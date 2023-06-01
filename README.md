@@ -56,7 +56,7 @@ The current version of minishell is developed and tested on macOS, but it should
 git clone https://github.com/tjensen42/42-minishell.git minishell
 ```
 ```
-cd minishell && make release
+cd minishell
 ```
 ```
 ./minishell
