@@ -1,7 +1,7 @@
 # 42-minishell
 
 The objective of this project is to create a simple shell, like an own little bash.<br>
-It is the first group project in the 42 core curriculum. <b>([tjensen42](https://github.com/tjensen42) && [hepple42](https://github.com/hepple42))</b>
+It is the first group project in the 42 core curriculum. <b>([tknibbe](https://github.com/tknibbe) && [cristje21](https://github.com/cristje21))</b>
 
 ## Project specifications
 
