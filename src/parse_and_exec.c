@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cris_main.c                                        :+:      :+:    :+:   */
+/*   parse_and_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 14:53:44 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/06/14 16:11:48 by tknibbe          ###   ########.fr       */
+/*   Created: 2023/06/14 16:07:59 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/06/14 16:09:30 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <string.h>
+#include "../includes/minishell.h"
 
-int	main(void)
+char **parse_and_execute(char *input)
 {
-	char	*string;
-
-	while (1)
-	{
-		string = readline("minishell/>");
-		//parse_and_execute(string);
-		
-		if (strcmp(string, "exit") == 0)
-			return (0);
-		printf("%s\n", string);
-	}
+	return (NULL);
 }
