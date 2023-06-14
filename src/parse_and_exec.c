@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:07:59 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/06/14 16:48:38 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:49:57 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	**parse_input(char *input)
 			if (input[i] == '\n' && input[i - 1] == 92) //if the last char is a '\' (92) it'll continue reading
 				i++;
 			write(1, &input[i], 1);
-			write(1, ' ', 1);
+			write(1, " ", 1);
 			i++;
 		}
 		i++;
