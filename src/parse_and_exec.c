@@ -1,18 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_and_exec.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 16:07:59 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/06/14 16:09:30 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parse_and_exec.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/06/14 16:07:59 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/06/14 16:43:47 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char **parse_and_execute(char *input)
+//bash will read only one line at a time unless the very last char is '\' is there is a char after '\' it wont read next line
+
+char	**parse_input(char *input)
 {
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		while (input[i] != '\n' && input[i])
+		{
+			if (input[i] == '\n' && input[i - 1] == 92) //if the last char is a '\' (92) it'll continue reading
+				i++;
+			
+			i++;
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+char	**parse_and_execute(char *input)
+{
+	char **result;
+	result = parse_input(input);
+	//do_history_ofzo();
+	//execute();
 	return (NULL);
 }
