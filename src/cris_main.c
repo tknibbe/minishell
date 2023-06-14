@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   cris_main.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/06/14 14:55:18 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   cris_main.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/14 14:53:44 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/06/14 16:02:50 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 
 int	main(void)
 {
-	char *string = readline("minishell/>");
+	char	*string;
+
+	while (1)
+	{
+		string = readline("minishell/>");
+		parse_and_execute(string);
+	}
 	printf("string: %s\n", string);
 }
