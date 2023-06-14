@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 16:07:59 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/06/14 16:46:04 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:48:38 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char	**parse_input(char *input)
 		}
 		i++;
 	}
+	return (NULL);
 }
 
 char	**parse_and_execute(char *input)

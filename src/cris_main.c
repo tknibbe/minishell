@@ -1,20 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cris_main.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 14:53:44 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/06/14 16:13:47 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   cris_main.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/06/14 16:36:59 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <readline/history.h>
-#include <readline/readline.h>
-#include <string.h>
+#include <minishell.h>
 
 int	main(void)
 {
@@ -23,10 +19,11 @@ int	main(void)
 	while (1)
 	{
 		string = readline("minishell/>");
+		history_management(string);
 		//parse_and_execute(string);
-		
-		if (strcmp(string, "exit") == 0) // for testing
-			return (0);
+		if (strcmp(string, "exit") == 0)
+			exit (0);
 		printf("%s\n", string);
+		free(string);
 	}
 }
