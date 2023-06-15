@@ -23,4 +23,7 @@ typedef struct s_data
 
 int	history_management(const char *s);
 
+// built-ins
+int	change_directory(const char *path);
+
 #endif

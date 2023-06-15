@@ -2,7 +2,7 @@
 
 int	history_management(const char *s)
 {
-	if (strcmp(s, "") > 0)
+	if (ft_strncmp(s, "", 1) > 0)
 	{
 		add_history(s);
 		printf("--> %s: added to history\n", s);

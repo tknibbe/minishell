@@ -6,7 +6,7 @@
 #    By: tknibbe <tknibbe@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/06/14 15:11:29 by tknibbe       #+#    #+#                  #
-#    Updated: 2023/06/14 16:40:58 by cvan-sch      ########   odam.nl          #
+#    Updated: 2023/06/14 19:24:56 by cvan-sch      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ MINISHELL	=	minishell
 LIBFT		=	lib/libft.a
 SRC			=	cris_main.c \
 				parse_and_exec.c \
-				history.c
+				history.c \
+				built_ins/cd.c 
 
 all : $(MINISHELL)
 
@@ -28,6 +29,7 @@ $(MINISHELL) : $(OBJ_F)
 
 obj/%.o : src/%.c
 	mkdir -p obj
+	mkdir -p obj/built_ins
 	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
 
 clean :
