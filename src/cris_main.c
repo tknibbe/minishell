@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/06/14 19:28:26 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/06/15 17:58:40 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(void)
 
 	while (1)
 	{
-		string = readline("cris en tymon hun superduper coole minishell> ");
+		string = readline("cris en tymon hooooooun superduper coole minishell> ");
 		history_management(string);
 		printf("chdir: %s\n", getcwd(buff, 256));
 		change_directory("..");
