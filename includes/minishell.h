@@ -13,6 +13,12 @@
 # include <string.h>
 # include "../lib/includes/libft.h"
 
+typedef struct s_env
+{
+	int		var_count;
+	char	**env;
+}			t_env;
+
 typedef struct s_data
 {
 
@@ -27,4 +33,6 @@ char	**parse_and_execute(char *input);
 // built-ins
 int	change_directory(const char *path);
 
+// env
+t_env	*env_init(char *envp[]);
 #endif

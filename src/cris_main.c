@@ -6,31 +6,24 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/06/28 11:52:35 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/06/28 13:50:51 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	main(void)
+int	main(int argc, char *argv[], char *envp[])
 {
 	char	*string;
 	char	buff[256];
 
+	t_env	*env = env_init(envp);
 	while (1)
 	{
-		string = readline("een andere string\n");
-		history_management(string);
-		printf("chdir: %s\n", getcwd(buff, 256));
-		change_directory("..");
-		printf("chdir: %s\n", getcwd(buff, 256));
+		string = readline("minshell>\n");
 		//parse_and_execute(string);
 		if (strcmp(string, "exit") == 0)
-		{
-			clear_history();
 			exit (0);
-		}
-		printf("%s\n", string);
 		free(string);
 	}
 }

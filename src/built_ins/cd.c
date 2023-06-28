@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   cd.c                                               :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2023/06/01 17:24:49 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/06/28 12:34:11 by cvan-sch      ########   odam.nl         */
+/*   Created: 2023/06/14 19:17:28 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/06/14 19:25:17 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "../includes/minishell.h"
+#include <minishell.h>
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
-int	main(int argc, char **argv)
+int	change_directory(const char *path)
 {
-	printf("minishell/>");
-	readline(NULL);
-
+	chdir(path);
 	return (0);
 }
