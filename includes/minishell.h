@@ -55,4 +55,8 @@ void	ft_exit(char *string, int errnum);
 
 // env
 t_env	*env_init(char *envp[]);
+void	unset(t_env *env, char **to_unset);
+
+//utils
+void	print_double_array(char **x);
 #endif

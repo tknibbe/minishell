@@ -1,22 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-<<<<<<< HEAD
 #                                                         ::::::::             #
 #    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
 #    By: tknibbe <tknibbe@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/06/14 15:11:29 by tknibbe       #+#    #+#                  #
-#    Updated: 2023/06/28 15:15:20 by cvan-sch      ########   odam.nl          #
-=======
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/14 15:11:29 by tknibbe           #+#    #+#              #
-#    Updated: 2023/06/28 15:26:52 by tknibbe          ###   ########.fr        #
->>>>>>> main
+#    Updated: 2023/06/28 16:56:38 by cvan-sch      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,15 +19,10 @@ LIBFT		=	lib/libft.a
 SRC			=	cris_main.c \
 				parse_and_exec.c \
 				history.c \
-<<<<<<< HEAD
-				built_ins/cd.c \
-				built_ins/env.c
-=======
-				built_ins/cd.c 
-				token.c \
-				token_funcs.c \
 				exit_funcs.c \
->>>>>>> main
+				built_ins/cd.c \
+				built_ins/env.c \
+				built_ins/unset.c
 
 all : $(MINISHELL)
 
