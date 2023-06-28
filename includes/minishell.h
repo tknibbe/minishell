@@ -21,7 +21,8 @@ typedef struct s_data
 //hey crissie baby <3
 //hey tymoo daddy 8=D
 
-int	history_management(const char *s);
+int		history_management(const char *s);
+char	**parse_and_execute(char *input);
 
 // built-ins
 int	change_directory(const char *path);

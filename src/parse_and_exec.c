@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_and_exec.c                                   :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/14 16:07:59 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/06/14 16:43:47 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_and_exec.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/14 16:07:59 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/06/14 16:51:22 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**parse_input(char *input)
 		{
 			if (input[i] == '\n' && input[i - 1] == 92) //if the last char is a '\' (92) it'll continue reading
 				i++;
-			
+
 			i++;
 		}
 		i++;
