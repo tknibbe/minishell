@@ -13,6 +13,9 @@
 # include <string.h>
 # include "../lib/includes/libft.h"
 
+#define TAB '	'
+#define SPACE ' '
+
 typedef struct s_data
 {
 	int	*token;
@@ -21,13 +24,16 @@ typedef struct s_data
 enum	e_token
 {
 	UNDEFINED,
-	DQUOTE,
 	SQUOTE,
+	DQUOTE,
 	DOLLO,
-	EXEC,
-	OPTIONS, //optional
+	REDIRLEFT,
+	REDIRRIGHT,
+	APPLEFT,
+	APPRIGHT,
 	PIPESYMBOL, // couldnt call it pipe because of redefinition error
-	REDIR,
+	OPTIONS, //optional
+	EXEC,
 	WHITESPACE,
 };
 //hey crissie baby <3
@@ -43,7 +49,8 @@ int		change_directory(const char *path);
 int		set_tokens(char *input, t_data *data);
 //TOKEN_FUNCS.C
 int		count_quote(char *input, t_data *data, char c);
-void	find_dollar(t_data *data, char *input);
+void	find_pipe(t_data *data, char *input);
+void	find_append_redirect(t_data *data, char *input);
 //EXIT_FUNCS.C
 void	ft_exit(char *string, int errnum);
 

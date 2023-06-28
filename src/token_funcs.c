@@ -6,20 +6,40 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:58:29 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/06/28 15:16:17 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/06/28 17:00:57 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
-void	find_dollar(t_data *data, char *input)
+static void	left(t_data *data, char *input, int *i);
+static void	right(t_data *data, char *input, int *i);
+
+void	find_pipe(t_data *data, char *input)
 {
 	int	i;
 
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '$' && input[i] != SQUOT)
+		if (input[i] == '|' && data->token[i] == UNDEFINED)
+			data->token[i] = PIPESYMBOL;
+		i++;
+	}
+}
+
+
+void	find_append_redirect(t_data *data, char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '<' && data->token[i] == UNDEFINED)
+			left(data, input, &i);
+		if (input[i] == '>' && data->token[i] == UNDEFINED)
+			right(data, input, &i);
 		i++;
 	}
 }
@@ -38,4 +58,28 @@ int	count_quote(char *input, t_data *data, char c)
 		i++;
 	}
 	return (count);
+}
+
+static void	left(t_data *data, char *input, int *i)
+{
+	if (input[*i + 1] == '<' && data->token[*i + 1] == UNDEFINED)
+	{
+		data->token[*i] = APPLEFT;
+		data->token[*i + 1] = APPLEFT;
+		*i += 1;
+	}
+	else
+		data->token[*i] = REDIRLEFT;
+}
+
+static void	right(t_data *data, char *input, int *i)
+{
+	if (input[*i + 1] == '>' && data->token[*i + 1] == UNDEFINED)
+	{
+		data->token[*i] = APPRIGHT;
+		data->token[*i + 1] = APPRIGHT;
+		*i += 1;
+	}
+	else
+		data->token[*i] = REDIRRIGHT;
 }
