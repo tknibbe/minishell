@@ -40,7 +40,9 @@ char	**parse_and_execute(char *input);
 
 //TOKEN.C
 int		set_tokens(char *input, t_data *data);
-
+//TOKEN_FUNCS.C
+int		count_quote(char *input, t_data *data, char c);
+void	find_dollar(t_data *data, char *input);
 //EXIT_FUNCS.C
 void	ft_exit(char *string, int errnum);
 

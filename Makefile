@@ -6,7 +6,7 @@
 #    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 15:11:29 by tknibbe           #+#    #+#              #
-#    Updated: 2023/06/28 12:35:27 by tknibbe          ###   ########.fr        #
+#    Updated: 2023/06/28 15:11:08 by tknibbe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC			=	cris_main.c \
 				parse_and_exec.c \
 				history.c \
 				token.c \
+				token_funcs.c \
 				exit_funcs.c \
 
 all : $(MINISHELL)
@@ -37,10 +38,11 @@ clean :
 	rm -rf obj
 
 fclean : clean
-	rm $(LIBFT)
-	rm $(MINISHELL)
+	rm -f $(LIBFT)
+	rm -f $(MINISHELL)
 
 re: fclean all
+
 git :
 	git add .
 	git commit -m "automatic push"
