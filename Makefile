@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         ::::::::             #
-#    Makefile                                           :+:    :+:             #
-#                                                      +:+                     #
-#    By: tknibbe <tknibbe@student.42.fr>              +#+                      #
-#                                                    +#+                       #
-#    Created: 2023/06/14 15:11:29 by tknibbe       #+#    #+#                  #
-#    Updated: 2023/06/14 16:40:58 by cvan-sch      ########   odam.nl          #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/06/14 15:11:29 by tknibbe           #+#    #+#              #
+#    Updated: 2023/06/28 12:35:27 by tknibbe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ MINISHELL	=	minishell
 LIBFT		=	lib/libft.a
 SRC			=	cris_main.c \
 				parse_and_exec.c \
-				history.c
+				history.c \
+				token.c \
+				exit_funcs.c \
 
 all : $(MINISHELL)
 
@@ -38,6 +40,7 @@ fclean : clean
 	rm $(LIBFT)
 	rm $(MINISHELL)
 
+re: fclean all
 git :
 	git add .
 	git commit -m "automatic push"
