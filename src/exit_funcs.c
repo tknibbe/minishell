@@ -1,34 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cris_main.c                                        :+:      :+:    :+:   */
+/*   exit_funcs.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 14:53:44 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/06/28 15:25:36 by tknibbe          ###   ########.fr       */
+/*   Created: 2023/06/28 12:33:22 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/06/28 12:35:12 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "../includes/minishell.h"
 
-int	main(void)
+void	ft_exit(char *string, int errnum)
 {
-	char	*string;
-	t_data	*data = malloc(sizeof(t_data));
-
-	while (1)
-	{
-		string = readline("test/>");
-		//history_management(string);
-		//parse_and_execute(string);
-		set_tokens(string, data);
-		if (strcmp(string, "exit") == 0)
-		{
-			clear_history();
-			exit (0);
-		}
-		printf("%s\n", string);
-		free(string);
-	}
+	write(2, string, ft_strlen(string));
+	exit(errnum);
 }

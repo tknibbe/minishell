@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         ::::::::             #
-#    Makefile                                           :+:    :+:             #
-#                                                      +:+                     #
-#    By: tknibbe <tknibbe@student.42.fr>              +#+                      #
-#                                                    +#+                       #
-#    Created: 2023/06/14 15:11:29 by tknibbe       #+#    #+#                  #
-#    Updated: 2023/06/14 19:24:56 by cvan-sch      ########   odam.nl          #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/06/14 15:11:29 by tknibbe           #+#    #+#              #
+#    Updated: 2023/06/28 15:26:52 by tknibbe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,9 @@ SRC			=	cris_main.c \
 				parse_and_exec.c \
 				history.c \
 				built_ins/cd.c 
+				token.c \
+				token_funcs.c \
+				exit_funcs.c \
 
 all : $(MINISHELL)
 
@@ -37,8 +40,10 @@ clean :
 	rm -rf obj
 
 fclean : clean
-	rm $(LIBFT)
-	rm $(MINISHELL)
+	rm -f $(LIBFT)
+	rm -f $(MINISHELL)
+
+re: fclean all
 
 git :
 	git add .

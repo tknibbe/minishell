@@ -1,26 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   token_funcs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 17:24:49 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/06/14 15:57:03 by tknibbe          ###   ########.fr       */
+/*   Created: 2023/06/28 14:58:29 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/06/28 15:16:17 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-
-int	main(int argc, char **argv)
+void	find_dollar(t_data *data, char *input)
 {
-	
-	printf("minishell/>");
-	readline(NULL);
+	int	i;
 
-	return (0);
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '$' && input[i] != SQUOT)
+		i++;
+	}
+}
+
+int	count_quote(char *input, t_data *data, char c)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (input[i])
+	{
+		if (input[i] == c && data->token[i] == UNDEFINED)
+			count++;
+		i++;
+	}
+	return (count);
 }
