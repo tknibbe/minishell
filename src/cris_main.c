@@ -6,11 +6,12 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:53:44 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/06/28 15:25:36 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/06/29 16:12:53 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <token.h>
 
 int	main(void)
 {
@@ -28,7 +29,7 @@ int	main(void)
 			clear_history();
 			exit (0);
 		}
-		printf("%s\n", string);
+		//printf("%s\n", string);
 		free(string);
 	}
 }

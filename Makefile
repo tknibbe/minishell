@@ -6,7 +6,7 @@
 #    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 15:11:29 by tknibbe           #+#    #+#              #
-#    Updated: 2023/06/28 15:38:37 by tknibbe          ###   ########.fr        #
+#    Updated: 2023/06/29 17:22:08 by tknibbe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,20 +19,22 @@ LIBFT		=	lib/libft.a
 SRC			=	cris_main.c \
 				parse_and_exec.c \
 				history.c \
-				token.c \
-				token_funcs.c \
+				tokenize/token.c \
+				tokenize/token_funcs.c \
+				tokenize/token_funcs2.c \
 				exit_funcs.c \
 				#built_ins/cd.c \
 
 all : $(MINISHELL)
 
 $(MINISHELL) : $(OBJ_F)
-	make -C lib
-	$(CC) $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@
+	@make -C lib
+	$(CC) -fsanitize=address $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@
 
 obj/%.o : src/%.c
-	mkdir -p obj
-	mkdir -p obj/built_ins
+	@mkdir -p obj
+	@mkdir -p obj/built_ins
+	@mkdir -p obj/tokenize
 	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
 
 clean :

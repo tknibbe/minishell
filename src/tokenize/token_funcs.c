@@ -6,11 +6,12 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:58:29 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/06/28 17:00:57 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/06/29 16:16:16 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <token.h>
 
 static void	left(t_data *data, char *input, int *i);
 static void	right(t_data *data, char *input, int *i);
@@ -27,7 +28,6 @@ void	find_pipe(t_data *data, char *input)
 		i++;
 	}
 }
-
 
 void	find_append_redirect(t_data *data, char *input)
 {
