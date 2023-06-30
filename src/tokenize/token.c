@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/06/29 17:22:47 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/06/30 16:05:13 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	find_dollar(t_data *data, char *input);
 
 void	print_class(int	num)
 {
+	//norm error not to forget to remove
 	if (num == SQUOTE)
 		printf("single quote: ");
 	else if (num == DQUOTE)
@@ -42,13 +43,19 @@ void	print_class(int	num)
 		printf("option      : ");
 	else if (num == INPUT)
 		printf("input       : ");
+	else if (num == EQUALS)
+		printf("equals      : ");
+	else if (num == VARIABLE)
+		printf("variable    : ");
+	else if (num == STRING)
+		printf("string      : ");
 	else
 		printf("undefined %d: ", num);
 }
 
 void print_test(t_data *data, char *input)
 {
-	int	i = 0;
+	int	i = 0; //remove func later
 	int	num;
 
 	while (input[i])
@@ -57,7 +64,7 @@ void print_test(t_data *data, char *input)
 			i++;
 		num = data->token[i];
 		print_class(data->token[i]);
-		while (data->token[i] == num)
+		while (data->token[i] == num && input[i])
 		{
 			printf("%c", input[i]);
 			i++;
@@ -72,6 +79,7 @@ returns 0 on succes.*/
 int	set_tokens(char *input, t_data *data)
 {
 //loops through string EVERY function. could be faster :/
+//still needs to find "= signs on define and make sure the variable name is valid
 	int	i;
 
 	i = 0;
@@ -84,6 +92,7 @@ int	set_tokens(char *input, t_data *data)
 	find_exec(data, input, 0);
 	find_options(data, input);
 	set_rest_to_str(data, input);
+	find_define(data, input);
 	print_test(data, input); // test ONLY
 	return (0);
 }

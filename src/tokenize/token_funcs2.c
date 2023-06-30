@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:54:23 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/06/29 17:23:31 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/06/30 16:05:24 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	set_rest_to_str(t_data *data, char *input)
 	last_token = 0;
 	while (input[i])
 	{
-		if (whitespace(input[i]) != 0)
-			last_token = data->token[i];
 		if (input[i] != ' ' && data->token[i] == UNDEFINED)
 		{
 			while (whitespace(input[i]) == 0 && input[i])
@@ -39,10 +37,12 @@ void	set_rest_to_str(t_data *data, char *input)
 				if (last_token == EXEC)
 					data->token[i] = INPUT;
 				else
-					data->token[i] = DQUOTE;
+					data->token[i] = STRING;
 				i++;
 			}		
 		}
+		if (whitespace(input[i]) == 0)
+			last_token = data->token[i];
 		i++;
 	}
 }

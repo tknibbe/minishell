@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:53:44 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/06/29 16:12:53 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/06/30 14:30:01 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(void)
 
 	while (1)
 	{
-		string = readline("test/>");
+		string = readline("minicris/>");
 		//history_management(string);
 		//parse_and_execute(string);
 		set_tokens(string, data);
