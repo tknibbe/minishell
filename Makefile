@@ -6,7 +6,7 @@
 #    By: tknibbe <tknibbe@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2023/06/14 15:11:29 by tknibbe       #+#    #+#                  #
-#    Updated: 2023/06/28 16:56:38 by cvan-sch      ########   odam.nl          #
+#    Updated: 2023/06/29 16:32:17 by cvan-sch      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,9 @@ SRC			=	cris_main.c \
 				exit_funcs.c \
 				built_ins/cd.c \
 				built_ins/env.c \
-				built_ins/unset.c
+				built_ins/unset.c \
+				utils/double_array_utils.c \
+				built_ins/export.c
 
 all : $(MINISHELL)
 
@@ -33,6 +35,7 @@ $(MINISHELL) : $(OBJ_F)
 obj/%.o : src/%.c
 	mkdir -p obj
 	mkdir -p obj/built_ins
+	mkdir -p obj/utils
 	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
 
 clean :

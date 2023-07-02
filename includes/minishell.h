@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/06/29 16:02:01 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/06/29 16:21:44 by cvan-sch      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -12,12 +24,6 @@
 # include <fcntl.h>
 # include <string.h>
 # include "../lib/includes/libft.h"
-
-typedef struct s_env
-{
-	int		var_count;
-	char	**env;
-}			t_env;
 
 typedef struct s_data
 {
@@ -36,6 +42,7 @@ enum	e_token
 	REDIR,
 	WHITESPACE,
 };
+
 //hey crissie baby <3
 //hey tymoo daddy 8=D
 //hey crissie deel 2 80085
@@ -53,10 +60,8 @@ void	find_dollar(t_data *data, char *input);
 //EXIT_FUNCS.C
 void	ft_exit(char *string, int errnum);
 
-// env
-t_env	*env_init(char *envp[]);
-void	unset(t_env *env, char **to_unset);
-
 //utils
 void	print_double_array(char **x);
+void	free_dp(char **dp);
+int		count(char **c);
 #endif

@@ -6,35 +6,12 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/28 12:34:26 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/06/28 17:02:07 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/02 11:52:47 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-int	count(char **c)
-{
-	int	i;
-
-	i = 0;
-	while (c[i])
-		i++;
-	return (i);
-}
-
-char **free_dp(char **dp)
-{
-	int	i;
-
-	i = 0;
-	while (dp[i])
-	{
-		free(dp[i]);
-		i++;
-	}
-	free(dp);
-	return (NULL);
-}
+#include <env.h>
 
 void	env_dp(t_env *t, char *envp[])
 {
@@ -68,35 +45,17 @@ t_env	*env_init(char *envp[])
 	if (!env)
 		return (NULL);
 	env_dp(env, envp);
-	// int i = 0;
-	// while (env->env[i])
-	// {
-	// 	printf("%s\n", env->env[i]);
-	// 	i++;
-	// }
 	return (env);
 }
 
-// int	check_what_to_export(char **old_env, char **to_export)
-// {
-// 	int	i;
-// 	int	j;
+void	export(t_env *env, char **to_export)
+{
+	reassign_export_items(env->env, to_export);
+	add_items(env, to_export);
+}
 
-// 	i = 0;
-// 	while (to_export[i])
-// 	{
-// 		j = 0;
-// 		while (old_env[j])
-// 		{
-			
-// 		}
-// 	}
-// 	return 0;
-// }
-
-// void	export(t_env *env, char **to_export)
-// {
-// 	char	**new_env;
-// 	int		i;
-
-// }
+void	env(char **s)
+{
+	while (*s)
+		printf("%s\n", *(s++));
+}
