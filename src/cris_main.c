@@ -6,21 +6,12 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/03 17:03:51 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/03 17:09:23 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <env.h>
-
-void	print_struct(t_exec *list)
-{
-	while (list)
-	{
-		printf("instr = [%s] option = %d\n", list->instr, list->option);
-		list = list->next;
-	}
-}
 
 t_ally	*minishell_init(char *envp[])
 {
