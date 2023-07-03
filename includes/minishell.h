@@ -6,7 +6,7 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/29 16:02:01 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/06/29 16:21:44 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/03 15:41:47 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 #define TAB '	'
 #define SPACE ' '
 
-<<<<<<< HEAD
 enum	e_token
 {
 	UNDEFINED,
@@ -42,8 +41,11 @@ enum	e_token
 	WHITESPACE,
 };
 
-=======
->>>>>>> 3e07408d06511042916c526588c5790e525f29fe
+typedef struct	s_ally
+{
+	t_env		*env;
+}				t_ally;
+
 //hey crissie baby <3
 //hey tymoo daddy 8=D
 //hey crissie deel 2 80085
