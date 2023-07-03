@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:58:29 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/06/29 16:16:16 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/03 11:08:05 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static void	left(t_data *data, char *input, int *i);
 static void	right(t_data *data, char *input, int *i);
 
-void	find_pipe(t_data *data, char *input)
+void	find_pipe_and_semicolon(t_data *data, char *input)
 {
 	int	i;
 
@@ -25,6 +25,8 @@ void	find_pipe(t_data *data, char *input)
 	{
 		if (input[i] == '|' && data->token[i] == UNDEFINED)
 			data->token[i] = PIPESYMBOL;
+		if (input[i] == ';' && data->token[i] == UNDEFINED)
+			data->token[i] = SEMICOLON;
 		i++;
 	}
 }

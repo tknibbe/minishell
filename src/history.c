@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 16:13:23 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/06/30 16:14:41 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/03 10:48:07 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int	history_management(const char *s)
 {
 	if (ft_strncmp(s, "", 1) > 0)
-	{
 		add_history(s);
-		printf("--> %s: added to history\n", s);
-	}
-	else
-		printf("not added\n");
+	//{
+		//printf("--> %s: added to history\n", s);
+	//}
+	//else
+	//	printf("not added\n");
 	return (0);
 }

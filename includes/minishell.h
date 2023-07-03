@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/29 16:02:01 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/03 15:41:47 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/03 14:11:50 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/07/03 16:58:31 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,6 @@
 # include <fcntl.h>
 # include <string.h>
 # include "../lib/includes/libft.h"
-
-#define TAB '	'
-#define SPACE ' '
-
-enum	e_token
-{
-	UNDEFINED,
-	DQUOTE,
-	SQUOTE,
-	DOLLO,
-	EXEC,
-	OPTIONS, //optional
-	PIPESYMBOL, // couldnt call it pipe because of redefinition error
-	REDIR,
-	WHITESPACE,
-};
-
-typedef struct	s_ally
-{
-	t_env		*env;
-}				t_ally;
 
 //hey crissie baby <3
 //hey tymoo daddy 8=D

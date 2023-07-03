@@ -6,12 +6,34 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:54:23 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/06/30 16:05:24 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/03 12:42:00 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <token.h>
+
+void	trim_undefined(t_data *data, char *input)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i< ft_strlen(input))
+	{
+		if (data->token[i] == UNDEFINED)
+			j++;
+		data->token[i] = data->token[i + j];
+		input[i] = input[i + j];
+		if (i + j > ft_strlen(input))
+			data->token[i] = UNDEFINED;
+		i++;
+	}
+	//while (i < ft_strlen(input))
+	//	data->token[i++] = UNDEFINED;
+	printf("%d undefs found\n%s\n", j, input);
+}
 
 int	whitespace(char c)
 {
