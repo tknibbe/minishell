@@ -6,7 +6,7 @@
 #    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 15:11:29 by tknibbe           #+#    #+#              #
-#    Updated: 2023/07/03 17:15:30 by tknibbe          ###   ########.fr        #
+#    Updated: 2023/07/03 17:16:06 by tknibbe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,18 @@ LIBFT		=	lib/libft.a
 SRC			=	cris_main.c \
 				parse_and_exec.c \
 				history.c \
-				tokenize/token.c \
-				tokenize/token_funcs.c \
-				tokenize/token_funcs2.c \
-				tokenize/define.c \
-				tokenize/make_list.c \
 				exit_funcs.c \
-				#built_ins/cd.c \
+				built_ins/env.c \
+				built_ins/unset.c \
+				utils/double_array_utils.c \
+				built_ins/export.c \
+				parse/tokenize/token.c \
+				parse/tokenize/token_funcs.c \
+				parse/tokenize/token_funcs2.c \
+				parse/tokenize/define.c \
+				exit_funcs.c \
+				# parse/tokenize/make_list.c \
+				# built_ins/cd.c \
 
 all : $(MINISHELL)
 
@@ -36,8 +41,9 @@ $(MINISHELL) : $(OBJ_F)
 
 obj/%.o : src/%.c
 	@mkdir -p obj
+	@mkdir -p obj/utils
 	@mkdir -p obj/built_ins
-	@mkdir -p obj/tokenize
+	@mkdir -p obj/parse/tokenize
 	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
 
 clean :

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 14:11:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/03 16:58:31 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/07/03 14:11:50 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/07/03 17:09:04 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@
 //hey crissie baby <3
 //hey tymoo daddy 8=D
 //hey crissie deel 2 80085
+
+# include <env.h>
+
+typedef struct t_minishell
+{
+	t_env		*env;
+}				t_ally;
+
 
 int		history_management(const char *s);
 char	**parse_and_execute(char *input);
