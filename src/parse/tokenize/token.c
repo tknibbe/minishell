@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/06/30 16:05:13 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/03 15:31:37 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	init_token(t_data *data, int len);
 static void	find_squote(t_data *data, char *input);
 static void	find_dquote(t_data *data, char *input);
 static void	find_dollar(t_data *data, char *input);
+//cat -e  "hallo $variable" | ls -la | << < >> > 'hallo $variable'
+
 
 void	print_class(int	num)
 {
@@ -49,6 +51,8 @@ void	print_class(int	num)
 		printf("variable    : ");
 	else if (num == STRING)
 		printf("string      : ");
+	else if (num == SEMICOLON)
+		printf("semicolom   : ");
 	else
 		printf("undefined %d: ", num);
 }
@@ -72,28 +76,42 @@ void print_test(t_data *data, char *input)
 		printf("\n");
 	}
 }
-//cat -e  "hallo $variable" | ls -la | << < >> > 'hallo $variable'
+
+void	print_tokens(t_data *data, char *input)
+{
+	int i = 0;
+	while (i < ft_strlen(input))
+	{
+		printf("[%d]", data->token[i]);
+		i++;
+	}
+	printf("\n");
+}
 
 /*sets tokens according to the ENUMs defined in the header. 
 returns 0 on succes.*/
-int	set_tokens(char *input, t_data *data)
+int	set_tokens(char *input, t_data **data)
 {
 //loops through string EVERY function. could be faster :/
-//still needs to find "= signs on define and make sure the variable name is valid
 	int	i;
 
 	i = 0;
-	init_token(data, ft_strlen(input));
-	find_squote(data, input);
-	find_dquote(data, input);
-	find_dollar(data, input);
-	find_pipe(data, input);
-	find_append_redirect(data, input);
-	find_exec(data, input, 0);
-	find_options(data, input);
-	set_rest_to_str(data, input);
-	find_define(data, input);
-	print_test(data, input); // test ONLY
+	//printf("pre %d\n", ft_strlen(input));
+	//input = ft_strtrim(input, " ");
+	//printf("post %d\n", ft_strlen(input));
+	init_token(*data, ft_strlen(input));
+	find_squote(*data, input);
+	find_dquote(*data, input);
+	find_dollar(*data, input);
+	find_pipe_and_semicolon(*data, input);
+	find_append_redirect(*data, input);
+	find_exec(*data, input, 0);
+	find_options(*data, input);
+	find_define(*data, input);
+	set_rest_to_str(*data, input);
+	//trim_undefined(*data, input);
+	//print_test(*data, input); // test ONLY
+	print_tokens(*data, input);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 14:04:57 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/06/30 16:04:51 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/03 14:15:31 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,15 @@ int	valid_var_name(t_data *data, char *input, int i)
 {
 	if (whitespace(input[i - 1]))
 		return (0);
-	while (data->token[i] == EXEC && i > 0)
+	while ((data->token[i] != DQUOTE || data->token[i] == SQUOTE) \
+			&& data->token[i] != UNDEFINED && i > 0)
 	{
 		i--;
 	}
-	if((input[i] >= '0' && input[i] <= '9') || input[i] == '=')
+	printf("checking [%c]\n", input[i]);
+	if (whitespace(input[i]))
+		i++;
+	if ((input[i] >= '0' && input[i] <= '9') || input[i] == '=')
 		return (0);
 	while (input[i] != '=')
 	{
@@ -77,16 +81,13 @@ void	find_define(t_data *data, char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '=' && data->token[i - 1] == EXEC)
+		if (input[i] == '=' && data->token[i - 1] != SQUOTE \
+			&& data->token[i - 1] != DQUOTE)
 		{
-			if (valid_var_name(data, input, i) && valid_var_input(data, input, i))
+			if (valid_var_name(data, input, i) && \
+				valid_var_input(data, input, i))
 			{
-				printf("varname is valid\n");
 				set_name_and_input(data, input, i);
-			}
-			else
-			{
-				printf("invalid variable name, undefined behaviour want is nog niet gehandeld xxx\n");
 			}
 		}
 		i++;

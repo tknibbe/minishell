@@ -6,7 +6,7 @@
 #    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 14:27:27 by tknibbe           #+#    #+#              #
-#    Updated: 2023/06/28 15:07:52 by tknibbe          ###   ########.fr        #
+#    Updated: 2023/07/03 13:48:57 by tknibbe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRCLIB = check/ft_isalpha.c \
 		io/ft_putendl_fd.c \
 		io/ft_putnbr_fd.c \
 		str/ft_instr.c
+		
 
 OBJLIB = ft_isalpha.o ft_isdigit.o ft_isalnum.o \
 		ft_isascii.o ft_isprint.o ft_strlen.o ft_memset.o \

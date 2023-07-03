@@ -6,7 +6,7 @@
 #    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 15:11:29 by tknibbe           #+#    #+#              #
-#    Updated: 2023/06/30 14:18:15 by tknibbe          ###   ########.fr        #
+#    Updated: 2023/07/03 14:16:07 by tknibbe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC			=	cris_main.c \
 				tokenize/token_funcs.c \
 				tokenize/token_funcs2.c \
 				tokenize/define.c \
+				tokenize/make_list.c \
 				exit_funcs.c \
 				#built_ins/cd.c \
 

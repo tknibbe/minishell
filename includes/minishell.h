@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/03 14:11:50 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/07/03 14:12:06 by tknibbe          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -12,9 +24,6 @@
 # include <fcntl.h>
 # include <string.h>
 # include "../lib/includes/libft.h"
-
-#define TAB '	'
-#define SPACE ' '
 
 //hey crissie baby <3
 //hey tymoo daddy 8=D
