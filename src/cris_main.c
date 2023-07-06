@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/03 20:49:38 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/06 18:25:13 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,24 @@ t_ally	*minishell_init(char *envp[])
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*string;
+	char	*prompt;
 	t_ally	*all;
 
+	if (argc != 1)
+		ft_exit("just minishell is enough\n", 1);
 	all = minishell_init(envp);
+	prompt = ft_strjoin(&argv[0][2], " -> ");
+	if (!prompt)
+		ft_exit("Error: malloc failure\n", errno);
 	while (1)
 	{
-		string = readline("minicris/>");
+		string = readline(prompt);
 		if (!string)
-			printf("jaja");
-		if (!ft_strncmp(string, "cd ", 3))
-			cd(string);
-		else if (!ft_strncmp(string, "pwd", 4));
-			pwd();
+			ft_exit("wtf?\n", 20000);
 		//parse_and_execute(string);
 		//set_tokens(string, data);
+		//history(string);
 		free(string);
 	}
+	free(prompt);
 }
