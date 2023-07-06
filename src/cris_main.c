@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/03 17:09:23 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/03 20:49:38 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ int	main(int argc, char *argv[], char *envp[])
 		string = readline("minicris/>");
 		if (!string)
 			printf("jaja");
+		if (!ft_strncmp(string, "cd ", 3))
+			cd(string);
+		else if (!ft_strncmp(string, "pwd", 4));
+			pwd();
 		//parse_and_execute(string);
 		//set_tokens(string, data);
 		free(string);

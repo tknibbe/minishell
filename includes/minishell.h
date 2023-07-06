@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 14:11:50 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/03 17:09:04 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/03 20:55:02 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ typedef struct t_minishell
 int		history_management(const char *s);
 char	**parse_and_execute(char *input);
 
-// built-ins
-int		change_directory(const char *path);
 //EXIT_FUNCS.C
 void	ft_exit(char *string, int errnum);
 
@@ -49,4 +47,5 @@ void	ft_exit(char *string, int errnum);
 void	print_double_array(char **x);
 void	free_dp(char **dp);
 int		count(char **c);
+
 #endif
