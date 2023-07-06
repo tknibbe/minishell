@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/06 18:25:13 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/06 18:31:09 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char	*prompt;
 	t_ally	*all;
 
+	// I changed it here so that the executables name will be the prompt :)
 	if (argc != 1)
 		ft_exit("just minishell is enough\n", 1);
 	all = minishell_init(envp);
