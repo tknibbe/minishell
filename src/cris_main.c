@@ -6,12 +6,13 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/06 18:31:09 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/06 18:33:11 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <env.h>
+#include <built_ins.h>
 
 t_ally	*minishell_init(char *envp[])
 {
@@ -43,10 +44,10 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		string = readline(prompt);
 		if (!string)
-			ft_exit("wtf?\n", 20000);
+			ft_exit("wtf!\n", 2000000);
 		//parse_and_execute(string);
 		//set_tokens(string, data);
-		//history(string);
+		history(string);
 		free(string);
 	}
 	free(prompt);
