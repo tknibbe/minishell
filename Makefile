@@ -1,21 +1,21 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         ::::::::             #
-#    Makefile                                           :+:    :+:             #
-#                                                      +:+                     #
-#    By: tknibbe <tknibbe@student.42.fr>              +#+                      #
-#                                                    +#+                       #
-#    Created: 2023/06/14 15:11:29 by tknibbe       #+#    #+#                  #
-#    Updated: 2023/07/06 18:33:26 by cvan-sch      ########   odam.nl          #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/06/14 15:11:29 by tknibbe           #+#    #+#              #
+#    Updated: 2023/07/07 11:41:06 by tknibbe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 INCLUDE		=	-I includes -I lib/includes
-CFLAGS		=	-Wall -Werror -Wextra
+CFLAGS		=	#-Wall -Werror -Wextra
 READLINE	=	-lreadline
 OBJ_F		=	$(SRC:%.c=obj/%.o)
-MINISHELL	=	minicris
+MINISHELL	=	minishell
 LIBFT		=	lib/libft.a
 SRC			=	cris_main.c \
 				parse_and_exec.c \
@@ -30,6 +30,8 @@ SRC			=	cris_main.c \
 				parse/tokenize/token_funcs.c \
 				parse/tokenize/token_funcs2.c \
 				parse/tokenize/define.c \
+				parse/parse/make_list.c \
+				parse/parse/list_functions.c \
 				exit_funcs.c \
 				# parse/tokenize/make_list.c \
 				# built_ins/cd.c \
@@ -45,6 +47,7 @@ obj/%.o : src/%.c
 	@mkdir -p obj/utils
 	@mkdir -p obj/built_ins
 	@mkdir -p obj/parse/tokenize
+	@mkdir -p obj/parse/parse
 	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
 
 clean :

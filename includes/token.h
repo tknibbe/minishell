@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:08:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/03 16:47:32 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/07 11:37:31 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,6 @@ void	trim_undefined(t_data *data, char *input);
 void	find_define(t_data *data, char *input);
 
 //MAKE_LIST.c
-void	make_list(t_data **data, char *input);
+void	parse(char *input, t_data **data);
 
 #endif
