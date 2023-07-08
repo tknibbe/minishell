@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 12:30:57 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/04 16:14:14 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/08 19:01:49 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_exec	*ft_lstlast(t_exec *lst)
 {
 	if (!lst)
-		return (0);
+		return (NULL);
 	while (lst->next != 0)
 		lst = lst->next;
 	return (lst);

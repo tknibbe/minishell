@@ -17,9 +17,7 @@ void	get_home(char **env)
 
 void	cd(char *path, char **env)
 {
-	if (!path)
-		return (get_home(env));
-	if (!ft_strncmp(path, "~", 2))
+	if (!path || !ft_strncmp(path, "~", 2))
 		return (get_home(env));
 	if (chdir(path) < 0)
 		perror("minishell: cd");
