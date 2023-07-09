@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/08 19:03:29 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/09 13:21:25 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	put_str_in_node(t_exec *node, char **args, int amount, int *k) // fix that 
 	{
 		if (strcmp_redirects(args[*k]))
 			*k += 1;
-		printf("i = %d, amnt = %d arg = %s\n", i, amount, args[*k]);
 		node->cmd[i] = args[*k];
 		*k += 1;
 		i++;
@@ -98,16 +97,17 @@ void	put_args_in_list(t_data **data, char **args)
 	j = 0;
 	k = 0;
 	nodes = nodes_needed(args);
-	(*data)->list = malloc(sizeof(t_exec));
-	if (!(*data)->list)
-		ft_exit("Malloc error\n", errno);
+	//(*data)->list = malloc(sizeof(t_exec *) * nodes);
+	//if (!(*data)->list)
+	//	ft_exit("Malloc error\n", errno);
 	while (i < nodes)
 	{
+		node = ft_lstnew();
 		cmds = cmd_needed(args, &j);
 		printf("%d cmds needed\n", cmds);
 		node->cmd = malloc(sizeof(char *) * cmds + 1);
 		put_str_in_node(node, args, cmds, &k);
-		//ft_lstadd_back(&(*data)->list, node); // all is in the node. need to put it in data->list
+		ft_lstadd_back(&(*data)->list, node); // all is in the node. need to put it in data->list
 	int	f = 0;
 	while (node->cmd[f])
 	{
@@ -125,5 +125,16 @@ void	parse(char *input, t_data **data)
 	args = split_args(input, *data);
 	(*data)->list = NULL;
 	put_args_in_list(data, args);
-
+	int i = 0;
+	while ((*data)->list)
+	{
+		while ((*data)->list->cmd[i])
+		{
+			printf("%s\n", (*data)->list->cmd[i]);
+			i++;
+		}
+		i = 0;
+		printf("\n\n\n");
+		(*data)->list = (*data)->list->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:08:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/08 19:02:35 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/09 13:12:32 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	print_tokens(t_data *data, char *input);
 
 //LIST_FUNCTIONS.C
 void	ft_lstadd_back(t_exec **lst, t_exec *new);
+t_exec	*ft_lstnew(void);
 
 //SPLIT_ARGS.C
 char	**split_args(char *input, t_data *data);
