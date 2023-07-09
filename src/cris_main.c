@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   cris_main.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/06 18:33:11 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   cris_main.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/14 14:53:44 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/07/08 14:15:41 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,23 @@ t_ally	*minishell_init(char *envp[])
 	all = malloc(sizeof(t_ally));
 	if (!all)
 		ft_exit("Error: allocation failed\n", errno);
+	if (!all->data)
+		ft_exit("Malloc error\n", errno);
 	all->env = env_init(envp);
+	all->data = malloc(sizeof(t_data));
 	return (all);
+}
+
+void	tymon(t_ally *all, char *input)
+{
+	if (set_tokens(input, &all->data))
+		return ;
+	parse(input, &all->data);
+}
+
+void	cris(t_ally *all, char *input)
+{
+	printf("eroor, doe beter code ofzo\n");
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -35,7 +50,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	// I changed it here so that the executables name will be the prompt :)
 	if (argc != 1)
-		ft_exit("just minishell is enough\n", 1);
+		ft_exit("just ./minishell is enough\n", 1);
 	all = minishell_init(envp);
 	prompt = ft_strjoin(&argv[0][2], " -> ");
 	if (!prompt)
@@ -45,8 +60,10 @@ int	main(int argc, char *argv[], char *envp[])
 		string = readline(prompt);
 		if (!string)
 			ft_exit("wtf!\n", 2000000);
-		//parse_and_execute(string);
-		//set_tokens(string, data);
+		if (ft_strncmp(string, "exit", 4) == 0)
+			exit(0);
+		tymon(all, string);
+		//cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
 		history(string);
 		free(string);
 	}

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/30 14:04:57 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/09 11:54:36 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/09 14:28:43 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	valid_var_name(t_data *data, char *input, int i)
 	if (whitespace(input[i - 1]))
 		return (0);
 	while ((data->token[i] != DQUOTE || data->token[i] == SQUOTE) \
-			&& data->token[i] != UNDEFINED && i > 0)
+			&& data->token[i] != BLANK && i > 0)
 	{
 		i--;
 	}

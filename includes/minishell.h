@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/07/03 14:11:50 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/03 20:55:02 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/03 14:11:50 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/07/07 18:11:11 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include "../lib/includes/libft.h"
+# include <token.h>
 
 //hey crissie baby <3
 //hey tymoo daddy 8=D
@@ -34,6 +35,8 @@
 typedef struct t_minishell
 {
 	t_env		*env;
+	t_data		*data;
+	int			exit_code;
 }				t_ally;
 
 
