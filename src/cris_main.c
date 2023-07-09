@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/09 16:27:31 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/09 17:45:06 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ void	tymon(t_ally *all, char *input)
 
 void	cris(t_ally *all, char *input)
 {
-	printf("eroor, doe beter code ofzo\n");
+	if (!ft_strncmp("kaas", input, 5))
+		test_exec(all->env->env);
+	//printf("eroor, doe beter code ofzo\n");
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -59,7 +61,8 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		string = readline(prompt);
 		if (!string)
-			ft_exit("wtf!\n", 2000000);
+			ft_exit("wtf!!\n", 2000000);
+		//printf("test\n");
 		if (ft_strncmp(string, "exit", 4) == 0)
 			exit(0);
 		// tymon(all, string);

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 14:11:50 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/09 16:12:48 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/09 16:40:23 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <string.h>
 # include "../lib/includes/libft.h"
 # include <token.h>
-
+# include <exec.h>
 //hey crissie baby <3
 //hey tymoo daddy 8=D
 //hey crissie deel 2 80085

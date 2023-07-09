@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/14 15:11:29 by tknibbe           #+#    #+#              #
-#    Updated: 2023/07/08 17:01:24 by tknibbe          ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: tknibbe <tknibbe@student.42.fr>              +#+                      #
+#                                                    +#+                       #
+#    Created: 2023/06/14 15:11:29 by tknibbe       #+#    #+#                  #
+#    Updated: 2023/07/09 16:36:57 by cvan-sch      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC			=	cris_main.c \
 				parse/parse/split_args.c \
 				parse/test_functions.c \
 				exit_funcs.c \
+				execution/exec.c \
 				# parse/tokenize/make_list.c \
 				# built_ins/cd.c \
 
@@ -52,6 +53,7 @@ obj/%.o : src/%.c
 	@mkdir -p obj/parse/tokenize
 	@mkdir -p obj/parse/parse
 	@mkdir -p obj/parse/expansion
+	@mkdir -p obj/execution
 	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
 
 clean :
