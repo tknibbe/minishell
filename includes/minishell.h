@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 14:11:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/07 11:29:13 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/07 18:11:11 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct t_minishell
 {
 	t_env		*env;
 	t_data		*data;
+	int			exit_code;
 }				t_ally;
 
 

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:53:44 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/07/07 11:49:07 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/08 14:15:41 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ t_ally	*minishell_init(char *envp[])
 
 void	tymon(t_ally *all, char *input)
 {
-	set_tokens(input, &all->data);
+	if (set_tokens(input, &all->data))
+		return ;
 	parse(input, &all->data);
 }
 

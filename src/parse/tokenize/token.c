@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/03 15:31:37 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/08 15:59:58 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,88 +17,12 @@ static void	init_token(t_data *data, int len);
 static void	find_squote(t_data *data, char *input);
 static void	find_dquote(t_data *data, char *input);
 static void	find_dollar(t_data *data, char *input);
-//cat -e  "hallo $variable" | ls -la | << < >> > 'hallo $variable'
-
-
-void	print_class(int	num)
-{
-	//norm error not to forget to remove
-	if (num == SQUOTE)
-		printf("single quote: ");
-	else if (num == DQUOTE)
-		printf("double quote: ");
-	else if (num == DOLLO)
-		printf("Dollarsign  : ");
-	else if (num == REDIRLEFT)
-		printf("redir left  : ");
-	else if (num == REDIRRIGHT)
-		printf("redirright  : ");
-	else if (num == APPLEFT)
-		printf("append left : ");
-	else if (num == APPRIGHT)
-		printf("append right: ");
-	else if (num == PIPESYMBOL)
-		printf("pipe        : ");
-	else if (num == EXEC)
-		printf("executable  : ");
-	else if (num == OPTION)
-		printf("option      : ");
-	else if (num == INPUT)
-		printf("input       : ");
-	else if (num == EQUALS)
-		printf("equals      : ");
-	else if (num == VARIABLE)
-		printf("variable    : ");
-	else if (num == STRING)
-		printf("string      : ");
-	else if (num == SEMICOLON)
-		printf("semicolom   : ");
-	else
-		printf("undefined %d: ", num);
-}
-
-void print_test(t_data *data, char *input)
-{
-	int	i = 0; //remove func later
-	int	num;
-
-	while (input[i])
-	{
-		while (input[i] == ' ')
-			i++;
-		num = data->token[i];
-		print_class(data->token[i]);
-		while (data->token[i] == num && input[i])
-		{
-			printf("%c", input[i]);
-			i++;
-		}
-		printf("\n");
-	}
-}
-
-void	print_tokens(t_data *data, char *input)
-{
-	int i = 0;
-	while (i < ft_strlen(input))
-	{
-		printf("[%d]", data->token[i]);
-		i++;
-	}
-	printf("\n");
-}
 
 /*sets tokens according to the ENUMs defined in the header. 
 returns 0 on succes.*/
 int	set_tokens(char *input, t_data **data)
 {
 //loops through string EVERY function. could be faster :/
-	int	i;
-
-	i = 0;
-	//printf("pre %d\n", ft_strlen(input));
-	//input = ft_strtrim(input, " ");
-	//printf("post %d\n", ft_strlen(input));
 	init_token(*data, ft_strlen(input));
 	find_squote(*data, input);
 	find_dquote(*data, input);
@@ -109,8 +33,9 @@ int	set_tokens(char *input, t_data **data)
 	find_options(*data, input);
 	find_define(*data, input);
 	set_rest_to_str(*data, input);
-	//trim_undefined(*data, input);
-	//print_test(*data, input); // test ONLY
+	if (check_syntax(*data, input))
+		return (1);
+	print_test(*data, input);
 	print_tokens(*data, input);
 	return (0);
 }
@@ -126,7 +51,8 @@ static void	find_dollar(t_data *data, char *input)
 	{
 		if (input[i] == '$' && data->token[i] != SQUOTE)
 		{
-			while (input[i] != TAB && input[i] != SPACE && input[i] != '"' && input[i])
+			while (input[i] != TAB && input[i] != SPACE \
+				&& input[i] != '"' && input[i])
 			{
 				data->token[i] = DOLLO;
 				i++;
@@ -153,10 +79,10 @@ static void	find_dquote(t_data *data, char *input)
 	{
 		if (input[i] == '"' && open == 0)
 			open = 1;
-		if (open && data->token[i] == UNDEFINED)
+		if (open && data->token[i] == BLANK)
 			data->token[i] = DQUOTE;
 		i++;
-		if (input[i] == '"' && open == 1 && data->token[i] == UNDEFINED)
+		if (input[i] == '"' && open == 1 && data->token[i] == BLANK)
 		{
 			data->token[i] = DQUOTE;
 			open = 0;
@@ -206,7 +132,7 @@ static void	init_token(t_data *data, int len)
 	i = 0;
 	while (i < len)
 	{
-		data->token[i] = UNDEFINED;
+		data->token[i] = BLANK;
 		i++;
 	}
 }

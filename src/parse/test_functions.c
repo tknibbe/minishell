@@ -35,7 +35,7 @@ void	print_class(int	num)
 	else if (num == SEMICOLON)
 		printf("semicolom   : ");
 	else
-		printf("undefined %d: ", num);
+		printf("BLANK %d: ", num);
 }
 
 void print_test(t_data *data, char *input)
