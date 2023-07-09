@@ -6,7 +6,7 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/29 16:32:24 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/02 12:52:05 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/09 11:53:07 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static void	move_pointers(char **env, int i, char **to_export, int j)
 static void	join_values(char **env, int i, char **to_export, int j)
 {
 	int		k;
-	int		l;
 	char	*tmp;
 
 	k = 0;
