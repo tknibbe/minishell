@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   list_functions.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/04 12:30:57 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/08 19:01:49 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   list_functions.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/07/04 12:30:57 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/07/09 16:26:46 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ t_exec	*ft_lstnew(void)
 	if (n1 == NULL)
 		ft_exit("Malloc error\n", errno);
 	n1->cmd = NULL;
-	n1->rd = -1;
-	n1->file = NULL;
+	n1->env = NULL;
+	n1->rdr = NULL;
 	n1->next = NULL;
 	return (n1);
 }

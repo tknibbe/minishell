@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cris_main.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 14:53:44 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/07/08 14:15:41 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   cris_main.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/07/09 16:27:31 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ int	main(int argc, char *argv[], char *envp[])
 			ft_exit("wtf!\n", 2000000);
 		if (ft_strncmp(string, "exit", 4) == 0)
 			exit(0);
-		tymon(all, string);
-		//cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
+		// tymon(all, string);
+		cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
 		history(string);
 		free(string);
 	}

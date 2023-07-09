@@ -1,33 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   token.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/29 16:08:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/09 13:12:32 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   token.h                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/06/29 16:08:40 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/07/09 16:28:59 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
 
-typedef struct s_exec	t_exec;
+// typedef struct s_exec	t_exec;
+
+// typedef struct s_exec
+// {
+// 	char	**cmd;
+// 	int		rd; // -1 : no- redirection | 0 outgoing rd | 1 ingoing | 2 ingoing && outgoing
+// 	char	*file;
+// 	t_exec	*next;
+// }			t_exec;
+
+typedef struct s_rdr
+{
+	char			*file; // file name
+	int				type; // <, >, <<, >>
+	struct t_rdr	*next;
+}					t_rdr;
 
 typedef struct s_exec
 {
-	char	**cmd;
-	int		rd; // -1 : no- redirection | 0 outgoing rd | 1 ingoing | 2 ingoing && outgoing
-	char	*file;
-	t_exec	*next;
-}			t_exec;
+	char			**cmd;
+	char			**env;
+	t_rdr			*rdr;
+	struct t_exec	*next;
+}					t_exec;
 
 typedef struct s_data
 {
 	int		*token;
 	t_exec	*list;
-}		t_data;
+}			t_data;
+
 
 # define TAB '	'
 # define SPACE ' '

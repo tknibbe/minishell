@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 14:11:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/07 18:11:11 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   minishell.h                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/07/03 14:11:50 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/07/09 16:12:48 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,12 @@
 
 # include <env.h>
 
-typedef struct t_minishell
+typedef struct s_minishell
 {
 	t_env		*env;
 	t_data		*data;
 	int			exit_code;
 }				t_ally;
-
 
 int		history_management(const char *s);
 char	**parse_and_execute(char *input);
