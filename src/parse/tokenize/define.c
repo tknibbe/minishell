@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   define.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/30 14:04:57 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/08 15:55:14 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   define.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/06/30 14:04:57 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/07/09 14:28:43 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	valid_var_name(t_data *data, char *input, int i)
 
 int	valid_var_input(t_data *data, char *input, int i)
 {
+	data = NULL;
 	if (whitespace(input[i + 1]))
 		return (0);
 	return (1);

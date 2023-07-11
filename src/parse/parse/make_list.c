@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/09 13:21:25 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/09 15:16:42 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,13 @@ void	put_args_in_list(t_data **data, char **args)
 		node->cmd = malloc(sizeof(char *) * cmds + 1);
 		put_str_in_node(node, args, cmds, &k);
 		ft_lstadd_back(&(*data)->list, node); // all is in the node. need to put it in data->list
-	int	f = 0;
-	while (node->cmd[f])
-	{
-		printf("node->cmd[%d] = %s\n", f, node->cmd[f]);
-		f++;
-	}
-		i++;
+	//int	f = 0;
+	//while (node->cmd[f])
+	//{
+	//	printf("node->cmd[%d] = %s\n", f, node->cmd[f]);
+	//	f++;
+	//}
+	//	i++;
 	}
 }
 
@@ -134,7 +134,7 @@ void	parse(char *input, t_data **data)
 			i++;
 		}
 		i = 0;
-		printf("\n\n\n");
+		printf("\n");
 		(*data)->list = (*data)->list->next;
 	}
 }
