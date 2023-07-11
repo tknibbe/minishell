@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:08:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/11 14:36:00 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/11 18:17:20 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,22 @@
 // 	t_exec	*next;
 // }			t_exec;
 
+typedef struct s_exec	t_exec;
+typedef struct s_rdr	t_rdr;
+
 typedef struct s_rdr
 {
 	char			*file; // file name
 	int				type; // <, >, <<, >>
-	struct t_rdr	*next;
+	t_rdr			*next;
 }					t_rdr;
 
 typedef struct s_exec
 {
 	char			**cmd;
-	char			**env;
 	t_rdr			*rdr;
-	struct t_exec	*next;
+	char			**env;
+	t_exec			*next;
 }					t_exec;
 
 typedef struct s_data
@@ -102,12 +105,18 @@ int		check_syntax(t_data *data, char *input);
 void	print_class(int	num);
 void 	print_test(t_data *data, char *input);
 void	print_tokens(t_data *data, char *input);
+void print_whole_list(t_data *data, char *input);
 
 //LIST_FUNCTIONS.C
-void	ft_lstadd_back(t_exec **lst, t_exec *new);
-t_exec	*ft_lstnew(void);
+void	exec_lstadd_back(t_exec **lst, t_exec *new);
+t_exec	*exec_lstnew(void);
+
+void	rdr_lstadd_back(t_rdr **lst, t_rdr *new);
+t_rdr	*rdr_lstnew(void);
 
 //SPLIT_ARGS.C
 char	**split_args(char *input, t_data *data);
 
+//SET_RDRS.C
+void	set_rdrs(t_data **data, char *input, int nodes);
 #endif
