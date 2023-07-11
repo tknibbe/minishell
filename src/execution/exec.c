@@ -43,10 +43,10 @@ t_rdr	*get_some_rdr(void)
 	t_rdr *head;
 
 	head = rdr_new("input1", 1);
-	// rdr_addback(&head, rdr_new("output", 2));
-	// rdr_addback(&head, rdr_new("output1", 2));
-	// rdr_addback(&head, rdr_new("output2", 2));
-	// rdr_addback(&head, rdr_new("output3", 2));
+	rdr_addback(&head, rdr_new("output", 2));
+	rdr_addback(&head, rdr_new("output1", 2));
+	rdr_addback(&head, rdr_new("output2", 2));
+	rdr_addback(&head, rdr_new("output3", 2));
 	return (head);
 }
 
@@ -62,7 +62,7 @@ void	open_file_and_dup(char *file, int flag, int to_dup)
 
 	if (flag == (O_WRONLY | O_CREAT | O_TRUNC))
 		fd = open(file, flag, 0644);
-	else
+	else if (flag == (O_RDONLY))
 		fd = open(file, flag);
 	if (fd < 0)
 	{
