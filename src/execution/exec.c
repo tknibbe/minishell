@@ -42,11 +42,12 @@ t_rdr	*get_some_rdr(void)
 {
 	t_rdr *head;
 
-	head = rdr_new("input1", 1);
+	head = rdr_new("program.c", 1);
 	rdr_addback(&head, rdr_new("output", 2));
 	rdr_addback(&head, rdr_new("output1", 2));
 	rdr_addback(&head, rdr_new("output2", 2));
 	rdr_addback(&head, rdr_new("output3", 2));
+	rdr_addback(&head, rdr_new("Makefile", 1));
 	return (head);
 }
 
@@ -83,12 +84,12 @@ void	redirection(t_rdr *r)
 	{
 		if (r->type == 1) // <
 		{
-			printf("type = <\n");
+			//printf("type = <\n");
 			open_file_and_dup(r->file, O_RDONLY, STDIN_FILENO);
 		}
 		else if (r->type == 2) // >
 		{
-			printf("type = >\n");
+			//printf("type = >\n");
 			open_file_and_dup(r->file, O_WRONLY | O_CREAT | O_TRUNC, STDOUT_FILENO);
 		}
 		r = r->next;
@@ -107,7 +108,6 @@ void	execute_command(t_exec *t)
 
 void	test_exec(char **env)
 {
-	
 	pid_t pid = fork();
 	if (pid == 0)
 	{
