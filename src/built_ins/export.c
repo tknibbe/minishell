@@ -6,7 +6,7 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/29 16:32:24 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/09 11:53:07 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/11 16:09:39 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	reassign_export_items(char **env, char **to_export)
 		{
 			if (!ft_strncmp(env[j], to_export[i], cmp))
 			{
+				printf("env j: %s\nto_export i\ncmp: %d\n", env[j], to_export[i], cmp);
 				if (plus_equals)
 					join_values(env, j, to_export, i);
 				move_pointers(env, j, to_export, i--);

@@ -6,7 +6,7 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/28 12:34:26 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/09 11:50:22 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/11 16:09:57 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,42 @@ t_env	*env_init(char *envp[])
 	return (env);
 }
 
+// void	validate_name(char **to_export)
+// {
+// 	int	end_i;
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	end_i = 0;
+// 	while (to_export[end_i])
+// 		end_i++;
+// 	while (to_export[i])
+// 	{
+// 		j = 0;
+// 		if (to_export[i][j] >= '0' && to_export[i][j] <= '9')
+// 		{
+// 			move
+// 			continue ;
+// 		}
+// 		while (to_export[i][j])
+// 		{
+// 			if (to_export[i][j] >= 'a' && to_export[i][j] <= 'z' ||\
+// 				to_export[i][j] >= 'A' && to_export[i][j] <= 'Z' ||\
+// 				to_export[i][j] >= '0' && to_export[i][j] <= '9' ||\
+// 				to_export[i][j] == '_')
+// 				j++;
+// 			else
+// 			{
+// 				continue ;
+// 			}
+// 		}
+// 	}
+// }
+
 void	export(t_env *env, char **to_export)
 {
+	// validate_name(to_export);
 	reassign_export_items(env->env, to_export);
 	add_items(env, to_export);
 }
