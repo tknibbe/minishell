@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:08:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/11 18:17:20 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/12 14:20:13 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,6 @@ void	parse(char *input, t_data **data);
 //SYNTAX.C
 int		check_syntax(t_data *data, char *input);
 
-//TEST_FUNCTIONS.C
-void	print_class(int	num);
-void 	print_test(t_data *data, char *input);
-void	print_tokens(t_data *data, char *input);
-void print_whole_list(t_data *data, char *input);
-
 //LIST_FUNCTIONS.C
 void	exec_lstadd_back(t_exec **lst, t_exec *new);
 t_exec	*exec_lstnew(void);
@@ -119,4 +113,13 @@ char	**split_args(char *input, t_data *data);
 
 //SET_RDRS.C
 void	set_rdrs(t_data **data, char *input, int nodes);
+
+//SET_CMDS.C
+void	set_cmds(t_data **data, char *input, int node_amount);
+
+//TEST_FUNCTIONS.C
+void	print_class(int	num);
+void 	print_test(t_data *data, char *input);
+void	print_tokens(t_data *data, char *input);
+void 	print_whole_list(t_data *data, char *input);
 #endif

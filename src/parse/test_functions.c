@@ -6,18 +6,19 @@ void print_whole_list(t_data *data, char *input)
 {
 	int	i = 0;
 	int	node_amnt = 0;
-	t_exec *list =  data->list;
 	while (data->list)
 	{
+		t_exec *list =  data->list;
 		t_rdr	*rdr = data->list->rdr;
 		printf("\nnode %d\n", node_amnt);
 		printf("[\n");
 		printf("CMD: ");
-		//while (list->cmd[i])
-		//{
-		//	//printf("%s, ", list->cmd[i]);
-		//	i++;
-		//}
+		while (list->cmd[i])
+		{
+			printf("%s, ", list->cmd[i]);
+			i++;
+		}
+		i = 0;
 		printf("\n");
 		printf("RDR: ");
 		while (rdr)

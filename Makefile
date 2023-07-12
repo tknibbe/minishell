@@ -6,7 +6,7 @@
 #    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 15:11:29 by tknibbe           #+#    #+#              #
-#    Updated: 2023/07/11 15:59:01 by tknibbe          ###   ########.fr        #
+#    Updated: 2023/07/12 14:17:32 by tknibbe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC			=	cris_main.c \
 				parse/parse/list_functions.c \
 				parse/parse/split_args.c \
 				parse/parse/set_rdrs.c \
+				parse/parse/set_cmds.c \
 				parse/test_functions.c \
 				exit_funcs.c \
 				# parse/tokenize/make_list.c \
