@@ -1,141 +1,91 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   export.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/29 16:32:24 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/11 16:30:03 by cvan-sch      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <env.h>
 #include <minishell.h>
 
-static int	to_compare(char *s, int *pe)
+static int	cmp_until_equals(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s1[i] == s2[i])
+		i++;
+	if (!s1[i] && s2[i] == '=')
+		return (1);
+	if (!s1[i] && s2[i] && s2[i] == '+' && s2[i + 1] == '=')
+		return (2);
+	return (0);
+}
+
+static void	replace_value(t_env *env, char **s, int i)
+{
+	int	j;
+
+	j = 0;
+	while (s[i][j] != '=')
+		j++;
+	j++;
+	free(env->value);
+	env->value = ft_strdup(&s[i][j]);
+	if (!env->value)
+		ft_exit("Error: malloc failure\n", errno);
+	move_pointer(s, i);
+}
+
+static void	join_value(t_env *env, char **s, int i)
+{
+	int		j;
+	char	*result;
+
+	j = 0;
+	while (s[i][j] != '=')
+		j++;
+	result = ft_strjoin(env->value, &s[i][j + 1]);
+	if (!result)
+		ft_exit("Error: malloc failure\n", errno);
+	free(env->value);
+	env->value = result;
+	move_pointer(s, i);
+}
+
+void	filter_valid_export_item(char **s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (check_valid_name(s[i]))
+			move_pointer(s, i);
+		else
+			i++;
+	}
+}
+
+void	export(t_env *env, char **to_export)
 {
 	int	i;
 	int	j;
 
-	i = 0;
-	while (s[i] && s[i] != '=')
-		i++;
-	if (i && s[i] == '=' && s[i - 1] == '+')
+	filter_valid_export_item(to_export);
+	while (env)
 	{
-		j = i;
-		while (s[i])
+		i = 0;
+		while (to_export[i])
 		{
-			s[i - 1] = s[i];
-			i++;
-		}
-		s[i - 1] = '\0';
-		*pe = 1;
-		return (j);
-	}
-	if (!s[i])
-		return (i);
-	return (i + 1);
-}
-
-void	move_pointers(char **env, int i, char **to_export, int j)
-{
-	if (env)
-	{	
-		free(env[i]);
-		env[i] = to_export[j];
-		if (!to_export[j])
-			return ;
-	}
-	while (to_export[j + 1])
-	{
-		to_export[j] = to_export[j + 1];
-		j++;
-	}
-	to_export[j] = NULL;
-}
-
-static void	join_values(char **env, int i, char **to_export, int j)
-{
-	int		k;
-	char	*tmp;
-
-	k = 0;
-	while (to_export[j][k] && to_export[j][k] != '=')
-		k++;
-	tmp = ft_strjoin(env[i], &to_export[j][k + 1]);
-	free(to_export[j]);
-	to_export[j] = tmp;
-}
-
-void	release_pointer(char **x, int i)
-{
-	free(x[i]);
-	while (x[i + 1])
-	{
-		x[i] = x[i + 1];
-		i++;
-	}
-	x[i] = NULL;
-}
-
-void	reassign_export_items(char **env, char **to_export)
-{
-	int		i;
-	int		j;
-	int		cmp;
-	int		plus_equals;
-
-	i = 0;
-	while (to_export[i])
-	{
-		if (!ft_strchr(to_export[i], '='))
-		{
-			release_pointer(to_export, i);
-			continue ;
-		}
-		j = 0;
-		plus_equals = 0;
-		cmp = to_compare(to_export[i], &plus_equals);
-		while (env[j])
-		{
-			if (!ft_strncmp(env[j], to_export[i], cmp))
+			j = cmp_until_equals(env->key, to_export[i]);
+			if (!j)
 			{
-				if (plus_equals)
-					join_values(env, j, to_export, i);
-				move_pointers(env, j, to_export, i--);
-				break ;
+				i++;
+				continue ;
 			}
-			j++;
+			else if (j == 1)
+				replace_value(env, to_export, i);
+			else
+				join_value(env, to_export, i);
+			break ;
 		}
-		i++;
+		if (!env->next)
+			break ;
+		env = env->next;
 	}
-}
-
-void	add_items(t_env *env, char **to_export)
-{
-	char	**new_env;
-	int		i;
-	int		j;
-
-	new_env = malloc((env->var_count + count(to_export) + 1) * sizeof(char *));
-	if (!new_env)
-		ft_exit("Error: allocation failed\n", errno);
-	i = 0;
-	while (env->env[i])
-	{
-		new_env[i] = env->env[i];
-		i++;
-	}
-	j = 0;
-	while (to_export[j])
-	{
-		new_env[i] = to_export[j];
-		i++;
-		j++;
-	}
-	new_env[i] = NULL;
-	free(to_export);
-	free(env->env);
-	env->env = new_env;
+	add_the_rest(env, to_export);
 }

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 14:11:50 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/09 16:12:48 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/12 18:39:42 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ void	ft_exit(char *string, int errnum);
 void	print_double_array(char **x);
 void	free_dp(char **dp);
 int		count(char **c);
+
+t_env	*env_init(char **env);
 
 #endif

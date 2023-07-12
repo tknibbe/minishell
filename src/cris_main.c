@@ -28,12 +28,19 @@ void	tymon(t_ally *all, char *input)
 
 void	cris(t_ally *all, char *input)
 {
-	if (!ft_strncmp("export", input, 6))
-		export(all->env, ft_split(&input[6], SPACE));
-	else if (!ft_strncmp("env", input, 7))
-		env(all->env->env);
-	else if (!ft_strncmp("unset", input, 5))
-		unset(all->env, ft_split(&input[5], SPACE));
+	if (!ft_strncmp(input, "env", 4))
+		env(all->env);
+	if (!ft_strncmp(input, "unset ", 6))
+		unset(&all->env, ft_split(&input[6], ' '));
+	if (!ft_strncmp(input, "export ", 6))
+		export(all->env, ft_split(&input[7], ' '));
+	//printf("%s\n%s\n", yo->key, yo->value);
+	// if (!ft_strncmp("export", input, 6))
+	// 	export(all->env, ft_split(&input[6], SPACE));
+	// else if (!ft_strncmp("env", input, 7))
+	// 	env(all->env->env);
+	// else if (!ft_strncmp("unset", input, 5))
+	// 	unset(all->env, ft_split(&input[5], SPACE));
 	// printf("eroor, doe beter code ofzo\n");
 }
 
@@ -57,8 +64,8 @@ int	main(int argc, char *argv[], char *envp[])
 			ft_exit("wtf!\n", 2000000);
 		if (ft_strncmp(string, "exit", 4) == 0)
 			exit(0);
-		 tymon(all, string);
-		//cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
+		//  tymon(all, string);
+		cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
 		history(string);
 		free(string);
 	}

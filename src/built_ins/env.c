@@ -1,93 +1,86 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/28 12:34:26 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/11 16:51:01 by cvan-sch      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include <minishell.h>
 #include <env.h>
+#include <minishell.h>
 
-void	env_dp(t_env *t, char *envp[])
+t_env	*env_new(char *s)
 {
+	t_env	*new;
 	int		i;
-	char	**env;
 
-	env = malloc((count(envp) + 1) * sizeof(char *));
-	if (!env)
-		return ;
 	i = 0;
-	while (envp[i])
-	{
-		env[i] = ft_strdup(envp[i]);
-		if (!env[i])
-		{
-			free_dp(env);
-			return ;
-		}
+	new = malloc(sizeof(t_env));
+	if (!new)
+		ft_exit("Error: malloc failure\n", errno);
+	while (s[i] && s[i] != '=')
 		i++;
-	}
-	env[i] = NULL;
-	t->var_count = i;
-	t->env = env;
+	new->key = ft_substr(s, 0, i);
+	if (!new->key)
+		ft_exit("Error: malloc failure\n", errno);
+	new->value = ft_strdup(s + i + 1);
+	if (!new->value)
+		ft_exit("Error: malloc failure\n", errno);
+	new->next = NULL;
+	return (new);
 }
 
-t_env	*env_init(char *envp[])
+void	env_addback(t_env **head, t_env *new)
 {
-	t_env	*env;
+	t_env	*tmp;
 
-	env = malloc(sizeof(t_env));
-	if (!env)
+	tmp = *head;
+	if (!(*head))
+		*head = new;
+	else
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+}
+
+unsigned int	check_valid_name(char *s)
+{
+	unsigned int	i;
+
+	i = 0;
+	if (ft_isdigit(s[0]) || s[i] == '=')
+		return (1);
+	while (s[i])
+	{
+		if (ft_isalnum(s[i]) || s[i] == '_')
+		{
+			i++;
+			continue ;
+		}
+		if (s[i] == '=' || (s[i] == '+' && s[i + 1] == '='))
+			return (0);
+		break ;
+	}
+	return (1);
+}
+
+void	env(t_env *env)
+{
+	while (env)
+	{
+		printf("%s=%s\n", env->key, env->value);
+		env = env->next;
+	}
+}
+
+t_env	*env_init(char **env)
+{
+	t_env	*head;
+	int		i;
+
+	if (!env[0])
 		return (NULL);
-	env_dp(env, envp);
-	return (env);
-}
-
-void	unvalid_identifier(char **to_export, int i)
-{
-	write(2, "minishell: export: `", 21);
-	write(2, to_export[i], ft_strlen(to_export[i]));
-	write(2, "': not a valid identifier\n", 27);
-	free(to_export[i]);
-	move_pointers(NULL, 0, to_export, i);
-}
-
-void	validate_name(char **to_export)
-{
-	int	i;
-	int	j;
-
 	i = 0;
-	while (to_export[i])
+	head = NULL;
+	while (env[i])
 	{
-		j = 0;
-		while (to_export[i][j])
-		{
-			if (!ft_isalnum(to_export[i][j]) || to_export[i][j] == '_')
-				break ;
-			j++;
-		}
-		if (ft_isdigit(to_export[i][0]) ||\
-			!ft_isalnum(to_export[i][j]) || to_export[i][j] == '_')
-			unvalid_identifier(to_export, --i);
+		if (!check_valid_name(env[i]))
+			env_addback(&head, env_new(env[i]));
 		i++;
 	}
-}
-
-void	export(t_env *env, char **to_export)
-{
-	validate_name(to_export);
-	reassign_export_items(env->env, to_export);
-	add_items(env, to_export);
-}
-
-void	env(char **s)
-{
-	while (*s)
-		printf("%s\n", *(s++));
+	return (head);
 }
