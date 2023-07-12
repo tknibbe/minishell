@@ -1,6 +1,37 @@
 
 #include <minishell.h>
 
+
+void print_whole_list(t_data *data, char *input)
+{
+	int	i = 0;
+	int	node_amnt = 0;
+	while (data->list)
+	{
+		t_exec *list =  data->list;
+		t_rdr	*rdr = data->list->rdr;
+		printf("\nnode %d\n", node_amnt);
+		printf("[\n");
+		printf("CMD: ");
+		while (list->cmd[i])
+		{
+			printf("%s, ", list->cmd[i]);
+			i++;
+		}
+		i = 0;
+		printf("\n");
+		printf("RDR: ");
+		while (rdr)
+		{
+			printf("{%s} [%d], ", rdr->file, rdr->type);
+			rdr = rdr->next;
+		}
+		node_amnt++;
+		printf("\n]\n\n");
+		data->list = data->list->next;
+	}
+}
+
 void	print_class(int	num)
 {
 	//norm error not to forget to remove

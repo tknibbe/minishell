@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/08 15:55:15 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/11 16:18:53 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_syntax_error(char *str, char c)
 	write(2, "\n", 1);
 }
 
-int	check_syntax(t_data *data, char *input)
+int	check_syntax(t_data *data, char *input) // is wronk. can do < >
 {
 	int	previous;
 	int	i;

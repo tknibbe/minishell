@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/08 15:59:58 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/11 18:25:41 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	set_tokens(char *input, t_data **data)
 	find_options(*data, input);
 	find_define(*data, input);
 	set_rest_to_str(*data, input);
-	if (check_syntax(*data, input))
-		return (1);
-	print_test(*data, input);
-	print_tokens(*data, input);
+	//if (check_syntax(*data, input)) 
+		//return (1);
+	//print_test(*data, input);
+	//print_tokens(*data, input);
 	return (0);
 }
 

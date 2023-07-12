@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   cris_main.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/11 16:17:49 by cvan-sch      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <minishell.h>
 #include <env.h>
 #include <built_ins.h>
@@ -27,6 +15,7 @@ t_ally	*minishell_init(char *envp[])
 		ft_exit("Malloc error\n", errno);
 	all->env = env_init(envp);
 	all->data = malloc(sizeof(t_data));
+	all->data->list = NULL;
 	return (all);
 }
 
@@ -68,8 +57,8 @@ int	main(int argc, char *argv[], char *envp[])
 			ft_exit("wtf!\n", 2000000);
 		if (ft_strncmp(string, "exit", 4) == 0)
 			exit(0);
-		// tymon(all, string);
-		cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
+		 tymon(all, string);
+		//cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
 		history(string);
 		free(string);
 	}
