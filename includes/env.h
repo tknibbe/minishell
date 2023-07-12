@@ -6,7 +6,7 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/29 16:01:53 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/06 17:03:39 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/11 16:30:39 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ void	print_double_array(char **x);
 void	reassign_export_items(char **env, char **to_export);
 void	add_items(t_env *env, char **to_export);
 char	*get_env(char *key, char **env);
+
+void	move_pointers(char **env, int i, char **to_export, int j);
 
 #endif

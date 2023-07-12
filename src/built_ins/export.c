@@ -6,7 +6,7 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/29 16:32:24 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/11 16:09:39 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/11 16:30:03 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,15 @@ static int	to_compare(char *s, int *pe)
 	return (i + 1);
 }
 
-static void	move_pointers(char **env, int i, char **to_export, int j)
+void	move_pointers(char **env, int i, char **to_export, int j)
 {
-	free(env[i]);
-	env[i] = to_export[j];
-	if (!to_export[j])
-		return ;
+	if (env)
+	{	
+		free(env[i]);
+		env[i] = to_export[j];
+		if (!to_export[j])
+			return ;
+	}
 	while (to_export[j + 1])
 	{
 		to_export[j] = to_export[j + 1];
@@ -98,7 +101,6 @@ void	reassign_export_items(char **env, char **to_export)
 		{
 			if (!ft_strncmp(env[j], to_export[i], cmp))
 			{
-				printf("env j: %s\nto_export i\ncmp: %d\n", env[j], to_export[i], cmp);
 				if (plus_equals)
 					join_values(env, j, to_export, i);
 				move_pointers(env, j, to_export, i--);

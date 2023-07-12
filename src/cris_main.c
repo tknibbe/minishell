@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/09 16:27:31 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/11 16:17:49 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,13 @@ void	tymon(t_ally *all, char *input)
 
 void	cris(t_ally *all, char *input)
 {
-	printf("eroor, doe beter code ofzo\n");
+	if (!ft_strncmp("export", input, 6))
+		export(all->env, ft_split(&input[6], SPACE));
+	else if (!ft_strncmp("env", input, 7))
+		env(all->env->env);
+	else if (!ft_strncmp("unset", input, 5))
+		unset(all->env, ft_split(&input[5], SPACE));
+	// printf("eroor, doe beter code ofzo\n");
 }
 
 int	main(int argc, char *argv[], char *envp[])
