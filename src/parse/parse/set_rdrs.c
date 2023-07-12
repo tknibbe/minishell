@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_rdrs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 15:58:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/12 15:45:03 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/12 21:49:58 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_rdr	*make_rdr_node(char *input, int	*j, int	*token)
 		i++;
 	}
 	node->file = ft_substr(input, start, i);
+	node->file = trim_quotes(node->file);
 	return (node);
 }
 

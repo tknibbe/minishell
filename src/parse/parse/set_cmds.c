@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_cmds.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:13:45 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/12 15:39:34 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/12 21:50:29 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char	**get_cmd(t_data *data, char *input, int *j)
 	while (i < len)
 	{
 		ret_str[i] = get_substr(data, input, j);
+		ret_str[i] = trim_quotes(ret_str[i]);
 		i++;
 	}
 	ret_str[len] = NULL;
@@ -101,18 +102,15 @@ int	count_cmds(t_data *data, char *input, int *j)
 	return (len);
 }
 
-	//while (data->token[i] != PIPESYMBOL)
-	//{
-	//	if (data->token[i] != BLANK)
-	//		len ++;
-	//	i++;
-	//}
-	//ret_str = malloc(sizeof(char) * len + 1);
-	//if (!ret_str)
-	//	ft_exit("Malloc error\n", errno);
-	//i = 0;
-	//while (data->token[*j] != PIPESYMBOL)
-	//{
-	//	if (data->token[*j] != BLANK)
-			
-	//}
+char *trim_quotes(char *str)
+{
+	char	quote[2];
+
+	quote[0] = 34;
+	quote[1] = '\0';
+	if (!ft_strncmp(str, "'", 1))
+		return (ft_strtrim(str, "'"));
+	if (!ft_strncmp(str, quote, 1))
+		return (ft_strtrim(str, quote));
+	return (str);
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:08:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/12 14:20:13 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/12 21:42:03 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	set_rdrs(t_data **data, char *input, int nodes);
 
 //SET_CMDS.C
 void	set_cmds(t_data **data, char *input, int node_amount);
-
+char 	*trim_quotes(char *str);
 //TEST_FUNCTIONS.C
 void	print_class(int	num);
 void 	print_test(t_data *data, char *input);
