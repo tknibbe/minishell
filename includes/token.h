@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:08:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/13 14:41:53 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/13 14:55:13 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	set_rdrs(t_data **data, char *input, int nodes);
 
 //SET_CMDS.C
 void	set_cmds(t_data **data, char *input, int node_amount);
+char 	*trim_quotes(char *str);
 
 //TEST_FUNCTIONS.C
 void	print_class(int	num);
