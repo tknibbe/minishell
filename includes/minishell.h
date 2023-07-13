@@ -1,18 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/03 14:11:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/13 14:35:55 by tknibbe          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
 
 # include <stdio.h> //!
 # include <stdlib.h>
@@ -36,7 +23,7 @@ typedef struct s_data	t_data;
 
 typedef struct s_minishell
 {
-	t_env		*env;
+	t_env_info	*env;
 	t_data		*data;
 	int			exit_code;
 }				t_ally;
@@ -51,5 +38,7 @@ void	ft_exit(char *string, int errnum);
 void	print_double_array(char **x);
 void	free_dp(char **dp);
 int		count(char **c);
+
+t_env_info	*env_init(char **env);
 
 #endif

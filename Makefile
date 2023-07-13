@@ -1,16 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/14 15:11:29 by tknibbe           #+#    #+#              #
-#    Updated: 2023/07/13 14:35:18 by tknibbe          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-
 INCLUDE		=	-I includes -I lib/includes
 CFLAGS		=	#-Wall -Werror -Wextra
 READLINE	=	-lreadline
@@ -20,6 +7,7 @@ LIBFT		=	lib/libft.a
 SRC			=	cris_main.c \
 				exit_funcs.c \
 				built_ins/env.c \
+				built_ins/env_utils.c \
 				built_ins/unset.c \
 				built_ins/export.c \
 				built_ins/cd.c \

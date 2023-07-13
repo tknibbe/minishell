@@ -1,61 +1,93 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/28 12:34:26 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/09 11:50:22 by cvan-sch      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include <minishell.h>
 #include <env.h>
+#include <minishell.h>
 
-void	env_dp(t_env *t, char *envp[])
+t_env	*env_new(char *s)
 {
+	t_env	*new;
 	int		i;
-	char	**env;
 
-	env = malloc((count(envp) + 1) * sizeof(char *));
-	if (!env)
-		return ;
 	i = 0;
-	while (envp[i])
+	new = malloc(sizeof(t_env));
+	if (!new)
+		ft_exit("Error: malloc failure\n", errno);
+	while (s[i] && s[i] != '=')
+		i++;
+	new->key = ft_substr(s, 0, i);
+	if (!new->key)
+		ft_exit("Error: malloc failure\n", errno);
+	new->value = ft_strdup(s + i + 1);
+	if (!new->value)
+		ft_exit("Error: malloc failure\n", errno);
+	new->joined_value = ft_envjoin(new->key, new->value);
+	new->next = NULL;
+	return (new);
+}
+
+void	env_addback(t_env **head, t_env *new)
+{
+	t_env	*tmp;
+
+	tmp = *head;
+	if (!(*head))
+		*head = new;
+	else
 	{
-		env[i] = ft_strdup(envp[i]);
-		if (!env[i])
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+}
+
+unsigned int	check_valid_name(char *s)
+{
+	unsigned int	i;
+
+	i = 0;
+	if (ft_isdigit(s[0]) || s[i] == '=')
+		return (1);
+	while (s[i])
+	{
+		if (ft_isalnum(s[i]) || s[i] == '_')
 		{
-			free_dp(env);
-			return ;
+			i++;
+			continue ;
 		}
+		if (s[i] == '=' || (s[i] == '+' && s[i + 1] == '='))
+			return (0);
+		break ;
+	}
+	return (1);
+}
+
+void	env(t_env *env)
+{
+	while (env)
+	{
+		printf("%s=%s\n", env->key, env->value);
+		env = env->next;
+	}
+}
+
+t_env_info	*env_init(char **env)
+{
+	t_env		*head;
+	t_env_info	*info;
+	int		i;
+
+	info = malloc(sizeof(t_env_info));
+	if (!info)
+		ft_exit("Error: malloc failure\n", errno);
+	i = 0;
+	head = NULL;
+	while (env[i])
+	{
+		if (!check_valid_name(env[i]))
+			env_addback(&head, env_new(env[i]));
 		i++;
 	}
-	env[i] = NULL;
-	t->var_count = i;
-	t->env = env;
-}
-
-t_env	*env_init(char *envp[])
-{
-	t_env	*env;
-
-	env = malloc(sizeof(t_env));
-	if (!env)
-		return (NULL);
-	env_dp(env, envp);
-	return (env);
-}
-
-void	export(t_env *env, char **to_export)
-{
-	reassign_export_items(env->env, to_export);
-	add_items(env, to_export);
-}
-
-void	env(char **s)
-{
-	while (*s)
-		printf("%s\n", *(s++));
+	info->count = i;
+	info->has_changed = 1;
+	info->head = head;
+	info->env = NULL;
+	return (info);
 }

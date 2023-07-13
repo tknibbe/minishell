@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cris_main.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 14:53:44 by cvan-sch          #+#    #+#             */
-/*   Updated: 2023/07/13 14:28:36 by tknibbe          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <minishell.h>
 #include <env.h>
 #include <built_ins.h>
@@ -38,7 +26,12 @@ void	tymon(t_ally *all, char *input)
 
 void	cris(t_ally *all, char *input)
 {
-	printf("eroor, doe beter code ofzo\n");
+	if (!ft_strncmp(input, "env", 4))
+		env(all->env->head);
+	if (!ft_strncmp(input, "unset ", 6))
+		unset(all->env, ft_split(&input[6], ' '));
+	if (!ft_strncmp(input, "export ", 6))
+		export(all->env, all->env->head, ft_split(&input[7], ' '));
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -61,8 +54,8 @@ int	main(int argc, char *argv[], char *envp[])
 			ft_exit("wtf!\n", 2000000);
 		if (ft_strncmp(string, "exit", 4) == 0)
 			exit(0);
-		 tymon(all, string);
-		//cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
+		//  tymon(all, string);
+		cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
 		history(string);
 		free(string);
 	}
