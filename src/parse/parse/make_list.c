@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/12 15:39:43 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/13 14:36:54 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,4 @@ void	parse(char *input, t_data **data)
 	node_amount = nodes_needed(args); // if not using split args anywhere else, make this with using input
 	set_rdrs(data, input, node_amount);
 	set_cmds(data, input, node_amount);
-
-	//test
-	print_whole_list(*data, input);
-	//print_tokens(*data, input);
 }

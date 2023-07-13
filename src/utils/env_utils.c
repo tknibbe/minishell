@@ -1,6 +1,6 @@
 #include <minishell.h>
 
-char *get_env(char *key, char **env)
+char	*get_env(char *key, char **env)
 {
 	char	*mod_key;
 	int		len;
