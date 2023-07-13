@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:08:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/12 14:20:13 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/13 14:35:02 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,11 @@
 #ifndef TOKEN_H
 # define TOKEN_H
 
-// typedef struct s_exec	t_exec;
+# include <minishell.h>
 
-// typedef struct s_exec
-// {
-// 	char	**cmd;
-// 	int		rd; // -1 : no- redirection | 0 outgoing rd | 1 ingoing | 2 ingoing && outgoing
-// 	char	*file;
-// 	t_exec	*next;
-// }			t_exec;
-
-typedef struct s_exec	t_exec;
-typedef struct s_rdr	t_rdr;
+typedef struct s_exec		t_exec;
+typedef struct s_rdr		t_rdr;
+typedef struct s_minishell	t_ally;
 
 typedef struct s_rdr
 {
@@ -77,6 +70,9 @@ enum	e_token
 	STRING,
 	SEMICOLON,
 };
+
+//PARSE.C
+void	parse_input(char *input, t_ally *all);
 
 //TOKEN.C
 int		set_tokens(char *input, t_data **data);

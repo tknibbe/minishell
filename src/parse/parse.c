@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion.c                                        :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/08 15:52:46 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/13 11:59:00 by tknibbe          ###   ########.fr       */
+/*   Created: 2023/07/13 14:26:34 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/07/13 14:37:41 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	expand(t_data *data, char *input)
+void	parse_input(char *input, t_ally *all)
 {
-	// while instr($)
-	//check if $ is instr and token == DOLLO
-	// take substr of pre dollo and post dollo
-	// free input
-	// get length of $string from env
-	// fill in dollo string
-	// strlcat pre dollo && dollo &&  post dollo
+	if (set_tokens(input, &all->data))
+		return ;
+	parse(input, &all->data);
+	//print_test(*data, input);
+	//print_tokens(*data, input);
+	//print_whole_list(all->data, input);
 }

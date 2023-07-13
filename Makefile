@@ -6,7 +6,7 @@
 #    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/14 15:11:29 by tknibbe           #+#    #+#              #
-#    Updated: 2023/07/12 14:17:32 by tknibbe          ###   ########.fr        #
+#    Updated: 2023/07/13 14:35:18 by tknibbe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ OBJ_F		=	$(SRC:%.c=obj/%.o)
 MINISHELL	=	minishell
 LIBFT		=	lib/libft.a
 SRC			=	cris_main.c \
-				parse_and_exec.c \
 				exit_funcs.c \
 				built_ins/env.c \
 				built_ins/unset.c \
@@ -26,6 +25,7 @@ SRC			=	cris_main.c \
 				built_ins/cd.c \
 				utils/double_array_utils.c \
 				utils/env_utils.c \
+				parse/parse.c \
 				parse/tokenize/token.c \
 				parse/tokenize/token_funcs.c \
 				parse/tokenize/token_funcs2.c \
