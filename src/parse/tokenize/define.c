@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/30 14:04:57 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/09 14:28:43 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/13 20:34:12 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	find_define(t_data *data, char *input)
 	i = 0;
 	while (input[i])
 	{
+		/*als input[0] = '=' gaat token dan segfaulten?*/
 		if (input[i] == '=' && data->token[i - 1] != SQUOTE \
 			&& data->token[i - 1] != DQUOTE)
 		{

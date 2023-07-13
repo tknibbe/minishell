@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   cris_main.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/14 14:53:44 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/09 17:45:06 by cvan-sch      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <minishell.h>
-#include <env.h>
 #include <built_ins.h>
+#include <exec.h>
 
 t_ally	*minishell_init(char *envp[])
 {
@@ -22,26 +10,34 @@ t_ally	*minishell_init(char *envp[])
 
 	all = malloc(sizeof(t_ally));
 	if (!all)
-		ft_exit("Error: allocation failed\n", errno);
+		ft_exit("Malloc error\n", errno);
 	if (!all->data)
 		ft_exit("Malloc error\n", errno);
 	all->env = env_init(envp);
 	all->data = malloc(sizeof(t_data));
+	all->data->list = NULL;
 	return (all);
 }
 
 void	tymon(t_ally *all, char *input)
 {
-	if (set_tokens(input, &all->data))
-		return ;
-	parse(input, &all->data);
+	parse_input(input, all);
 }
 
 void	cris(t_ally *all, char *input)
 {
-	if (!ft_strncmp("kaas", input, 5))
-		test_exec(all->env->env);
-	//printf("eroor, doe beter code ofzo\n");
+	// int pid = fork();
+	// if (!pid)
+	// 	execute_command(all->data->list);
+	// wait(NULL);
+	if (!ft_strncmp(input, "echo ", 5))
+		echo(ft_split(&input[5], ' '));
+	if (!ft_strncmp(input, "env", 4))
+		env(all->env->head);
+	if (!ft_strncmp(input, "unset ", 6))
+		unset(all->env, ft_split(&input[6], ' '));
+	if (!ft_strncmp(input, "export ", 6))
+		export(all->env, all->env->head, ft_split(&input[7], ' '));
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -65,7 +61,7 @@ int	main(int argc, char *argv[], char *envp[])
 		//printf("test\n");
 		if (ft_strncmp(string, "exit", 4) == 0)
 			exit(0);
-		// tymon(all, string);
+		//tymon(all, string);
 		cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
 		history(string);
 		free(string);

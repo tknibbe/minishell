@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 10:42:35 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/02/03 15:07:25 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/12 21:29:18 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 static int	set_cmp(char c, char const *set)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while (set[i])
 	{
 		if (c == set[i])

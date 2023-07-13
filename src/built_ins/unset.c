@@ -1,87 +1,75 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   unset.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/28 16:08:40 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/06/29 19:57:05 by cvan-sch      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
+#include <built_ins.h>
 #include <minishell.h>
-#include <env.h>
 
-int	to_remove(char **env, char **to_unset)
+void	add_the_rest(t_env_info *e, t_env *env, char **to_export)
 {
 	int	i;
-	int	j;
-	int	k;
-	int	to_remove;
-
+	
 	i = 0;
-	to_remove = 0;
-	while (to_unset[i])
+	while (to_export[i])
 	{
-		j = 0;
-		while (env[j])
-		{
-			k = 0;
-			while (env[j][k] == to_unset[i][k])
-				k++;
-			if (env[j][k] == '=' && to_unset[i][k] == '\0')
-			{
-				to_remove++;
-				break ;
-			}
-			j++;
-		}
+		env_addback(&env, env_new(to_export[i]));
+		e->count++;
 		i++;
 	}
-	return (to_remove);
 }
 
-void	reassign_pointers(char **src, char **dst, char **to_unset)
+void	move_pointer(char **s, int i)
 {
-	int	x;
-	int	y;
-	int	z;
+	int	k;
 
-	x = 0;
-	z = 0;
-	while (src[x])
-	{
-		y = 0;
-		while (to_unset[y])
-		{
-			if (ft_strncmp(src[x], to_unset[y], \
-				ft_strlen(to_unset[y]) + 1) == '=')
-				break ;
-			y++;
-		}
-		if (!to_unset[y])
-			dst[z++] = src[x];
-		else
-			free(src[x]);
-		x++;
-	}
-	dst[z] = NULL;
+	k = i;
+	while (s[k + 1])
+		k++;
+	free(s[i]);
+	s[i] = s[k];
+	s[k] = NULL;
 }
 
-void	unset(t_env *env, char **to_unset)
+static void	release_node(t_env **env, t_env **c, t_env **p)
+{
+	if (*p)
+		(*p)->next = (*c)->next;
+	else
+		*env = (*c)->next;
+	free((*c)->key);
+	free((*c)->value);
+	free((*c));
+	if (*p)
+		*c = (*p)->next;
+	else
+		*c = *env;
+}
+
+void	unset(t_env_info *e, char **to_unset)
 {
 	int		i;
-	char	**new_env;
-
-	i = to_remove(env->env, to_unset);
-	if (!i)
-		return (free_dp(to_unset));
-	new_env = malloc((env->var_count - i + 1) * sizeof(char *));
-	if (!new_env)
-		ft_exit("allocation error\n", errno);
-	reassign_pointers(env->env, new_env, to_unset);
-	free(env->env);
-	env->env = new_env;
-	env->var_count -= i;
+	int		cmp;
+	t_env	*curr;
+	t_env	*prev;
+	
+	i = 0;
+	prev = NULL;
+	curr = e->head;
+	while (curr)
+	{
+		i = 0;
+		cmp = ft_strlen(curr->key);
+		while (to_unset[i])
+		{
+			if (!ft_strncmp(curr->key, to_unset[i], cmp))
+			{
+				release_node(&e->head, &curr, &prev);
+				e->count--;
+				e->has_changed = 1;
+				break ;
+			}
+			i++;
+		}
+		if (!to_unset[i])
+		{
+			prev = curr;
+			curr = curr->next;
+		}
+	}
 }

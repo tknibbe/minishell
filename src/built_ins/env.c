@@ -1,61 +1,95 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/28 12:34:26 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/07/09 11:50:22 by cvan-sch      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
+#include <built_ins.h>
 #include <minishell.h>
-#include <env.h>
 
-void	env_dp(t_env *t, char *envp[])
+t_env	*env_new(char *s)
 {
+	t_env	*new;
 	int		i;
-	char	**env;
 
-	env = malloc((count(envp) + 1) * sizeof(char *));
-	if (!env)
-		return ;
 	i = 0;
-	while (envp[i])
-	{
-		env[i] = ft_strdup(envp[i]);
-		if (!env[i])
-		{
-			free_dp(env);
-			return ;
-		}
+	new = malloc(sizeof(t_env));
+	if (!new)
+		ft_exit("Error: malloc failure\n", errno);
+	while (s[i] && s[i] != '=')
 		i++;
+	new->key = ft_substr(s, 0, i);
+	if (!new->key)
+		ft_exit("Error: malloc failure\n", errno);
+	new->value = ft_strdup(s + i + 1);
+	if (!new->value)
+		ft_exit("Error: malloc failure\n", errno);
+	new->joined_value = ft_envjoin(new->key, new->value);
+	new->next = NULL;
+	return (new);
+}
+
+void	env_addback(t_env **head, t_env *new)
+{
+	t_env	*tmp;
+
+	tmp = *head;
+	if (!(*head))
+		*head = new;
+	else
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
 	}
-	env[i] = NULL;
-	t->var_count = i;
-	t->env = env;
 }
 
-t_env	*env_init(char *envp[])
+/*the function will check if the name pointed to by 's' is a valid name 
+a valid name is defined as a word comprised of only letters, numbers and or lower dash
+it can also not start as a number as those are reserved*/
+unsigned int	check_valid_name(char *s)
 {
-	t_env	*env;
+	unsigned int	i;
 
-	env = malloc(sizeof(t_env));
-	if (!env)
-		return (NULL);
-	env_dp(env, envp);
-	return (env);
+	i = 0;
+	if (ft_isdigit(s[0]) || s[i] == '=')
+		return (1);
+	while (s[i])
+	{
+		if (ft_isalnum(s[i]) || s[i] == '_')
+		{
+			i++;
+			continue ;
+		}
+		if (s[i] == '=' || (s[i] == '+' && s[i + 1] == '='))
+			return (0);
+		break ;
+	}
+	return (1);
 }
 
-void	export(t_env *env, char **to_export)
+/*when called the function will loop through the already existing env linked list and print both key and value*/
+void	env(t_env *env)
 {
-	reassign_export_items(env->env, to_export);
-	add_items(env, to_export);
+	while (env)
+	{
+		printf("%s\n", env->joined_value);
+		env = env->next;
+	}
 }
 
-void	env(char **s)
+/*env_init is a call to initialize the environment it creates the struct with data about the environment
+and will also put all the inherited env_variables in a linked list that can be modified for later use*/
+t_env_info	*env_init(char **env)
 {
-	while (*s)
-		printf("%s\n", *(s++));
+	t_env		*head;
+	t_env_info	*info;
+	int		i;
+
+	info = malloc(sizeof(t_env_info));
+	if (!info)
+		ft_exit("Error: malloc failure\n", errno);
+	i = 0;
+	head = NULL;
+	while (env[i])
+		env_addback(&head, env_new(env[i++]));
+	info->count = i;
+	info->has_changed = 1;
+	info->head = head;
+	info->env = NULL;
+	return (info);
 }
