@@ -54,7 +54,7 @@ int	main(int argc, char *argv[], char *envp[])
 			ft_exit("wtf!\n", 2000000);
 		if (ft_strncmp(string, "exit", 4) == 0)
 			exit(0);
-		//  tymon(all, string);
+		tymon(all, string);
 		cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
 		history(string);
 		free(string);
