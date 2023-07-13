@@ -29,19 +29,11 @@ void	tymon(t_ally *all, char *input)
 void	cris(t_ally *all, char *input)
 {
 	if (!ft_strncmp(input, "env", 4))
-		env(all->env);
+		env(all->env->head);
 	if (!ft_strncmp(input, "unset ", 6))
-		unset(&all->env, ft_split(&input[6], ' '));
+		unset(all->env, ft_split(&input[6], ' '));
 	if (!ft_strncmp(input, "export ", 6))
-		export(all->env, ft_split(&input[7], ' '));
-	//printf("%s\n%s\n", yo->key, yo->value);
-	// if (!ft_strncmp("export", input, 6))
-	// 	export(all->env, ft_split(&input[6], SPACE));
-	// else if (!ft_strncmp("env", input, 7))
-	// 	env(all->env->env);
-	// else if (!ft_strncmp("unset", input, 5))
-	// 	unset(all->env, ft_split(&input[5], SPACE));
-	// printf("eroor, doe beter code ofzo\n");
+		export(all->env, all->env->head, ft_split(&input[7], ' '));
 }
 
 int	main(int argc, char *argv[], char *envp[])

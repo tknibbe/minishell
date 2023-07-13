@@ -1,26 +1,14 @@
 #include <minishell.h>
 
-char *get_env(char *key, char **env)
+char *get_env(char *key, t_env *head)
 {
-	char	*mod_key;
-	int		len;
+	int	len;
 
-	mod_key = ft_strjoin(key, "=");
-	if (!mod_key)
-		ft_exit("Error: malloc failure\n", errno); 
-	len = ft_strlen(mod_key);
-	while (*env)
+	len = ft_strlen(key) + 1;
+	while (head)
 	{
-		if (!ft_strncmp(*env, mod_key, len))
-		{
-			free(mod_key);
-			mod_key = ft_strdup(&(*env)[len]);
-			if (!mod_key)
-				ft_exit("Error: malloc failure\n", errno);
-			return (mod_key);
-		}
-		env++;
+		if (!ft_strncmp(key, head->key, len))
+			return (head->value);
 	}
-	free(mod_key);
 	return (NULL);
 }

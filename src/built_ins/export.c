@@ -27,6 +27,8 @@ static void	replace_value(t_env *env, char **s, int i)
 	env->value = ft_strdup(&s[i][j]);
 	if (!env->value)
 		ft_exit("Error: malloc failure\n", errno);
+	free(env->joined_value);
+	env->joined_value = ft_envjoin(env->key, env->value);
 	move_pointer(s, i);
 }
 
@@ -43,10 +45,12 @@ static void	join_value(t_env *env, char **s, int i)
 		ft_exit("Error: malloc failure\n", errno);
 	free(env->value);
 	env->value = result;
+	free(env->joined_value);
+	env->joined_value = ft_envjoin(env->key, env->value);
 	move_pointer(s, i);
 }
 
-void	filter_valid_export_item(char **s)
+int	filter_valid_export_item(char **s)
 {
 	int	i;
 
@@ -58,14 +62,16 @@ void	filter_valid_export_item(char **s)
 		else
 			i++;
 	}
+	return (i);
 }
 
-void	export(t_env *env, char **to_export)
+void	export(t_env_info *e, t_env *env, char **to_export)
 {
 	int	i;
 	int	j;
 
-	filter_valid_export_item(to_export);
+	if (filter_valid_export_item(to_export))
+		e->has_changed = 1;
 	while (env)
 	{
 		i = 0;
@@ -87,5 +93,5 @@ void	export(t_env *env, char **to_export)
 			break ;
 		env = env->next;
 	}
-	add_the_rest(env, to_export);
+	add_the_rest(e, env, to_export);
 }

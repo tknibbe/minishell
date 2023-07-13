@@ -18,6 +18,7 @@ t_env	*env_new(char *s)
 	new->value = ft_strdup(s + i + 1);
 	if (!new->value)
 		ft_exit("Error: malloc failure\n", errno);
+	new->joined_value = ft_envjoin(new->key, new->value);
 	new->next = NULL;
 	return (new);
 }
@@ -67,13 +68,15 @@ void	env(t_env *env)
 	}
 }
 
-t_env	*env_init(char **env)
+t_env_info	*env_init(char **env)
 {
-	t_env	*head;
+	t_env		*head;
+	t_env_info	*info;
 	int		i;
 
-	if (!env[0])
-		return (NULL);
+	info = malloc(sizeof(t_env_info));
+	if (!info)
+		ft_exit("Error: malloc failure\n", errno);
 	i = 0;
 	head = NULL;
 	while (env[i])
@@ -82,5 +85,9 @@ t_env	*env_init(char **env)
 			env_addback(&head, env_new(env[i]));
 		i++;
 	}
-	return (head);
+	info->count = i;
+	info->has_changed = 1;
+	info->head = head;
+	info->env = NULL;
+	return (info);
 }

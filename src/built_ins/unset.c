@@ -1,7 +1,7 @@
 #include <env.h>
 #include <minishell.h>
 
-void	add_the_rest(t_env *env, char **to_export)
+void	add_the_rest(t_env_info *e, t_env *env, char **to_export)
 {
 	int	i;
 	
@@ -9,6 +9,7 @@ void	add_the_rest(t_env *env, char **to_export)
 	while (to_export[i])
 	{
 		env_addback(&env, env_new(to_export[i]));
+		e->count++;
 		i++;
 	}
 }
@@ -40,7 +41,7 @@ static void	release_node(t_env **env, t_env **c, t_env **p)
 		*c = *env;
 }
 
-void	unset(t_env **env, char **to_unset)
+void	unset(t_env_info *e, char **to_unset)
 {
 	int		i;
 	int		cmp;
@@ -49,7 +50,7 @@ void	unset(t_env **env, char **to_unset)
 	
 	i = 0;
 	prev = NULL;
-	curr = *env;
+	curr = e->head;
 	while (curr)
 	{
 		i = 0;
@@ -58,7 +59,9 @@ void	unset(t_env **env, char **to_unset)
 		{
 			if (!ft_strncmp(curr->key, to_unset[i], cmp))
 			{
-				release_node(env, &curr, &prev);
+				release_node(&e->head, &curr, &prev);
+				e->count--;
+				e->has_changed = 1;
 				break ;
 			}
 			i++;

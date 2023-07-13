@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/06/14 15:11:29 by tknibbe           #+#    #+#              #
-#    Updated: 2023/07/12 14:17:32 by tknibbe          ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: tknibbe <tknibbe@student.42.fr>              +#+                      #
+#                                                    +#+                       #
+#    Created: 2023/06/14 15:11:29 by tknibbe       #+#    #+#                  #
+#    Updated: 2023/07/13 15:38:37 by cvan-sch      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC			=	cris_main.c \
 				parse_and_exec.c \
 				exit_funcs.c \
 				built_ins/env.c \
+				built_ins/env_utils.c \
 				built_ins/unset.c \
 				built_ins/export.c \
 				built_ins/cd.c \

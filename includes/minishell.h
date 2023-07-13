@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/07/03 14:11:50 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/12 18:39:42 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/13 15:35:45 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 
 typedef struct s_minishell
 {
-	t_env		*env;
+	t_env_info	*env;
 	t_data		*data;
 	int			exit_code;
 }				t_ally;
@@ -50,6 +50,6 @@ void	print_double_array(char **x);
 void	free_dp(char **dp);
 int		count(char **c);
 
-t_env	*env_init(char **env);
+t_env_info	*env_init(char **env);
 
 #endif
