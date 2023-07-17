@@ -32,6 +32,18 @@ typedef struct s_data
 # define TAB '	'
 # define SPACE ' '
 
+//	whitespace
+//	word
+//	<
+//	>
+//	<<
+//	>>
+//	|
+//	||
+//	&&
+//	()
+//	*
+
 enum	e_token
 {
 	BLANK,

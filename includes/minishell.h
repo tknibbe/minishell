@@ -40,6 +40,13 @@ void	print_double_array(char **x);
 void	free_dp(char **dp);
 int		count(char **c);
 
+int		ft_iswhitespace(int	c);
+int		ft_isname(int c);
+int		ft_isinset(int c, char *s);
+
 t_env_info	*env_init(char **env);
+
+//expansion
+void		test_env_expansion_shit(t_ally *all, char *input);
 
 #endif

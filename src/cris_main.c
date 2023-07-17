@@ -26,10 +26,8 @@ void	tymon(t_ally *all, char *input)
 
 void	cris(t_ally *all, char *input)
 {
-	// int pid = fork();
-	// if (!pid)
-	// 	execute_command(all->data->list);
-	// wait(NULL);
+	if (!ft_strncmp(input, "> ", 2))
+		test_env_expansion_shit(all, &input[2]);
 	if (!ft_strncmp(input, "echo ", 5))
 		echo(ft_split(&input[5], ' '));
 	if (!ft_strncmp(input, "env", 4))

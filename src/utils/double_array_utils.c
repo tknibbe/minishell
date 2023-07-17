@@ -6,7 +6,7 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/29 15:58:29 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/06/29 18:42:18 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/14 13:08:05 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	print_double_array(char **x)
 
 	i = 0;
 	if (*x == NULL)
-		printf("NULL\n");
+		printf("(null)\n");
 	while (*x)
 		printf("%d: %s\n", i++, *(x++));
 }

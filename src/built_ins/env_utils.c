@@ -37,6 +37,38 @@ char	*ft_envjoin(char *s1, char *s2)
 	return (result);
 }
 
+int	check_key_status(int src, int n)
+{
+	if (src || (ft_isalnum(n) || n == '_'))
+		return (1);
+	return (0);
+}
+
+
+/*finds value corrosponding with key in the environment and returns an allocated string that must be FREED properly*/
+char *get_env(char *key, t_env *head)
+{
+	int		i;
+	char	*value;
+
+	while (head)
+	{
+		i = 0;
+		while (head->key[i] == key[i])
+			i++;
+		if (!(head->key[i]) && !ft_isname(key[i]))
+		{
+			value = ft_strdup(head->value);
+			if (!value)
+				ft_exit("Malloc error\n", errno);
+			return (value);
+		}
+		head = head->next;
+	}
+	return (NULL);
+}
+
+
 void	create_env_for_execution(t_env_info *e)
 {
 	char	**new_env;
