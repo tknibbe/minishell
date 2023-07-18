@@ -7,7 +7,6 @@ LIBFT		=	lib/libft.a
 SRC			=	cris_main.c \
 				exit_funcs.c \
 				built_ins/env.c \
-				built_ins/env_utils.c \
 				built_ins/unset.c \
 				built_ins/export.c \
 				built_ins/cd.c \
@@ -26,6 +25,7 @@ SRC			=	cris_main.c \
 				parse/parse/set_cmds.c \
 				parse/test_functions.c \
 				exit_funcs.c \
+				#built_ins/env_utils.c \
 				# parse/tokenize/make_list.c \
 				# built_ins/cd.c \
 

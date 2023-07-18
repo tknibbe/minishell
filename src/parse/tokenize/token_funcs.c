@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:58:29 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/08 15:57:05 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/15 12:42:50 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,19 @@
 static void	left(t_data *data, char *input, int *i);
 static void	right(t_data *data, char *input, int *i);
 
-void	find_pipe_and_semicolon(t_data *data, char *input)
+static void find_ampersand(t_data *data, char *input, int i)
+{
+	if (input[i] == '&' && data->token[i] == BLANK)
+	{
+		if (input[i + 1] == '&')
+		{
+			data->token[i] = AND;
+			data->token[i + 1] = AND;
+		}
+	}
+}
+
+void	find_pipe_and_ampersand(t_data *data, char *input)
 {
 	int	i;
 
@@ -24,9 +36,16 @@ void	find_pipe_and_semicolon(t_data *data, char *input)
 	while (input[i])
 	{
 		if (input[i] == '|' && data->token[i] == BLANK)
-			data->token[i] = PIPESYMBOL;
-		if (input[i] == ';' && data->token[i] == BLANK)
-			data->token[i] = SEMICOLON;
+		{
+			if (input[i + 1] == '|')
+			{
+				data->token[i] = OR;
+				data->token[i + 1] = OR;
+			}
+			else
+				data->token[i] = PIPESYMBOL;
+		}
+		find_ampersand(data, input, i);
 		i++;
 	}
 }

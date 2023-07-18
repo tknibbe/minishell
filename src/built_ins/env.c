@@ -18,7 +18,7 @@ t_env	*env_new(char *s)
 	new->value = ft_strdup(s + i + 1);
 	if (!new->value)
 		ft_exit("Error: malloc failure\n", errno);
-	new->joined_value = ft_envjoin(new->key, new->value);
+	//new->joined_value = ft_envjoin(new->key, new->value);
 	new->next = NULL;
 	return (new);
 }

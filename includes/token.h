@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 16:08:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/13 14:55:13 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/15 12:42:38 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,14 @@ typedef struct s_data
 enum	e_token
 {
 	BLANK,
-	SQUOTE,
-	DQUOTE,
-	DOLLO,
+	WORD,
 	REDIRLEFT,
 	REDIRRIGHT,
 	APPLEFT,
 	APPRIGHT,
 	PIPESYMBOL,
-	EXEC,
-	OPTION,
-	INPUT,
-	VARIABLE,
-	EQUALS,
-	STRING,
-	SEMICOLON,
+	OR,
+	AND,
 };
 
 //PARSE.C
@@ -78,7 +71,7 @@ void	parse_input(char *input, t_ally *all);
 int		set_tokens(char *input, t_data **data);
 //TOKEN_FUNCS.C
 int		count_quote(char *input, t_data *data, char c);
-void	find_pipe_and_semicolon(t_data *data, char *input);
+void	find_pipe_and_ampersand(t_data *data, char *input);
 void	find_append_redirect(t_data *data, char *input);
 
 //TOKEN_FUNCS2.C

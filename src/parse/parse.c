@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 14:26:34 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/13 14:42:48 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/15 10:43:59 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	parse_input(char *input, t_ally *all)
 {
 	if (set_tokens(input, &all->data))
 		return ;
-	parse(input, &all->data);
+	//parse(input, &all->data);
 	//print_test(*data, input);
 	//print_tokens(*data, input);
-	print_whole_list(all->data, input);
+	//print_whole_list(all->data, input);
 }
