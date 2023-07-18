@@ -15,55 +15,6 @@ int	condition(int f, int s)
 	return (-2);
 }
 
-// int	is_compatible(char *f, char *s)
-// {
-// 	int	i;
-
-// 	while (*f)
-// 	{
-// 		if (*s == '*')
-// 		{
-// 			i = 0;
-// 			while (*s == '*')
-// 				s++;
-// 			while (*f && *f != *s)
-// 				f++;
-// 			// we now need to increment both to see if the entirity of s up until NULL or * is equal;
-// 			while (f[i] && f[i] == s[i])
-// 				i++;
-// 			// if it is fully equal and both are NULL we can return 1
-// 			if (!f[i] && !s[i])
-// 				return (1);
-// 			// if s is NULL and f still continues we can return 0
-// 			if (f[i] && !s[i])
-// 				return (0);
-// 			// if s == true but they are different s stays the same and loop again with s reset
-// 			if (s[i] && s[i] != '*')
-// 			{
-// 				f += i;
-// 				s--;
-// 				continue ;
-// 			}
-// 			// if s == * we increment s and loop again
-// 			if (s[i] == '*')
-// 			{
-// 				s += i;
-// 				f += i;
-// 				continue ;
-// 			}
-// 			// only if both strings are at \0 or s[i] still has asterisks left we can continue
-// 		}
-// 		while (*f && *f == *s)
-// 		{
-// 			f++;
-// 			s++;
-// 		}
-// 	}
-// 	if (!(*f) && !(*s))
-// 		return (1);
-// 	return (0);
-// }
-
 int	is_compatible(char *f, char *input)
 {
 	int	i;
@@ -84,6 +35,7 @@ int	is_compatible(char *f, char *input)
 			f++;
 		}
 	}
+	return (0);
 }
 
 void	expand_wildcard(char **result, int count)

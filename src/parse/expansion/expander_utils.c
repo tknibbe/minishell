@@ -30,45 +30,55 @@ char	*ft_join(char *s1, char *s2)
 	return (s);
 }
 
-void	expand_dollo(t_exp *x, int state, char *s, int i)
+int	expand_dollo(t_exp *x, char **s, int i)
 {
 	char	*value;
 
-	if (s)
+	value = get_env(&x->input[i], x->head);
+	if (value)
 	{
-		x->result = ft_join(x->result, s);
-		free(s);
-	}
-	s = get_env(&x->input[i], x->head);
-	if (s)
-	{
-		x->result = ft_join(x->result, s);
-		free(s);
+		*s = ft_join(*s, value);
+		free(value);
 	}
 	while (ft_isname(x->input[i]))
 		i++;
-	x->input += i;
-	x->token += i;
-	if (state == '"')
-		return (expander(state, "\"$", x));
-	return (expander(state, "\"'$", x));
+	return (i);
+}
+
+void	append_sub(char **s, char *input, int len)
+{
+	char	*str;
+
+	str = ft_substr(input, 0, len);
+	if (!str)
+		ft_exit("Malloc error\n", errno);
+	*s = ft_join(*s, str);
+	free(str);
 }
 
 int	identify_substr(t_exp *x, int state, char *brake, char **s)
 {
-	int	i;
+	char	*str;
+	int		i;
+	int		j;
 
 	i = 0;
-	while (x->input[i] && x->token[i] == WORD && !ft_isinset(x->input[i], brake))
+	while (x->input[i] && x->input[i] != state)
 	{
-		if (!state && x->input[i] == '*')
-			x->star++;
-		i++;
+		j = 0;
+		while (x->input[i + j] && x->token[i + j] == WORD && !ft_isinset(x->input[i + j], brake))
+		{
+			if (!state && x->input[i + j] == '*')
+				x->star++;
+			j++;
+		}
+		if (j)
+			append_sub(s, &x->input[i], j);
+		i += j;
+		if (x->input[i] == '$')
+			i = expand_dollo(x, s, (i + 1));
+		else if (ft_isinset(x->input[i], brake))
+			break ;
 	}
-	if (!i)
-		return (0);
-	*s = ft_substr(x->input, 0, i);
-	if (!(*s))
-		ft_exit("Malloc error\n", errno);
 	return (i);
 }
