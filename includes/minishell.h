@@ -13,23 +13,24 @@
 # include <string.h>
 # include "../lib/includes/libft.h"
 # include <token.h>
+# include <exec.h>
+# include <built_ins.h>
 
 //hey crissie baby <3
 //hey tymoo daddy 8=D
 //hey crissie deel 2 80085
 
-# include <env.h>
 typedef struct s_data	t_data;
 
 typedef struct s_minishell
 {
-	t_env_info	*env;
-	t_data		*data;
-	int			exit_code;
-}				t_ally;
+	t_env_info			*env;
+	t_data				*data;
+	int					exit_code;
+}						t_ally;
 
-int		history_management(const char *s);
-char	**parse_and_execute(char *input);
+void	history(const char *s);
+void	parse_input(char *input, t_ally *all);
 
 //EXIT_FUNCS.C
 void	ft_exit(char *string, int errnum);
@@ -39,6 +40,13 @@ void	print_double_array(char **x);
 void	free_dp(char **dp);
 int		count(char **c);
 
+int		ft_iswhitespace(int	c);
+int		ft_isname(int c);
+int		ft_isinset(int c, char *s);
+
 t_env_info	*env_init(char **env);
+
+//expansion
+void		test_env_expansion_shit(t_ally *all, char *input);
 
 #endif

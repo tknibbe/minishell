@@ -1,4 +1,4 @@
-#include <env.h>
+#include <built_ins.h>
 #include <minishell.h>
 
 static int	cmp_until_equals(char *s1, char *s2)
@@ -70,6 +70,8 @@ void	export(t_env_info *e, t_env *env, char **to_export)
 	int	i;
 	int	j;
 
+	if (!(*to_export))
+		return ; // discuss if we need the declare function
 	if (filter_valid_export_item(to_export))
 		e->has_changed = 1;
 	while (env)

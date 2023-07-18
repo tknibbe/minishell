@@ -1,21 +1,19 @@
+#include <built_ins.h>
 #include <minishell.h>
+#include <readline/history.h>
 
-void	get_home(char **env)
+void	get_home(t_env *env)
 {
 	char	*home;
 
 	home = get_env("HOME", env);
-	if (!home)
-	{
+	if (!home) 
 		write(2, "minishell: cd: HOME not set\n", 29);
-		return ;
-	}
-	if (chdir(home) < 0)
+	else if (chdir(home) < 0)
 		perror("minishell: cd");
-	free(home);
 }
 
-void	cd(char *path, char **env)
+void	cd(char *path, t_env *env)
 {
 	if (!path || !ft_strncmp(path, "~", 2))
 		return (get_home(env));

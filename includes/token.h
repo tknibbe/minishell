@@ -1,21 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   token.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/29 16:08:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/15 12:42:38 by tknibbe          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/29 16:08:40 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/09 16:28:59 by cvan-sch      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef TOKEN_H
 # define TOKEN_H
@@ -47,9 +29,20 @@ typedef struct s_data
 	t_exec	*list;
 }			t_data;
 
-
 # define TAB '	'
 # define SPACE ' '
+
+//	whitespace
+//	word
+//	<
+//	>
+//	<<
+//	>>
+//	|
+//	||
+//	&&
+//	()
+//	*
 
 enum	e_token
 {
@@ -79,7 +72,7 @@ void	find_exec(t_data *data, char *input, int i);
 void	find_options(t_data *data, char *input);
 void	set_rest_to_str(t_data *data, char *input);
 int		whitespace(char c);
-void	trim_BLANK(t_data *data, char *input);
+//void	trim_BLANK(t_data *data, char *input);
 
 //DEFINE.C
 void	find_define(t_data *data, char *input);

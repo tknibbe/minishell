@@ -1,4 +1,4 @@
-#include <env.h>
+#include <built_ins.h>
 #include <minishell.h>
 
 t_env	*env_new(char *s)
@@ -38,6 +38,9 @@ void	env_addback(t_env **head, t_env *new)
 	}
 }
 
+/*the function will check if the name pointed to by 's' is a valid name 
+a valid name is defined as a word comprised of only letters, numbers and or lower dash
+it can also not start as a number as those are reserved*/
 unsigned int	check_valid_name(char *s)
 {
 	unsigned int	i;
@@ -59,15 +62,18 @@ unsigned int	check_valid_name(char *s)
 	return (1);
 }
 
+/*when called the function will loop through the already existing env linked list and print both key and value*/
 void	env(t_env *env)
 {
 	while (env)
 	{
-		printf("%s=%s\n", env->key, env->value);
+		printf("%s\n", env->joined_value);
 		env = env->next;
 	}
 }
 
+/*env_init is a call to initialize the environment it creates the struct with data about the environment
+and will also put all the inherited env_variables in a linked list that can be modified for later use*/
 t_env_info	*env_init(char **env)
 {
 	t_env		*head;
@@ -80,11 +86,7 @@ t_env_info	*env_init(char **env)
 	i = 0;
 	head = NULL;
 	while (env[i])
-	{
-		if (!check_valid_name(env[i]))
-			env_addback(&head, env_new(env[i]));
-		i++;
-	}
+		env_addback(&head, env_new(env[i++]));
 	info->count = i;
 	info->has_changed = 1;
 	info->head = head;

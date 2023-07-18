@@ -9,9 +9,11 @@ SRC			=	cris_main.c \
 				built_ins/env.c \
 				built_ins/unset.c \
 				built_ins/export.c \
+				built_ins/env_utils.c \
 				built_ins/cd.c \
+				built_ins/echo.c \
 				utils/double_array_utils.c \
-				utils/env_utils.c \
+				utils/utils1.c \
 				parse/parse.c \
 				parse/tokenize/token.c \
 				parse/tokenize/token_funcs.c \
@@ -23,9 +25,11 @@ SRC			=	cris_main.c \
 				parse/parse/split_args.c \
 				parse/parse/set_rdrs.c \
 				parse/parse/set_cmds.c \
+				parse/expansion/expander_wildcard.c \
+				parse/expansion/expander.c \
+				parse/expansion/expander_utils.c \
 				parse/test_functions.c \
 				exit_funcs.c \
-				#built_ins/env_utils.c \
 				# parse/tokenize/make_list.c \
 				# built_ins/cd.c \
 
@@ -42,6 +46,7 @@ obj/%.o : src/%.c
 	@mkdir -p obj/parse/tokenize
 	@mkdir -p obj/parse/parse
 	@mkdir -p obj/parse/expansion
+	@mkdir -p obj/execution
 	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
 
 clean :

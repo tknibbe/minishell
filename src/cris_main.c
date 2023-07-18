@@ -1,6 +1,6 @@
 #include <minishell.h>
-#include <env.h>
 #include <built_ins.h>
+#include <exec.h>
 
 t_ally	*minishell_init(char *envp[])
 {
@@ -10,7 +10,7 @@ t_ally	*minishell_init(char *envp[])
 
 	all = malloc(sizeof(t_ally));
 	if (!all)
-		ft_exit("Error: allocation failed\n", errno);
+		ft_exit("Malloc error\n", errno);
 	if (!all->data)
 		ft_exit("Malloc error\n", errno);
 	all->env = env_init(envp);
@@ -26,6 +26,10 @@ void	tymon(t_ally *all, char *input)
 
 void	cris(t_ally *all, char *input)
 {
+	if (!ft_strncmp(input, "> ", 2))
+		test_env_expansion_shit(all, &input[2]);
+	if (!ft_strncmp(input, "echo ", 5))
+		echo(ft_split(&input[5], ' '));
 	if (!ft_strncmp(input, "env", 4))
 		env(all->env->head);
 	if (!ft_strncmp(input, "unset ", 6))
@@ -51,7 +55,8 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		string = readline(prompt);
 		if (!string)
-			ft_exit("wtf!\n", 2000000);
+			ft_exit("wtf!!\n", 2000000);
+		//printf("test\n");
 		if (ft_strncmp(string, "exit", 4) == 0)
 			exit(0);
 		  tymon(all, string);
