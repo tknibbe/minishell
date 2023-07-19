@@ -26,8 +26,7 @@ int	is_compatible(char *f, char *input)
 			while (*input == '*')
 				input++;
 			while (*f && *input != *f)
-				f++;
-				
+				f++;	
 		}
 		while (*input && *input == *f)
 		{
