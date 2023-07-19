@@ -20,6 +20,6 @@ void	expander(int state, char *brake, t_exp *x);
 
 char	*ft_join(char *s1, char *s2);
 int		identify_substr(t_exp *x, int state, char *brake, char **s);
-void	expand_dollo(t_exp *x, int state, char *s, int i);
+int		expand_dollo(t_exp *x, char **s, int i);
 
 #endif

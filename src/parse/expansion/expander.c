@@ -14,8 +14,6 @@ void	expander(int state, char *brake, t_exp *x)
 	if (state == *x->input)
 		x->input++;
 	i = identify_substr(x, state, brake, &s);
-	if (x->input[i] == '$')
-		return (expand_dollo(x, state, s, i + 1));
 	if ((state && state == x->input[i]) || !state)
 		x->result = ft_join(x->result, s);
 	if (state && state == x->input[i])
@@ -26,10 +24,10 @@ void	expander(int state, char *brake, t_exp *x)
 	x->token += i;
 	free(s);
 	if (*x->input == '\'')
-		return (expander('\'' , "'", x));
+		return (expander('\'', "'", x));
 	else if (*x->input == '"')
 		return (expander('"', "$\"", x));
-	return (expander(0 , "$\"'", x));
+	return (expander(0, "$\"'", x));
 }
 
 char	*full_expansion(char *input, int *token, t_env *head)
@@ -42,14 +40,14 @@ char	*full_expansion(char *input, int *token, t_env *head)
 	xp.token = token;
 	xp.head = head;
 	if (*xp.input == '\'')
-		expander('\'' , "'", &xp);
+		expander('\'', "'", &xp);
 	else if (*xp.input == '"')
 		expander('"', "$\"", &xp);
 	else
-		expander(0 , "$\"'", &xp);
+		expander(0, "$\"'", &xp);
 	// if (xp.star)
 	// 	expand_wildcard(&xp.result, xp.star);
-	printf("result = [%s]\n", xp.result);
+	printf("result = [> %s <]\n", xp.result);
 	return (xp.result);
 }
 

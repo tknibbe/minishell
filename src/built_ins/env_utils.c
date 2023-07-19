@@ -56,7 +56,7 @@ char	*get_env(char *key, t_env *head)
 		i = 0;
 		while (head->key[i] == key[i])
 			i++;
-		if (!(head->key[i]) && !ft_isname(key[i]))
+		if (!ft_isname(head->key[i]) && !ft_isname(key[i]))
 		{
 			value = ft_strdup(head->value);
 			if (!value)
