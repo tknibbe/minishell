@@ -11,17 +11,19 @@ t_ally	*minishell_init(char *envp[])
 	all = malloc(sizeof(t_ally));
 	if (!all)
 		ft_exit("Malloc error\n", errno);
+	all->data = malloc(sizeof(t_data));
 	if (!all->data)
 		ft_exit("Malloc error\n", errno);
 	all->env = env_init(envp);
-	all->data = malloc(sizeof(t_data));
 	all->data->list = NULL;
 	return (all);
 }
 
-void	tymon(t_ally *all, char *input)
+void	tymon(t_ally *all, char **input)
 {
 	parse_input(input, all);
+	//printf("new str = %s\n", *input);
+	free(all->data->token);
 }
 
 void	cris(t_ally *all, char *input)
@@ -48,21 +50,23 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc != 1)
 		ft_exit("just ./minishell is enough\n", 1);
 	all = minishell_init(envp);
-	prompt = ft_strjoin(&argv[0][2], " -> ");
-	if (!prompt)
-		ft_exit("Error: malloc failure\n", errno);
+	//prompt = ft_strjoin(&argv[0][2], " -> ");
+	//if (!prompt)
+	//	ft_exit("Error: malloc failure\n", errno);
 	while (1)
 	{
-		string = readline(prompt);
+		string = readline("wat een grap -> ");
 		if (!string)
 			ft_exit("wtf!!\n", 2000000);
 		//printf("test\n");
 		if (ft_strncmp(string, "exit", 4) == 0)
 			exit(0);
-		  tymon(all, string);
+		  tymon(all, &string);
+		printf("string in main is : %s\n", string);
 		//cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
 		history(string);
 		free(string);
+		//system("leaks -q minishell");
 	}
-	free(prompt);
+	//free(prompt);
 }

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 14:13:45 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/13 14:54:23 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/19 11:52:52 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char	**get_cmd(t_data *data, char *input, int *j)
 	while (i < len)
 	{
 		ret_str[i] = get_substr(data, input, j);
+		printf("ret_str[%d] %s j = %d\n", i, ret_str[i], *j);
 		ret_str[i] = trim_quotes(ret_str[i]);
 		i++;
 	}
@@ -62,9 +63,14 @@ char	*get_substr(t_data *data, char *input, int *j)
 	int		len;
 
 	len = 0;
+	printf("entry is %d\n", *j);
+	print_tokens(data, input);
 	while ((data->token[*j] == PIPESYMBOL || data->token[*j] == BLANK) \
 			&& input[i])
+	{
 		*j += 1;
+	}
+	printf("start is %d\n", *j);
 	start = *j;
 	while (data->token[*j] != PIPESYMBOL && data->token[*j] != BLANK \
 			&& input[*j])

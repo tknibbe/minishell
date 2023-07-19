@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/18 14:08:35 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/18 18:11:24 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int	set_tokens(char *input, t_data **data)
 	find_pipe_and_ampersand(*data, input);
 	find_append_redirect(*data, input);
 	set_rest_to_str(*data, input);
-
-	print_tokens(*data, input);
+	//print_tokens(*data, input);
 	return (0);
 }
 

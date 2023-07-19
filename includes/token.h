@@ -32,18 +32,6 @@ typedef struct s_data
 # define TAB '	'
 # define SPACE ' '
 
-//	whitespace
-//	word
-//	<
-//	>
-//	<<
-//	>>
-//	|
-//	||
-//	&&
-//	()
-//	*
-
 enum	e_token
 {
 	BLANK,
@@ -58,7 +46,7 @@ enum	e_token
 };
 
 //PARSE.C
-void	parse_input(char *input, t_ally *all);
+void	parse_input(char **input, t_ally *all);
 
 //TOKEN.C
 int		set_tokens(char *input, t_data **data);
@@ -81,7 +69,7 @@ void	find_define(t_data *data, char *input);
 void	parse(char *input, t_data **data);
 
 //SYNTAX.C
-int		check_syntax(t_data *data, char *input);
+int		check_syntax(t_data *data, char **input);
 
 //LIST_FUNCTIONS.C
 void	exec_lstadd_back(t_exec **lst, t_exec *new);
