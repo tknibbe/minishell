@@ -61,9 +61,9 @@ int	main(int argc, char *argv[], char *envp[])
 		//printf("test\n");
 		if (ft_strncmp(string, "exit", 4) == 0)
 			exit(0);
-		  tymon(all, &string);
+		// tymon(all, &string);
 		//printf("string in main is : %s\n", string);
-		//cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
+		cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
 		history(string);
 		free(string);
 		//system("leaks -q minishell");
