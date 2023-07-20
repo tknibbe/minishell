@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   set_cmds.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/12 14:13:45 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/19 15:09:36 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   set_cmds.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/07/12 14:13:45 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/07/20 14:52:14 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	**get_cmd(t_data *data, char *input, int *j);
-char	*get_substr(t_data *data, char *input, int *j);
-int		count_cmds(t_data *data, char *input, int *j);
+char	**get_cmd(t_list *list, char *input, int *j);
+char	*get_substr(t_list *list, char *input, int *j);
+int		count_cmds(t_list *list, char *input, int *j);
 
-void	set_cmds(t_data **data, char *input, int node_amount)
+void	set_cmds(t_list **list, char *input, int node_amount)
 {
 	int		i;
 	int		j;
@@ -24,29 +24,29 @@ void	set_cmds(t_data **data, char *input, int node_amount)
 
 	i = 0;
 	j = 0;
-	node = (*data)->list;
+	node = (*list)->exec;
 	while (i < node_amount)
 	{
-		node->cmd = get_cmd(*data, input, &j);
+		node->cmd = get_cmd(*list, input, &j);
 		node = node->next;
 		i++;
 	}
 }
 
-char	**get_cmd(t_data *data, char *input, int *j)
+char	**get_cmd(t_list *list, char *input, int *j)
 {
 	int		len;
 	int		i;
 	char	**ret_str;
 
 	i = 0;
-	len = count_cmds(data, input, j);
+	len = count_cmds(list, input, j);
 	ret_str = malloc(sizeof(char *) * len + 1);
 	if (!ret_str)
 		ft_exit("Malloc error\n", errno);
 	while (i < len)
 	{
-		ret_str[i] = get_substr(data, input, j);
+		ret_str[i] = get_substr(list, input, j);
 		printf("ret_str[%d] %s j = %d\n", i, ret_str[i], *j);
 		ret_str[i] = trim_quotes(ret_str[i]);
 		i++;
@@ -55,7 +55,7 @@ char	**get_cmd(t_data *data, char *input, int *j)
 	return (ret_str);
 }
 
-char	*get_substr(t_data *data, char *input, int *j)
+char	*get_substr(t_list *list, char *input, int *j)
 {
 	int		i;
 	int		start;
@@ -63,13 +63,13 @@ char	*get_substr(t_data *data, char *input, int *j)
 	int		len;
 
 	len = 0;
-	print_tokens(data, input);
-	while ((data->token[*j] == PIPESYMBOL || data->token[*j] == BLANK) && input[i])
+	print_tokens(list, input);
+	while ((list->token[*j] == PIPESYMBOL || list->token[*j] == BLANK) && input[i])
 	{
 		*j += 1;
 	}
 	start = *j;
-	while (data->token[*j] != PIPESYMBOL && data->token[*j] != BLANK \
+	while (list->token[*j] != PIPESYMBOL && list->token[*j] != BLANK \
 			&& input[*j])
 	{
 		*j += 1;
@@ -79,25 +79,25 @@ char	*get_substr(t_data *data, char *input, int *j)
 	return (str);
 }
 
-int	count_cmds(t_data *data, char *input, int *j)
+int	count_cmds(t_list *list, char *input, int *j)
 {
 	int	len;
 	int	i;
 
 	i = *j;
 	len = 0;
-	while ((data->token[i] == PIPESYMBOL || data->token[i] == BLANK) \
+	while ((list->token[i] == PIPESYMBOL || list->token[i] == BLANK) \
 			&& input[i])
 		i++;;
 	//printf("countentry point [%c][%d]\n", input[*j], *j);
-	while (input[i] && data->token[i] != PIPESYMBOL)
+	while (input[i] && list->token[i] != PIPESYMBOL)
 	{
-		if (input[i + 1] && data->token[i] != BLANK \
-			&& data->token[i + 1] == BLANK && data->token[i + 1] != PIPESYMBOL)
+		if (input[i + 1] && list->token[i] != BLANK \
+			&& list->token[i + 1] == BLANK && list->token[i + 1] != PIPESYMBOL)
 			{
 				len++;
 			}
-		else if (data->token[i] != BLANK && !input[i + 1])
+		else if (list->token[i] != BLANK && !input[i + 1])
 			len++;
 		i++;
 	}

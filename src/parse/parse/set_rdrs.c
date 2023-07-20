@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   set_rdrs.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/11 15:58:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/13 14:54:04 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   set_rdrs.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/07/11 15:58:11 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/07/20 14:52:15 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	redir_token(int	*token, int *j);
 t_rdr	*make_rdr_node(char *input, int	*j, int	*token);
 
-void	set_rdrs(t_data **data, char *input, int node_amount)
+void	set_rdrs(t_list **list, char *input, int node_amount)
 {
 	int		i;
 	int		j;
@@ -29,19 +29,19 @@ void	set_rdrs(t_data **data, char *input, int node_amount)
 	{
 		rdr_head = NULL;
 		exec_node = exec_lstnew();
-		while (input[j] && (*data)->token[j] != PIPESYMBOL)
+		while (input[j] && (*list)->token[j] != PIPESYMBOL)
 		{
-			if (redir_token((*data)->token, &j))
+			if (redir_token((*list)->token, &j))
 			{
-				rdr_node = make_rdr_node(input, &j, (*data)->token);
+				rdr_node = make_rdr_node(input, &j, (*list)->token);
 				rdr_lstadd_back(&rdr_head, rdr_node);
 			}
 			j++;
 		}
-		while ((*data)->token[j] == PIPESYMBOL && input[j])
+		while ((*list)->token[j] == PIPESYMBOL && input[j])
 			j++;
 		exec_node->rdr = rdr_head;
-		exec_lstadd_back(&(*data)->list, exec_node);
+		exec_lstadd_back(&(*list)->exec, exec_node);
 		i++;
 	}
 }

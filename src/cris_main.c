@@ -11,11 +11,11 @@ t_ally	*minishell_init(char *envp[])
 	all = malloc(sizeof(t_ally));
 	if (!all)
 		ft_exit("Malloc error\n", errno);
-	all->data = malloc(sizeof(t_data));
-	if (!all->data)
+	all->list = malloc(sizeof(t_list));
+	if (!all->list)
 		ft_exit("Malloc error\n", errno);
 	all->env = env_init(envp);
-	all->data->list = NULL;
+	all->list->exec = NULL;
 	return (all);
 }
 
@@ -23,7 +23,7 @@ void	tymon(t_ally *all, char **input)
 {
 	parse_input(input, all);
 	//printf("new str = %s\n", *input);
-	free(all->data->token);
+	free(all->list->token);
 }
 
 void	cris(t_ally *all, char *input)
@@ -61,7 +61,7 @@ int	main(int argc, char *argv[], char *envp[])
 		//printf("test\n");
 		if (ft_strncmp(string, "exit", 4) == 0)
 			exit(0);
-		//   tymon(all, &string);
+		// // tymon(all, &string);
 		//printf("string in main is : %s\n", string);
 		cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
 		history(string);
