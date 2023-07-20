@@ -4,7 +4,7 @@
 # include <built_ins.h>
 # include <dirent.h>
 
-# define WORD 1
+//# define WORD 1
 
 typedef struct s_exp
 {

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/12 14:14:41 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/19 15:51:37 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/20 13:51:46 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "get_next_line.h"
 
 typedef struct s_list
 {

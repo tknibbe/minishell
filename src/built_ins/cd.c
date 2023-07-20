@@ -1,5 +1,6 @@
 #include <built_ins.h>
-# include <readline/history.h>
+#include <minishell.h>
+#include <readline/history.h>
 
 void	get_home(t_env *env)
 {

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/13 14:36:54 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/19 15:58:12 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,30 +19,33 @@ int	more_space_needed(int i, char **args)
 	return (1);
 }
 
-int	nodes_needed(char **args)
+int	nodes_needed(char *input, t_data *data)
 {
-	int	nodes;
 	int	i;
+	int	count;
 
 	i = 0;
-	nodes = 1;
-	while (args[i] && more_space_needed(i, args))
+	count = 1;
+	while (input[i])
 	{
-		if (!ft_strncmp(args[i], "|", 1))
-			nodes++;
+		if (data->token[i] == PIPESYMBOL)
+			count++;
+		else if (data->token[i] == OR || data->token[i] == AND)
+		{
+			count++;
+			i++;
+		}
 		i++;
 	}
-	//printf("%d nodes needed\n", nodes);
-	return (nodes);
+	return (count);
 }
 
 void	parse(char *input, t_data **data)
 {
-	char	**args;
 	int		node_amount;
 
-	args = split_args(input, *data); //useless?
-	node_amount = nodes_needed(args); // if not using split args anywhere else, make this with using input
-	set_rdrs(data, input, node_amount);
-	set_cmds(data, input, node_amount);
+	node_amount = nodes_needed(input, *data);
+	printf("%d nodes needed\n", node_amount);
+	set_rdrs(data, input, node_amount); // make so it takes criss' function
+	set_cmds(data, input, node_amount); //see abpve
 }

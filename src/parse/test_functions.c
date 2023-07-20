@@ -35,12 +35,8 @@ void print_whole_list(t_data *data, char *input)
 void	print_class(int	num)
 {
 	//norm error not to forget to remove
-	if (num == SQUOTE)
-		printf("single quote: ");
-	else if (num == DQUOTE)
-		printf("double quote: ");
-	else if (num == DOLLO)
-		printf("Dollarsign  : ");
+	if (num == WORD)
+		printf("word        : ");
 	else if (num == REDIRLEFT)
 		printf("redir left  : ");
 	else if (num == REDIRRIGHT)
@@ -51,20 +47,6 @@ void	print_class(int	num)
 		printf("append right: ");
 	else if (num == PIPESYMBOL)
 		printf("pipe        : ");
-	else if (num == EXEC)
-		printf("executable  : ");
-	else if (num == OPTION)
-		printf("option      : ");
-	else if (num == INPUT)
-		printf("input       : ");
-	else if (num == EQUALS)
-		printf("equals      : ");
-	else if (num == VARIABLE)
-		printf("variable    : ");
-	else if (num == STRING)
-		printf("string      : ");
-	else if (num == SEMICOLON)
-		printf("semicolom   : ");
 	else
 		printf("BLANK %d: ", num);
 }

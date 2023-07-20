@@ -46,7 +46,7 @@ int	check_key_status(int src, int n)
 
 
 /*finds value corrosponding with key in the environment and returns an allocated string that must be FREED properly*/
-char *get_env(char *key, t_env *head)
+char	*get_env(char *key, t_env *head)
 {
 	int		i;
 	char	*value;

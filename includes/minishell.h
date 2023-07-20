@@ -30,7 +30,7 @@ typedef struct s_minishell
 }						t_ally;
 
 void	history(const char *s);
-void	parse_input(char *input, t_ally *all);
+//void	parse_input(char *input, t_ally *all);
 
 //EXIT_FUNCS.C
 void	ft_exit(char *string, int errnum);
