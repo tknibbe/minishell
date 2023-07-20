@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   split_args.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/08 16:59:19 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/08 18:37:48 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   split_args.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/07/08 16:59:19 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/07/20 14:54:28 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int		get_num_args(char *input, t_data *data);
-char	*split_on_token(t_data *data, char *input, int *start);
+int		get_num_args(char *input, t_list *list);
+char	*split_on_token(t_list *list, char *input, int *start);
 
-char	**split_args(char *input, t_data *data)
+char	**split_args(char *input, t_list *list)
 {
 	int		i;
 	char	**args;
@@ -24,29 +24,29 @@ char	**split_args(char *input, t_data *data)
 
 	i = 0;
 	j = 0;
-	num_args = get_num_args(input, data);
+	num_args = get_num_args(input, list);
 	args = malloc(sizeof(char *) * num_args + 1);
 	while (i < num_args)
 	{
-		args[i] = split_on_token(data, input, &j);
+		args[i] = split_on_token(list, input, &j);
 		i++;
 	}
 	args[i] = NULL;
 	return (args);
 }
 
-int	more_to_parse(int i, char *input, t_data *data)
+int	more_to_parse(int i, char *input, t_list *list)
 {
 	while (input[i])
 	{
-		if (data->token[i] != BLANK)
+		if (list->token[i] != BLANK)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-int	get_num_args(char *input, t_data *data)
+int	get_num_args(char *input, t_list *list)
 {
 	int	i;
 	int	num;
@@ -54,13 +54,13 @@ int	get_num_args(char *input, t_data *data)
 
 	i = 0;
 	num = 0;
-	while (input[i] && more_to_parse(i, input, data))
+	while (input[i] && more_to_parse(i, input, list))
 	{
 		while (input[i] == SPACE)
 			i++;
 		num++;
-		token = data->token[i];
-		while (data->token[i] == token && input[i])
+		token = list->token[i];
+		while (list->token[i] == token && input[i])
 		{
 			i++;
 		}
@@ -69,17 +69,17 @@ int	get_num_args(char *input, t_data *data)
 	return (num);
 }
 
-char	*split_on_token(t_data *data, char *input, int *start)
+char	*split_on_token(t_list *list, char *input, int *start)
 {
 	int		i;
 	int		token;
 	char	*str;
 	int		j;
 
-	token = data->token[*start];
+	token = list->token[*start];
 	i = *start;
 	j = 0;
-	while (data->token[i] == token && input[i])
+	while (list->token[i] == token && input[i])
 		i++;
 	str = malloc(sizeof(char) * (i - *start + 1)); //prtoct
 	if (!str)
@@ -91,7 +91,7 @@ char	*split_on_token(t_data *data, char *input, int *start)
 		j++;
 	}
 	str[j] = '\0';
-	while (data->token[*start] == BLANK && input[*start])
+	while (list->token[*start] == BLANK && input[*start])
 		*start += 1;
 	return (str);
 }

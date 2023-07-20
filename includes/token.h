@@ -19,16 +19,17 @@ typedef struct s_exec
 {
 	char			**cmd;
 	t_rdr			*rdr;
-	char			**env;
-	char			*and_or; // "&&" > "||" > "$OR" > "$AND"
 	t_exec			*next;
 }					t_exec;
 
-typedef struct s_data
+typedef struct s_list
 {
-	int		*token;
-	t_exec	*list;
-}			t_data;
+	int				*token;
+	char			*input;
+	char			*and_or;
+	t_exec			*exec;
+	struct s_list	*next;
+}					t_list;
 
 # define TAB '	'
 # define SPACE ' '
@@ -42,26 +43,28 @@ enum	e_token
 	APPLEFT,
 	APPRIGHT,
 	PIPESYMBOL,
-	OR,
+	BRACE_OPEN,
+	BRACE_CLOSE,
 	AND,
+	OR,
 };
 
 //PARSE.C
 void	parse_input(char **input, t_ally *all);
 
 //TOKEN.C
-int		tokenize(char *input, t_data **data);
+int		tokenize(char *input, t_list **list);
 //TOKEN_UTILS.C
 int		whitespace(char c);
-void	set_rdr_pipe_amp(t_data *data, char *input, int *i);
-void	left(t_data *data, char *input, int *i);
-void	right(t_data *data, char *input, int *i);
+void	set_rdr_pipe_amp(t_list *list, char *input, int *i);
+void	left(t_list *list, char *input, int *i);
+void	right(t_list *list, char *input, int *i);
 int		is_alphanumeric(char c);
 //MAKE_LIST.c
-void	parse(char *input, t_data **data);
+void	parse(char *input, t_list **list);
 
 //SYNTAX.C
-int		check_syntax(t_data *data, char **input);
+int		check_syntax(t_list *list, char **input);
 
 //LIST_FUNCTIONS.C
 void	exec_lstadd_back(t_exec **lst, t_exec *new);
@@ -71,18 +74,18 @@ void	rdr_lstadd_back(t_rdr **lst, t_rdr *new);
 t_rdr	*rdr_lstnew(void);
 
 //SPLIT_ARGS.C
-char	**split_args(char *input, t_data *data);
+char	**split_args(char *input, t_list *list);
 
 //SET_RDRS.C
-void	set_rdrs(t_data **data, char *input, int nodes);
+void	set_rdrs(t_list **list, char *input, int nodes);
 
 //SET_CMDS.C
-void	set_cmds(t_data **data, char *input, int node_amount);
+void	set_cmds(t_list **list, char *input, int node_amount);
 char	*trim_quotes(char *str);
 
 //TEST_FUNCTIONS.C
 void	print_class(int num);
-void	print_test(t_data *data, char *input);
-void	print_tokens(t_data *data, char *input);
-void	print_whole_list(t_data *data, char *input);
+void	print_test(t_list *list, char *input);
+void	print_tokens(t_list *list, char *input);
+void	print_whole_list(t_list *list, char *input);
 #endif

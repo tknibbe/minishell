@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/19 15:41:34 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   token.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/06/28 12:18:15 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/07/20 14:46:41 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <token.h>
 
-static void	set_token(t_data *data, char *input);
+static void	set_token(t_list *list, char *input);
 
 /*sets tokens according to the ENUMs defined in the header. 
 returns 0 on succes.*/
-int	tokenize(char *input, t_data **data)
+int	tokenize(char *input, t_list **list)
 {
 	int	len;
 
 	len = ft_strlen(input);
-	(*data)->token = malloc(sizeof(int) * len);
-	if (!(*data)->token)
+	(*list)->token = malloc(sizeof(int) * len);
+	if (!(*list)->token)
 		ft_exit("Malloc error\n", errno);
-	set_token(*data, input);
-	//print_tokens(*data, input);
+	set_token(*list, input);
+	//print_tokens(*list, input);
 	return (0);
 }
 
@@ -57,7 +57,7 @@ static int	is_closed_quote(char *input, int *end_quote, int i)
 	return (0);
 }
 
-static void	set_token(t_data *data, char *input)
+static void	set_token(t_list *list, char *input)
 {
 	int	i;
 	int	end_quote;
@@ -70,21 +70,21 @@ static void	set_token(t_data *data, char *input)
 		{
 			while (i < end_quote)
 			{
-				data->token[i] = WORD;
+				list->token[i] = WORD;
 				i++;
 			}
 		}
 		if (is_rdr_pipe_amp(input[i]))
 		{
-			set_rdr_pipe_amp(data, input, &i);
+			set_rdr_pipe_amp(list, input, &i);
 			i++;
 		}
 		else
 		{
 			if (!whitespace(input[i]))
-				data->token[i] = WORD;
+				list->token[i] = WORD;
 			else
-				data->token[i] = BLANK;
+				list->token[i] = BLANK;
 			i++;
 		}
 	}

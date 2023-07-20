@@ -3,10 +3,10 @@
 
 void	parse_input(char **input, t_ally *all)
 {
-	tokenize(*input, &all->data);
-	check_syntax(all->data, input);
-	parse(*input, &all->data);
-	//print_test(*data, input);
-	//print_tokens(all->data, *input);
-	print_whole_list(all->data, *input);
+	tokenize(*input, &all->list);
+	check_syntax(all->list, input);
+	parse(*input, &all->list);
+	//print_test(*list, input);
+	//print_tokens(all->list, *input);
+	print_whole_list(all->list, *input);
 }

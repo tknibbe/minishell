@@ -11,11 +11,11 @@ t_ally	*minishell_init(char *envp[])
 	all = malloc(sizeof(t_ally));
 	if (!all)
 		ft_exit("Malloc error\n", errno);
-	all->data = malloc(sizeof(t_data));
-	if (!all->data)
+	all->list = malloc(sizeof(t_list));
+	if (!all->list)
 		ft_exit("Malloc error\n", errno);
 	all->env = env_init(envp);
-	all->data->list = NULL;
+	all->list->exec = NULL;
 	return (all);
 }
 
@@ -23,7 +23,7 @@ void	tymon(t_ally *all, char **input)
 {
 	parse_input(input, all);
 	//printf("new str = %s\n", *input);
-	free(all->data->token);
+	free(all->list->token);
 }
 
 void	cris(t_ally *all, char *input)

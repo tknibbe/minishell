@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   syntax.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/19 15:48:00 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   syntax.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/07/08 13:46:32 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/07/20 14:49:33 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,43 +43,43 @@ void	ft_syntax_error(char *str, char c, int token)
 	write(2, "\n", 1);
 }
 
-static int	check_rdr(t_data *data, char *input, int *i)
+static int	check_rdr(t_list *list, char *input, int *i)
 {
 	*i += 1;
-	if (data->token[*i] == APPRIGHT | data->token[*i] == APPLEFT)
+	if (list->token[*i] == APPRIGHT | list->token[*i] == APPLEFT)
 		*i += 1;
-	while (data->token[*i] == BLANK && input[*i])
+	while (list->token[*i] == BLANK && input[*i])
 	{
 		*i += 1;
 	}
-	if (data->token[*i] != WORD || !input[*i])
+	if (list->token[*i] != WORD || !input[*i])
 		return (1);
 	return (0);
 }
 
-static int	check_rest(t_data *data, char **input, int *i)
+static int	check_rest(t_list *list, char **input, int *i)
 {
 	char	*str;
 
 	str = *input;
-	if (data->token[*i] == OR || data->token[*i] == AND)
+	if (list->token[*i] == OR || list->token[*i] == AND)
 		*i += 2;
 	else
 		*i += 1;
-	if (!str[*i] && (data->token[*i - 1] == OR || data->token[*i -1] == AND \
-		|| data->token[*i - 1] == PIPESYMBOL))
+	if (!str[*i] && (list->token[*i - 1] == OR || list->token[*i -1] == AND \
+		|| list->token[*i - 1] == PIPESYMBOL))
 		return (2);
-	while (data->token[*i] == BLANK)
+	while (list->token[*i] == BLANK)
 		*i += 1;
-	if (is_redirect(data->token[*i]))
-		return (check_rdr(data, str, i));
-	else if (data->token[*i] == PIPESYMBOL || data->token[*i] == OR \
-			|| data->token[*i] == AND)
+	if (is_redirect(list->token[*i]))
+		return (check_rdr(list, str, i));
+	else if (list->token[*i] == PIPESYMBOL || list->token[*i] == OR \
+			|| list->token[*i] == AND)
 		return (1);
 	return (0);
 }
 
-void	add_new_input(t_data *data, char **input) //WILL LEAK! i think
+void	add_new_input(t_list *list, char **input) //WILL LEAK! i think
 {
 	char	*new_str;
 	char	*str;
@@ -89,14 +89,14 @@ void	add_new_input(t_data *data, char **input) //WILL LEAK! i think
 	new_str = ft_strjoin(*input, str);
 	free(*input);
 	free(str);
-	free(data->token);
-	free(data->list);
+	free(list->token);
+	free(list->exec);
 	*input = new_str;
-	tokenize(*input, &data);
-	check_syntax(data, input);
+	tokenize(*input, &list);
+	check_syntax(list, input);
 }
 
-int	check_syntax(t_data *data, char **input)
+int	check_syntax(t_list *list, char **input)
 {
 	int	check;
 	int	i;
@@ -106,22 +106,22 @@ int	check_syntax(t_data *data, char **input)
 	check = 0;
 	while (test[i])
 	{
-		while (test[i] && data->token[i] == WORD)
+		while (test[i] && list->token[i] == WORD)
 			i++;
-		if (is_redirect(data->token[i]))
-			check = check_rdr(data, *input, &i);
-		else if (data->token[i] == PIPESYMBOL || data->token[i] == OR \
-			|| data->token[i] == AND)
-			check = check_rest(data, input, &i);
+		if (is_redirect(list->token[i]))
+			check = check_rdr(list, *input, &i);
+		else if (list->token[i] == PIPESYMBOL || list->token[i] == OR \
+			|| list->token[i] == AND)
+			check = check_rest(list, input, &i);
 		if (check == 1)
 		{
 			ft_syntax_error("Minishell: syntax error near unexpected token ", \
-				test[i], data->token[i]);
+				test[i], list->token[i]);
 			return (1);
 		}
 		if (check == 2)
 		{
-			add_new_input(data, input);
+			add_new_input(list, input);
 			break ;
 		}
 		i++;

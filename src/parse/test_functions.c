@@ -1,36 +1,35 @@
 
 #include <minishell.h>
 
-
-void print_whole_list(t_data *data, char *input)
-{
-	int	i = 0;
-	int	node_amnt = 0;
-	while (data->list)
-	{
-		t_exec *list =  data->list;
-		t_rdr	*rdr = data->list->rdr;
-		printf("\nnode %d\n", node_amnt);
-		printf("[\n");
-		printf("CMD: ");
-		while (list->cmd[i])
-		{
-			printf("%s, ", list->cmd[i]);
-			i++;
-		}
-		i = 0;
-		printf("\n");
-		printf("RDR: ");
-		while (rdr)
-		{
-			printf("{%s} [%d], ", rdr->file, rdr->type);
-			rdr = rdr->next;
-		}
-		node_amnt++;
-		printf("\n]\n\n");
-		data->list = data->list->next;
-	}
-}
+// void print_whole_list(t_list *list, char *input)
+// {
+// 	int	i = 0;
+// 	int	node_amnt = 0;
+// 	while (list->exec)
+// 	{
+// 		t_exec *list =  list->exec;
+// 		t_rdr	*rdr = list->exec->rdr;
+// 		printf("\nnode %d\n", node_amnt);
+// 		printf("[\n");
+// 		printf("CMD: ");
+// 		while (list->cmd[i])
+// 		{
+// 			printf("%s, ", list->cmd[i]);
+// 			i++;
+// 		}
+// 		i = 0;
+// 		printf("\n");
+// 		printf("RDR: ");
+// 		while (rdr)
+// 		{
+// 			printf("{%s} [%d], ", rdr->file, rdr->type);
+// 			rdr = rdr->next;
+// 		}
+// 		node_amnt++;
+// 		printf("\n]\n\n");
+// 		list->exec = list->exec->next;
+// 	}
+// }
 
 void	print_class(int	num)
 {
@@ -51,7 +50,7 @@ void	print_class(int	num)
 		printf("BLANK %d: ", num);
 }
 
-void print_test(t_data *data, char *input)
+void print_test(t_list *list, char *input)
 {
 	int	i = 0; //remove func later
 	int	num;
@@ -60,9 +59,9 @@ void print_test(t_data *data, char *input)
 	{
 		while (input[i] == ' ')
 			i++;
-		num = data->token[i];
-		print_class(data->token[i]);
-		while (data->token[i] == num && input[i])
+		num = list->token[i];
+		print_class(list->token[i]);
+		while (list->token[i] == num && input[i])
 		{
 			printf("%c", input[i]);
 			i++;
@@ -71,12 +70,12 @@ void print_test(t_data *data, char *input)
 	}
 }
 
-void	print_tokens(t_data *data, char *input)
+void	print_tokens(t_list *list, char *input)
 {
 	int i = 0;
 	while (i < ft_strlen(input))
 	{
-		printf("[%d]", data->token[i]);
+		printf("[%d]", list->token[i]);
 		i++;
 	}
 	printf("\n");

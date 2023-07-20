@@ -72,7 +72,7 @@ void	env(t_env *env)
 	}
 }
 
-/*env_init is a call to initialize the environment it creates the struct with data about the environment
+/*env_init is a call to initialize the environment it creates the struct with list about the environment
 and will also put all the inherited env_variables in a linked list that can be modified for later use*/
 t_env_info	*env_init(char **env)
 {

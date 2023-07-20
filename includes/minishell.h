@@ -20,12 +20,12 @@
 //hey tymoo daddy 8=D
 //hey crissie deel 2 80085
 
-typedef struct s_data	t_data;
+typedef struct	s_list	t_list;
 
 typedef struct s_minishell
 {
 	t_env_info			*env;
-	t_data				*data;
+	t_list				*list;
 	int					exit_code;
 }						t_ally;
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   list_functions.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/04 12:30:57 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/11 18:43:33 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   list_functions.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/07/04 12:30:57 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/07/20 14:50:27 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_exec	*exec_lstnew(void)
 	if (n1 == NULL)
 		ft_exit("Malloc error\n", errno);
 	n1->cmd = NULL;
-	n1->env = NULL;
 	n1->rdr = NULL;
 	n1->next = NULL;
 	return (n1);
@@ -96,7 +95,7 @@ t_rdr	*rdr_lstnew(void)
 //	return (i);
 //}
 
-//int	get_arg_len(t_data *data, int i, char *input)
+//int	get_arg_len(t_list *list, int i, char *input)
 //{
 //	int	len;
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   make_list.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/19 15:58:12 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   make_list.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/07/07 11:26:11 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/07/20 14:46:35 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	more_space_needed(int i, char **args)
 	return (1);
 }
 
-int	nodes_needed(char *input, t_data *data)
+int	nodes_needed(char *input, t_list *list)
 {
 	int	i;
 	int	count;
@@ -28,9 +28,9 @@ int	nodes_needed(char *input, t_data *data)
 	count = 1;
 	while (input[i])
 	{
-		if (data->token[i] == PIPESYMBOL)
+		if (list->token[i] == PIPESYMBOL)
 			count++;
-		else if (data->token[i] == OR || data->token[i] == AND)
+		else if (list->token[i] == OR || list->token[i] == AND)
 		{
 			count++;
 			i++;
@@ -40,12 +40,12 @@ int	nodes_needed(char *input, t_data *data)
 	return (count);
 }
 
-void	parse(char *input, t_data **data)
+void	parse(char *input, t_list **list)
 {
 	int		node_amount;
 
-	node_amount = nodes_needed(input, *data);
+	node_amount = nodes_needed(input, *list);
 	printf("%d nodes needed\n", node_amount);
-	set_rdrs(data, input, node_amount); // make so it takes criss' function
-	set_cmds(data, input, node_amount); //see abpve
+	set_rdrs(list, input, node_amount); // make so it takes criss' function
+	set_cmds(list, input, node_amount); //see abpve
 }
