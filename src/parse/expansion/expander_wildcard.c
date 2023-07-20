@@ -61,5 +61,6 @@ void	expand_wildcard(char **result, int count)
 		if (pattern_match(dir_info->d_name, *result))
 			printf("%s ", dir_info->d_name);
 	}
+	printf("\n\n");
 	closedir(dir_p);
 }
