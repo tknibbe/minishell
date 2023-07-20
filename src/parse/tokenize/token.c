@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/19 15:07:34 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/19 15:41:34 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ int	tokenize(char *input, t_data **data)
 	len = ft_strlen(input);
 	(*data)->token = malloc(sizeof(int) * len);
 	if (!(*data)->token)
-		ft_exit("Malloc error\n", errno);	
+		ft_exit("Malloc error\n", errno);
 	set_token(*data, input);
+	//print_tokens(*data, input);
 	return (0);
 }
 
-int	is_rdr_or_pipe(char c)
+int	is_rdr_pipe_amp(char c)
 {
-	if (c == '|' || c == '<' || c == '>')
+	if (c == '|' || c == '<' || c == '>' || c == '&')
 		return (1);
 	return (0);
 }
@@ -73,9 +74,9 @@ static void	set_token(t_data *data, char *input)
 				i++;
 			}
 		}
-		if (is_rdr_or_pipe(input[i]))
+		if (is_rdr_pipe_amp(input[i]))
 		{
-			set_rdr_or_pipe(data, input, &i);
+			set_rdr_pipe_amp(data, input, &i);
 			i++;
 		}
 		else

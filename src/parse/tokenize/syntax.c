@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/19 15:00:06 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/19 15:48:00 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	ft_syntax_error(char *str, char c, int token)
 static int	check_rdr(t_data *data, char *input, int *i)
 {
 	*i += 1;
+	if (data->token[*i] == APPRIGHT | data->token[*i] == APPLEFT)
+		*i += 1;
 	while (data->token[*i] == BLANK && input[*i])
 	{
 		*i += 1;
@@ -57,15 +59,15 @@ static int	check_rdr(t_data *data, char *input, int *i)
 
 static int	check_rest(t_data *data, char **input, int *i)
 {
-	char *str;
+	char	*str;
 
 	str = *input;
 	if (data->token[*i] == OR || data->token[*i] == AND)
 		*i += 2;
 	else
 		*i += 1;
-	if (!str[*i] && (data->token[*i - 1] == OR || data->token[*i -1] == AND ||
-		data->token[*i - 1] == PIPESYMBOL))
+	if (!str[*i] && (data->token[*i - 1] == OR || data->token[*i -1] == AND \
+		|| data->token[*i - 1] == PIPESYMBOL))
 		return (2);
 	while (data->token[*i] == BLANK)
 		*i += 1;
@@ -90,7 +92,6 @@ void	add_new_input(t_data *data, char **input) //WILL LEAK! i think
 	free(data->token);
 	free(data->list);
 	*input = new_str;
-	//free(new_str);
 	tokenize(*input, &data);
 	check_syntax(data, input);
 }

@@ -20,6 +20,7 @@ typedef struct s_exec
 	char			**cmd;
 	t_rdr			*rdr;
 	char			**env;
+	char			*and_or; // "&&" > "||" > "$OR" > "$AND"
 	t_exec			*next;
 }					t_exec;
 
@@ -52,7 +53,7 @@ void	parse_input(char **input, t_ally *all);
 int		tokenize(char *input, t_data **data);
 //TOKEN_UTILS.C
 int		whitespace(char c);
-void	set_rdr_or_pipe(t_data *data, char *input, int *i);
+void	set_rdr_pipe_amp(t_data *data, char *input, int *i);
 void	left(t_data *data, char *input, int *i);
 void	right(t_data *data, char *input, int *i);
 int		is_alphanumeric(char c);

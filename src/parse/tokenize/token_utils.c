@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:56:52 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/19 15:07:44 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/19 15:40:57 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,18 @@ int	whitespace(char c)
 	return (0);
 }
 
-void	set_rdr_or_pipe(t_data *data, char *input, int *i)
+void	set_rdr_pipe_amp(t_data *data, char *input, int *i)
 {
-	if (input[*i] == '|')
+	if (input[*i] == '&')
+	{
+		if (input[*i + 1] == '&')
+		{
+			data->token[*i] = AND;
+			data->token[*i + 1] = AND;
+			*i += 1;
+		}
+	}
+	else if (input[*i] == '|')
 	{
 		if (input[*i + 1] == '|')
 		{
