@@ -22,4 +22,6 @@ char	*ft_join(char *s1, char *s2);
 int		identify_substr(t_exp *x, int state, char *brake, char **s);
 int		expand_dollo(t_exp *x, char **s, int i);
 
+void	expand_wildcard(char **result, int count);
+
 #endif

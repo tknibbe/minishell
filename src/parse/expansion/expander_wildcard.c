@@ -2,45 +2,51 @@
 #include <sys/errno.h>
 #include <minishell.h>
 
-int	condition(int f, int s)
-{
-	if (!s && f)
-		return (0);
-	if (!s && !f)
-		return (1);
-	if (f && s != '*')
-		return (0);
-	if (f && s == '*')
-		return (-1);
-	return (-2);
-}
-
-int	is_compatible(char *f, char *input)
+int	check_for_first_matching_string(char **file, char **input, int w_card)
 {
 	int	i;
 
-	while (*input)
+	while (*(*file))
 	{
-		if (*input == '*')
+		i = 0;
+		if (w_card)
+			while (*(*file) && *(*file) != *(*input))
+				(*file)++;
+		while ((*file)[i] && (*file)[i] == (*input)[i])
+			i++;
+		if ((*input)[i] == '*' || (!(*file)[i] && !(*input)[i]))
 		{
-			while (*input == '*')
-				input++;
-			while (*f && *input != *f)
-				f++;
-				
+			*input += i;
+			*file += i;
+			return (1);
 		}
-		while (*input && *input == *f)
-		{
-			input++;
-			f++;
-		}
+		if (!((*file)[i]) || !w_card)
+			break ;
+		*file += i;
 	}
 	return (0);
 }
 
+int	pattern_match(char *f, char *input)
+{
+	int	w_mode;
+
+	while (*f)
+	{
+		w_mode = 0;
+		if (*input == '*')
+		{
+			input++;
+			w_mode = 1;
+		}
+		if (!check_for_first_matching_string(&f, &input, w_mode))
+			return (0);
+	}
+	return (1);
+}
+
 void	expand_wildcard(char **result, int count)
 {
-	//printf("is compatible? = %d\n", is_compatible("kaas", *result));
 	DIR				*dir_p;
 	struct dirent	*dir_info;
 
@@ -51,10 +57,9 @@ void	expand_wildcard(char **result, int count)
 	{
 		dir_info = readdir(dir_p);
 		if (!dir_info)
-			return ;
-		printf("check\n");
-		if (is_compatible(dir_info->d_name, *result))
-			printf("> %s\n", dir_info->d_name);
+			break ;
+		if (pattern_match(dir_info->d_name, *result))
+			printf("%s ", dir_info->d_name);
 	}
 	closedir(dir_p);
 }

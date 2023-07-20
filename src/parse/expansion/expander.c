@@ -3,6 +3,14 @@
 
 #define WORD 1
 
+int	unclosed_quote(int state)
+{
+	write(2, "Warning: unclosed quote ( ", 26);
+	write(2, &state, 1);
+	write(2, " ) was ignored\n", 16);
+	return (0);
+}
+
 void	expander(int state, char *brake, t_exp *x)
 {
 	int		i;
@@ -19,7 +27,7 @@ void	expander(int state, char *brake, t_exp *x)
 	if (state && state == x->input[i])
 		i++;
 	else if (state && !x->input[i])
-		i = 0;
+		i = unclosed_quote(state);
 	x->input += i;
 	x->token += i;
 	free(s);
@@ -45,8 +53,8 @@ char	*full_expansion(char *input, int *token, t_env *head)
 		expander('"', "$\"", &xp);
 	else
 		expander(0, "$\"'", &xp);
-	// if (xp.star)
-	// 	expand_wildcard(&xp.result, xp.star);
+	if (xp.star)
+		expand_wildcard(&xp.result, xp.star);
 	printf("result = [> %s <]\n", xp.result);
 	return (xp.result);
 }
