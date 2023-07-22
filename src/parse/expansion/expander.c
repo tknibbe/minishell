@@ -54,7 +54,7 @@ char	*full_expansion(char *input, int *token, t_env *head)
 	else
 		expander(0, "$\"'", &xp);
 	if (xp.star)
-		expand_wildcard(&xp.result, xp.star);
+		xp.result = expand_wildcard(xp.result, xp.star, ft_strdup("."));
 	printf("result = [> %s <]\n", xp.result);
 	return (xp.result);
 }

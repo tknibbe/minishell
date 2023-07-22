@@ -26,7 +26,7 @@ typedef struct s_list
 {
 	int				*token;
 	char			*input;
-	char			*and_or;
+	int				and_or;
 	t_exec			*exec;
 	struct s_list	*next;
 }					t_list;
@@ -53,13 +53,12 @@ enum	e_token
 void	parse_input(char **input, t_ally *all);
 
 //TOKEN.C
-int		tokenize(char *input, t_list **list);
+void	tokenize(char *input, t_list **list);
 //TOKEN_UTILS.C
 int		whitespace(char c);
-void	set_rdr_pipe_amp(t_list *list, char *input, int *i);
+int		set_rdr_pipe_amp(t_list *list, char *input, int *i);
 void	left(t_list *list, char *input, int *i);
 void	right(t_list *list, char *input, int *i);
-int		is_alphanumeric(char c);
 //MAKE_LIST.c
 void	parse(char *input, t_list **list);
 
@@ -88,4 +87,8 @@ void	print_class(int num);
 void	print_test(t_list *list, char *input);
 void	print_tokens(t_list *list, char *input);
 void	print_whole_list(t_list *list, char *input);
+
+void	list_addback(t_list **head, t_list *new);
+t_list	*list_new(int len	);
+
 #endif

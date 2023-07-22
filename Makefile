@@ -18,6 +18,7 @@ SRC			=	cris_main.c \
 				parse/tokenize/token.c \
 				parse/tokenize/token_utils.c \
 				parse/tokenize/syntax.c \
+				parse/tokenize/create_list.c \
 				parse/parse/make_list.c \
 				parse/parse/list_functions.c \
 				parse/parse/split_args.c \
@@ -35,7 +36,7 @@ all : $(MINISHELL)
 
 $(MINISHELL) : $(OBJ_F)
 	@make -C lib
-	$(CC) $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@
+	$(CC) -g -fsanitize=address $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@
 
 obj/%.o : src/%.c
 	@mkdir -p obj

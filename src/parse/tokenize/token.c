@@ -6,86 +6,101 @@
 /*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/28 12:18:15 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/20 14:46:41 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/07/21 13:14:44 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 #include <token.h>
 
-static void	set_token(t_list *list, char *input);
+static void	set_token(t_list **head, t_list *list, char *input);
+
+int	len_until_next_list(char *input)
+{
+	int	i;
+	int	state;
+
+	i = 0;
+	state = 0;
+	while (input[i])
+	{
+		if (!state && ft_isinset(input[i], "'\""))
+			state = input[i];
+		else if (state && input[i] == state)
+			state = 0;
+		if (!state && ((input[i] == '|' && input[i + 1] == '|') ||\
+			(input[i] == '&' && input[i + 1] == '&')))
+			return (i);
+		i++;
+	}
+	return (i);
+}
 
 /*sets tokens according to the ENUMs defined in the header. 
 returns 0 on succes.*/
-int	tokenize(char *input, t_list **list)
+void	tokenize(char *input, t_list **list)
 {
-	int	len;
+	int		len;
+	t_list	*new;
 
 	len = ft_strlen(input);
-	(*list)->token = malloc(sizeof(int) * len);
-	if (!(*list)->token)
-		ft_exit("Malloc error\n", errno);
-	set_token(*list, input);
+	new = list_new(len);
+	list_addback(list, new);
+	set_token(list, new, input);
 	//print_tokens(*list, input);
-	return (0);
 }
 
 int	is_rdr_pipe_amp(char c)
 {
-	if (c == '|' || c == '<' || c == '>' || c == '&')
-		return (1);
-	return (0);
+	return (c == '|' || c == '<' || c == '>' || c == '&');
 }
 
-static int	is_closed_quote(char *input, int *end_quote, int i)
+static int	is_closed_quote(char *input, int i)
 {
 	char	quote;
+	int		end_quote;
 
-	if (input[i] != '"' && input[i] != '\'')
-		return (0);
-	*end_quote = i + 1;
+	end_quote = i + 1;
 	quote = input[i];
-	i++;
-	while (input[i])
+	while (input[end_quote])
 	{
-		*end_quote += 1;
-		if (input[i] == quote)
-			return (1);
-		i++;
+		if (input[end_quote] == quote)
+			return (end_quote);
+		end_quote += 1;
 	}
-	*end_quote = 0;
-	return (0);
+	return (i + 1);
 }
 
-static void	set_token(t_list *list, char *input)
+static void	set_token(t_list **head, t_list *list, char *input)
 {
 	int	i;
 	int	end_quote;
 
 	i = 0;
-	end_quote = 0;
 	while (input[i])
 	{
-		if (is_closed_quote(input, &end_quote, i))
+		if (input[i] == '\'' || input[i] == '"')
 		{
+			end_quote = is_closed_quote(input, i);
 			while (i < end_quote)
+				list->token[i++] = WORD;
+			continue ;
+		}
+		else if (is_rdr_pipe_amp(input[i]))
+		{
+			if (set_rdr_pipe_amp(list, input, &i))
 			{
-				list->token[i] = WORD;
-				i++;
+				list->input = ft_substr(input, 0, i);
+				list->token[i] = BLANK;
+				if (!list->input)
+					return ;
+				return (tokenize(input + i + 2, head));
 			}
 		}
-		if (is_rdr_pipe_amp(input[i]))
-		{
-			set_rdr_pipe_amp(list, input, &i);
-			i++;
-		}
+		else if (!whitespace(input[i]))
+			list->token[i] = WORD;
 		else
-		{
-			if (!whitespace(input[i]))
-				list->token[i] = WORD;
-			else
-				list->token[i] = BLANK;
-			i++;
-		}
+			list->token[i] = BLANK;
+		i++;
 	}
 }

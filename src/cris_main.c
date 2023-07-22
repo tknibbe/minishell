@@ -11,11 +11,8 @@ t_ally	*minishell_init(char *envp[])
 	all = malloc(sizeof(t_ally));
 	if (!all)
 		ft_exit("Malloc error\n", errno);
-	all->list = malloc(sizeof(t_list));
-	if (!all->list)
-		ft_exit("Malloc error\n", errno);
 	all->env = env_init(envp);
-	all->list->exec = NULL;
+	all->list = NULL;
 	return (all);
 }
 
@@ -23,7 +20,7 @@ void	tymon(t_ally *all, char **input)
 {
 	parse_input(input, all);
 	//printf("new str = %s\n", *input);
-	free(all->list->token);
+	//free(all->list->token);
 }
 
 void	cris(t_ally *all, char *input)
@@ -34,6 +31,10 @@ void	cris(t_ally *all, char *input)
 		echo(ft_split(&input[5], ' '));
 	if (!ft_strncmp(input, "env", 4))
 		env(all->env->head);
+	if (!ft_strncmp(input, "pwd", 4))
+		pwd();
+	if (!ft_strncmp(input, "cd ", 3))
+		cd(&input[3], all->env->head);
 	if (!ft_strncmp(input, "unset ", 6))
 		unset(all->env, ft_split(&input[6], ' '));
 	if (!ft_strncmp(input, "export ", 6))
@@ -50,18 +51,15 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc != 1)
 		ft_exit("just ./minishell is enough\n", 1);
 	all = minishell_init(envp);
-	//prompt = ft_strjoin(&argv[0][2], " -> ");
-	//if (!prompt)
-	//	ft_exit("Error: malloc failure\n", errno);
 	while (1)
 	{
-		string = readline("wat een grap -> ");
+		string = readline("ez -> ");
 		if (!string)
 			ft_exit("wtf!!\n", 2000000);
 		//printf("test\n");
 		if (ft_strncmp(string, "exit", 4) == 0)
 			exit(0);
-		// tymon(all, &string);
+		//tymon(all, &string);
 		//printf("string in main is : %s\n", string);
 		cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
 		history(string);
