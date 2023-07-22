@@ -60,11 +60,14 @@ void	match_hidden(DIR *derp, struct dirent **dir_info, int dot)
 		*dir_info = readdir(derp);
 }
 
+
+/*	not working yet but the idea is: creating a linked list as being the depth of the directory that I'm in
+	and keep matching in the loop and when I succesfully match than I create new list with the matched which will later
+	put in a double pointer as the filename or as arguments */
 char	*expand_wildcard(char *result, int count, char *d)
 {
 	DIR				*dir_p;
 	struct dirent	*dir_info;
-	char			*file_name;
 	int				state;
 
 	if (!d)
@@ -95,6 +98,7 @@ char	*expand_wildcard(char *result, int count, char *d)
 			dir_info = readdir(dir_p);
 		}
 	}
+	printf("\n\n");
 	closedir(dir_p);
 	return (NULL);
 }
