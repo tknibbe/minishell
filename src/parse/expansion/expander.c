@@ -38,7 +38,7 @@ void	expander(int state, char *brake, t_exp *x)
 	return (expander(0, "$\"'", x));
 }
 
-char	*full_expansion(char *input, int *token, t_env *head)
+void	full_expansion(char *input, int *token, t_env *head, t_char *res)
 {
 	t_exp	xp;
 

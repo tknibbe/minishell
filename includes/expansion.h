@@ -15,7 +15,7 @@ typedef struct s_exp
 	t_env	*head;
 }			t_exp;
 
-char	*full_expansion(char *input, int *token, t_env *head);
+void	full_expansion(char *input, int *token, t_env *head, t_char *res);
 void	expander(int state, char *brake, t_exp *x);
 
 char	*ft_join(char *s1, char *s2);
