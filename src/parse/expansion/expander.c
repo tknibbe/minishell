@@ -61,9 +61,10 @@ void	full_expansion(char *input, int *token, t_env *head, t_char *res)
 
 void	test_env_expansion_shit(t_ally *all, char *input)
 {
-	int	*token = malloc((ft_strlen(input) + 1) * sizeof(int));
-	for (int i = 0; i < ft_strlen(input); i++)
-		token[i] = 1;
-	token[ft_strlen(input)] = 0;
-	full_expansion(input, token, all->env->head);
+	t_str *head = NULL;
+	t_str_addback(&head, t_strnew(ft_strdup("ls")));
+	t_str_addback(&head, t_strnew(ft_strdup("-l")));
+	t_str_addback(&head, t_strnew(ft_strdup("-a")));
+	t_str_addback(&head, t_strnew(ft_strdup("-h")));
+	
 }

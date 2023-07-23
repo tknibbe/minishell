@@ -22,11 +22,11 @@
 
 typedef struct	s_list	t_list;
 
-typedef struct	s_char
+typedef struct	s_str
 {
-	char			*s;
-	struct s_char	*next;
-}					t_char;
+	char			*str;
+	struct s_str	*next;
+}					t_str;
 
 typedef struct	s_minishell
 {
@@ -49,6 +49,10 @@ int		count(char **c);
 int		ft_iswhitespace(int	c);
 int		ft_isname(int c);
 int		ft_isinset(int c, char *s);
+
+t_str	*tstr_new(char *content);
+void	tstr_addback(t_str **head, t_str *new);
+void	tstr_addnext(t_str *current, t_str *new);
 
 t_env_info	*env_init(char **env);
 

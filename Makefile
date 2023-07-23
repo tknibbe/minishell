@@ -13,6 +13,7 @@ SRC			=	cris_main.c \
 				built_ins/cd.c \
 				built_ins/echo.c \
 				utils/double_array_utils.c \
+				utils/t_char_utils.c \
 				utils/utils1.c \
 				parse/parse.c \
 				parse/tokenize/token.c \
