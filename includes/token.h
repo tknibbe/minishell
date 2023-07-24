@@ -71,7 +71,6 @@ int		check_syntax(t_list *list, char **input);
 //LIST_utils.C
 void	exec_lstadd_back(t_exec **lst, t_exec *new);
 t_exec	*exec_lstnew(void);
-
 void	rdr_lstadd_back(t_rdr **lst, t_rdr *new);
 
 //LIST_UTILS2.c
@@ -79,15 +78,8 @@ t_rdr	*rdr_lstnew(char *str, int type);
 void	char_lstadd_back(t_char **lst, t_char *new);
 t_char	*char_lstnew(char *str);
 
-//SPLIT_ARGS.C
-char	**split_args(char *input, t_list *list);
-
-//SET_RDRS.C
-void	set_rdrs(t_list **list, char *input, int nodes);
-
-//SET_CMDS.C
-void	set_cmds(t_list **list, char *input, int node_amount);
-char	*trim_quotes(char *str);
+//HEREDOC.C
+void	add_heredoc(char *input, t_exec *node, int *i);
 
 //TEST_FUNCTIONS.C
 void	print_class(int num);

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/24 14:58:32 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/24 15:40:37 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	new_cmd_node(char *input, int *token, t_exec *node, int *i)
 		while (token[*i] == WORD && input[*i])
 			*i += 1;
 		str = ft_substr(input, start, *i - start);
+		if (!str)
+			ft_exit("Malloc error\n", errno);
 		char_lstadd_back(&node->cmd, char_lstnew(str));
 		while (token[*i] == BLANK && input[*i])
 			*i += 1;
@@ -68,11 +70,18 @@ void	new_rdr_node(char *input, int *token, t_exec *node, int *i)
 	char	*str;
 
 	type = token[*i];
+	if (type == HEREDOC)
+	{
+		add_heredoc(input, node, i);
+		return ;
+	}
 	while ((token[*i] == BLANK || is_redirect(token[*i])) && input[*i])
 		*i += 1;
 	start = *i;
 	while (token[*i] == WORD && input[*i])
 		*i += 1;
 	str = ft_substr(input, start, *i - start);
+	if (!str)
+		ft_exit("Malloc error\n", errno);
 	rdr_lstadd_back(&node->rdr, rdr_lstnew(str, type));
 }

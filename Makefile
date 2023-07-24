@@ -21,6 +21,7 @@ SRC			=	cris_main.c \
 				parse/parse/make_list.c \
 				parse/parse/list_utils.c \
 				parse/parse/list_utils2.c \
+				parse/parse/heredoc.c \
 				parse/expansion/expander_wildcard.c \
 				parse/expansion/expander.c \
 				parse/expansion/expander_utils.c \
@@ -33,7 +34,7 @@ all : $(MINISHELL)
 
 $(MINISHELL) : $(OBJ_F)
 	@make -C lib
-	$(CC) $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@
+	$(CC) -fsanitize=address $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@
 
 obj/%.o : src/%.c
 	@mkdir -p obj

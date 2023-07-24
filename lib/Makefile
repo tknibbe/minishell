@@ -6,7 +6,7 @@
 #    By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/05 14:27:27 by tknibbe           #+#    #+#              #
-#    Updated: 2023/07/03 13:48:57 by tknibbe          ###   ########.fr        #
+#    Updated: 2023/07/24 16:26:58 by tknibbe          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCLIB = check/ft_isalpha.c \
 		str/ft_strchr.c \
 		str/ft_strrchr.c \
 		str/ft_strncmp.c \
+		str/ft_strdel.c \
 		memory/ft_memchr.c \
 		memory/ft_memcmp.c \
 		str/ft_strnstr.c \
@@ -61,7 +62,7 @@ OBJLIB = ft_isalpha.o ft_isdigit.o ft_isalnum.o \
 		ft_substr.o ft_strjoin.o ft_strtrim.o ft_split.o \
 		ft_itoa.o ft_strmapi.o ft_striteri.o ft_putchar_fd.o \
 		ft_putstr_fd.o ft_putendl_fd.o ft_putnbr_fd.o \
-		ft_instr.o
+		ft_instr.o ft_strdel.o
 		
 SRCPRINTF = io/ft_printf.c \
 			io/c_s_u_d_i_conversion.c \
