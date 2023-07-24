@@ -11,8 +11,8 @@ typedef struct s_char		t_char;
 
 typedef struct s_rdr
 {
-	char			*file; // file name
-	int				type; // <, >, <<, >>
+	char			*file;
+	int				type;
 	t_rdr			*next;
 }					t_rdr;
 
@@ -41,8 +41,9 @@ enum	e_token
 	WORD,
 	REDIRLEFT,
 	REDIRRIGHT,
-	APPLEFT,
 	APPRIGHT,
+	HEREDOC,
+	HEREDOC_NO_EXP,
 	PIPESYMBOL,
 	BRACE_OPEN,
 	BRACE_CLOSE,

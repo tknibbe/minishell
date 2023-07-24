@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   token_utils.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/07/19 14:56:52 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/20 14:46:41 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/19 14:56:52 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/07/24 14:58:34 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	left(t_list *list, char *input, int *i)
 {
 	if (input[*i + 1] == '<')
 	{
-		list->token[*i] = APPLEFT;
-		list->token[*i + 1] = APPLEFT;
+		list->token[*i] = HEREDOC;
+		list->token[*i + 1] = HEREDOC;
 		*i += 1;
 	}
 	else

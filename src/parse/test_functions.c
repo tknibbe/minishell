@@ -39,7 +39,7 @@ void	print_class(int	num)
 		printf("redir left  : ");
 	else if (num == REDIRRIGHT)
 		printf("redirright  : ");
-	else if (num == APPLEFT)
+	else if (num == HEREDOC)
 		printf("append left : ");
 	else if (num == APPRIGHT)
 		printf("append right: ");

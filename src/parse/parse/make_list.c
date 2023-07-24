@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/24 12:46:56 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/24 14:58:32 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	new_cmd_node(char *input, int *token, t_exec *exec, int *i);
 
 int	is_redirect(int t)
 {
-	return (t == REDIRLEFT || t == REDIRRIGHT || t == APPLEFT || t == APPRIGHT);
+	return (t == REDIRLEFT || t == REDIRRIGHT || t == HEREDOC || t == APPRIGHT);
 }
 
 void	parse(char *input, t_list *list)
