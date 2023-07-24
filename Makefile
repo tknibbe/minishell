@@ -19,10 +19,8 @@ SRC			=	cris_main.c \
 				parse/tokenize/token_utils.c \
 				parse/tokenize/syntax.c \
 				parse/parse/make_list.c \
-				parse/parse/list_functions.c \
-				parse/parse/split_args.c \
-				parse/parse/set_rdrs.c \
-				parse/parse/set_cmds.c \
+				parse/parse/list_utils.c \
+				parse/parse/list_utils2.c \
 				parse/expansion/expander_wildcard.c \
 				parse/expansion/expander.c \
 				parse/expansion/expander_utils.c \

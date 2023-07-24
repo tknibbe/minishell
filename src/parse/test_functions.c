@@ -1,35 +1,34 @@
 
 #include <minishell.h>
 
-// void print_whole_list(t_list *list, char *input)
-// {
-// 	int	i = 0;
-// 	int	node_amnt = 0;
-// 	while (list->exec)
-// 	{
-// 		t_exec *list =  list->exec;
-// 		t_rdr	*rdr = list->exec->rdr;
-// 		printf("\nnode %d\n", node_amnt);
-// 		printf("[\n");
-// 		printf("CMD: ");
-// 		while (list->cmd[i])
-// 		{
-// 			printf("%s, ", list->cmd[i]);
-// 			i++;
-// 		}
-// 		i = 0;
-// 		printf("\n");
-// 		printf("RDR: ");
-// 		while (rdr)
-// 		{
-// 			printf("{%s} [%d], ", rdr->file, rdr->type);
-// 			rdr = rdr->next;
-// 		}
-// 		node_amnt++;
-// 		printf("\n]\n\n");
-// 		list->exec = list->exec->next;
-// 	}
-// }
+ void print_whole_list(t_list *list, char *input)
+ {
+ 	int	node_amnt = 0;
+ 	while (list->exec)
+ 	{
+ 		t_exec	*exec =  list->exec;
+ 		t_rdr	*rdr = list->exec->rdr;
+		t_char	*cmd = list->exec->cmd;
+ 		printf("\nnode %d\n", node_amnt);
+ 		printf("[\n");
+ 		printf("CMD: ");
+ 		while (cmd)
+ 		{
+ 			printf("%s, ", cmd->s);
+ 			cmd = cmd->next;
+ 		}
+ 		printf("\n");
+ 		printf("RDR: ");
+ 		while (rdr)
+ 		{
+ 			printf("{%s} [%d], ", rdr->file, rdr->type);
+ 			rdr = rdr->next;
+ 		}
+ 		node_amnt++;
+ 		printf("\n]\n\n");
+ 		list->exec = list->exec->next;
+ 	}
+ }
 
 void	print_class(int	num)
 {

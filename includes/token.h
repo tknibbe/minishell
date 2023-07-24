@@ -7,6 +7,7 @@
 typedef struct s_exec		t_exec;
 typedef struct s_rdr		t_rdr;
 typedef struct s_minishell	t_ally;
+typedef struct s_char		t_char;
 
 typedef struct s_rdr
 {
@@ -17,7 +18,7 @@ typedef struct s_rdr
 
 typedef struct s_exec
 {
-	char			**cmd;
+	t_char			*cmd;
 	t_rdr			*rdr;
 	t_exec			*next;
 }					t_exec;
@@ -61,17 +62,21 @@ void	left(t_list *list, char *input, int *i);
 void	right(t_list *list, char *input, int *i);
 int		is_alphanumeric(char c);
 //MAKE_LIST.c
-void	parse(char *input, t_list **list);
+void	parse(char *input, t_list *list);
 
 //SYNTAX.C
 int		check_syntax(t_list *list, char **input);
 
-//LIST_FUNCTIONS.C
+//LIST_utils.C
 void	exec_lstadd_back(t_exec **lst, t_exec *new);
 t_exec	*exec_lstnew(void);
 
 void	rdr_lstadd_back(t_rdr **lst, t_rdr *new);
-t_rdr	*rdr_lstnew(void);
+
+//LIST_UTILS2.c
+t_rdr	*rdr_lstnew(char *str, int type);
+void	char_lstadd_back(t_char **lst, t_char *new);
+t_char	*char_lstnew(char *str);
 
 //SPLIT_ARGS.C
 char	**split_args(char *input, t_list *list);
