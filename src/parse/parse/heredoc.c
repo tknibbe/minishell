@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/25 11:42:53 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/25 11:44:23 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	add_heredoc(char *input, t_exec *node, int *i)
 
 	delimiter = get_delimiter(input, i);
 	expand = set_expand(delimiter);
-	if (expand == HEREDOC_NO_EXP) //cleaner?
+	if (expand == HEREDOC_NO_EXP)
 		delimiter = ft_strdel(delimiter, "\"\'");
 	line = NULL;
 	while (1)
@@ -42,7 +42,7 @@ void	add_heredoc(char *input, t_exec *node, int *i)
 	free(line);
 }
 
-static int	set_expand(char *d) // cleaner
+static int	set_expand(char *d)
 {
 	int		i;
 	int		j;
