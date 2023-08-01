@@ -64,30 +64,30 @@ void	execute_command(t_exec *t)
 {
 	int	i = 0;
 	int	node_amnt = 0;
-	t_exec *list = t;
-	while (list)
-	{
-		t_rdr	*rdr = list->rdr;
-		printf("\nnode %d\n", node_amnt);
-		printf("[\n");
-		printf("CMD: ");
-		// while (list->cmd[i])
-		// {
-		// 	printf("%s, ", list->cmd[i]);
-		// 	i++;
-		// }
-		i = 0;
-		printf("\n");
-		printf("RDR: ");
-		while (rdr)
-		{
-			printf("{%s} [%d], ", rdr->file, rdr->type);
-			rdr = rdr->next;
-		}
-		node_amnt++;
-		printf("\n]\n\n");
-		list = list->next;
-	}
+	//t_exec *list = t;
+	//while (list)
+	//{
+	//	t_rdr	*rdr = list->rdr;
+	//	printf("\nnode %d\n", node_amnt);
+	//	printf("[\n");
+	//	printf("CMD: ");
+	//	// while (list->cmd[i])
+	//	// {
+	//	// 	printf("%s, ", list->cmd[i]);
+	//	// 	i++;
+	//	// }
+	//	i = 0;
+	//	printf("\n");
+	//	printf("RDR: ");
+	//	while (rdr)
+	//	{
+	//		printf("{%s} [%d], ", rdr->file, rdr->type);
+	//		rdr = rdr->next;
+	//	}
+	//	node_amnt++;
+	//	printf("\n]\n\n");
+	//	list = list->next;
+	//}
 	redirection(t->rdr);
 	// write(2, "redirection succesfull?\n", 25);
 	execve(t->cmd[0], t->cmd, NULL);

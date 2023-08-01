@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:56:52 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/24 14:58:34 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/25 13:38:04 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	right(t_list *list, char *input, int *i)
 {
 	if (input[*i + 1] == '>')
 	{
-		list->token[*i] = APPRIGHT;
-		list->token[*i + 1] = APPRIGHT;
+		list->token[*i] = APPEND;
+		list->token[*i + 1] = APPEND;
 		*i += 1;
 	}
 	else

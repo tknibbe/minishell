@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/25 11:44:23 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/28 14:22:47 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static char	*get_delimiter(char *input, int *i);
 static int	set_expand(char *delimiter);
 static char	*trim_char(char *line, char *c);
-static char *backslash_check(char *line);
+static char	*backslash_check(char *line);
 
 void	add_heredoc(char *input, t_exec *node, int *i)
 {
@@ -33,7 +33,10 @@ void	add_heredoc(char *input, t_exec *node, int *i)
 	{
 		write(1, ">", 1);
 		line = get_next_line(STDIN_FILENO);
-		line = backslash_check(line);
+		if (!line)
+			return ;
+		//line = backslash_check(line);
+		printf("line  = [%s]\n", line);
 		if (!ft_strncmp(delimiter, line, ft_strlen(delimiter)))
 			break ;
 		line = trim_char(line, "\n");
@@ -86,23 +89,24 @@ static char	*get_delimiter(char *input, int *i)
 	free (temp);
 	return (str);
 }
-static char *backslash_check(char *line)
-{
-	char *str;
-	char *temp;
 
-	if (line[ft_strlen(line) - 2] == '\\')
-	{
-		line = trim_char(line, "\\\n");
-		write(1, ">", 1);
-		str = get_next_line(STDIN_FILENO);
-		temp = ft_strjoin(line, str);
-		free (line);
-		free (str);
-		return (temp);
-	}
-	return (line);
-}
+//static char	*backslash_check(char *line)
+//{
+//	char	*str;
+//	char	*temp;
+
+//	if (line[ft_strlen(line) - 2] == '\\')
+//	{
+//		line = trim_char(line, "\\\n");
+//		write(1, ">", 1);
+//		str = get_next_line(STDIN_FILENO);
+//		temp = ft_strjoin(line, str);
+//		free (line);
+//		free (str);
+//		return (temp);
+//	}
+//	return (line);
+//}
 
 static char	*trim_char(char *line, char *c)
 {

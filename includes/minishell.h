@@ -15,6 +15,7 @@
 # include <token.h>
 # include <exec.h>
 # include <built_ins.h>
+# include <signal.h>
 
 //hey crissie baby <3
 //hey tymoo daddy 8=D
@@ -54,5 +55,8 @@ t_env_info	*env_init(char **env);
 
 //expansion
 void		test_env_expansion_shit(t_ally *all, char *input);
+
+//SIGNALS
+void	set_signals(void);
 
 #endif

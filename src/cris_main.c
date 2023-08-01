@@ -16,6 +16,7 @@ t_ally	*minishell_init(char *envp[])
 		ft_exit("Malloc error\n", errno);
 	all->env = env_init(envp);
 	all->list->exec = NULL;
+	set_signals();
 	return (all);
 }
 
@@ -39,10 +40,38 @@ void	cris(t_ally *all, char *input)
 	if (!ft_strncmp(input, "export ", 6))
 		export(all->env, all->env->head, ft_split(&input[7], ' '));
 }
+int	start(t_ally *all, char *prompt)
+{
+	char	*string;
+
+	while (1)
+	{
+		//write(1, "1", 1);
+		 int rl_catch_signals = 0;
+		set_signals();
+		string = readline(prompt);
+		//write(1, "2", 1);
+		if (!string)
+			exit(0);
+		if (!strncmp(string, "", 1)) // added because otherwise an empty string would go through parser
+		{
+			free(string);
+			continue ;
+		}
+		if (ft_strncmp(string, "exit", 4) == 0)
+			exit(0);
+		tymon(all, &string);
+		//printf("string in main is : %s\n", string);
+		//cris(all, string);
+		//history(string);
+		//free(string);
+		//system("leaks -q minishell");
+	}
+
+}
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	char	*string;
 	char	*prompt;
 	t_ally	*all;
 
@@ -50,23 +79,10 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc != 1)
 		ft_exit("just ./minishell is enough\n", 1);
 	all = minishell_init(envp);
-	//prompt = ft_strjoin(&argv[0][2], " -> ");
-	//if (!prompt)
-	//	ft_exit("Error: malloc failure\n", errno);
-	while (1)
-	{
-		string = readline("wat een grap -> ");
-		if (!string)
-			ft_exit("wtf!!\n", 2000000);
-		//printf("test\n");
-		if (ft_strncmp(string, "exit", 4) == 0)
-			exit(0);
-		tymon(all, &string);
-		//printf("string in main is : %s\n", string);
-		//cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
-		history(string);
-		free(string);
-		//system("leaks -q minishell");
-	}
+	//all = NULL;
+	prompt = ft_strjoin(&argv[0][2], " -> ");
+	if (!prompt)
+		ft_exit("Error: malloc failure\n", errno);
+	start(all, prompt);
 	//free(prompt);
 }

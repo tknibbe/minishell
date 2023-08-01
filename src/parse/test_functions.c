@@ -41,7 +41,7 @@ void	print_class(int	num)
 		printf("redirright  : ");
 	else if (num == HEREDOC)
 		printf("append left : ");
-	else if (num == APPRIGHT)
+	else if (num == APPEND)
 		printf("append right: ");
 	else if (num == PIPESYMBOL)
 		printf("pipe        : ");

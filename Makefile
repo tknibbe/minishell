@@ -1,6 +1,6 @@
 INCLUDE		=	-I includes -I lib/includes
 CFLAGS		=	#-Wall -Werror -Wextra
-READLINE	=	-lreadline
+READLINE	=	-lreadline -I $(shell brew --prefix readline)/includes -L$(shell brew --prefix readline)/lib
 OBJ_F		=	$(SRC:%.c=obj/%.o)
 MINISHELL	=	minishell
 LIBFT		=	lib/libft.a
@@ -26,6 +26,7 @@ SRC			=	cris_main.c \
 				parse/expansion/expander.c \
 				parse/expansion/expander_utils.c \
 				parse/test_functions.c \
+				signals/signals.c \
 				exit_funcs.c \
 				# parse/tokenize/make_list.c \
 				# built_ins/cd.c \
@@ -44,6 +45,7 @@ obj/%.o : src/%.c
 	@mkdir -p obj/parse/parse
 	@mkdir -p obj/parse/expansion
 	@mkdir -p obj/execution
+	@mkdir -p obj/signals
 	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
 
 clean :

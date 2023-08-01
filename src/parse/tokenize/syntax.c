@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/24 14:58:33 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/07/25 13:39:03 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	is_redirect(int c)
 {
 	if (c == REDIRRIGHT || c == REDIRLEFT \
-		|| c == HEREDOC || c == APPRIGHT)
+		|| c == HEREDOC || c == APPEND)
 		return (1);
 	return (0);
 }
@@ -30,7 +30,7 @@ void	ft_syntax_error(char *str, char c, int token)
 		write(2, "\'", 1);
 		if (token == HEREDOC)
 			write(2, "<<", 2);
-		else if (token == APPRIGHT)
+		else if (token == APPEND)
 			write(2, ">>", 2);
 		else if (token == OR)
 			write(2, "||", 2);
@@ -46,7 +46,7 @@ void	ft_syntax_error(char *str, char c, int token)
 static int	check_rdr(t_list *list, char *input, int *i)
 {
 	*i += 1;
-	if (list->token[*i] == APPRIGHT | list->token[*i] == HEREDOC)
+	if (list->token[*i] == APPEND || list->token[*i] == HEREDOC)
 		*i += 1;
 	while (list->token[*i] == BLANK && input[*i])
 	{
