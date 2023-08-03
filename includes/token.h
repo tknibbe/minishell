@@ -32,7 +32,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-# define TAB '	'
+//# define TAB '	'
 # define SPACE ' '
 
 enum	e_token
@@ -57,7 +57,7 @@ void	parse_input(char **input, t_ally *all);
 //TOKEN.C
 int		tokenize(char *input, t_list *list);
 //TOKEN_UTILS.C
-int		whitespace(char c);
+int		ft_whitespace(char c);
 void	set_rdr_pipe_amp(t_list *list, char *input, int *i);
 void	left(t_list *list, char *input, int *i);
 void	right(t_list *list, char *input, int *i);

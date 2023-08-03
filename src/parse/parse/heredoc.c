@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/28 14:22:47 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/03 17:04:12 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static char	*get_delimiter(char *input, int *i);
 static int	set_expand(char *delimiter);
 static char	*trim_char(char *line, char *c);
-static char	*backslash_check(char *line);
+//static char	*backslash_check(char *line);
 
 void	add_heredoc(char *input, t_exec *node, int *i)
 {
@@ -77,10 +77,10 @@ static char	*get_delimiter(char *input, int *i)
 	char	*temp;
 	char	*str;
 
-	while (whitespace(input[*i]) || input[*i] == '<')
+	while (ft_whitespace(input[*i]) || input[*i] == '<')
 		*i += 1;
 	start = *i;
-	while (!whitespace(input[*i]) && input[*i])
+	while (!ft_whitespace(input[*i]) && input[*i])
 		*i += 1;
 	temp = ft_substr(input, start, *i - start);
 	if (temp == NULL)

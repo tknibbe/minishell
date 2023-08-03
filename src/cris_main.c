@@ -2,7 +2,6 @@
 #include <built_ins.h>
 #include <exec.h>
 
-int	signal_received = 0;
 
 void	leaks(void)
 {
@@ -55,15 +54,11 @@ int	run_shell(t_ally *all, char *prompt)
 	char	*string;
 
 	set_signals();
+	//signal(SIGINT, signal_handler);
 	string = readline(prompt);
+	//signal(SIGINT, signal_handler);
 	if (!string)
 		exit(0);
-	if (signal_received)
-	{
-		printf("INTERRUPPTEEEDD\n");
-		signal_received = 0;
-		return (1);
-	}
 	if (!strncmp(string, "", 1))
 	{
 		free(string);

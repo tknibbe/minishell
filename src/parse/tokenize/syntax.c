@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/03 13:18:03 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/03 16:41:10 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	add_new_input(t_list *list, char **input) //WILL LEAK! i think
 {
 	char	*new_str;
 	char	*str;
-	char	*temp;
 
 	str = readline("> ");
 	new_str = ft_strjoin(*input, str);

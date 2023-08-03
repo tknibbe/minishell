@@ -6,13 +6,13 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:56:52 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/25 13:38:04 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/03 17:03:46 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <token.h>
 
-int	whitespace(char c)
+int	ft_whitespace(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n'\
 		|| c == '\v' || c == '\f' || c == '\r')

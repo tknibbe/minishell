@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/03 13:10:40 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/03 17:03:59 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	set_token(t_list *list, char *input)
 		}
 		else
 		{
-			if (!whitespace(input[i]))
+			if (!ft_whitespace(input[i]))
 				list->token[i] = WORD;
 			else
 				list->token[i] = BLANK;

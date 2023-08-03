@@ -1,6 +1,6 @@
-INCLUDE		=	-I includes -I lib/includes
+INCLUDE		=	-I includes -I lib/includes -I $(shell brew --prefix readline)/include
 CFLAGS		=	#-Wall -Werror -Wextra
-READLINE	=	-lreadline -I $(shell brew --prefix readline)/includes/readline/* -L$(shell brew --prefix readline)/lib
+READLINE	=	-lreadline  -L $(shell brew --prefix readline)/lib
 OBJ_F		=	$(SRC:%.c=obj/%.o)
 MINISHELL	=	minishell
 LIBFT		=	lib/libft.a
