@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/25 14:21:10 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/03 13:36:06 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 void	new_rdr_node(char *input, int *token, t_exec *exec, int *i);
 void	new_cmd_node(char *input, int *token, t_exec *exec, int *i);
-
-int	is_redirect(int t)
-{
-	return (t == REDIRLEFT || t == REDIRRIGHT || t == HEREDOC || t == APPEND);
-}
+int		is_redirect(int t);
 
 void	parse(char *input, t_list *list)
 {
@@ -38,10 +34,16 @@ void	parse(char *input, t_list *list)
 			else
 				i++;
 		}
+		//printf("adding %p to back of list->exec at %p\n", node, list->exec);
 		exec_lstadd_back(&list->exec, node);
 		i++;
 	}
-	//print_whole_list(list, input);
+	//free(node);
+}
+
+int	is_redirect(int t)
+{
+	return (t == REDIRLEFT || t == REDIRRIGHT || t == HEREDOC || t == APPEND);
 }
 
 void	new_cmd_node(char *input, int *token, t_exec *node, int *i)

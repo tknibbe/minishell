@@ -1,6 +1,6 @@
 INCLUDE		=	-I includes -I lib/includes
 CFLAGS		=	#-Wall -Werror -Wextra
-READLINE	=	-lreadline -I $(shell brew --prefix readline)/includes -L$(shell brew --prefix readline)/lib
+READLINE	=	-lreadline -I $(shell brew --prefix readline)/includes/readline/* -L$(shell brew --prefix readline)/lib
 OBJ_F		=	$(SRC:%.c=obj/%.o)
 MINISHELL	=	minishell
 LIBFT		=	lib/libft.a
@@ -35,7 +35,7 @@ all : $(MINISHELL)
 
 $(MINISHELL) : $(OBJ_F)
 	@make -C lib
-	$(CC) -fsanitize=address $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@
+	$(CC)  $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@ #-fsanitize=address
 
 obj/%.o : src/%.c
 	@mkdir -p obj

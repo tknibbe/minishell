@@ -1,6 +1,7 @@
 
 #include <minishell.h>
 
+// somehow moves the pointers so if you use this expect leaks xxxx <3
  void print_whole_list(t_list *list, char *input)
  {
  	int	node_amnt = 0;

@@ -2,6 +2,13 @@
 #include <built_ins.h>
 #include <exec.h>
 
+int	signal_received = 0;
+
+void	leaks(void)
+{
+	system("leaks -q minishell");
+}
+
 t_ally	*minishell_init(char *envp[])
 {
 	t_ally	*all;
@@ -14,6 +21,7 @@ t_ally	*minishell_init(char *envp[])
 	all->list = malloc(sizeof(t_list));
 	if (!all->list)
 		ft_exit("Malloc error\n", errno);
+	all->list->next = NULL;
 	all->env = env_init(envp);
 	all->list->exec = NULL;
 	set_signals();
@@ -24,7 +32,9 @@ void	tymon(t_ally *all, char **input)
 {
 	parse_input(input, all);
 	//printf("new str = %s\n", *input);
-	free(all->list->token);
+	//free(input);
+	free (*input);
+	//leaks();
 }
 
 void	cris(t_ally *all, char *input)
@@ -40,34 +50,29 @@ void	cris(t_ally *all, char *input)
 	if (!ft_strncmp(input, "export ", 6))
 		export(all->env, all->env->head, ft_split(&input[7], ' '));
 }
-int	start(t_ally *all, char *prompt)
+int	run_shell(t_ally *all, char *prompt)
 {
 	char	*string;
 
-	while (1)
+	set_signals();
+	string = readline(prompt);
+	if (!string)
+		exit(0);
+	if (signal_received)
 	{
-		//write(1, "1", 1);
-		 int rl_catch_signals = 0;
-		set_signals();
-		string = readline(prompt);
-		//write(1, "2", 1);
-		if (!string)
-			exit(0);
-		if (!strncmp(string, "", 1)) // added because otherwise an empty string would go through parser
-		{
-			free(string);
-			continue ;
-		}
-		if (ft_strncmp(string, "exit", 4) == 0)
-			exit(0);
-		tymon(all, &string);
-		//printf("string in main is : %s\n", string);
-		//cris(all, string);
-		//history(string);
-		//free(string);
-		//system("leaks -q minishell");
+		printf("INTERRUPPTEEEDD\n");
+		signal_received = 0;
+		return (1);
 	}
-
+	if (!strncmp(string, "", 1))
+	{
+		free(string);
+		return (1);
+	}
+	if (ft_strncmp(string, "exit", 4) == 0)
+		exit(0);
+	tymon(all, &string);
+	return (0);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -80,9 +85,10 @@ int	main(int argc, char *argv[], char *envp[])
 		ft_exit("just ./minishell is enough\n", 1);
 	all = minishell_init(envp);
 	//all = NULL;
-	prompt = ft_strjoin(&argv[0][2], " -> ");
+	prompt = ft_strjoin(&argv[0][2], " -> "); //kunnen misschien de prompt ook in de header definen? maybe cleaner?
 	if (!prompt)
 		ft_exit("Error: malloc failure\n", errno);
-	start(all, prompt);
+	while (1)
+		run_shell(all, prompt);
 	//free(prompt);
 }

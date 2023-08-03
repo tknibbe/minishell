@@ -55,7 +55,7 @@ enum	e_token
 void	parse_input(char **input, t_ally *all);
 
 //TOKEN.C
-int		tokenize(char *input, t_list **list);
+int		tokenize(char *input, t_list *list);
 //TOKEN_UTILS.C
 int		whitespace(char c);
 void	set_rdr_pipe_amp(t_list *list, char *input, int *i);
@@ -64,6 +64,7 @@ void	right(t_list *list, char *input, int *i);
 int		is_alphanumeric(char c);
 //MAKE_LIST.c
 void	parse(char *input, t_list *list);
+void	free_list_struct(t_list *list);
 
 //SYNTAX.C
 int		check_syntax(t_list *list, char **input);

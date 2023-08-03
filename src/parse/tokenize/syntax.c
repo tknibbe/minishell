@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/25 13:39:03 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/03 13:18:03 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	add_new_input(t_list *list, char **input) //WILL LEAK! i think
 	free(list->token);
 	free(list->exec);
 	*input = new_str;
-	tokenize(*input, &list);
+	tokenize(*input, list);
 	check_syntax(list, input);
 }
 

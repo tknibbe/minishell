@@ -6,6 +6,7 @@
 # include <unistd.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+//# include <readline>
 
 # include <sys/wait.h>
 # include <sys/errno.h>
@@ -20,6 +21,7 @@
 //hey crissie baby <3
 //hey tymoo daddy 8=D
 //hey crissie deel 2 80085
+int	signal_received;
 
 typedef struct s_list	t_list;
 
@@ -58,5 +60,6 @@ void		test_env_expansion_shit(t_ally *all, char *input);
 
 //SIGNALS
 void	set_signals(void);
+void	signal_handler(int c);
 
 #endif
