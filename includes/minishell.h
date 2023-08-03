@@ -21,7 +21,6 @@
 //hey crissie baby <3
 //hey tymoo daddy 8=D
 //hey crissie deel 2 80085
-int	signal_received;
 
 typedef struct s_list	t_list;
 

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/03 13:36:06 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/03 17:28:50 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	parse(char *input, t_list *list)
 		}
 		//printf("adding %p to back of list->exec at %p\n", node, list->exec);
 		exec_lstadd_back(&list->exec, node);
-		i++;
+		if (input[i] == '|')
+			i++;
 	}
 	//free(node);
 }
