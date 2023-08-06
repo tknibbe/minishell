@@ -1,7 +1,7 @@
 #include <built_ins.h>
 #include <minishell.h>
 
-static int	cmp_until_equals(char *s1, char *s2)
+int	cmp_until_equals(char *s1, char *s2)
 {
 	int	i;
 
@@ -15,7 +15,7 @@ static int	cmp_until_equals(char *s1, char *s2)
 	return (0);
 }
 
-static void	replace_value(t_env *env, char **s, int i)
+void	replace_value(t_env *env, char **s, int i)
 {
 	int	j;
 
@@ -28,11 +28,11 @@ static void	replace_value(t_env *env, char **s, int i)
 	if (!env->value)
 		ft_exit("Error: malloc failure\n", errno);
 	free(env->joined_value);
-	//env->joined_value = ft_envjoin(env->key, env->value);
+	env->joined_value = ft_envjoin(env->key, env->value);
 	move_pointer(s, i);
 }
 
-static void	join_value(t_env *env, char **s, int i)
+void	join_value(t_env *env, char **s, int i)
 {
 	int		j;
 	char	*result;
@@ -46,7 +46,7 @@ static void	join_value(t_env *env, char **s, int i)
 	free(env->value);
 	env->value = result;
 	free(env->joined_value);
-	//env->joined_value = ft_envjoin(env->key, env->value);
+	env->joined_value = ft_envjoin(env->key, env->value);
 	move_pointer(s, i);
 }
 

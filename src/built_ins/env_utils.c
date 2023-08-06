@@ -39,9 +39,7 @@ char	*ft_envjoin(char *s1, char *s2)
 
 int	check_key_status(int src, int n)
 {
-	if (src || (ft_isalnum(n) || n == '_'))
-		return (1);
-	return (0);
+	return (src || ft_isalnum(n) || n == '_');
 }
 
 

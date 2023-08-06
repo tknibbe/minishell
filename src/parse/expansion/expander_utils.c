@@ -30,17 +30,17 @@ char	*ft_join(char *s1, char *s2)
 	return (s);
 }
 
-int	expand_dollo(t_exp *x, char **s, int i)
+int	expand_dollo(t_exp *x, char *input, char **s, int i)
 {
 	char	*value;
 
-	value = get_env(&x->input[i], x->head);
+	value = get_env(&input[i], x->head);
 	if (value)
 	{
 		*s = ft_join(*s, value);
 		free(value);
 	}
-	while (ft_isname(x->input[i]))
+	while (ft_isname(input[i]))
 		i++;
 	return (i);
 }
@@ -56,28 +56,39 @@ void	append_sub(char **s, char *input, int len)
 	free(str);
 }
 
-int	identify_substr(t_exp *x, int state, char *brake, char **s)
+char	*get_brake(int state)
+{
+	if (state == '\'')
+		return ("'");
+	else if (state == '"')
+		return ("$\"");
+	return ("$\"'");
+}
+
+int	identify_substr(t_exp *x, int state, char *input, char **s)
 {
 	char	*str;
 	int		i;
 	int		j;
+	char	*brake;
 
 	i = 0;
-	while (x->input[i] && x->input[i] != state)
+	brake = get_brake(state);
+	while (input[i] && input[i] != state)
 	{
 		j = 0;
-		while (x->input[i + j] && x->token[i + j] == WORD && !ft_isinset(x->input[i + j], brake))
+		while (input[i + j] && !ft_isinset(input[i + j], brake))
 		{
-			if (!state && x->input[i + j] == '*')
+			if (!state && input[i + j] == '*')
 				x->star++;
 			j++;
 		}
 		if (j)
-			append_sub(s, &x->input[i], j);
+			append_sub(s, &input[i], j);
 		i += j;
-		if (x->input[i] == '$')
-			i = expand_dollo(x, s, (i + 1));
-		else if (ft_isinset(x->input[i], brake))
+		if (input[i] == '$')
+			i = expand_dollo(x, input, s, (i + 1));
+		else if (ft_isinset(input[i], brake))
 			break ;
 	}
 	return (i);

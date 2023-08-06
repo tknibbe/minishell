@@ -107,6 +107,6 @@ void	execute_command(t_exec *t)
 // 		t->rdr = get_some_rdr();
 // 		execute_command(t);
 // 	}
-// 	wait(NULL);
+// 	waitpid(&status);
 // 	return ;
 // }

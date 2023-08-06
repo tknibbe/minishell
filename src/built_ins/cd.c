@@ -2,24 +2,30 @@
 #include <minishell.h>
 #include <readline/history.h>
 
-void	get_home(t_env *env)
+void	builtin(t_env *env, char *key)
 {
-	char	*home;
+	char	*to_fetch;
 
-	home = get_env("HOME", env);
-	if (!home) 
-		write(2, "minishell: cd: HOME not set\n", 29);
-	else if (chdir(home) < 0)
+	to_fetch = get_env(key, env);
+	if (!to_fetch)
+	{
+		write(2, "minishell: cd: ", 16);
+		write(2, key, ft_strlen(key));
+		write(2, " not set\n", 10);
+	}
+	else if (chdir(to_fetch) < 0)
 		perror("minishell: cd");
+	free(to_fetch);
 }
 
 void	cd(char *path, t_env *env)
 {
 	if (!path || !ft_strncmp(path, "~", 2))
-		return (get_home(env));
+		builtin(env, "HOME");
+	if (!ft_strncmp(path, "-", 2))
+		builtin(env, "OLDPWD");
 	if (chdir(path) < 0)
 		perror("minishell: cd");
-
 	/*	maybe also set the last error number to 1
 		and also send the environment so we can get the path */
 }
