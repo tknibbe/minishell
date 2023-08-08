@@ -6,20 +6,26 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 12:12:28 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/24 12:25:09 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/08 12:19:42 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <token.h>
 
-t_rdr	*rdr_lstnew(char *str, int type)
+t_rdr	*rdr_lstnew(char *str, int type, int heredoc)
 {
 	t_rdr	*n1;
 
 	n1 = malloc(sizeof(t_rdr));
 	if (n1 == NULL)
 		ft_exit("Malloc error\n", errno);
-	n1->file = str;
+	if (!heredoc)
+	{
+		n1->file = malloc(sizeof(t_char));  //TODO free this in free function
+		n1->file->s = str;
+	}
+	else
+		n1->file = NULL;
 	n1->type = type;
 	n1->next = NULL;
 	return (n1);

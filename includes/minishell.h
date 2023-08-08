@@ -1,13 +1,11 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h> //!
+# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-//# include <readline>
-
 # include <sys/wait.h>
 # include <sys/errno.h>
 # include <fcntl.h>
@@ -17,6 +15,7 @@
 # include <exec.h>
 # include <built_ins.h>
 # include <signal.h>
+# include <sys/ioctl.h>
 
 //hey crissie baby <3
 //hey tymoo daddy 8=D
@@ -58,7 +57,7 @@ t_env_info	*env_init(char **env);
 void		test_env_expansion_shit(t_ally *all, char *input);
 
 //SIGNALS
-void	set_signals(void);
-void	signal_handler(int c);
+void	set_signals_inter(void);
+void	set_signals_non_inter(void);
 
 #endif

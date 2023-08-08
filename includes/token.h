@@ -1,5 +1,5 @@
 
-#ifndef TOKEN_H
+#ifndef TOKEN_H //TODO rename token.h to parsing.h
 # define TOKEN_H
 
 # include <minishell.h>
@@ -11,7 +11,7 @@ typedef struct s_char		t_char;
 
 typedef struct s_rdr
 {
-	char			*file;
+	t_char			*file;
 	int				type;
 	t_rdr			*next;
 }					t_rdr;
@@ -31,6 +31,15 @@ typedef struct s_list
 	t_exec			*exec;
 	struct s_list	*next;
 }					t_list;
+
+typedef struct s_heredoc
+{
+	int		pid;
+	int		expand;
+	int		pipefd[2];
+	char	*line;
+	char	*delimiter;
+}				t_heredoc;
 
 //# define TAB '	'
 # define SPACE ' '
@@ -75,7 +84,7 @@ t_exec	*exec_lstnew(void);
 void	rdr_lstadd_back(t_rdr **lst, t_rdr *new);
 
 //LIST_UTILS2.c
-t_rdr	*rdr_lstnew(char *str, int type);
+t_rdr	*rdr_lstnew(char *str, int type, int heredoc);
 void	char_lstadd_back(t_char **lst, t_char *new);
 t_char	*char_lstnew(char *str);
 

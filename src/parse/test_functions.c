@@ -10,6 +10,7 @@
  		t_exec	*exec =  list->exec;
  		t_rdr	*rdr = list->exec->rdr;
 		t_char	*cmd = list->exec->cmd;
+		t_char	*hd = NULL;
  		printf("\nnode %d\n", node_amnt);
  		printf("[\n");
  		printf("CMD: ");
@@ -22,9 +23,28 @@
  		printf("RDR: ");
  		while (rdr)
  		{
- 			printf("{%s} [%d], ", rdr->file, rdr->type);
+			if (rdr->type == HEREDOC || rdr->type == HEREDOC_NO_EXP)
+			{
+				if (hd)
+					printf("\n(WARNING! 2 heredocs found but the print function will only display the last ones contents)\n");
+				if (rdr->type == HEREDOC)
+					printf("{HEREDOC} [%d], ", rdr->type);
+				else
+					printf("{HEREDOC_NO_EXP} [%d], ", rdr->type);
+				hd = rdr->file;
+			}
+			else
+ 				printf("{%s} [%d], ", rdr->file->s, rdr->type);
  			rdr = rdr->next;
  		}
+		if (hd)
+			printf("\nHEREDOC contents: ");
+		while (hd)
+		{
+			printf("{%s}, ", hd->s);
+			hd = hd->next;
+		}
+		hd = NULL;
  		node_amnt++;
  		printf("\n]\n\n");
  		list->exec = list->exec->next;

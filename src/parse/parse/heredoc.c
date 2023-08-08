@@ -6,43 +6,73 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/03 17:04:12 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/08 12:30:08 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <token.h>
 
-//i needs to be set to the end of the delimiter
 static char	*get_delimiter(char *input, int *i);
 static int	set_expand(char *delimiter);
-static char	*trim_char(char *line, char *c);
-//static char	*backslash_check(char *line);
+void		heredoc(char *input, t_exec *node, int *i, t_heredoc *doc);
+
+void	init_struct(t_heredoc *doc, char *input, int *i)
+{
+	doc->delimiter = get_delimiter(input, i); // TODO figure out cleaner way to get delimiter and expand to be able to insert it in node in parent
+	doc->expand = set_expand(doc->delimiter);
+	if (doc->expand == HEREDOC_NO_EXP)
+		doc->delimiter = ft_strdel(doc->delimiter, "\"\'");
+	if (pipe(doc->pipefd) < 0)
+		ft_exit("Error creating pipe", errno);
+	doc->pid = fork();
+	if (doc->pid < 0)
+		ft_exit("Error creating child process", errno);
+}
 
 void	add_heredoc(char *input, t_exec *node, int *i)
 {
-	char	*delimiter;
-	char	*line;
-	int		expand;
+	t_heredoc	doc;
+	t_rdr		*rdr_node;
 
-	delimiter = get_delimiter(input, i);
-	expand = set_expand(delimiter);
-	if (expand == HEREDOC_NO_EXP)
-		delimiter = ft_strdel(delimiter, "\"\'");
-	line = NULL;
+	init_struct(&doc, input, i);
+	rdr_node = rdr_lstnew(NULL, doc.expand, 1);
+	if (doc.pid == 0)
+	{
+		signal(SIGQUIT, SIG_IGN);
+		heredoc(input, node, i, &doc); // get exit status
+		exit(9);
+	}
+	close(doc.pipefd[1]);
+	doc.line = "";
+	while (doc.line)
+	{
+		doc.line = get_next_line(doc.pipefd[0]);
+		if (doc.line)
+			char_lstadd_back(&rdr_node->file, char_lstnew(doc.line));
+	}
+	//wait(NULL);
+	//rdr in exec;
+	//free_struct
+	rdr_lstadd_back(&node->rdr, rdr_node);
+	//wexitstatus
+}
+
+void	heredoc(char *input, t_exec *node, int *i, t_heredoc *doc) // int *i can be int i
+{
+	close(doc->pipefd[0]);
+	doc->line = NULL;
 	while (1)
 	{
 		write(1, ">", 1);
-		line = get_next_line(STDIN_FILENO);
-		if (!line)
-			return ;
-		//line = backslash_check(line);
-		printf("line  = [%s]\n", line);
-		if (!ft_strncmp(delimiter, line, ft_strlen(delimiter)))
+		doc->line = get_next_line(STDIN_FILENO);
+		if (!doc->line)
 			break ;
-		line = trim_char(line, "\n");
-		rdr_lstadd_back(&node->rdr, rdr_lstnew(line, expand));
+		if (!ft_strncmp(doc->delimiter, doc->line, ft_strlen(doc->delimiter)))
+			break ;
+		write(doc->pipefd[1], doc->line, ft_strlen(doc->line));
 	}
-	free(line);
+	close(doc->pipefd[1]);
+	free(doc->line);
 }
 
 static int	set_expand(char *d)
@@ -88,31 +118,4 @@ static char	*get_delimiter(char *input, int *i)
 	str = ft_strjoin(temp, "\n");
 	free (temp);
 	return (str);
-}
-
-//static char	*backslash_check(char *line)
-//{
-//	char	*str;
-//	char	*temp;
-
-//	if (line[ft_strlen(line) - 2] == '\\')
-//	{
-//		line = trim_char(line, "\\\n");
-//		write(1, ">", 1);
-//		str = get_next_line(STDIN_FILENO);
-//		temp = ft_strjoin(line, str);
-//		free (line);
-//		free (str);
-//		return (temp);
-//	}
-//	return (line);
-//}
-
-static char	*trim_char(char *line, char *c)
-{
-	char	*ret;
-
-	ret = ft_strtrim(line, c);
-	free(line);
-	return (ret);
 }

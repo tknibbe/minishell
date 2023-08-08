@@ -8,6 +8,7 @@ void	leaks(void)
 	system("leaks -q minishell");
 }
 
+
 t_ally	*minishell_init(char *envp[])
 {
 	t_ally	*all;
@@ -23,7 +24,6 @@ t_ally	*minishell_init(char *envp[])
 	all->list->next = NULL;
 	all->env = env_init(envp);
 	all->list->exec = NULL;
-	set_signals();
 	return (all);
 }
 
@@ -53,10 +53,9 @@ int	run_shell(t_ally *all, char *prompt)
 {
 	char	*string;
 
-	set_signals();
-	//signal(SIGINT, signal_handler);
+	set_signals_inter();
 	string = readline(prompt);
-	//signal(SIGINT, signal_handler);
+	set_signals_non_inter();
 	if (!string)
 		exit(0);
 	if (!strncmp(string, "", 1))

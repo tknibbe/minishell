@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/03 17:28:50 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/08 12:21:10 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	parse(char *input, t_list *list)
 			else
 				i++;
 		}
-		//printf("adding %p to back of list->exec at %p\n", node, list->exec);
 		exec_lstadd_back(&list->exec, node);
 		if (input[i] == '|')
 			i++;
@@ -71,6 +70,7 @@ void	new_rdr_node(char *input, int *token, t_exec *node, int *i)
 	int		start;
 	int		type;
 	char	*str;
+	t_rdr	*rdr_node;
 
 	type = token[*i];
 	if (type == HEREDOC)
@@ -78,13 +78,14 @@ void	new_rdr_node(char *input, int *token, t_exec *node, int *i)
 		add_heredoc(input, node, i);
 		return ;
 	}
+	rdr_node = rdr_lstnew(NULL, type, 0);
 	while ((token[*i] == BLANK || is_redirect(token[*i])) && input[*i])
 		*i += 1;
 	start = *i;
 	while (token[*i] == WORD && input[*i])
 		*i += 1;
-	str = ft_substr(input, start, *i - start);
-	if (!str)
+	rdr_node->file->s = ft_substr(input, start, *i - start);
+	if (!rdr_node->file->s)
 		ft_exit("Malloc error\n", errno);
-	rdr_lstadd_back(&node->rdr, rdr_lstnew(str, type));
+	rdr_lstadd_back(&node->rdr, rdr_node);
 }
