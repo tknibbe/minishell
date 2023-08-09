@@ -29,7 +29,6 @@ void	free_list_struct(t_list *list)
 		free (list->token);
 		//free (list->input); //TODO when its malloced by cris func
 		exec = list->exec;
-		//printf("exec = %p\n", exec);
 		while (exec)
 		{
 			free_t_str(exec->cmd);

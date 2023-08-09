@@ -16,6 +16,7 @@
 # include <built_ins.h>
 # include <signal.h>
 # include <sys/ioctl.h>
+# include <termios.h>
 
 //hey crissie baby <3
 //hey tymoo daddy 8=D
@@ -54,10 +55,12 @@ int		ft_isinset(int c, char *s);
 t_env_info	*env_init(char **env);
 
 //expansion
-void		test_env_expansion_shit(t_ally *all, char *input);
+void	test_env_expansion_shit(t_ally *all, char *input);
 
 //SIGNALS
 void	set_signals_inter(void);
+void	unset_echo(void);
 void	set_signals_non_inter(void);
+void	set_echo(void);
 
 #endif

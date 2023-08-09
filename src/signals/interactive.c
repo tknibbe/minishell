@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   interactive.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/25 13:41:26 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/08 15:33:11 by tknibbe          ###   ########.fr       */
+/*   Created: 2023/08/09 15:35:50 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/08/09 15:38:23 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <termios.h>
 
-
-void	interactive_handler(int c)
+static void	interactive_handler(int c)
 {
 	ft_putchar_fd('\n', STDIN_FILENO);
 	rl_replace_line("", 0);
@@ -22,34 +20,20 @@ void	interactive_handler(int c)
 	rl_redisplay();
 }
 
-void	non_inter_handler(int c)
+void	unset_echo(void)
 {
-	//printf("interuppted\n");
-	//global_signal = 1;
-	ft_putchar_fd('\n', STDIN_FILENO);
-	//rl_replace_line("", 0);
-	//rl_on_new_line();
-	//rl_redisplay();
+	struct termios	term;
+
+	if (tcgetattr(STDIN_FILENO, &term) != 0)
+		ft_exit("Error getting terminal attributes", errno);
+	term.c_lflag &= ~ECHOCTL;
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) != 0)
+		ft_exit("Error setting terminal attributes", errno);
 }
-
-//• In interactive mode:
-//	◦ ctrl-C displays a new prompt on a new line.
-//	◦ ctrl-D exits the shell.
-//	◦ ctrl-\ does nothing.
-
-//non interactive mode:
-//	ctrl-C exits whatever your running 
 
 void	set_signals_inter(void)
 {
+	unset_echo();
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, interactive_handler);
-	//printf("signals interactive\n");
-}
-
-void	set_signals_non_inter(void)
-{
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, non_inter_handler);
-	//printf("signals now non-interactive\n");
 }

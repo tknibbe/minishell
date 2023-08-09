@@ -31,11 +31,9 @@ t_ally	*minishell_init(char *envp[])
 void	tymon(t_ally *all, char **input)
 {
 	parse_input(input, all);
-	//printf("new str = %s\n", *input);
-	//free(input);
 	printf("pipeline exited with code : %d\n", all->list->exit_code);
 	free (*input);
-	leaks();
+	//leaks();
 }
 
 void	cris(t_ally *all, char *input)

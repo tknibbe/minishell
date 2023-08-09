@@ -26,7 +26,8 @@ SRC			=	cris_main.c \
 				parse/expansion/expander.c \
 				parse/expansion/expander_utils.c \
 				parse/test_functions.c \
-				signals/signals.c \
+				signals/interactive.c \
+				signals/non_interactive.c \
 				exit_funcs.c \
 				# parse/tokenize/make_list.c \
 				# built_ins/cd.c \

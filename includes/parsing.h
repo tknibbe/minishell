@@ -88,7 +88,7 @@ void	rdr_lstadd_back(t_rdr **lst, t_rdr *new);
 //LIST_UTILS2.c
 t_rdr	*rdr_lstnew(char *str, int type, int heredoc);
 void	char_lstadd_back(t_str **lst, t_str *new);
-t_str*char_lstnew(char *str);
+t_str	*char_lstnew(char *str);
 
 //HEREDOC.C
 void	add_heredoc(char *input, t_list *list, int *i);
