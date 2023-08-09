@@ -35,7 +35,7 @@ all : $(MINISHELL)
 
 $(MINISHELL) : $(OBJ_F)
 	@make -C lib
-	$(CC)  $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@ #-fsanitize=address
+	$(CC)  $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@ -fsanitize=address
 
 obj/%.o : src/%.c
 	@mkdir -p obj

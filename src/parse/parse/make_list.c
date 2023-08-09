@@ -6,13 +6,13 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/08 12:21:10 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/09 11:34:01 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	new_rdr_node(char *input, int *token, t_exec *exec, int *i);
+void	new_rdr_node(char *input, int *token, t_list *list, int *i);
 void	new_cmd_node(char *input, int *token, t_exec *exec, int *i);
 int		is_redirect(int t);
 
@@ -25,20 +25,19 @@ void	parse(char *input, t_list *list)
 	while (input[i])
 	{
 		node = exec_lstnew();
+		exec_lstadd_back(&list->exec, node);
 		while (list->token[i] != PIPESYMBOL && input[i])
 		{
 			if (is_redirect(list->token[i]))
-				new_rdr_node(input, list->token, node, &i);
+				new_rdr_node(input, list->token, list, &i);
 			else if (list->token[i] == WORD)
 				new_cmd_node(input, list->token, node, &i);
 			else
 				i++;
 		}
-		exec_lstadd_back(&list->exec, node);
 		if (input[i] == '|')
 			i++;
 	}
-	//free(node);
 }
 
 int	is_redirect(int t)
@@ -65,7 +64,7 @@ void	new_cmd_node(char *input, int *token, t_exec *node, int *i)
 	}
 }
 
-void	new_rdr_node(char *input, int *token, t_exec *node, int *i)
+void	new_rdr_node(char *input, int *token, t_list *list, int *i)
 {
 	int		start;
 	int		type;
@@ -75,7 +74,7 @@ void	new_rdr_node(char *input, int *token, t_exec *node, int *i)
 	type = token[*i];
 	if (type == HEREDOC)
 	{
-		add_heredoc(input, node, i);
+		add_heredoc(input, list, i);
 		return ;
 	}
 	rdr_node = rdr_lstnew(NULL, type, 0);
@@ -87,5 +86,5 @@ void	new_rdr_node(char *input, int *token, t_exec *node, int *i)
 	rdr_node->file->s = ft_substr(input, start, *i - start);
 	if (!rdr_node->file->s)
 		ft_exit("Malloc error\n", errno);
-	rdr_lstadd_back(&node->rdr, rdr_node);
+	rdr_lstadd_back(&list->exec->rdr, rdr_node);
 }

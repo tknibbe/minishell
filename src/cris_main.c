@@ -22,6 +22,7 @@ t_ally	*minishell_init(char *envp[])
 	if (!all->list)
 		ft_exit("Malloc error\n", errno);
 	all->list->next = NULL;
+	all->list->exit_code = 0;
 	all->env = env_init(envp);
 	all->list->exec = NULL;
 	return (all);
@@ -33,6 +34,7 @@ void	tymon(t_ally *all, char **input)
 	//printf("new str = %s\n", *input);
 	//free(input);
 	free (*input);
+	printf("pipeline exited with code : %d\n", all->list->exit_code);
 	//leaks();
 }
 
@@ -49,6 +51,7 @@ void	cris(t_ally *all, char *input)
 	if (!ft_strncmp(input, "export ", 6))
 		export(all->env, all->env->head, ft_split(&input[7], ' '));
 }
+
 int	run_shell(t_ally *all, char *prompt)
 {
 	char	*string;

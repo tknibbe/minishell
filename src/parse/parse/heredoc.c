@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/08 12:30:08 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/09 11:35:35 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 static char	*get_delimiter(char *input, int *i);
 static int	set_expand(char *delimiter);
-void		heredoc(char *input, t_exec *node, int *i, t_heredoc *doc);
+static void	heredoc(char *input, t_heredoc *doc);
 
-void	init_struct(t_heredoc *doc, char *input, int *i)
+void	init_struct_and_fork(t_heredoc *doc, char *input, int *i)
 {
-	doc->delimiter = get_delimiter(input, i); // TODO figure out cleaner way to get delimiter and expand to be able to insert it in node in parent
+	doc->delimiter = get_delimiter(input, i);
 	doc->expand = set_expand(doc->delimiter);
+	doc->status = 0;
 	if (doc->expand == HEREDOC_NO_EXP)
 		doc->delimiter = ft_strdel(doc->delimiter, "\"\'");
 	if (pipe(doc->pipefd) < 0)
@@ -29,18 +30,23 @@ void	init_struct(t_heredoc *doc, char *input, int *i)
 		ft_exit("Error creating child process", errno);
 }
 
-void	add_heredoc(char *input, t_exec *node, int *i)
+void	add_heredoc(char *input, t_list *list, int *i)
 {
 	t_heredoc	doc;
 	t_rdr		*rdr_node;
 
-	init_struct(&doc, input, i);
+	init_struct_and_fork(&doc, input, i);
 	rdr_node = rdr_lstnew(NULL, doc.expand, 1);
 	if (doc.pid == 0)
 	{
-		signal(SIGQUIT, SIG_IGN);
-		heredoc(input, node, i, &doc); // get exit status
-		exit(9);
+		heredoc(input, &doc);
+	}
+	wait(&doc.status);
+	if (WIFSIGNALED(doc.status))
+	{
+		list->exit_code = 129;
+		printf("CHILD EXITED because of a sginal\n");
+		return ;
 	}
 	close(doc.pipefd[1]);
 	doc.line = "";
@@ -50,15 +56,13 @@ void	add_heredoc(char *input, t_exec *node, int *i)
 		if (doc.line)
 			char_lstadd_back(&rdr_node->file, char_lstnew(doc.line));
 	}
-	//wait(NULL);
-	//rdr in exec;
-	//free_struct
-	rdr_lstadd_back(&node->rdr, rdr_node);
-	//wexitstatus
+	rdr_lstadd_back(&list->exec->rdr, rdr_node);
 }
 
-void	heredoc(char *input, t_exec *node, int *i, t_heredoc *doc) // int *i can be int i
+static void	heredoc(char *input, t_heredoc *doc)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
 	close(doc->pipefd[0]);
 	doc->line = NULL;
 	while (1)
@@ -73,6 +77,7 @@ void	heredoc(char *input, t_exec *node, int *i, t_heredoc *doc) // int *i can be
 	}
 	close(doc->pipefd[1]);
 	free(doc->line);
+	exit(0);
 }
 
 static int	set_expand(char *d)

@@ -29,6 +29,7 @@ typedef struct s_list
 	char			*input;
 	char			*and_or;
 	t_exec			*exec;
+	int				exit_code;
 	struct s_list	*next;
 }					t_list;
 
@@ -36,6 +37,7 @@ typedef struct s_heredoc
 {
 	int		pid;
 	int		expand;
+	int		status;
 	int		pipefd[2];
 	char	*line;
 	char	*delimiter;
@@ -89,7 +91,7 @@ void	char_lstadd_back(t_char **lst, t_char *new);
 t_char	*char_lstnew(char *str);
 
 //HEREDOC.C
-void	add_heredoc(char *input, t_exec *node, int *i);
+void	add_heredoc(char *input, t_list *list, int *i);
 
 //TEST_FUNCTIONS.C
 void	print_class(int num);
