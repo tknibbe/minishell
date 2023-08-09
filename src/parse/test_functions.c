@@ -9,8 +9,8 @@
  	{
  		t_exec	*exec =  list->exec;
  		t_rdr	*rdr = list->exec->rdr;
-		t_char	*cmd = list->exec->cmd;
-		t_char	*hd = NULL;
+		t_str	*cmd = list->exec->cmd;
+		t_str	*hd = NULL;
  		printf("\nnode %d\n", node_amnt);
  		printf("[\n");
  		printf("CMD: ");

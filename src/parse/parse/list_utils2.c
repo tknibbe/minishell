@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 12:12:28 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/09 11:44:51 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/09 12:00:08 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_rdr	*rdr_lstnew(char *str, int type, int heredoc)
 		ft_exit("Malloc error\n", errno);
 	if (!heredoc)
 	{
-		n1->file = malloc(sizeof(t_char));  //TODO free this in free function
+		n1->file = malloc(sizeof(t_str));  //TODO free this in free function
 		n1->file->s = str;
 	}
 	else
@@ -31,7 +31,7 @@ t_rdr	*rdr_lstnew(char *str, int type, int heredoc)
 	return (n1);
 }
 
-t_char	*char_lstlast(t_char *lst)
+t_str	*char_lstlast(t_str *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -40,9 +40,9 @@ t_char	*char_lstlast(t_char *lst)
 	return (lst);
 }
 
-void	char_lstadd_back(t_char **lst, t_char *new)
+void	char_lstadd_back(t_str **lst, t_str *new)
 {
-	t_char	*last;
+	t_str	*last;
 
 	if (!(*lst))
 	{
@@ -53,11 +53,11 @@ void	char_lstadd_back(t_char **lst, t_char *new)
 	last->next = new;
 }
 
-t_char	*char_lstnew(char *str)
+t_str	*char_lstnew(char *str)
 {
-	t_char	*n1;
+	t_str	*n1;
 
-	n1 = malloc(sizeof(t_char));
+	n1 = malloc(sizeof(t_str));
 	if (n1 == NULL)
 		ft_exit("Malloc error\n", errno);
 	n1->s = str;

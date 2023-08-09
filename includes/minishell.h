@@ -23,11 +23,11 @@
 
 typedef struct s_list	t_list;
 
-typedef struct s_char
+typedef struct s_str
 {
 	char			*s;
-	struct s_char	*next;
-}					t_char;
+	struct s_str	*next;
+}					t_str;
 
 typedef struct s_minishell
 {

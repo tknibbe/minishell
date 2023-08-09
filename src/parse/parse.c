@@ -2,17 +2,18 @@
 #include <minishell.h>
 
 void	free_list_struct(t_list *list);
-void	free_cmd(t_char *cmd);
+void	free_t_str(t_str *cmd);
 void	free_rdr(t_rdr	*rdr);
 
 void	parse_input(char **input, t_ally *all)
 {
 	tokenize(*input, all->list);
-	check_syntax(all->list, input);
+	if (check_syntax(all->list, input))
+		return ;
 	parse(*input, all->list);
 	//print_test(*list, input);
-	//print_tokens(all->list, *input);
-	//print_whole_list(all->list, *input);
+	print_tokens(all->list, *input);
+	print_whole_list(all->list, *input);
 	//free_list_struct(all->list);
 }
 
@@ -31,7 +32,7 @@ void	free_list_struct(t_list *list)
 		//printf("exec = %p\n", exec);
 		while (exec)
 		{
-			free_cmd(exec->cmd);
+			free_t_str(exec->cmd);
 			free_rdr(exec->rdr);
 			temp = exec;
 			exec = exec->next;
@@ -47,11 +48,13 @@ void	free_list_struct(t_list *list)
 void	free_rdr(t_rdr *rdr)
 {
 	t_rdr	*temp;
+	t_str	*str;
 
 	if (!rdr)
 		return ;
 	while (rdr)
 	{
+		free_t_str(rdr->file);
 		temp = rdr;
 		rdr = rdr->next;
 		free(temp->file);
@@ -59,9 +62,9 @@ void	free_rdr(t_rdr *rdr)
 	}
 }
 
-void	free_cmd(t_char *cmd)
+void	free_t_str(t_str *cmd)
 {
-	t_char	*temp;
+	t_str	*temp;
 
 	if (!cmd)
 		return ;
