@@ -6,11 +6,11 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 12:12:28 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/08 12:19:42 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/09 11:44:51 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <token.h>
+#include <parsing.h>
 
 t_rdr	*rdr_lstnew(char *str, int type, int heredoc)
 {

@@ -6,12 +6,12 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/03 17:03:59 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/09 11:44:53 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <token.h>
+#include <parsing.h>
 
 static void	set_token(t_list *list, char *input);
 

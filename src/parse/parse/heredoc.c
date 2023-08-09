@@ -6,11 +6,11 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/09 11:35:35 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/09 11:44:49 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <token.h>
+#include <parsing.h>
 
 static char	*get_delimiter(char *input, int *i);
 static int	set_expand(char *delimiter);

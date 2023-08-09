@@ -6,11 +6,11 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:56:52 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/03 17:03:46 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/09 11:44:52 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <token.h>
+#include <parsing.h>
 
 int	ft_whitespace(char c)
 {
