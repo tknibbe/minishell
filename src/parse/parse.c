@@ -12,9 +12,9 @@ void	parse_input(char **input, t_ally *all)
 		return ;
 	parse(*input, all->list);
 	//print_test(*list, input);
-	print_tokens(all->list, *input);
-	print_whole_list(all->list, *input);
-	//free_list_struct(all->list);
+	//print_tokens(all->list, *input);
+	//print_whole_list(all->list, *input);
+	free_list_struct(all->list);
 }
 
 void	free_list_struct(t_list *list)
@@ -57,7 +57,6 @@ void	free_rdr(t_rdr *rdr)
 		free_t_str(rdr->file);
 		temp = rdr;
 		rdr = rdr->next;
-		free(temp->file);
 		free(temp);
 	}
 }

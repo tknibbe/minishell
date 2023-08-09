@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/09 11:44:49 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/09 12:10:26 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,14 @@ void	add_heredoc(char *input, t_list *list, int *i)
 
 	init_struct_and_fork(&doc, input, i);
 	rdr_node = rdr_lstnew(NULL, doc.expand, 1);
+	rdr_lstadd_back(&list->exec->rdr, rdr_node);
 	if (doc.pid == 0)
-	{
 		heredoc(input, &doc);
-	}
 	wait(&doc.status);
 	if (WIFSIGNALED(doc.status))
 	{
+		free(doc.delimiter);
 		list->exit_code = 129;
-		printf("CHILD EXITED because of a sginal\n");
 		return ;
 	}
 	close(doc.pipefd[1]);
@@ -56,7 +55,7 @@ void	add_heredoc(char *input, t_list *list, int *i)
 		if (doc.line)
 			char_lstadd_back(&rdr_node->file, char_lstnew(doc.line));
 	}
-	rdr_lstadd_back(&list->exec->rdr, rdr_node);
+	free(doc.delimiter);
 }
 
 static void	heredoc(char *input, t_heredoc *doc)

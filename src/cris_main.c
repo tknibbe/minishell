@@ -33,9 +33,9 @@ void	tymon(t_ally *all, char **input)
 	parse_input(input, all);
 	//printf("new str = %s\n", *input);
 	//free(input);
-	free (*input);
 	printf("pipeline exited with code : %d\n", all->list->exit_code);
-	//leaks();
+	free (*input);
+	leaks();
 }
 
 void	cris(t_ally *all, char *input)
