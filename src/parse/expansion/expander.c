@@ -64,115 +64,48 @@ void	expander(int state, char *brake, t_exp *x, char *input)
 	return (expander(0, "$\"'", x, input));
 }
 
-t_str	*insert_lst(char *var, t_env *env_head, char *s)
+t_str	*get_insert_lst(char *var, t_env *env_head, char *s)
 {
-	t_str	*head;
+	t_exp	x;
 	char	**result;
 	int		i;
-	t_exp	x;
 
 	i = 0;
 	head = NULL;
 	initialize_xp(&x, s, env_head);
 	if (s)
-	{
-		if (*s == '\'')
-			expander('\'', "'", &x, s);
-		else if (*s == '"')
-			expander('"', "$\"", &x, s);
-		else
-			expander(0, "$\"'", &x, s);
-		free(s);
-	}
+		expand_string(s, &x);
 	if (var)
-	{
-		result = ft_split(var, ' ');
-		if (!result)
-			ft_exit("Malloc error\n", errno);
-		if (var[0] != ' ')
-		{
-			s = result[0];
-			result[0] = ft_join(x.result, result[0]);
-			free(s);
-		}
-		else
-			tstr_addback(&head, tstr_new(x.result));
-		while (result[i])
-			tstr_addback(&head, tstr_new(result[i++]));
-		if (var[0] && var[ft_strlen(var) - 1] == ' ')
-			tstr_addback(&head, tstr_new(NULL));
-		free(result);
-	}
+		return (split_var(var, x.result));
 	else if (x.result)
-		tstr_addback(&head, tstr_new(x.result));
-	return (head);
-}
-
-char	*create_sub(char *s, int i, int j)
-{
-	char	*sub;
-
-	sub = NULL;
-	if (j)
-	{
-		sub = ft_substr(s, i, j);
-		if (!sub)
-			ft_exit("Malloc error\n", errno);
-	}
-	return (sub);
+		return (tstr_new(x.result));
+	return (NULL);
 }
 
 void	split_word(t_str *start, t_env *head)
 {
 	int		i;
-	int		j;
 	char	*s;
-	t_str	*splitted;
-	t_str	*tmp;
 	char	*sub;
+	t_str	*splitted;
 
-	splitted = NULL;
 	s = start->str;
 	start->str = NULL;
-
 	i = 0;
 	while (s[i])
 	{
-		j = 0;
-		while (s[i + j] && !ft_isinset(s[i + j], "'\"$"))
-			j++;
-		if (s[i + j] == '\'' || s[i + j] == '"' || !s[i + j])
+		sub = create_sub(s, &i, 0);
+		if (s[i] == '$')
 		{
-			if (s[i + j] == '\'' || s[i + j] == '"')
-				j = skip_quoted_state(s + i, j + 1, s[i + j]);
-			sub = create_sub(s, i, j);
-			splitted = insert_lst(NULL, head, sub);
+			splitted = get_insert_lst(get_env(&s[++i], head), head, sub);
+			while (ft_isname(s[i]))
+				i++;
 		}
-		else if (s[i + j] == '$')
-		{
-			sub = create_sub(s, i, j);
-			splitted = insert_lst(get_env(&s[i + ++j], head), head, sub);
-			while (ft_isname(s[i + j]))
-				j++;
-		}
-		if (splitted)
-		{
-			if (start->str)
-			{
-				start->str = ft_join(start->str, splitted->str);
-				free(splitted->str);
-			}
-			else
-				start->str = splitted->str;
-			tmp = start->next;
-			start->next = splitted->next;
-			free(splitted);
-			while (start->next)
-				start = start->next;
-			start->next = tmp;
-		}
-		i += j;
+		else
+			splitted = get_insert_lst(NULL, head, sub);
+		insert_splitted(&start, splitted);
 	}
+	free(s);
 }
 
 char	**full_expansion(t_str *start, t_env *head)
@@ -191,7 +124,7 @@ char	**full_expansion(t_str *start, t_env *head)
 void	test_env_expansion_shit(t_ally *all, char *input)
 {
 	t_str *head = NULL;
-	tstr_addback(&head, tstr_new(ft_strdup("$s\"ls\"$s-l$s-a$s\"-h\"$s")));
+	tstr_addback(&head, tstr_new(ft_strdup("kaas$s-ban$s-aan")));
 	// tstr_addback(&head, tstr_new(ft_strdup("-l''")));
 	// tstr_addback(&head, tstr_new(ft_strdup("-a")));
 	// tstr_addback(&head, tstr_new(ft_strdup("-h")));

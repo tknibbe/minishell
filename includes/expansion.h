@@ -24,4 +24,11 @@ int		expand_dollo(t_exp *x, char *input, char **s, int i);
 
 char	*expand_wildcard(char *result, int count, char *d);
 
+/* word splitter utils */
+void	insert_splitted(t_str **start, t_str *splitted);
+char	*create_sub(char *s, int *i, int j);
+t_str	*split_var(char *var, char *sub);
+void	expand_string(char *s, t_exp *x);
+
+
 #endif

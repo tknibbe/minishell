@@ -28,6 +28,7 @@ SRC			=	cris_main.c \
 				parse/expansion/expander_wildcard.c \
 				parse/expansion/expander.c \
 				parse/expansion/expander_utils.c \
+				parse/expansion/word_splitter_utils.c \
 				parse/test_functions.c \
 				exit_funcs.c \
 				# parse/tokenize/make_list.c \
