@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   syntax.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/07/08 13:46:32 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/20 14:49:33 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   syntax.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/08/10 12:20:49 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	is_redirect(int c)
 {
 	if (c == REDIRRIGHT || c == REDIRLEFT \
-		|| c == APPLEFT || c == APPRIGHT)
+		|| c == HEREDOC || c == APPEND)
 		return (1);
 	return (0);
 }
@@ -23,14 +23,16 @@ static int	is_redirect(int c)
 void	ft_syntax_error(char *str, char c, int token)
 {
 	write(2, str, ft_strlen(str));
-	if (c == '\0')
+	if (token == -1)
+		write(2, "unexpected end of file", 22);
+	else if (c == '\0')
 		write(2, "'newline'", 9);
 	else
 	{
 		write(2, "\'", 1);
-		if (token == APPLEFT)
+		if (token == HEREDOC)
 			write(2, "<<", 2);
-		else if (token == APPRIGHT)
+		else if (token == APPEND)
 			write(2, ">>", 2);
 		else if (token == OR)
 			write(2, "||", 2);
@@ -46,7 +48,7 @@ void	ft_syntax_error(char *str, char c, int token)
 static int	check_rdr(t_list *list, char *input, int *i)
 {
 	*i += 1;
-	if (list->token[*i] == APPRIGHT | list->token[*i] == APPLEFT)
+	if (list->token[*i] == APPEND || list->token[*i] == HEREDOC)
 		*i += 1;
 	while (list->token[*i] == BLANK && input[*i])
 	{
@@ -79,21 +81,23 @@ static int	check_rest(t_list *list, char **input, int *i)
 	return (0);
 }
 
-void	add_new_input(t_list *list, char **input) //WILL LEAK! i think
+int	add_new_input(t_list *list, char **input) //WILL LEAK! i think
 {
 	char	*new_str;
 	char	*str;
-	char	*temp;
 
 	str = readline("> ");
+	if (!str)
+		return (1);
 	new_str = ft_strjoin(*input, str);
 	free(*input);
 	free(str);
 	free(list->token);
 	free(list->exec);
 	*input = new_str;
-	tokenize(*input, &list);
+	tokenize(*input, list);
 	check_syntax(list, input);
+	return (0);
 }
 
 int	check_syntax(t_list *list, char **input)
@@ -121,7 +125,11 @@ int	check_syntax(t_list *list, char **input)
 		}
 		if (check == 2)
 		{
-			add_new_input(list, input);
+			if (add_new_input(list, input))
+			{
+				ft_syntax_error("Minishell: syntax error: ", ' ', -1);
+				return (1);
+			}
 			break ;
 		}
 		i++;

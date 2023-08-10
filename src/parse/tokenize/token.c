@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   token.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/28 12:18:15 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/20 14:46:41 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   token.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/08/09 11:44:53 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-#include <token.h>
+#include <parsing.h>
 
 static void	set_token(t_list *list, char *input);
 
 /*sets tokens according to the ENUMs defined in the header. 
 returns 0 on succes.*/
-int	tokenize(char *input, t_list **list)
+int	tokenize(char *input, t_list *list)
 {
 	int	len;
 
 	len = ft_strlen(input);
-	(*list)->token = malloc(sizeof(int) * len);
-	if (!(*list)->token)
+	list->token = malloc(sizeof(int) * len);
+	if (!list->token)
 		ft_exit("Malloc error\n", errno);
-	set_token(*list, input);
+	set_token(list, input);
 	//print_tokens(*list, input);
 	return (0);
 }
@@ -81,7 +81,7 @@ static void	set_token(t_list *list, char *input)
 		}
 		else
 		{
-			if (!whitespace(input[i]))
+			if (!ft_whitespace(input[i]))
 				list->token[i] = WORD;
 			else
 				list->token[i] = BLANK;

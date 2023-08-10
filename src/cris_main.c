@@ -2,6 +2,13 @@
 #include <built_ins.h>
 #include <exec.h>
 
+
+void	leaks(void)
+{
+	system("leaks -q minishell");
+}
+
+
 t_ally	*minishell_init(char *envp[])
 {
 	t_ally	*all;
@@ -14,6 +21,8 @@ t_ally	*minishell_init(char *envp[])
 	all->list = malloc(sizeof(t_list));
 	if (!all->list)
 		ft_exit("Malloc error\n", errno);
+	all->list->next = NULL;
+	all->list->exit_code = 0;
 	all->env = env_init(envp);
 	all->list->exec = NULL;
 	return (all);
@@ -22,8 +31,9 @@ t_ally	*minishell_init(char *envp[])
 void	tymon(t_ally *all, char **input)
 {
 	parse_input(input, all);
-	//printf("new str = %s\n", *input);
-	free(all->list->token);
+	printf("pipeline exited with code : %d\n", all->list->exit_code);
+	free (*input);
+	//leaks();
 }
 
 void	cris(t_ally *all, char *input)
@@ -40,9 +50,30 @@ void	cris(t_ally *all, char *input)
 		export(all->env, all->env->head, ft_split(&input[7], ' '));
 }
 
-int	main(int argc, char *argv[], char *envp[])
+int	run_shell(t_ally *all, char *prompt)
 {
 	char	*string;
+
+	set_signals_inter();
+	string = readline(prompt);
+	set_signals_non_inter();
+	if (!string)
+		exit(0);
+	if (!strncmp(string, "", 1))
+	{
+		free(string);
+		return (1);
+	}
+	add_history(string);
+	if (ft_strncmp(string, "exit", 4) == 0)
+		exit(0);
+	tymon(all, &string);
+	//cris(all, string);
+	return (0);
+}
+
+int	main(int argc, char *argv[], char *envp[])
+{
 	char	*prompt;
 	t_ally	*all;
 
@@ -50,23 +81,11 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc != 1)
 		ft_exit("just ./minishell is enough\n", 1);
 	all = minishell_init(envp);
-	//prompt = ft_strjoin(&argv[0][2], " -> ");
-	//if (!prompt)
-	//	ft_exit("Error: malloc failure\n", errno);
+	//all = NULL;
+	prompt = ft_strjoin(&argv[0][2], " -> "); //kunnen misschien de prompt ook in de header definen? maybe cleaner?
+	if (!prompt)
+		ft_exit("Error: malloc failure\n", errno);
 	while (1)
-	{
-		string = readline("wat een grap -> ");
-		if (!string)
-			ft_exit("wtf!!\n", 2000000);
-		//printf("test\n");
-		if (ft_strncmp(string, "exit", 4) == 0)
-			exit(0);
-		// // tymon(all, &string);
-		//printf("string in main is : %s\n", string);
-		cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
-		history(string);
-		free(string);
-		//system("leaks -q minishell");
-	}
+		run_shell(all, prompt);
 	//free(prompt);
 }
