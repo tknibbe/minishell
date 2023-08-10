@@ -7,13 +7,26 @@ void	free_rdr(t_rdr	*rdr);
 
 void	parse_input(char **input, t_ally *all)
 {
+	/*pre-parse for the bonus before this;
+	check if theres &&||() in the string and split the inputstr on that across t_list
+	while(inputstr)
+	{
+		tokenize()
+		check_syntax();
+		parse();
+		int = execute(); fork here maybe?
+		if (int != (&&/||) condition to continue)
+			break;
+		
+	}
+	*/
 	tokenize(*input, all->list);
 	if (check_syntax(all->list, input))
 		return ;
 	parse(*input, all->list);
 	//print_test(*list, input);
-	//print_tokens(all->list, *input);
-	//print_whole_list(all->list, *input);
+	print_tokens(all->list, *input);
+	print_whole_list(all->list, *input);
 	free_list_struct(all->list);
 }
 
@@ -27,7 +40,7 @@ void	free_list_struct(t_list *list)
 	while (templist)
 	{
 		free (list->token);
-		//free (list->input); //TODO when its malloced by cris func
+		//free (list->input); //TODO when its malloced by bonus parse func
 		exec = list->exec;
 		while (exec)
 		{

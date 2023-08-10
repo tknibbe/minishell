@@ -83,6 +83,7 @@ int		check_syntax(t_list *list, char **input);
 //LIST_utils.C
 void	exec_lstadd_back(t_exec **lst, t_exec *new);
 t_exec	*exec_lstnew(void);
+t_exec	*exec_lstlast(t_exec *lst);
 void	rdr_lstadd_back(t_rdr **lst, t_rdr *new);
 
 //LIST_UTILS2.c

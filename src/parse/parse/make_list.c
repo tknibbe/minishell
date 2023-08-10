@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/09 11:34:01 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/10 14:25:46 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ void	new_rdr_node(char *input, int *token, t_list *list, int *i)
 	int		type;
 	char	*str;
 	t_rdr	*rdr_node;
+	t_exec	*cur_node;
 
+	cur_node = exec_lstlast(list->exec);
 	type = token[*i];
 	if (type == HEREDOC)
 	{
@@ -86,5 +88,5 @@ void	new_rdr_node(char *input, int *token, t_list *list, int *i)
 	rdr_node->file->s = ft_substr(input, start, *i - start);
 	if (!rdr_node->file->s)
 		ft_exit("Malloc error\n", errno);
-	rdr_lstadd_back(&list->exec->rdr, rdr_node);
+	rdr_lstadd_back(&cur_node->rdr, rdr_node);
 }
