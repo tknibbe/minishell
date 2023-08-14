@@ -1,12 +1,11 @@
-# include <expansion.h>
-#include <sys/errno.h>
+#include <expansion.h>
 #include <minishell.h>
 
 #define NO_MATCH 0
 #define MATCHED 1
 #define DIRECTORY 47
 
-int	check_for_first_matching_string(char **file, char **input, int w_card)
+static int	check_for_first_matching_string(char **file, char **input, int w_card)
 {
 	int	i;
 
@@ -18,7 +17,7 @@ int	check_for_first_matching_string(char **file, char **input, int w_card)
 				(*file)++;
 		while ((*file)[i] && (*file)[i] == (*input)[i])
 			i++;
-		if ((*input)[i] == '*' || (!(*file)[i] && !(*input)[i])\
+		if ((*input)[i] == -1 || (!(*file)[i] && !(*input)[i])\
 			|| (!(*file)[i] && (*input)[i] == '/'))
 		{
 			*input += i;
@@ -32,18 +31,17 @@ int	check_for_first_matching_string(char **file, char **input, int w_card)
 	return (NO_MATCH);
 }
 
-int	pattern_match(char *f, char *input)
+static int	pattern_match(char *f, char *input)
 {
-	int	w_mode;
-	int	match;
+	int	wildcard;
 
 	while (*f)
 	{
-		w_mode = 0;
-		if (*input == '*')
-			w_mode = *(input++);
-		match = check_for_first_matching_string(&f, &input, w_mode);
-		if (!match)
+		if (*input == -1)
+			wildcard = *(input++);
+		else
+			wildcard = 0;
+		if (!check_for_first_matching_string(&f, &input, wildcard))
 			return (NO_MATCH);
 		else if (*input == DIRECTORY)
 			return (DIRECTORY);
@@ -51,54 +49,41 @@ int	pattern_match(char *f, char *input)
 	return (MATCHED);
 }
 
-void	match_hidden(DIR *derp, struct dirent **dir_info, int dot)
+static void	attempt_to_match(t_str **head, struct dirent *entry, char *s)
 {
-	*dir_info = readdir(derp);
-	if (dot == '.')
+	int		m;
+	char	*tmp;
+
+	m = pattern_match(entry->d_name, s);
+	if (!m || (m == DIRECTORY && entry->d_type != DT_DIR))
 		return ;
-	while (*(*dir_info)->d_name == '.')
-		*dir_info = readdir(derp);
+	tmp = ft_strdup(entry->d_name);
+	if (!tmp)
+		ft_exit("Malloc error\n", errno);
+	if (m == DIRECTORY && entry->d_type == DT_DIR)
+		tmp = ft_join(tmp, "/");
+	tstr_addback(head, tstr_new(tmp));
 }
 
-
-/*	not working yet but the idea is: creating a linked list as being the depth of the directory that I'm in
-	and keep matching in the loop and when I succesfully match than I create new list with the matched which will later
-	put in a double pointer as the filename or as arguments */
-char	*expand_wildcard(char *result, int count, char *d)
+t_str	*expand_wildcard(char *s)
 {
 	DIR				*dir_p;
-	struct dirent	*dir_info;
-	int				state;
+	struct dirent	*entry;
+	t_str			*matched;
 
-	if (!d)
-		ft_exit("Malloc error\n", errno);
-	state = 1;
-	while (state)
+	matched = NULL;
+	dir_p = opendir(".");
+	if (dir_p < 0)
+		ft_exit("opendir()\n", errno);
+	while (1)
 	{
-		dir_p = opendir(d);
-		if (dir_p < 0)
-			ft_exit("opendir()\n", errno);
-		match_hidden(dir_p, &dir_info, *result);
-		while (dir_info)
-		{
-			state = pattern_match(dir_info->d_name, result);
-			if (state == MATCHED)
-			{
-				printf("normal match %s\n\n", dir_info->d_name);
-				// name matched ! should join with other but don't yet know how
-			}
-			else if(state == NO_MATCH)
-			{
-				printf("continuing search with next dir entry<\n\n");
-			}
-			else if (dir_info->d_type == DT_DIR)
-			{
-				printf("directory match %s/\n", dir_info->d_name);
-			}
-			dir_info = readdir(dir_p);
-		}
+		entry = readdir(dir_p);
+		if (!entry)
+			break ;
+		if (*entry->d_name == '.' && *s != '.')
+			continue ;
+		attempt_to_match(&matched, entry, s);
 	}
-	printf("\n\n");
 	closedir(dir_p);
-	return (NULL);
+	return (matched);
 }

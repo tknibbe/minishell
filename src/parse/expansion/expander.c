@@ -1,41 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   expander.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/08/14 20:18:58 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2023/08/14 21:47:38 by cvan-sch      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <minishell.h>
 #include <expansion.h>
 
-#define WORD 1
-
-void	print_list(t_str *s)
+static void	expansion_wc(t_str *s)
 {
-	int	i = 1;
+	t_str	*matched;
+	int		i;
+
 	while (s)
 	{
-		printf("%d: %s\n", i++, s->str);
+		if (!s->str)
+			return ;
+		if (check_for_wildcard(s->str))
+		{
+			matched = expand_wildcard(s->str);
+			if (matched)
+			{
+				free(s->str);
+				s->str = NULL;
+				insert_list(&s, matched);
+				continue ;
+			}
+			i = 0;
+			while (s->str[i])
+				if (s->str[i++] == -1)
+					s->str[i - 1] = '*';
+		}
 		s = s->next;
 	}
-	printf("\n");
 }
 
-int	unclosed_quote(int state)
+static void	expansion_ws(t_str *start, t_env *head)
 {
-	write(2, "Warning: unclosed quote ( ", 26);
-	write(2, &state, 1);
-	write(2, " ) was ignored\n", 16);
-	return (0);
-}
+	t_str	*next;
 
-int	skip_quoted_state(char *s, int i, int quote)
-{
-	while (s[i] && s[i] != quote)
-		i++;
-	if (!s[i])
-		return (1);
-	return (i + 1);
-}
-
-void	initialize_xp(t_exp *xp, char *input, t_env *head)
-{
-	xp->star = 0;
-	xp->head = head;
-	xp->result = NULL;
+	while (start)
+	{
+		next = start->next;
+		split_word(start, head);
+		start = next;
+	}
 }
 
 void	expander(int state, char *brake, t_exp *x, char *input)
@@ -64,75 +79,26 @@ void	expander(int state, char *brake, t_exp *x, char *input)
 	return (expander(0, "$\"'", x, input));
 }
 
-t_str	*get_insert_lst(char *var, t_env *env_head, char *s)
+char	**full_expansion(t_str *c, t_env *head)
 {
-	t_exp	x;
 	char	**result;
+	t_str	*willy;
 	int		i;
 
+	expansion_ws(c, head);
+	expansion_wc(c);
+	result = malloc((amount(c) + 1) * sizeof(char *));
+	if (!result)
+		ft_exit("Malloc error\n", errno);
 	i = 0;
-	head = NULL;
-	initialize_xp(&x, s, env_head);
-	if (s)
-		expand_string(s, &x);
-	if (var)
-		return (split_var(var, x.result));
-	else if (x.result)
-		return (tstr_new(x.result));
-	return (NULL);
-}
-
-void	split_word(t_str *start, t_env *head)
-{
-	int		i;
-	char	*s;
-	char	*sub;
-	t_str	*splitted;
-
-	s = start->str;
-	start->str = NULL;
-	i = 0;
-	while (s[i])
+	while (c)
 	{
-		sub = create_sub(s, &i, 0);
-		if (s[i] == '$')
-		{
-			splitted = get_insert_lst(get_env(&s[++i], head), head, sub);
-			while (ft_isname(s[i]))
-				i++;
-		}
-		else
-			splitted = get_insert_lst(NULL, head, sub);
-		insert_splitted(&start, splitted);
+		if (c->str)
+			result[i++] = c->str;
+		willy = c;
+		c = c->next;
+		free(willy);
 	}
-	free(s);
-}
-
-char	**full_expansion(t_str *start, t_env *head)
-{
-	t_str	*next;
-
-	while (start)
-	{
-		next = start->next;
-		split_word(start, head);
-		start = next;
-	}
-	return (NULL);
-}
-
-void	test_env_expansion_shit(t_ally *all, char *input)
-{
-	t_str *head = NULL;
-	tstr_addback(&head, tstr_new(ft_strdup("kaas$s-ban$s-aan")));
-	// tstr_addback(&head, tstr_new(ft_strdup("-l''")));
-	// tstr_addback(&head, tstr_new(ft_strdup("-a")));
-	// tstr_addback(&head, tstr_new(ft_strdup("-h")));
-	full_expansion(head, all->env->head);
-	int	i = 1;
-	while (head)
-	{
-		printf("%d %s\n", i++, head->str);
-		head = head->next;
-	}
+	result[i] = NULL;
+	return (result);
 }

@@ -1,35 +1,55 @@
 
 #include <minishell.h>
 
-// void print_whole_list(t_list *list, char *input)
-// {
-// 	int	i = 0;
-// 	int	node_amnt = 0;
-// 	while (list->exec)
-// 	{
-// 		t_exec *list =  list->exec;
-// 		t_rdr	*rdr = list->exec->rdr;
-// 		printf("\nnode %d\n", node_amnt);
-// 		printf("[\n");
-// 		printf("CMD: ");
-// 		while (list->cmd[i])
-// 		{
-// 			printf("%s, ", list->cmd[i]);
-// 			i++;
-// 		}
-// 		i = 0;
-// 		printf("\n");
-// 		printf("RDR: ");
-// 		while (rdr)
-// 		{
-// 			printf("{%s} [%d], ", rdr->file, rdr->type);
-// 			rdr = rdr->next;
-// 		}
-// 		node_amnt++;
-// 		printf("\n]\n\n");
-// 		list->exec = list->exec->next;
-// 	}
-// }
+// somehow moves the pointers so if you use this expect leaks xxxx <3
+ void print_whole_list(t_list *list, char *input)
+ {
+ 	int	node_amnt = 0;
+ 	while (list->exec)
+ 	{
+ 		t_exec	*exec =  list->exec;
+ 		t_rdr	*rdr = list->exec->rdr;
+		t_str	*cmd = list->exec->cmd;
+		t_str	*hd = NULL;
+ 		printf("\nnode %d\n", node_amnt);
+ 		printf("[\n");
+ 		printf("CMD: ");
+ 		while (cmd)
+ 		{
+ 			printf("%s, ", cmd->s);
+ 			cmd = cmd->next;
+ 		}
+ 		printf("\n");
+ 		printf("RDR: ");
+ 		while (rdr)
+ 		{
+			if (rdr->type == HEREDOC || rdr->type == HEREDOC_NO_EXP)
+			{
+				if (hd)
+					printf("\n(WARNING! 2 heredocs found but the print function will only display the last ones contents)\n");
+				if (rdr->type == HEREDOC)
+					printf("{HEREDOC} [%d], ", rdr->type);
+				else
+					printf("{HEREDOC_NO_EXP} [%d], ", rdr->type);
+				hd = rdr->file;
+			}
+			else
+ 				printf("{%s} [%d], ", rdr->file->s, rdr->type);
+ 			rdr = rdr->next;
+ 		}
+		if (hd)
+			printf("\nHEREDOC contents: ");
+		while (hd)
+		{
+			printf("{%s}, ", hd->s);
+			hd = hd->next;
+		}
+		hd = NULL;
+ 		node_amnt++;
+ 		printf("\n]\n\n");
+ 		list->exec = list->exec->next;
+ 	}
+ }
 
 void	print_class(int	num)
 {
@@ -40,9 +60,9 @@ void	print_class(int	num)
 		printf("redir left  : ");
 	else if (num == REDIRRIGHT)
 		printf("redirright  : ");
-	else if (num == APPLEFT)
+	else if (num == HEREDOC)
 		printf("append left : ");
-	else if (num == APPRIGHT)
+	else if (num == APPEND)
 		printf("append right: ");
 	else if (num == PIPESYMBOL)
 		printf("pipe        : ");

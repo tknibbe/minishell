@@ -1,6 +1,6 @@
-INCLUDE		=	-I includes -I lib/includes
+INCLUDE		=	-I includes -I lib/includes -I $(shell brew --prefix readline)/include
 CFLAGS		=	#-Wall -Werror -Wextra
-READLINE	=	-lreadline
+READLINE	=	-lreadline  -L $(shell brew --prefix readline)/lib
 OBJ_F		=	$(SRC:%.c=obj/%.o)
 MINISHELL	=	minishell
 LIBFT		=	lib/libft.a
@@ -21,15 +21,16 @@ SRC			=	cris_main.c \
 				parse/tokenize/syntax.c \
 				parse/tokenize/create_list.c \
 				parse/parse/make_list.c \
-				parse/parse/list_functions.c \
-				parse/parse/split_args.c \
-				parse/parse/set_rdrs.c \
-				parse/parse/set_cmds.c \
+				parse/parse/list_utils.c \
+				parse/parse/list_utils2.c \
+				parse/parse/heredoc.c \
 				parse/expansion/expander_wildcard.c \
 				parse/expansion/expander.c \
 				parse/expansion/expander_utils.c \
 				parse/expansion/word_splitter_utils.c \
 				parse/test_functions.c \
+				signals/interactive.c \
+				signals/non_interactive.c \
 				exit_funcs.c \
 				# parse/tokenize/make_list.c \
 				# built_ins/cd.c \
@@ -38,7 +39,7 @@ all : $(MINISHELL)
 
 $(MINISHELL) : $(OBJ_F)
 	@make -C lib
-	$(CC) -g -fsanitize=address $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@
+	$(CC)  $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@ #-fsanitize=address
 
 obj/%.o : src/%.c
 	@mkdir -p obj
@@ -48,6 +49,7 @@ obj/%.o : src/%.c
 	@mkdir -p obj/parse/parse
 	@mkdir -p obj/parse/expansion
 	@mkdir -p obj/execution
+	@mkdir -p obj/signals
 	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
 
 clean :

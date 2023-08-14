@@ -2,6 +2,13 @@
 #include <built_ins.h>
 #include <exec.h>
 
+
+void	leaks(void)
+{
+	system("leaks -q minishell");
+}
+
+
 t_ally	*minishell_init(char *envp[])
 {
 	t_ally	*all;
@@ -11,6 +18,11 @@ t_ally	*minishell_init(char *envp[])
 	all = malloc(sizeof(t_ally));
 	if (!all)
 		ft_exit("Malloc error\n", errno);
+	all->list = malloc(sizeof(t_list));
+	if (!all->list)
+		ft_exit("Malloc error\n", errno);
+	all->list->next = NULL;
+	all->list->exit_code = 0;
 	all->env = env_init(envp);
 	all->list = NULL;
 	return (all);
@@ -41,30 +53,37 @@ void	cris(t_ally *all, char *input)
 		export(all->env, all->env->head, ft_split(&input[7], ' '));
 }
 
-int	main(int argc, char *argv[], char *envp[])
+int	run_shell(t_ally *all, char *prompt)
 {
 	char	*string;
-	char	*prompt;
+
+	set_signals_inter();
+	string = readline(prompt);
+	set_signals_non_inter();
+	if (!string)
+		exit(0);
+	if (!strncmp(string, "", 1))
+	{
+		free(string);
+		return (1);
+	}
+	add_history(string);
+	if (ft_strncmp(string, "exit", 4) == 0)
+		exit(0);
+	tymon(all, &string);
+	//cris(all, string);
+	return (0);
+}
+
+int	main(int argc, char *argv[], char *envp[])
+{
 	t_ally	*all;
 
-	// I changed it here so that the executables name will be the prompt :)
 	if (argc != 1)
 		ft_exit("just ./minishell is enough\n", 1);
 	all = minishell_init(envp);
+	//all = NULL;
 	while (1)
-	{
-		string = readline("ez -> ");
-		if (!string)
-			ft_exit("wtf!!\n", 2000000);
-		//printf("test\n");
-		if (ft_strncmp(string, "exit", 4) == 0)
-			exit(0);
-		//tymon(all, &string);
-		//printf("string in main is : %s\n", string);
-		cris(all, string); //graag hier onze tests in uitvoeren zodat we maar 1 ding hoeven te commenten
-		history(string);
-		free(string);
-		//system("leaks -q minishell");
-	}
+		run_shell(all, PROMPT);
 	//free(prompt);
 }

@@ -67,22 +67,23 @@ char	*get_brake(int state)
 
 int	identify_substr(t_exp *x, int state, char *input, char **s)
 {
-	char	*str;
+	char	*brake;
 	int		i;
 	int		j;
-	char	*brake;
 
 	i = 0;
 	brake = get_brake(state);
-	while (input[i] && input[i] != state)
+	while (input[i] && input[i] != state) //  change statement so it also includes lowest elseif
 	{
 		j = 0;
 		while (input[i + j] && !ft_isinset(input[i + j], brake))
 		{
 			if (!state && input[i + j] == '*')
-				x->star++;
+				input[i + j] = -1;
 			j++;
 		}
+		if (input[i + j] == '$' && !ft_isname(input[i + j + 1]) && !ft_isinset(input[i + j + 1], "?$"))
+			j++;
 		if (j)
 			append_sub(s, &input[i], j);
 		i += j;

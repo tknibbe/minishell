@@ -1,18 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   token_utils.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/07/19 14:56:52 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/21 13:18:21 by cvan-sch      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
 
-#include <token.h>
+#include <parsing.h>
 
-int	whitespace(char c)
+int	ft_whitespace(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n'\
 		|| c == '\v' || c == '\f' || c == '\r')
@@ -44,8 +33,8 @@ void	left(t_list *list, char *input, int *i)
 {
 	if (input[*i + 1] == '<')
 	{
-		list->token[*i] = APPLEFT;
-		list->token[*i + 1] = APPLEFT;
+		list->token[*i] = HEREDOC;
+		list->token[*i + 1] = HEREDOC;
 		*i += 1;
 	}
 	else
@@ -56,8 +45,8 @@ void	right(t_list *list, char *input, int *i)
 {
 	if (input[*i + 1] == '>')
 	{
-		list->token[*i] = APPRIGHT;
-		list->token[*i + 1] = APPRIGHT;
+		list->token[*i] = APPEND;
+		list->token[*i + 1] = APPEND;
 		*i += 1;
 	}
 	else

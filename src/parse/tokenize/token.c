@@ -1,17 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   token.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/28 12:18:15 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/07/21 13:14:44 by cvan-sch      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include <minishell.h>
-#include <token.h>
+#include <parsing.h>
 
 static void	set_token(t_list **head, t_list *list, char *input);
 
@@ -43,16 +32,16 @@ void	tokenize(char *input, t_list **list)
 	int		len;
 	t_list	*new;
 
-	len = ft_strlen(input);
+	len = len_until_next_list(input);
 	new = list_new(len);
 	list_addback(list, new);
 	set_token(list, new, input);
 	//print_tokens(*list, input);
 }
 
-int	is_rdr_pipe_amp(char c)
+int	is_rdr_pipe_amp(char *c)
 {
-	return (c == '|' || c == '<' || c == '>' || c == '&');
+	return (*c == '|' || *c == '<' || *c == '>' || (*c == '&' && *(c + 1) == '&'));
 }
 
 static int	is_closed_quote(char *input, int i)
@@ -86,7 +75,7 @@ static void	set_token(t_list **head, t_list *list, char *input)
 				list->token[i++] = WORD;
 			continue ;
 		}
-		else if (is_rdr_pipe_amp(input[i]))
+		else if (is_rdr_pipe_amp(input + i))
 		{
 			if (set_rdr_pipe_amp(list, input, &i))
 			{
@@ -97,7 +86,7 @@ static void	set_token(t_list **head, t_list *list, char *input)
 				return (tokenize(input + i + 2, head));
 			}
 		}
-		else if (!whitespace(input[i]))
+		else if (!ft_whitespace(input[i]))
 			list->token[i] = WORD;
 		else
 			list->token[i] = BLANK;
