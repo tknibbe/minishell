@@ -96,17 +96,17 @@ void	execute_command(t_exec *t)
 	//printf("did it work?\n");
 }
 
-// void	test_exec(char **env)
-// {
-// 	pid_t pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		t_exec	*t = ft_lstnew();
-// 		t->cmd = ft_split("/bin/cat", ' ');
-// 		t->env = env;
-// 		t->rdr = get_some_rdr();
-// 		execute_command(t);
-// 	}
-// 	waitpid(&status);
-// 	return ;
-// }
+void	test_exec(char **env)
+{
+	pid_t pid = fork();
+	if (pid == 0)
+	{
+		t_exec	*t = ft_lstnew();
+		t->cmd = ft_split("/bin/cat", ' ');
+		t->env = env;
+		t->rdr = get_some_rdr();
+		execute_command(t);
+	}
+	waitpid(&status);
+	return ;
+}

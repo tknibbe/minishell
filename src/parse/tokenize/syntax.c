@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   syntax.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/10 12:20:49 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   syntax.c                                           :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/07/08 13:46:32 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/08/10 17:26:27 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	add_new_input(t_list *list, char **input) //WILL LEAK! i think
 	free(list->token);
 	free(list->exec);
 	*input = new_str;
-	tokenize(*input, list);
+	tokenize(*input, &list);
 	check_syntax(list, input);
 	return (0);
 }

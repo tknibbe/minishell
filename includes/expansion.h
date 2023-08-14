@@ -3,8 +3,7 @@
 
 # include <built_ins.h>
 # include <dirent.h>
-
-//# define WORD 1
+# include <minishell.h>
 
 typedef struct s_exp
 {
@@ -15,20 +14,30 @@ typedef struct s_exp
 
 typedef struct	s_str	t_str;
 
-char	**full_expansion(t_str *start, t_env *head);
+/*full expansion*/
+char	**full_expansion(t_str *c, t_env *head);
 void	expander(int state, char *brake, t_exp *x, char *input);
 
+/*wordsplitter functions*/
+void	split_word(t_str *start, t_env *head);
+void	insert_list(t_str **start, t_str *list);
+
+/*wildcard expander*/
+t_str	*expand_wildcard(char *s);
+
+/*utils*/
 char	*ft_join(char *s1, char *s2);
-int		identify_substr(t_exp *x, int state, char *input, char **s);
 int		expand_dollo(t_exp *x, char *input, char **s, int i);
-
-char	*expand_wildcard(char *result, int count, char *d);
-
-/* word splitter utils */
-void	insert_splitted(t_str **start, t_str *splitted);
+void	append_sub(char **s, char *input, int len);
+char	*get_brake(int state);
+int		identify_substr(t_exp *x, int state, char *input, char **s);
 char	*create_sub(char *s, int *i, int j);
-t_str	*split_var(char *var, char *sub);
+void	transform_wildcards(char **s);
 void	expand_string(char *s, t_exp *x);
-
+int		check_for_wildcard(char *s);
+int		unclosed_quote(int state);
+int		skip_quoted_state(char *s, int i, int quote);
+int		amount(t_str *s);
+void	initialize_xp(t_exp *xp, char *input, t_env *head);
 
 #endif

@@ -26,8 +26,10 @@ SRC			=	cris_main.c \
 				parse/parse/heredoc.c \
 				parse/expansion/expander_wildcard.c \
 				parse/expansion/expander.c \
+				parse/expansion/expander_wordsplit.c \
 				parse/expansion/expander_utils.c \
-				parse/expansion/word_splitter_utils.c \
+				parse/expansion/expander_ws_utils.c \
+				parse/expansion/expander_wc_utils.c \
 				parse/test_functions.c \
 				signals/interactive.c \
 				signals/non_interactive.c \
@@ -39,7 +41,7 @@ all : $(MINISHELL)
 
 $(MINISHELL) : $(OBJ_F)
 	@make -C lib
-	$(CC)  $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@ #-fsanitize=address
+	$(CC)  $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@ -fsanitize=address
 
 obj/%.o : src/%.c
 	@mkdir -p obj

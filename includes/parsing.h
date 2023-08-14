@@ -97,7 +97,7 @@ void	add_heredoc(char *input, t_list *list, int *i);
 void	print_class(int num);
 void	print_test(t_list *list, char *input);
 void	print_tokens(t_list *list, char *input);
-void	print_whole_list(t_list *list, char *input);
+void	print_whole_list(t_list *list);
 
 void	list_addback(t_list **head, t_list *new);
 t_list	*list_new(int len	);

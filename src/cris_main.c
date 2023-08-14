@@ -37,8 +37,8 @@ void	tymon(t_ally *all, char **input)
 
 void	cris(t_ally *all, char *input)
 {
-	if (!ft_strncmp(input, "> ", 2))
-		test_env_expansion_shit(all, &input[2]);
+	// if (!ft_strncmp(input, "> ", 2))
+	// 	test_env_expansion_shit(all, &input[2]);
 	if (!ft_strncmp(input, "echo ", 5))
 		echo(ft_split(&input[5], ' '));
 	if (!ft_strncmp(input, "env", 4))
@@ -70,8 +70,8 @@ int	run_shell(t_ally *all, char *prompt)
 	add_history(string);
 	if (ft_strncmp(string, "exit", 4) == 0)
 		exit(0);
-	tymon(all, &string);
-	//cris(all, string);
+	//tymon(all, &string);
+	cris(all, string);
 	return (0);
 }
 
@@ -82,7 +82,6 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc != 1)
 		ft_exit("just ./minishell is enough\n", 1);
 	all = minishell_init(envp);
-	//all = NULL;
 	while (1)
 		run_shell(all, PROMPT);
 	//free(prompt);

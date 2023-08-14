@@ -18,6 +18,8 @@
 # include <sys/ioctl.h>
 # include <termios.h>
 
+# define PROMPT "ez_game -> "
+
 //hey crissie baby <3
 //hey tymoo daddy 8=D
 //hey crissie deel 2 80085
@@ -59,7 +61,7 @@ void	tstr_addnext(t_str *current, t_str *new);
 t_env_info	*env_init(char **env);
 
 //expansion
-void	test_env_expansion_shit(t_ally *all, char *input);
+char	**full_expansion(t_str *c, t_env *head);
 
 //SIGNALS
 void	set_signals_inter(void);

@@ -7,14 +7,19 @@ void	free_rdr(t_rdr	*rdr);
 
 void	parse_input(char **input, t_ally *all)
 {
-	tokenize(*input, all->list);
-	if (check_syntax(all->list, input))
-		return ;
+	tokenize(*input, &all->list);
+	// if (check_syntax(all->list, input))
+	// 	return ;
 	parse(*input, all->list);
+	t_list *test;
+	test = all->list;
+	all->list = all->list->next;
+	parse(*input, all->list);
+	all->list = test;
 	//print_test(*list, input);
-	print_tokens(all->list, *input);
-	print_whole_list(all->list, *input);
-	free_list_struct(all->list);
+	print_tokens(all->list, all->list->input);
+	print_whole_list(all->list);
+	//free_list_struct(all->list);
 }
 
 void	free_list_struct(t_list *list)

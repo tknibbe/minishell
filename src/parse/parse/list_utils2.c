@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   list_utils2.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 12:12:28 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/09 12:00:08 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   list_utils2.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/07/24 12:12:28 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/08/10 16:56:41 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_rdr	*rdr_lstnew(char *str, int type, int heredoc)
 	if (!heredoc)
 	{
 		n1->file = malloc(sizeof(t_str));  //TODO free this in free function
-		n1->file->s = str;
+		n1->file->str = str;
 	}
 	else
 		n1->file = NULL;
@@ -60,7 +60,7 @@ t_str	*char_lstnew(char *str)
 	n1 = malloc(sizeof(t_str));
 	if (n1 == NULL)
 		ft_exit("Malloc error\n", errno);
-	n1->s = str;
+	n1->str = str;
 	n1->next = NULL;
 	return (n1);
 }

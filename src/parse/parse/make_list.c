@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   make_list.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/10 14:25:46 by tknibbe          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   make_list.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/07/07 11:26:11 by tknibbe       #+#    #+#                 */
+/*   Updated: 2023/08/10 16:56:02 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void	new_rdr_node(char *input, int *token, t_list *list, int *i)
 	start = *i;
 	while (token[*i] == WORD && input[*i])
 		*i += 1;
-	rdr_node->file->s = ft_substr(input, start, *i - start);
-	if (!rdr_node->file->s)
+	rdr_node->file->str = ft_substr(input, start, *i - start);
+	if (!rdr_node->file->str)
 		ft_exit("Malloc error\n", errno);
 	rdr_lstadd_back(&cur_node->rdr, rdr_node);
 }
