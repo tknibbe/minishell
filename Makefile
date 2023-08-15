@@ -19,7 +19,6 @@ SRC			=	cris_main.c \
 				parse/tokenize/token.c \
 				parse/tokenize/token_utils.c \
 				parse/tokenize/syntax.c \
-				parse/tokenize/create_list.c \
 				parse/parse/make_list.c \
 				parse/parse/list_utils.c \
 				parse/parse/list_utils2.c \
