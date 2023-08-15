@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/10 14:25:46 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/15 14:45:18 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	new_cmd_node(char *input, int *token, t_exec *node, int *i)
 		str = ft_substr(input, start, *i - start);
 		if (!str)
 			ft_exit("Malloc error\n", errno);
-		char_lstadd_back(&node->cmd, char_lstnew(str));
+		t_str_lstadd_back(&node->cmd, t_str_lstnew(str));
 		while (token[*i] == BLANK && input[*i])
 			*i += 1;
 	}

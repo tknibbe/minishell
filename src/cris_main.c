@@ -2,7 +2,6 @@
 #include <built_ins.h>
 #include <exec.h>
 
-
 void	leaks(void)
 {
 	system("leaks -q minishell");
@@ -23,15 +22,18 @@ t_ally	*minishell_init(char *envp[])
 		ft_exit("Malloc error\n", errno);
 	all->list->next = NULL;
 	all->list->exit_code = 0;
-	all->env = env_init(envp);
 	all->list->exec = NULL;
+	all->env = env_init(envp);
 	return (all);
 }
 
 void	tymon(t_ally *all, char **input)
 {
+
+	//pre_parse(input, all);
+	all->list = t_listnew();
 	parse_input(input, all);
-	printf("pipeline exited with code : %d\n", all->list->exit_code);
+	//printf("pipeline exited with code : %d\n", all->list->exit_code);
 	free (*input);
 	//leaks();
 }

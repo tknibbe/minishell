@@ -7,27 +7,30 @@ void	free_rdr(t_rdr	*rdr);
 
 void	parse_input(char **input, t_ally *all)
 {
-	/*pre-parse for the bonus before this;
-	check if theres &&||() in the string and split the inputstr on that across t_list
-	while(inputstr)
-	{
-		tokenize()
-		check_syntax();
-		parse();
-		int = execute(); fork here maybe?
-		if (int != (&&/||) condition to continue)
-			break;
-		
-	}
-	*/
+	t_list	*temp;
+
 	tokenize(*input, all->list);
 	if (check_syntax(all->list, input))
 		return ;
-	parse(*input, all->list);
+	if (split_pipelines(*input, all))
+	{
+		temp = all->list;
+		while (temp)
+		{
+			parse(temp->input, temp);
+			temp = temp->next;
+		}
+	}
+	else
+		parse(*input, all->list);
 	//print_test(*list, input);
-	print_tokens(all->list, *input);
-	print_whole_list(all->list, *input);
-	free_list_struct(all->list);
+	//print_tokens(all->list, ft_strlen(*input));
+	print_whole_list(all->list);
+	//while (all->list) // this loop frees all data that falls under t_list
+	//{
+	//	free_list_struct(all->list);
+	//	all->list = all->list->next;
+	//}
 }
 
 void	free_list_struct(t_list *list)
@@ -39,9 +42,9 @@ void	free_list_struct(t_list *list)
 	templist = list;
 	while (templist)
 	{
-		free (list->token);
-		//free (list->input); //TODO when its malloced by bonus parse func
-		exec = list->exec;
+		exec = templist->exec;
+		free (templist->token);
+		//free (templist->input); //TODO when its malloced by bonus parse func
 		while (exec)
 		{
 			free_t_str(exec->cmd);
@@ -51,8 +54,9 @@ void	free_list_struct(t_list *list)
 			//printf("temp = %p, exec = %p\n", temp, exec);
 			free(temp);
 		}
-		templist = templist->next;
+		templist = templist->next; // free old templist?
 	}
+	free(list);
 	list->next = NULL;
 	list->exec = NULL;
 }
@@ -82,8 +86,8 @@ void	free_t_str(t_str *cmd)
 	while (cmd)
 	{
 		temp = cmd;
-		cmd = cmd->next;
 		free (temp->s);
 		free(temp);
+		cmd = cmd->next;
 	}
 }
