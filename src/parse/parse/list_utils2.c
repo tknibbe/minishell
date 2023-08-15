@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 12:12:28 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/15 15:39:00 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/15 15:49:09 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_rdr	*rdr_lstnew(char *str, int type, int heredoc)
 	if (!heredoc)
 	{
 		n1->file = t_str_lstnew(NULL);
-		n1->file->s = str;
+		n1->file->str = str;
 	}
 	else
 		n1->file = NULL;

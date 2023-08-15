@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:34:27 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/15 14:25:01 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/15 15:42:04 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	split_pipelines(char *input, t_ally *all)
 			t_listadd_back(&all->list, node);
 			node->input = ft_substr(input, start, end - start);
 			node->token = copy_token(data->token, start, end);
-			node->and_or = &input[end];
+			node->and_or = data->token[end];
 			if (input[end + 2])
 				end += 2;
 			start = end;

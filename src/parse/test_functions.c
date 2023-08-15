@@ -64,18 +64,18 @@ void print_whole_list(t_list *list)
     }
  }
 
-void print_whole_list(t_list *list)
-{
-    t_list *temp;
-    temp = list;
-    printf("\n\n");
-    while (temp)
-    {
-        printf("--------------------\n");
-        print_t_exec(temp, temp->input);
-        temp = temp->next;
-    }
-}
+//void print_whole_list(t_list *list)
+//{
+//    t_list *temp;
+//    temp = list;
+//    printf("\n\n");
+//    while (temp)
+//    {
+//        printf("--------------------\n");
+//        print_t_exec(temp, temp->input);
+//        temp = temp->next;
+//    }
+//}
 
 void	print_class(int	num)
 {

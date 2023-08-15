@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/15 14:56:36 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/15 15:45:50 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	set_token(t_list *list, char *input);
 
 /*sets tokens according to the ENUMs defined in the header. 
 returns 0 on succes.*/
-int	tokenize(char *input, t_list *list)
+void	tokenize(char *input, t_list *list)
 {
 	int	len;
 
@@ -28,7 +28,6 @@ int	tokenize(char *input, t_list *list)
 	if (!list->token)
 		ft_exit("Malloc error\n", errno);
 	set_token(list, input);
-	return (0);
 }
 
 int	is_rdr_pipe_amp(char c)

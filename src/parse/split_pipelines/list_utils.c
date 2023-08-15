@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 15:20:01 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/10 15:21:30 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/15 15:42:40 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list	*t_listnew(void)
 		ft_exit("Malloc error", errno);
 	node->token = NULL;
 	node->input = NULL;
-	node->and_or = NULL;
+	node->and_or = 0;
 	node->exec = NULL;
 	node->exit_code = 0;
 	node->next = NULL;
