@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/10 14:28:34 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/15 14:05:24 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	add_heredoc(char *input, t_list *list, int *i)
 	{
 		doc.line = get_next_line(doc.pipefd[0]);
 		if (doc.line)
-			char_lstadd_back(&rdr_node->file, char_lstnew(doc.line));
+			t_str_lstadd_back(&rdr_node->file, t_str_lstnew(doc.line));
 	}
 	free(doc.delimiter);
 }
