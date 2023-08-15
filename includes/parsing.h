@@ -69,7 +69,7 @@ void	parse_input(char **input, t_ally *all);
 void	tokenize(char *input, t_list *list);
 //TOKEN_UTILS.C
 int		ft_whitespace(char c);
-int		set_rdr_pipe_amp(t_list *list, char *input, int *i);
+void	set_rdr_pipe_amp(t_list *list, char *input, int *i);
 void	left(t_list *list, char *input, int *i);
 void	right(t_list *list, char *input, int *i);
 //MAKE_LIST.c
