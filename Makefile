@@ -15,11 +15,12 @@ SRC			=	cris_main.c \
 				utils/double_array_utils.c \
 				utils/t_char_utils.c \
 				utils/utils1.c \
+				parse/split_pipelines/split_pipelines.c \
+				parse/split_pipelines/list_utils.c \
 				parse/parse.c \
 				parse/tokenize/token.c \
 				parse/tokenize/token_utils.c \
 				parse/tokenize/syntax.c \
-				parse/tokenize/create_list.c \
 				parse/parse/make_list.c \
 				parse/parse/list_utils.c \
 				parse/parse/list_utils2.c \
@@ -34,6 +35,7 @@ SRC			=	cris_main.c \
 				signals/interactive.c \
 				signals/non_interactive.c \
 				exit_funcs.c \
+				#test.c \
 				# parse/tokenize/make_list.c \
 				# built_ins/cd.c \
 
@@ -47,6 +49,7 @@ obj/%.o : src/%.c
 	@mkdir -p obj
 	@mkdir -p obj/utils
 	@mkdir -p obj/built_ins
+	@mkdir -p obj/parse/split_pipelines
 	@mkdir -p obj/parse/tokenize
 	@mkdir -p obj/parse/parse
 	@mkdir -p obj/parse/expansion

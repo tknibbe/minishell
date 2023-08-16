@@ -1,7 +1,19 @@
 
 #include <minishell.h>
 
-// somehow moves the pointers so if you use this expect leaks xxxx <3
+void print_whole_list(t_list *list)
+{
+	t_list *temp;
+	temp = list;
+	printf("\n\n");
+	while (temp)
+	{
+		printf("--------------------\n");
+		print_t_exec(temp, temp->input);
+		temp = temp->next;
+	}
+}
+
 // somehow moves the pointers so if you use this expect leaks xxxx <3
  void print_t_exec(t_list *list, char *input)
  {
@@ -52,18 +64,18 @@
     }
  }
 
-void print_whole_list(t_list *list)
-{
-    t_list *temp;
-    temp = list;
-    printf("\n\n");
-    while (temp)
-    {
-        printf("--------------------\n");
-        print_t_exec(temp, temp->input);
-        temp = temp->next;
-    }
-}
+//void print_whole_list(t_list *list)
+//{
+//    t_list *temp;
+//    temp = list;
+//    printf("\n\n");
+//    while (temp)
+//    {
+//        printf("--------------------\n");
+//        print_t_exec(temp, temp->input);
+//        temp = temp->next;
+//    }
+//}
 
 void	print_class(int	num)
 {
@@ -104,10 +116,11 @@ void print_test(t_list *list, char *input)
 	}
 }
 
-void	print_tokens(t_list *list, char *input)
+void	print_tokens(t_list *list, int len)
 {
 	int i = 0;
-	while (i < ft_strlen(input))
+	printf("len = %d\n", len);
+	while (i < len)
 	{
 		printf("[%d]", list->token[i]);
 		i++;

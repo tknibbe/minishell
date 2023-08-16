@@ -66,10 +66,10 @@ enum	e_token
 void	parse_input(char **input, t_ally *all);
 
 //TOKEN.C
-void	tokenize(char *input, t_list **list);
+void	tokenize(char *input, t_list *list);
 //TOKEN_UTILS.C
 int		ft_whitespace(char c);
-int		set_rdr_pipe_amp(t_list *list, char *input, int *i);
+void	set_rdr_pipe_amp(t_list *list, char *input, int *i);
 void	left(t_list *list, char *input, int *i);
 void	right(t_list *list, char *input, int *i);
 //MAKE_LIST.c
@@ -87,19 +87,23 @@ void	rdr_lstadd_back(t_rdr **lst, t_rdr *new);
 
 //LIST_UTILS2.c
 t_rdr	*rdr_lstnew(char *str, int type, int heredoc);
-void	char_lstadd_back(t_str **lst, t_str *new);
-t_str	*char_lstnew(char *str);
+void	t_str_lstadd_back(t_str **lst, t_str *new);
+t_str	*t_str_lstnew(char *str);
 
 //HEREDOC.C
 void	add_heredoc(char *input, t_list *list, int *i);
 
+//SPLIT_PIPELINES.C
+int		split_pipelines(char *input, t_ally *all);
+
+//SPLIT_UTILS
+void	t_listadd_back(t_list **lst, t_list *new);
+t_list	*t_listnew(void);
+
 //TEST_FUNCTIONS.C
 void	print_class(int num);
 void	print_test(t_list *list, char *input);
-void	print_tokens(t_list *list, char *input);
-void	print_whole_list(t_list *list);
-
-void	list_addback(t_list **head, t_list *new);
-t_list	*list_new(int len	);
-
+void	print_tokens(t_list *list, int len);
+void	print_t_exec(t_list *list, char *input);
+void 	print_whole_list(t_list *list);
 #endif

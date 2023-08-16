@@ -17,7 +17,7 @@ static int	check_for_first_matching_string(char **file, char **input, int w_card
 				(*file)++;
 		while ((*file)[i] && (*file)[i] == (*input)[i])
 			i++;
-		if ((*input)[i] == -1 || (!(*file)[i] && !(*input)[i])\
+		if ((*input)[i] == -1 || (!(*file)[i] && !(*input)[i]) \
 			|| (!(*file)[i] && (*input)[i] == '/'))
 		{
 			*input += i;
