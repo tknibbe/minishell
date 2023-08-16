@@ -7,19 +7,19 @@
 
 typedef struct s_exp
 {
-	char	*result;
-	int		star;
-	t_env	*head;
+	char		*result;
+	int			star;
+	t_env_info	*e;
 }			t_exp;
 
 typedef struct	s_str	t_str;
 
 /*full expansion*/
-char	**full_expansion(t_str *c, t_env *head);
+char	**full_expansion(t_str *c, t_env_info *e);
 void	expander(int state, char *brake, t_exp *x, char *input);
 
 /*wordsplitter functions*/
-void	split_word(t_str *start, t_env *head);
+void	split_word(t_str *start, t_env_info *e);
 void	insert_list(t_str **start, t_str *list);
 
 /*wildcard expander*/
@@ -38,6 +38,6 @@ int		check_for_wildcard(char *s);
 int		unclosed_quote(int state);
 int		skip_quoted_state(char *s, int i, int quote);
 int		amount(t_str *s);
-void	initialize_xp(t_exp *xp, char *input, t_env *head);
+void	initialize_xp(t_exp *xp, char *input, t_env_info *e);
 
 #endif

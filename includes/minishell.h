@@ -61,7 +61,7 @@ void	tstr_addnext(t_str *current, t_str *new);
 t_env_info	*env_init(char **env);
 
 //expansion
-char	**full_expansion(t_str *c, t_env *head);
+char	**full_expansion(t_str *c, t_env_info *e);
 
 //SIGNALS
 void	set_signals_inter(void);
@@ -69,6 +69,6 @@ void	unset_echo(void);
 void	set_signals_non_inter(void);
 void	set_echo(void);
 
-void	ft_minishell_error(char *program, char *arg, char *desc);
+int	ft_minishell_error(char *program, char *arg, char *desc);
 
 #endif

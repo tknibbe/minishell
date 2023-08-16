@@ -46,9 +46,9 @@ int	amount(t_str *s)
 	return (count);
 }
 
-void	initialize_xp(t_exp *xp, char *input, t_env *head)
+void	initialize_xp(t_exp *xp, char *input, t_env_info *e)
 {
 	xp->star = 0;
-	xp->head = head;
+	xp->e = e;
 	xp->result = NULL;
 }

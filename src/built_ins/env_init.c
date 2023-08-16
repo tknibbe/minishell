@@ -17,6 +17,7 @@ t_env_info	*env_init(char **env)
 	info->count = i;
 	info->has_changed = 1;
 	info->head = head;
+	info->last_exit_status = 0;
 	info->env = NULL;
 	return (info);
 }

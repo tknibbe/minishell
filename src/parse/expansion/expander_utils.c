@@ -34,7 +34,7 @@ int	expand_dollo(t_exp *x, char *input, char **s, int i)
 {
 	char	*value;
 
-	value = get_env(&input[i], x->head);
+	value = get_env(&input[i], x->e);
 	if (value)
 	{
 		*s = ft_join(*s, value);
@@ -82,8 +82,6 @@ int	identify_substr(t_exp *x, int state, char *input, char **s)
 				input[i + j] = -1;
 			j++;
 		}
-		if (input[i + j] == '$' && !ft_isname(input[i + j + 1]) && !ft_isinset(input[i + j + 1], "?$"))
-			j++;
 		if (j)
 			append_sub(s, &input[i], j);
 		i += j;

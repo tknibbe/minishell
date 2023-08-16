@@ -37,12 +37,29 @@ char	*ft_envjoin(char *s1, char *s2)
 	return (result);
 }
 
+static char	*no_env(int c, int status)
+{
+	char	*value;
+
+	if (c == '?')
+		value = ft_itoa(status);
+	else
+		value = ft_strdup("$");
+	if (!value)
+		ft_exit("Malloc error\n", errno);
+	return (value);
+}
+
 /*finds value corrosponding with key in the environment and returns an allocated string that must be FREED properly*/
-char	*get_env(char *key, t_env *head)
+char	*get_env(char *key, t_env_info *e)
 {
 	int		i;
 	char	*value;
+	t_env	*head;
 
+	if (!ft_isname(*key))
+		return (no_env(*key, e->last_exit_status));
+	head = e->head;
 	while (head)
 	{
 		i = 0;
