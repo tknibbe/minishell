@@ -42,18 +42,18 @@ void	cris(t_ally *all, char *input)
 {
 	// if (!ft_strncmp(input, "> ", 2))
 	// 	test_env_expansion_shit(all, &input[2]);
-	if (!ft_strncmp(input, "echo ", 5))
-		echo(ft_split(&input[5], ' '));
+	// if (!ft_strncmp(input, "echo ", 5))
+	// 	echo(ft_split(&input[5], ' '));
 	if (!ft_strncmp(input, "env", 4))
 		env(all->env->head);
-	if (!ft_strncmp(input, "pwd", 4))
-		pwd();
-	if (!ft_strncmp(input, "cd ", 3))
-		cd(&input[3], all->env->head);
 	if (!ft_strncmp(input, "unset ", 6))
-		unset(all->env, ft_split(&input[6], ' '));
+		unset(all->env, ft_split(input, ' '));
 	if (!ft_strncmp(input, "export ", 6))
-		export(all->env, all->env->head, ft_split(&input[7], ' '));
+		export(all->env, ft_split(input, ' '));
+	// if (!ft_strncmp(input, "pwd", 4))
+	// 	pwd();
+	// if (!ft_strncmp(input, "cd ", 3))
+	// 	cd(&input[3], all->env->head);
 }
 
 int	run_shell(t_ally *all, char *prompt)

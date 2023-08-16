@@ -29,6 +29,10 @@ void				echo(char **echo);
 void				env(t_env *env);
 void				unset(t_env_info *e, char **to_unset);
 void				export(t_env_info *e, char **to_export);
+int					valid_identifier(char *s);
+int					legit_export_item(char *to_export);
+int					find_and_unset(t_env **env, char *unset);
+int					find_and_export(t_env *head, char *to_export);
 
 t_env_info			*env_init(char **env);
 t_env				*env_new(char *s);

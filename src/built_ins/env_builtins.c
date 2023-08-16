@@ -50,7 +50,7 @@ void	unset(t_env_info *e, char **unset)
 	{
 		if (valid_identifier(unset[i]))
 		{
-			if (find_and_unset(e->head, unset[i]))
+			if (find_and_unset(&e->head, unset[i]))
 			{
 				e->has_changed = 1;
 				e->count--;

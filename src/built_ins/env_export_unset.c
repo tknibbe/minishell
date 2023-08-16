@@ -2,7 +2,8 @@
 #include <minishell.h>
 #include <expansion.h>
 
-static int	valid_identifier(char *s)
+
+int	valid_identifier(char *s)
 {
 	int	i;
 
@@ -14,7 +15,7 @@ static int	valid_identifier(char *s)
 	return (1);
 }
 
-static int	legit_export_item(char *to_export)
+int	legit_export_item(char *to_export)
 {
 	int		i;
 
@@ -25,7 +26,7 @@ static int	legit_export_item(char *to_export)
 		return (1);
 	else if (to_export[i] == '=')
 		return (0);
-	else if (to_export[i] == '+' && to_export[i] == '=')
+	else if (to_export[i] == '+' && to_export[i + 1] == '=')
 		return (0);
 	return (2);
 }
@@ -75,7 +76,7 @@ int	find_and_export(t_env *head, char *to_export)
 		}
 		else if (!head->key[i] && to_export[i] == '+')
 		{
-			head->value = ft_join(head->value, to_export[i + 2]);
+			head->value = ft_join(head->value, &to_export[i + 2]);
 			return (1);
 		}
 		head = head->next;
