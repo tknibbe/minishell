@@ -6,9 +6,9 @@ MINISHELL	=	minishell
 LIBFT		=	lib/libft.a
 SRC			=	cris_main.c \
 				exit_funcs.c \
-				built_ins/env.c \
-				built_ins/unset.c \
-				built_ins/export.c \
+				built_ins/env_builtins.c \
+				built_ins/env_export_unset.c \
+				built_ins/env_init.c \
 				built_ins/env_utils.c \
 				built_ins/cd.c \
 				built_ins/echo.c \

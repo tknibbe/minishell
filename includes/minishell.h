@@ -69,4 +69,6 @@ void	unset_echo(void);
 void	set_signals_non_inter(void);
 void	set_echo(void);
 
+void	ft_minishell_error(char *program, char *arg, char *desc);
+
 #endif

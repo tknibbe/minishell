@@ -1,0 +1,65 @@
+#include <built_ins.h>
+#include <minishell.h>
+
+/*will print out all keys with their value's*/
+void	env(t_env *env)
+{
+	while (env)
+	{
+		printf("%s=%s\n", env->key, env->value);
+		env = env->next;
+	}
+}
+
+/*will create or adjust a node for export*/
+void	export(t_env_info *e, char **to_export)
+{
+	int		i;
+	int		mode;
+
+	i = 1;
+	free(to_export[0]);
+	while (to_export[i])
+	{
+		mode = legit_export_item(to_export[i]);
+		if (mode < 1)
+		{
+			if (!find_and_export(e->head, to_export[i]))
+			{
+				env_addback(&e->head, env_new(to_export[i]));
+				e->count++;
+			}
+			e->has_changed = 1;
+		}
+		else if (mode > 1)
+			ft_minishell_error("export", to_export[i], "not a valid identifier");
+		free(to_export[i]);
+		i++;
+	}
+	free(to_export);
+}
+
+/*will unset a variable given the key*/
+void	unset(t_env_info *e, char **unset)
+{
+	int	i;
+
+	i = 1;
+	free(unset[0]);
+	while (unset[i])
+	{
+		if (valid_identifier(unset[i]))
+		{
+			if (find_and_unset(e->head, unset[i]))
+			{
+				e->has_changed = 1;
+				e->count--;
+			}
+		}
+		else
+			ft_minishell_error("export", unset[i], "not a valid identifier");
+		free(unset[i]);
+		i++;
+	}
+	free(unset);
+}

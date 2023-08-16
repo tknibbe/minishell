@@ -20,3 +20,13 @@ int	ft_isinset(int c, char *s)
 	}
 	return (0);
 }
+
+void	ft_minishell_error(char *program, char *arg, char *desc)
+{
+	write(2, program, ft_strlen(program));
+	write(2, ": ", 2);
+	write(2, arg, ft_strlen(arg));
+	write(2, ": ", 2);
+	write(2, desc, ft_strlen(desc));
+	write(2, "\n", 1);
+}
