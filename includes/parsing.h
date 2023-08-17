@@ -18,6 +18,7 @@ typedef struct s_rdr
 
 typedef struct s_exec
 {
+	t_list			*subshell;
 	t_str			*cmd;
 	t_rdr			*rdr;
 	t_exec			*next;
@@ -28,8 +29,8 @@ typedef struct s_list
 	int				*token;
 	char			*input;
 	int				and_or;
-	t_exec			*exec;
 	int				exit_code;
+	t_exec			*exec;
 	struct s_list	*next;
 }					t_list;
 

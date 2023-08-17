@@ -86,8 +86,8 @@ void	free_t_str(t_str *cmd)
 	while (cmd)
 	{
 		temp = cmd;
+		cmd = cmd->next;
 		free (temp->str);
 		free(temp);
-		cmd = cmd->next;
 	}
 }
