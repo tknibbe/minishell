@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/15 14:05:24 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/17 14:15:07 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	add_heredoc(char *input, t_list *list, int *i)
 	if (WIFSIGNALED(doc.status) && doc.status != 0)
 	{
 		free(doc.delimiter);
-		list->exit_code = 129;
+		list->exit_code = 130;
 		return ;
 	}
 	close(doc.pipefd[1]);

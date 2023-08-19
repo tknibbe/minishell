@@ -66,7 +66,7 @@ enum	e_token
 void	parse_input(char **input, t_ally *all);
 
 //TOKEN.C
-void	tokenize(char *input, t_list *list);
+void	tokenize(t_list *list);
 //TOKEN_UTILS.C
 int		ft_whitespace(char c);
 void	set_rdr_pipe_amp(t_list *list, char *input, int *i);
@@ -77,7 +77,8 @@ void	parse(char *input, t_list *list);
 void	free_list_struct(t_list *list);
 
 //SYNTAX.C
-int		check_syntax(t_list *list, char **input);
+//int		check_syntax(t_list *list, char **input);
+int		check_syntax(t_list *list);
 
 //LIST_utils.C
 void	exec_lstadd_back(t_exec **lst, t_exec *new);
@@ -99,6 +100,11 @@ int		split_pipelines(char *input, t_ally *all);
 //SPLIT_UTILS
 void	t_listadd_back(t_list **lst, t_list *new);
 t_list	*t_listnew(void);
+
+//subshell.c
+void	set_subshell(t_list *list, char *input);
+int		sub_count(char c, int want);
+int		is_subshell(int token);
 
 //TEST_FUNCTIONS.C
 void	print_class(int num);

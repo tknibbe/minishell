@@ -6,14 +6,14 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 13:41:26 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/09 15:38:42 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/17 15:31:22 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 //• In interactive mode:
-//		ECHOCTL in termios (cl(set/get)attr) needs to be turned off
+//	ECHOCTL in termios (cl(set/get)attr) needs to be turned off
 //	◦ ctrl-C displays a new prompt on a new line.
 //	◦ ctrl-D exits the shell.
 //	◦ ctrl-\ does nothing.
@@ -21,7 +21,7 @@
 //non interactive mode:
 //	ctrl-C exits whatever your running 
 //	ctrl-\ is ignored
-//	ctrl-D sends EOF -- is working automattically
+//	ctrl-D sends EOF -- is working automatically
 
 void	non_inter_handler(int c)
 {

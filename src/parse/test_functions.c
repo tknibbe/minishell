@@ -119,7 +119,7 @@ void print_test(t_list *list, char *input)
 void	print_tokens(t_list *list, int len)
 {
 	int i = 0;
-	printf("len = %d\n", len);
+	//printf("len = %d\n", len);
 	while (i < len)
 	{
 		printf("[%d]", list->token[i]);

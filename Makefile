@@ -20,6 +20,7 @@ SRC			=	cris_main.c \
 				parse/parse.c \
 				parse/tokenize/token.c \
 				parse/tokenize/token_utils.c \
+				parse/tokenize/subshell.c \
 				parse/tokenize/syntax.c \
 				parse/parse/make_list.c \
 				parse/parse/list_utils.c \

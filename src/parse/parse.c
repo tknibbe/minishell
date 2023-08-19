@@ -9,8 +9,11 @@ void	parse_input(char **input, t_ally *all)
 {
 	t_list	*temp;
 
-	tokenize(*input, all->list);
-	if (check_syntax(all->list, input))
+	all->list->input = ft_strdup(*input);
+	all->list->input = ft_strtrim(all->list->input, " ");
+	tokenize(all->list);
+	//print_tokens(all->list, ft_strlen(all->list->input));
+	if (check_syntax(all->list))
 		return ;
 	if (split_pipelines(*input, all))
 	{
@@ -24,7 +27,6 @@ void	parse_input(char **input, t_ally *all)
 	else
 		parse(*input, all->list);
 	//print_test(*list, input);
-	//print_tokens(all->list, ft_strlen(*input));
 	print_whole_list(all->list);
 	//while (all->list) // this loop frees all data that falls under t_list
 	//{
