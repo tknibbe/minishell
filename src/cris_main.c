@@ -73,7 +73,7 @@ int	run_shell(t_ally *all, char *prompt)
 	add_history(string);
 	if (ft_strncmp(string, "exit", 4) == 0)
 		exit(0);
-	tymon(all, &string);
+	//tymon(all, &string);
 	//cris(all, string);
 	return (0);
 	//exit(0);
