@@ -11,13 +11,13 @@ void	echo(char **echo)
 
 	i = 1;
 	free(echo[0]);
-	if (!ft_strncmp(echo[i], "-n", 3))
+	new_line = 0;
+	while (!ft_strncmp(echo[i], "-n", 3))
 	{
-		free(echo[i++]);
 		new_line = 1;
+		free(echo[i]);
+		i++;
 	}
-	else
-		new_line = 0;
 	while (echo[i])
 	{
 		write(1, echo[i], ft_strlen(echo[i]));

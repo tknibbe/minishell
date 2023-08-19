@@ -42,8 +42,8 @@ void	cris(t_ally *all, char *input)
 {
 	// if (!ft_strncmp(input, "> ", 2))
 	// 	test_env_expansion_shit(all, &input[2]);
-	// if (!ft_strncmp(input, "echo ", 5))
-	// 	echo(ft_split(&input[5], ' '));
+	if (!ft_strncmp(input, "echo ", 5))
+		echo(ft_split(input, ' '));
 	if (!ft_strncmp(input, "env", 4))
 		env(all->env->head);
 	if (!ft_strncmp(input, "unset ", 6))

@@ -2,7 +2,6 @@
 #include <minishell.h>
 #include <expansion.h>
 
-
 int	valid_identifier(char *s)
 {
 	int	i;

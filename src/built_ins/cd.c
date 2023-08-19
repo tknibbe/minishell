@@ -2,32 +2,26 @@
 #include <minishell.h>
 #include <readline/history.h>
 
-void	builtin(t_env *env, char *key)
+static int	use_env(t_env_info *e, char *var)
 {
-	char	*to_fetch;
-
-	to_fetch = get_env(key, env);
-	if (!to_fetch)
+	if (chdir(get_env(var, e)) < 0)
 	{
-		write(2, "minishell: cd: ", 16);
-		write(2, key, ft_strlen(key));
-		write(2, " not set\n", 10);
+		ft_minishell_error("cd", var, "not set");
+		return (1);
 	}
-	else if (chdir(to_fetch) < 0)
-		perror("minishell: cd");
-	free(to_fetch);
+	return (0);
 }
 
-void	cd(char *path, t_env *env)
+int	cd(char **cmd, t_env_info *e)
 {
-	if (!path || !ft_strncmp(path, "~", 2))
-		builtin(env, "HOME");
-	if (!ft_strncmp(path, "-", 2))
-		builtin(env, "OLDPWD");
-	if (chdir(path) < 0)
-		perror("minishell: cd");
-	/*	maybe also set the last error number to 1
-		and also send the environment so we can get the path */
+	if (!cmd[1])
+		return (free_dp(cmd), use_env(e, "HOME"));
+	else if (!ft_strncmp(cmd[1], "-", 2))
+		return (free_dp(cmd), use_env(e, "OLDPWD"));
+	else if (chdir(cmd[1]) < 0)
+		return (free_dp(cmd), ft_minishell_error("cd", cmd[1], strerror(errno)));
+	free_dp(cmd);
+	return (0);
 }
 
 void	history(const char *s)
@@ -36,13 +30,14 @@ void	history(const char *s)
 		add_history(s);
 }
 
-void	pwd(void)
+int	pwd(void)
 {
 	char	*buff;
 
 	buff = getcwd(NULL, 0);
 	if (!buff)
-		perror("minishell: pwd");
+		return (ft_minishell_error("pwd", strerror(errno), NULL));
 	printf("%s\n", buff);
 	free(buff);
+	return (0);
 }

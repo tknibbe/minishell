@@ -29,14 +29,14 @@ static t_str	*split_var(char *var, char *sub)
 	return (head);
 }
 
-static t_str	*get_insert_lst(char *var, t_env *env_head, char *s)
+static t_str	*get_insert_lst(char *var, t_env_info *e, char *s)
 {
 	t_exp	x;
 	char	**result;
 	int		i;
 
 	i = 0;
-	initialize_xp(&x, s, env_head);
+	initialize_xp(&x, s, e);
 	if (s)
 		expand_string(s, &x);
 	if (var)
@@ -67,7 +67,7 @@ void	insert_list(t_str **start, t_str *list)
 	(*start)->next = tmp;
 }
 
-void	split_word(t_str *start, t_env *head)
+void	split_word(t_str *start, t_env_info *e)
 {
 	int		i;
 	char	*s;
@@ -82,12 +82,12 @@ void	split_word(t_str *start, t_env *head)
 		sub = create_sub(s, &i, 0);
 		if (s[i] == '$')
 		{
-			splitted = get_insert_lst(get_env(&s[++i], head), head, sub);
+			splitted = get_insert_lst(get_env(&s[++i], e), e, sub);
 			while (ft_isname(s[i]))
 				i++;
 		}
 		else
-			splitted = get_insert_lst(NULL, head, sub);
+			splitted = get_insert_lst(NULL, e, sub);
 		insert_list(&start, splitted);
 	}
 	free(s);

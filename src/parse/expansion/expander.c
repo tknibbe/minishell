@@ -6,7 +6,7 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/14 20:18:58 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/08/14 21:47:38 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/08/16 14:55:03 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ static void	expansion_wc(t_str *s)
 	}
 }
 
-static void	expansion_ws(t_str *start, t_env *head)
+static void	expansion_ws(t_str *start, t_env_info *e)
 {
 	t_str	*next;
 
 	while (start)
 	{
 		next = start->next;
-		split_word(start, head);
+		split_word(start, e);
 		start = next;
 	}
 }
@@ -79,13 +79,13 @@ void	expander(int state, char *brake, t_exp *x, char *input)
 	return (expander(0, "$\"'", x, input));
 }
 
-char	**full_expansion(t_str *c, t_env *head)
+char	**full_expansion(t_str *c, t_env_info *e)
 {
 	char	**result;
 	t_str	*willy;
 	int		i;
 
-	expansion_ws(c, head);
+	expansion_ws(c, e);
 	expansion_wc(c);
 	result = malloc((amount(c) + 1) * sizeof(char *));
 	if (!result)

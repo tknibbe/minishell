@@ -2,7 +2,7 @@
 #include <minishell.h>
 
 /*will print out all keys with their value's*/
-void	env(t_env *env)
+int	env(t_env *env)
 {
 	while (env)
 	{
@@ -12,12 +12,14 @@ void	env(t_env *env)
 }
 
 /*will create or adjust a node for export*/
-void	export(t_env_info *e, char **to_export)
+int	export(t_env_info *e, char **to_export)
 {
 	int		i;
 	int		mode;
+	int		ret;
 
 	i = 1;
+	ret = 0;
 	free(to_export[0]);
 	while (to_export[i])
 	{
@@ -32,20 +34,22 @@ void	export(t_env_info *e, char **to_export)
 			e->has_changed = 1;
 		}
 		else if (mode > 1)
-			ft_minishell_error("export", to_export[i], "not a valid identifier");
-		free(to_export[i]);
-		i++;
+			ret = ft_minishell_error("export", to_export[i], "not a valid identifier");
+		free(to_export[i++]);
 	}
 	free(to_export);
+	return (ret);
 }
 
 /*will unset a variable given the key*/
-void	unset(t_env_info *e, char **unset)
+int	unset(t_env_info *e, char **unset)
 {
 	int	i;
+	int	ret;
 
 	i = 1;
 	free(unset[0]);
+	ret = 0;
 	while (unset[i])
 	{
 		if (valid_identifier(unset[i]))
@@ -57,9 +61,10 @@ void	unset(t_env_info *e, char **unset)
 			}
 		}
 		else
-			ft_minishell_error("export", unset[i], "not a valid identifier");
+			ret = ft_minishell_error("export", unset[i], "not a valid identifier");
 		free(unset[i]);
 		i++;
 	}
 	free(unset);
+	return (ret);
 }

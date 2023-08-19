@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/17 14:15:07 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/19 15:21:26 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ void	add_heredoc(char *input, t_list *list, int *i)
 	if (doc.pid == 0)
 		heredoc(input, &doc);
 	wait(&doc.status);
-	if (WIFSIGNALED(doc.status) && doc.status != 0)
+	if (WIFSIGNALED(doc.status) && WEXITSTATUS(doc.status) != 0)
 	{
 		free(doc.delimiter);
-		list->exit_code = 130;
+		list->exit_code = 1;
 		return ;
 	}
 	close(doc.pipefd[1]);
