@@ -5,19 +5,20 @@ void	free_list_struct(t_list *list);
 void	free_t_str(t_str *cmd);
 void	free_rdr(t_rdr	*rdr);
 
-void	parse_input(char **input, t_ally *all)
+t_list	*parse_input(char *input)
 {
-	t_list	*temp;
+	t_list	*list;
+	t_list 	*temp;
 
-	all->list->input = ft_strdup(*input);
-	all->list->input = ft_strtrim(all->list->input, " ");
-	tokenize(all->list);
-	//print_tokens(all->list, ft_strlen(all->list->input));
-	if (check_syntax(all->list))
-		return ;
-	if (split_pipelines(*input, all))
+	list = t_listnew();
+	list->input = ft_strtrim(list->input, " ");
+	tokenize(list);
+	print_tokens(list, ft_strlen(list->input));
+	if (check_syntax(list))
+		return (NULL);
+	if (split_pipelines(*input, list))
 	{
-		temp = all->list;
+		temp = list;
 		while (temp)
 		{
 			parse(temp->input, temp);
@@ -25,14 +26,15 @@ void	parse_input(char **input, t_ally *all)
 		}
 	}
 	else
-		parse(*input, all->list);
+		parse(*input, list);
 	//print_test(*list, input);
-	//print_whole_list(all->list);
+	print_whole_list(list);
 	//while (all->list) // this loop frees all data that falls under t_list
 	//{
 	//	free_list_struct(all->list);
 	//	all->list = all->list->next;
 	//}
+	return (list);
 }
 
 void	free_list_struct(t_list *list)

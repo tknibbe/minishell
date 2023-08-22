@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 14:46:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/19 15:18:25 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/22 15:43:32 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	is_subshell(int token)
 
 int	sub_count(char c, int option)
 {
-	static int amount_open;
-	static int amount_close;
+	static int	amount_open;
+	static int	amount_close;
 
 	if (c == '(')
 		amount_open++;
@@ -44,7 +44,7 @@ void	set_subshell(t_list *list, char *input)
 	int	open;
 	int	close;
 	int	i;
-	
+
 	open = sub_count(' ', 0);
 	close = sub_count(' ', 0);
 	i = 0;
@@ -63,4 +63,12 @@ void	set_subshell(t_list *list, char *input)
 		i++;
 	}
 	sub_count(' ', RESET);
+}
+
+void	add_subshell(char *input, t_list *list, int *i)
+{
+	int	start;
+
+	start = *i + 1;
+	list->subshell = parse_input()
 }

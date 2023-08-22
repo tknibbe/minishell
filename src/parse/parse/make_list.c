@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/19 16:33:58 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/22 15:41:20 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ void	parse(char *input, t_list *list)
 		exec_lstadd_back(&list->exec, node);
 		while (list->token[i] != PIPESYMBOL && input[i])
 		{
-		//printf("parser\n");
+			printf("going in on %c\n", input[i]);
 			if (is_redirect(list->token[i]))
 				new_rdr_node(input, list->token, list, &i);
 			else if (list->token[i] == WORD)
 				new_cmd_node(input, list->token, node, &i);
+			else if (list->token[i] == BRACE_OPEN)
+				add_subshell(input, list, &i);
 			else
 				i++;
 		}
@@ -51,7 +53,8 @@ void	new_cmd_node(char *input, int *token, t_exec *node, int *i)
 	int		start;
 	char	*str;
 
-	while (is_redirect(token[*i]) == 0 && token[*i] != PIPESYMBOL && input[*i])
+	while (is_redirect(token[*i]) == 0 && token[*i] != PIPESYMBOL \
+			&& input[*i] && token[*i] != BRACE_OPEN)
 	{
 		start = *i;
 		while (token[*i] == WORD && input[*i])
@@ -59,6 +62,7 @@ void	new_cmd_node(char *input, int *token, t_exec *node, int *i)
 		str = ft_substr(input, start, *i - start);
 		if (!str)
 			ft_exit("Malloc error\n", errno);
+		printf("stuck! token[i] = %d\n", token[*i]);
 		t_str_lstadd_back(&node->cmd, t_str_lstnew(str));
 		while (token[*i] == BLANK && input[*i])
 			*i += 1;

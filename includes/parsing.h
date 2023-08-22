@@ -63,7 +63,7 @@ enum	e_token
 };
 
 //PARSE.C
-void	parse_input(char **input, t_ally *all);
+t_list	*parse_input(char *input);
 
 //TOKEN.C
 void	tokenize(t_list *list);
@@ -95,7 +95,7 @@ t_str	*t_str_lstnew(char *str);
 void	add_heredoc(char *input, t_list *list, int *i);
 
 //SPLIT_PIPELINES.C
-int		split_pipelines(char *input, t_ally *all);
+int		split_pipelines(char *input, t_list *list);
 
 //SPLIT_UTILS
 void	t_listadd_back(t_list **lst, t_list *new);
