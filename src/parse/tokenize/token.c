@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/19 15:11:00 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/19 16:42:45 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ static void	set_token(t_list *list, char *input)
 				i++;
 			}
 		}
-		if (is_rdr_pipe_amp(input, i))
+		else if (is_rdr_pipe_amp(input, i))
 		{
 			set_rdr_pipe_amp(list, input, &i);
 			i++;
 		}
-		if (input[i] == '(' || input[i] == ')')
+		else if (input[i] == '(' || input[i] == ')')
 			sub_count(input[i++], 0);
 		else
 		{

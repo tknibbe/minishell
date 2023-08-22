@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/19 15:18:36 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/19 16:33:35 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int	check_syntax(t_list *list)
 		return (1);
 	while (list->input[i])
 	{
-		printf("i = %d c = [%c]\n", i, list->input[i]);
+		//printf("i = %d c = [%c]\n", i, list->input[i]);
 		if (is_redirect(list->token[i]))
 		{
 			if (rdr_check(list, &i))

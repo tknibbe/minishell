@@ -27,7 +27,7 @@ void	parse_input(char **input, t_ally *all)
 	else
 		parse(*input, all->list);
 	//print_test(*list, input);
-	print_whole_list(all->list);
+	//print_whole_list(all->list);
 	//while (all->list) // this loop frees all data that falls under t_list
 	//{
 	//	free_list_struct(all->list);

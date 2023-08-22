@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/19 15:19:42 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/19 16:33:58 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ void	parse(char *input, t_list *list)
 	i = 0;
 	while (input[i])
 	{
-		printf("parser\n");
 		node = exec_lstnew();
 		exec_lstadd_back(&list->exec, node);
 		while (list->token[i] != PIPESYMBOL && input[i])
 		{
+		//printf("parser\n");
 			if (is_redirect(list->token[i]))
 				new_rdr_node(input, list->token, list, &i);
 			else if (list->token[i] == WORD)
