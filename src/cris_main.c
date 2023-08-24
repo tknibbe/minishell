@@ -32,6 +32,7 @@ void	tymon(t_ally *all, char *input)
 
 	//pre_parse(input, all);
 	all->list = parse_input(input);
+	//print_whole_list(all->list);
 	//printf("pipeline exited with code : %d\n", all->list->exit_code);
 	//free (*input);
 	//leaks();

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/19 16:33:35 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/23 12:06:32 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static int control_op_check(t_list *list, int *i)
 		*i += 1;
 	if (!list->input[*i + 1] && is_control_op(list->token[*i]))
 		return (add_new_input(list));
-	if (list->token[*i] == WORD || is_redirect(list->token[*i]))
+	if (list->token[*i] == WORD || is_redirect(list->token[*i]) || list->token[*i] == BRACE_OPEN)
 	{
 		return (0);
 	}

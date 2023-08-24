@@ -8,6 +8,7 @@ typedef struct s_exec		t_exec;
 typedef struct s_rdr		t_rdr;
 typedef struct s_minishell	t_ally;
 typedef struct s_str		t_str;
+typedef struct s_list		t_list;
 
 typedef struct s_rdr
 {
@@ -30,6 +31,7 @@ typedef struct s_list
 	int				and_or;
 	t_exec			*exec;
 	int				exit_code;
+	t_list			*subshell;
 	struct s_list	*next;
 }					t_list;
 
@@ -95,7 +97,7 @@ t_str	*t_str_lstnew(char *str);
 void	add_heredoc(char *input, t_list *list, int *i);
 
 //SPLIT_PIPELINES.C
-int		split_pipelines(char *input, t_list *list);
+int		split_pipelines(char *input, t_list **list);
 
 //SPLIT_UTILS
 void	t_listadd_back(t_list **lst, t_list *new);
@@ -105,6 +107,7 @@ t_list	*t_listnew(void);
 void	set_subshell(t_list *list, char *input);
 int		sub_count(char c, int want);
 int		is_subshell(int token);
+void	add_subshell(char *input, t_list *list, int *i);
 
 //TEST_FUNCTIONS.C
 void	print_class(int num);

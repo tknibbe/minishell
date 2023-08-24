@@ -10,6 +10,13 @@ void print_whole_list(t_list *list)
 	{
 		printf("--------------------\n");
 		print_t_exec(temp, temp->input);
+		while (list->subshell)
+		{
+			printf("-------START SUBSHELL-------\n");
+			print_whole_list(list->subshell);
+			list->subshell = list->subshell->next;
+			printf("-------END SUBSHELL-------\n");
+		}
 		temp = temp->next;
 	}
 }
