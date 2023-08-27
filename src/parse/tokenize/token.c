@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/15 15:45:50 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/19 16:42:45 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@ static void	set_token(t_list *list, char *input);
 
 /*sets tokens according to the ENUMs defined in the header. 
 returns 0 on succes.*/
-void	tokenize(char *input, t_list *list)
+void	tokenize(t_list *list)
 {
 	int	len;
 
-	printf("tpken = %s\n", input);
-	printf("list = %p\n", list);
-	len = ft_strlen(input);
-	list->token = malloc(sizeof(int) * len);
+	len = ft_strlen(list->input);
+	list->token = ft_calloc(sizeof(int), len);
 	if (!list->token)
 		ft_exit("Malloc error\n", errno);
-	set_token(list, input);
+	set_token(list, list->input);
 }
 
-int	is_rdr_pipe_amp(char c)
+int	is_rdr_pipe_amp(char *c, int i)
 {
-	if (c == '|' || c == '<' || c == '>' || c == '&')
+	if (c[i] == '|' || c[i] == '<' || c[i] == '>')
+		return (1);
+	if (c[i] == '&' && c[i + 1] == '&')
 		return (1);
 	return (0);
 }
@@ -57,12 +57,15 @@ static int	is_closed_quote(char *input, int *end_quote, int i)
 	return (0);
 }
 
+
 static void	set_token(t_list *list, char *input)
 {
 	int	i;
 	int	end_quote;
+	int	subshell;
 
 	i = 0;
+	subshell = 0;
 	end_quote = 0;
 	while (input[i])
 	{
@@ -74,11 +77,13 @@ static void	set_token(t_list *list, char *input)
 				i++;
 			}
 		}
-		if (is_rdr_pipe_amp(input[i]))
+		else if (is_rdr_pipe_amp(input, i))
 		{
 			set_rdr_pipe_amp(list, input, &i);
 			i++;
 		}
+		else if (input[i] == '(' || input[i] == ')')
+			sub_count(input[i++], 0);
 		else
 		{
 			if (!ft_whitespace(input[i]))
@@ -88,4 +93,5 @@ static void	set_token(t_list *list, char *input)
 			i++;
 		}
 	}
+	set_subshell(list, input);
 }

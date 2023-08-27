@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:34:27 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/15 15:42:04 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/23 12:47:24 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	*copy_token(int *token, int start, int end)
 	return (new_token);
 }
 
-int	split_pipelines(char *input, t_ally *all)
+int	split_pipelines(char *input, t_list **list)
 {
 	t_list	*node;
 	t_list	*data;
@@ -50,12 +50,12 @@ int	split_pipelines(char *input, t_ally *all)
 	int		end;
 
 	start = 0;
-	data = all->list;
+	data = *list;
 	end = and_or_instr(input, data->token, 0);
-	print_tokens(all->list, ft_strlen(input));
+	//print_tokens(all->list, ft_strlen(input));
 	if (end == 0)
 		return (0);
-	all->list = NULL;
+	*list = NULL;
 	while (input[end])
 	{
 		if (data->token[end] == AND || data->token[end] == OR || !input[end + 1])
@@ -63,8 +63,10 @@ int	split_pipelines(char *input, t_ally *all)
 			if (!input[end + 1])
 				end++;
 			node = t_listnew();
-			t_listadd_back(&all->list, node);
+			t_listadd_back(list, node);
 			node->input = ft_substr(input, start, end - start);
+			printf("node->input = %s\n", node->input);
+			printf("list address %p\n", list);
 			node->token = copy_token(data->token, start, end);
 			node->and_or = data->token[end];
 			if (input[end + 2])

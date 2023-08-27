@@ -10,6 +10,13 @@ void print_whole_list(t_list *list)
 	{
 		printf("--------------------\n");
 		print_t_exec(temp, temp->input);
+		while (list->subshell)
+		{
+			printf("-------START SUBSHELL-------\n");
+			print_whole_list(list->subshell);
+			list->subshell = list->subshell->next;
+			printf("-------END SUBSHELL-------\n");
+		}
 		temp = temp->next;
 	}
 }
@@ -119,7 +126,7 @@ void print_test(t_list *list, char *input)
 void	print_tokens(t_list *list, int len)
 {
 	int i = 0;
-	printf("len = %d\n", len);
+	//printf("len = %d\n", len);
 	while (i < len)
 	{
 		printf("[%d]", list->token[i]);

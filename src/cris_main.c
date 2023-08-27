@@ -27,14 +27,14 @@ t_ally	*minishell_init(char *envp[])
 	return (all);
 }
 
-void	tymon(t_ally *all, char **input)
+void	tymon(t_ally *all, char *input)
 {
 
 	//pre_parse(input, all);
-	all->list = t_listnew();
-	parse_input(input, all);
+	all->list = parse_input(input);
+	print_whole_list(all->list);
 	//printf("pipeline exited with code : %d\n", all->list->exit_code);
-	free (*input);
+	//free (*input);
 	//leaks();
 }
 
@@ -60,9 +60,9 @@ int	run_shell(t_ally *all, char *prompt)
 {
 	char	*string;
 
-	set_signals_inter();
+	//set_signals_inter();
 	string = readline(prompt);
-	set_signals_non_inter();
+	//set_signals_non_inter();
 	if (!string)
 		exit(0);
 	if (!strncmp(string, "", 1))
@@ -73,9 +73,10 @@ int	run_shell(t_ally *all, char *prompt)
 	add_history(string);
 	if (ft_strncmp(string, "exit", 4) == 0)
 		exit(0);
-	//tymon(all, &string);
-	cris(all, string);
+	tymon(all, string);
+	//cris(all, string);
 	return (0);
+	//exit(0);
 }
 
 int	main(int argc, char *argv[], char *envp[])

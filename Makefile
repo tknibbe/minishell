@@ -20,7 +20,9 @@ SRC			=	cris_main.c \
 				parse/parse.c \
 				parse/tokenize/token.c \
 				parse/tokenize/token_utils.c \
-				parse/tokenize/syntax.c \
+				parse/tokenize/subshell.c \
+				parse/syntax/syntax.c \
+				parse/syntax/syntax_utils.c \
 				parse/parse/make_list.c \
 				parse/parse/list_utils.c \
 				parse/parse/list_utils2.c \
@@ -55,6 +57,7 @@ obj/%.o : src/%.c
 	@mkdir -p obj/parse/tokenize
 	@mkdir -p obj/parse/parse
 	@mkdir -p obj/parse/expansion
+	@mkdir -p obj/parse/syntax
 	@mkdir -p obj/execution
 	@mkdir -p obj/signals
 	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
