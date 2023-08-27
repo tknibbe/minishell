@@ -8,12 +8,12 @@ void	free_rdr(t_rdr	*rdr);
 t_list	*parse_input(char *input)
 {
 	t_list	*list;
-	t_list 	*temp;
+	t_list	*temp;
 
 	list = t_listnew();
 	list->input = ft_strtrim(input, " ");
 	tokenize(list);
-	print_tokens(list, ft_strlen(list->input));
+	//print_tokens(list, ft_strlen(list->input));
 	if (check_syntax(list))
 		return (NULL);
 	if (split_pipelines(input, &list))

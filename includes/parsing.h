@@ -19,6 +19,7 @@ typedef struct s_rdr
 
 typedef struct s_exec
 {
+	t_list			*subshell;
 	t_str			*cmd;
 	t_rdr			*rdr;
 	t_exec			*next;
@@ -31,7 +32,6 @@ typedef struct s_list
 	int				and_or;
 	t_exec			*exec;
 	int				exit_code;
-	t_list			*subshell;
 	struct s_list	*next;
 }					t_list;
 
@@ -107,7 +107,7 @@ t_list	*t_listnew(void);
 void	set_subshell(t_list *list, char *input);
 int		sub_count(char c, int want);
 int		is_subshell(int token);
-void	add_subshell(char *input, t_list *list, int *i);
+void	add_subshell(char *input, t_list *list, t_exec *exec, int *i);
 
 //SYNTAX.C
 int		is_redirect(int c);

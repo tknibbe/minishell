@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 12:30:57 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/24 12:12:36 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/27 16:23:53 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_exec	*exec_lstnew(void)
 	if (n1 == NULL)
 		ft_exit("Malloc error\n", errno);
 	n1->cmd = NULL;
+	n1->subshell = NULL;
 	n1->rdr = NULL;
 	n1->next = NULL;
 	return (n1);

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/27 13:48:03 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/27 15:36:42 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,19 @@ static int	control_op_check(t_list *list, int *i)
 	int	j;
 	int	token;
 
-	j = 0;
+	j = *i;
 	token = list->token[*i];
+	if (!list->input[*i + 1])
+		return (add_new_input(list));
 	if (op_amount_check(list, *i))
 		return (ft_syntax_error(' ', list->token[*i]));
 	while (list->token[*i] == token && list->input[*i + 1])
 		*i += 1;
 	while (list->token[*i] == BLANK && list->input[*i + 1])
 		*i += 1;
-	if (!list->input[*i + 1] && is_control_op(list->token[*i]))
-		return (add_new_input(list));
 	if (list->token[*i] == WORD || is_redirect(list->token[*i]) \
 		|| list->token[*i] == BRACE_OPEN)
 	{
-		printf("EXIT HERE\n");
 		return (0);
 	}
 	return (ft_syntax_error(' ', list->token[*i]));
