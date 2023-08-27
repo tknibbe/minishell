@@ -1,6 +1,7 @@
 #include <minishell.h>
 #include <parsing.h>
 #include <built_ins.h>
+#include <expansion.h>
 
 void	open_file_and_dup(char *file, int flag, int to_dup, int permission)
 {

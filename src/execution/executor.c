@@ -98,6 +98,7 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 	waitpid(pid, &status, NULL);
 	while (wait(NULL) != -1)
 		;
+	return (status);
 }
 
 void	executor(t_list *pipe_line, t_env_info *e)
