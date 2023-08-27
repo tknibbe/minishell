@@ -5,10 +5,7 @@
 static int	use_env(t_env_info *e, char *var)
 {
 	if (chdir(get_env(var, e)) < 0)
-	{
-		ft_minishell_error("cd", var, "not set");
-		return (1);
-	}
+		return (ft_minishell_error("cd", var, "not set", 0));
 	return (0);
 }
 
@@ -19,7 +16,7 @@ int	cd(char **cmd, t_env_info *e)
 	else if (!ft_strncmp(cmd[1], "-", 2))
 		return (free_dp(cmd), use_env(e, "OLDPWD"));
 	else if (chdir(cmd[1]) < 0)
-		return (free_dp(cmd), ft_minishell_error("cd", cmd[1], strerror(errno)));
+		return (free_dp(cmd), ft_minishell_error("cd", cmd[1], strerror(errno), 0));
 	free_dp(cmd);
 	return (0);
 }
@@ -36,7 +33,7 @@ int	pwd(void)
 
 	buff = getcwd(NULL, 0);
 	if (!buff)
-		return (ft_minishell_error("pwd", strerror(errno), NULL));
+		return (ft_minishell_error("getcwd()", strerror(errno), NULL, errno));
 	printf("%s\n", buff);
 	free(buff);
 	return (0);

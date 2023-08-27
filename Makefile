@@ -35,6 +35,8 @@ SRC			=	cris_main.c \
 				signals/interactive.c \
 				signals/non_interactive.c \
 				exit_funcs.c \
+				execution/executor.c \
+				execution/redirect.c \
 				#test.c \
 				# parse/tokenize/make_list.c \
 				# built_ins/cd.c \

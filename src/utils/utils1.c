@@ -1,4 +1,5 @@
 #include <minishell.h>
+#include <stdlib.h>
 
 int	ft_iswhitespace(int	c)
 {
@@ -21,17 +22,23 @@ int	ft_isinset(int c, char *s)
 	return (0);
 }
 
-int	ft_minishell_error(char *program, char *arg, char *desc)
+int	ft_minishell_error(char *program, char *arg, char *desc, int ex)
 {
 	write(2, "minishell: ", 11);
-	write(2, program, ft_strlen(program));
-	write(2, ": ", 2);
-	write(2, arg, ft_strlen(arg));
+	if (program)
+		write(2, program, ft_strlen(program));
+	if (arg)
+	{
+		write(2, ": ", 2);
+		write(2, arg, ft_strlen(arg));
+	}
 	if (desc)
 	{
-		write(2, ": ", 3);
+		write(2, ": ", 2);
 		write(2, desc, ft_strlen(desc));
 	}
 	write(2, "\n", 1);
+	if (ex)
+		exit(ex);
 	return (1);
 }

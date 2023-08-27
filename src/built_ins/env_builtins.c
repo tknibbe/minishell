@@ -34,7 +34,7 @@ int	export(t_env_info *e, char **to_export)
 			e->has_changed = 1;
 		}
 		else if (mode > 1)
-			ret = ft_minishell_error("export", to_export[i], "not a valid identifier");
+			ret = ft_minishell_error("export", to_export[i], "not a valid identifier", 0);
 		free(to_export[i++]);
 	}
 	free(to_export);
@@ -61,7 +61,7 @@ int	unset(t_env_info *e, char **unset)
 			}
 		}
 		else
-			ret = ft_minishell_error("export", unset[i], "not a valid identifier");
+			ret = ft_minishell_error("export", unset[i], "not a valid identifier", 0);
 		free(unset[i]);
 		i++;
 	}

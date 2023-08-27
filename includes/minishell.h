@@ -23,6 +23,7 @@
 //hey crissie baby <3
 //hey tymoo daddy 8=D
 //hey crissie deel 2 80085
+//hey tymoo bicep baby muscle mommy
 
 typedef struct s_list	t_list;
 
@@ -69,6 +70,6 @@ void	unset_echo(void);
 void	set_signals_non_inter(void);
 void	set_echo(void);
 
-int	ft_minishell_error(char *program, char *arg, char *desc);
+int	ft_minishell_error(char *program, char *arg, char *desc, int ex);
 
 #endif
