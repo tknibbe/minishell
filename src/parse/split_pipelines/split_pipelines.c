@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:34:27 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/23 12:47:24 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/27 16:21:23 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	split_pipelines(char *input, t_list **list)
 	start = 0;
 	data = *list;
 	end = and_or_instr(input, data->token, 0);
-	//print_tokens(all->list, ft_strlen(input));
 	if (end == 0)
 		return (0);
 	*list = NULL;
@@ -65,8 +64,6 @@ int	split_pipelines(char *input, t_list **list)
 			node = t_listnew();
 			t_listadd_back(list, node);
 			node->input = ft_substr(input, start, end - start);
-			printf("node->input = %s\n", node->input);
-			printf("list address %p\n", list);
 			node->token = copy_token(data->token, start, end);
 			node->and_or = data->token[end];
 			if (input[end + 2])
@@ -76,9 +73,7 @@ int	split_pipelines(char *input, t_list **list)
 		else
 			end++;
 	}
-	printf("exit split_pipes\n");
 	free(data->token);
 	free(data);
 	return (1);
 }
- 

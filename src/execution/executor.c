@@ -21,7 +21,7 @@ t_list	*next_pipe_line(t_list *current)
 	printf("free current node");
 	if (!current->next)
 		return (NULL);
-	if (!(!current->exit_code && current->and_or || current->exit_code && !current->and_or))
+	if (!((!current->exit_code && current->and_or) || (current->exit_code && !current->and_or)))
 	{
 		printf(", and next node\n");
 		return (current->next->next);
@@ -53,8 +53,8 @@ void	execute_child(t_exec *exec, int *p, int fd, t_env_info *e, char **cmd)
 		redirect(exec->rdr, e);
 	if (cmd)
 	{
-		if (find_path(*cmd))
-			ft_minishell_error(NULL, *cmd, "command not found", 127);
+		// if (find_path(*cmd))
+		// 	ft_minishell_error(NULL, *cmd, "command not found", 127);
 		get_environment_for_exec(e);
 		execve(*cmd, cmd, e->env);
 		printf("execve went wrong!\n");
@@ -80,22 +80,31 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 		cmd = NULL;
 		if (exec->cmd)
 			cmd = full_expansion(exec->cmd, e);
-		if (cmd && !builtin(*cmd))
+		if (cmd)
+			print_double_array(cmd);
+		// if (cmd && !builtin(*cmd))
+		if (cmd)
 		{
 			set_pipe(p);
 			pid = fork();
 			if (pid < 0)
 				ft_minishell_error("fork()", strerror(errno), NULL, errno);
 			else if (!pid)
-				execute_child(exec, p, fd, e, cmd);
+			{
+				if (exec->next)
+					execute_child(exec, p, fd, e, cmd);
+				else
+					execute_child(exec, NULL, fd, e, cmd);
+			}
 			fd = dup(p[0]);
 			close(p[0]);
 			close(p[1]);
 		}
 		exec = exec->next;
 	}
+	close(fd);
 	int status;
-	waitpid(pid, &status, NULL);
+	waitpid(pid, &status, 0);
 	while (wait(NULL) != -1)
 		;
 	return (status);
@@ -105,8 +114,9 @@ void	executor(t_list *pipe_line, t_env_info *e)
 {
 	while (pipe_line)
 	{
-		printf("free and nullify token and input variable.\n");
+		//printf("free and nullify token and input variable.\n");
 		pipe_line->exit_code = exec_pipe_line(pipe_line->exec, e);
-		pipe_line = next_pipeline(pipe_line);
+		// pipe_line = pipe_line->next;
+		pipe_line = next_pipe_line(pipe_line);
 	}
 }

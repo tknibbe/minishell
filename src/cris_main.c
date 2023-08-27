@@ -36,6 +36,7 @@ void	tymon(t_ally *all, char *input)
 	// print_whole_list(all->list);
 	//printf("pipeline exited with code : %d\n", all->list->exit_code);
 	//free (*input);
+	// exit(0);
 	//leaks();
 }
 
@@ -61,9 +62,9 @@ int	run_shell(t_ally *all, char *prompt)
 {
 	char	*string;
 
-	//set_signals_inter();
+	set_signals_inter();
 	string = readline(prompt);
-	//set_signals_non_inter();
+	set_signals_non_inter();
 	if (!string)
 		exit(0);
 	if (!strncmp(string, "", 1))

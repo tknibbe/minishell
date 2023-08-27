@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 15:20:01 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/22 16:36:45 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/27 16:20:22 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_list	*t_listnew(void)
 	node->and_or = 0;
 	node->exec = NULL;
 	node->exit_code = 0;
-	node->subshell = NULL;
 	node->next = NULL;
 	return (node);
 }

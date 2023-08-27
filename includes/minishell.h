@@ -26,6 +26,7 @@
 //hey tymoo bicep baby muscle mommy
 
 typedef struct s_list	t_list;
+typedef struct s_rdr		t_rdr;
 
 typedef struct	s_str
 {

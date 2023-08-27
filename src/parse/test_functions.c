@@ -10,13 +10,6 @@ void print_whole_list(t_list *list)
 	{
 		printf("--------------------\n");
 		print_t_exec(temp, temp->input);
-		while (list->subshell)
-		{
-			printf("-------START SUBSHELL-------\n");
-			print_whole_list(list->subshell);
-			list->subshell = list->subshell->next;
-			printf("-------END SUBSHELL-------\n");
-		}
 		temp = temp->next;
 	}
 }
@@ -34,6 +27,12 @@ void print_whole_list(t_list *list)
         printf("\nnode %d\n", node_amnt);
         printf("[\n");
         printf("CMD: ");
+		if (exec->subshell)
+		{
+			printf("-------SUBSHELL----------- ");
+			print_t_exec(list, exec->subshell->input);
+			printf("---END SUBSHELL----------- ");
+		}
         while (cmd)
         {
             printf("%s, ", cmd->str);

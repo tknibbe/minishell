@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 14:46:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/23 12:47:13 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/08/27 16:26:25 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,12 @@ void	set_subshell(t_list *list, char *input)
 	sub_count(' ', RESET);
 }
 
-void	add_subshell(char *input, t_list *list, int *i)
+void	add_subshell(char *input, t_list *list, t_exec *exec, int *i)
 {
 	int		start;
 	char	*str;
 	int		shdepth;
 
-	// fork here?
 	start = *i + 1;
 	shdepth = 1;
 	*i += 1;
@@ -87,12 +86,9 @@ void	add_subshell(char *input, t_list *list, int *i)
 			shdepth++;
 		else if (list->token[*i] == BRACE_CLOSE)
 			shdepth--;
-		//printf("shdepth = %d\n", shdepth);
 		*i += 1;
 	}
 	str = ft_substr(input, start, *i - start - 1);
-	//str = ft_strtrim(str, "()");
 	printf("str = %s\n", str);
-	t_listadd_back(&list->subshell, parse_input(str));
-	//list->subshell = parse_input(str);
+	t_listadd_back(&exec->subshell, parse_input(str));
 }
