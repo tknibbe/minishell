@@ -76,7 +76,6 @@ void	left(t_list *list, char *input, int *i);
 void	right(t_list *list, char *input, int *i);
 //MAKE_LIST.c
 void	parse(char *input, t_list *list);
-void	free_list_struct(t_list *list);
 
 //SYNTAX.C
 //int		check_syntax(t_list *list, char **input);

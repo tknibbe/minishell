@@ -37,8 +37,7 @@ void	tymon(t_ally *all, char *input)
 	//	printf("%s\n", all->env->env[i++]);
 	//char *path = get_env("PATH", all->env);
 	//printf("path: %s\n", path);
-	append_cmd_path(all, all->list->exec->cmd);
-	 print_whole_list(all->list);
+	// print_whole_list(all->list);
 	//printf("pipeline exited with code : %d\n", all->list->exit_code);
 	//free (*input);
 	// exit(0);

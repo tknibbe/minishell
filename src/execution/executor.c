@@ -59,8 +59,6 @@ void	execute_child(t_exec *exec, int *p, int fd, t_env_info *e, char **cmd)
 		redirect(exec->rdr, e);
 	if (cmd)
 	{
-		// if (find_path(*cmd))
-		// 	ft_minishell_error(NULL, *cmd, "command not found", 127);
 		get_environment_for_exec(e);
 		execve(*cmd, cmd, e->env);
 		printf("execve went wrong!\n");
@@ -68,7 +66,6 @@ void	execute_child(t_exec *exec, int *p, int fd, t_env_info *e, char **cmd)
 	}
 	else if (exec->subshell)
 		executor(exec->subshell, e);
-	exit(0);
 }
 
 // int	execute_parent()
@@ -91,7 +88,10 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 		if (exec->next)
 			set_pipe(p);
 		else
+		{
+			free(p);
 			p = NULL;
+		}
 		pid = fork();
 		if (pid < 0)
 			ft_minishell_error("fork()", strerror(errno), NULL, errno);
@@ -107,16 +107,14 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 	waitpid(pid, &status, 0);
 	while (wait(NULL) != -1)
 		;
-	return (status);
+	return (WEXITSTATUS(status));
 }
 
 void	executor(t_list *pipe_line, t_env_info *e)
 {
 	while (pipe_line)
 	{
-		//printf("free and nullify token and input variable.\n");
 		pipe_line->exit_code = exec_pipe_line(pipe_line->exec, e);
-		// pipe_line = pipe_line->next;
 		pipe_line = next_pipe_line(pipe_line);
 	}
 }

@@ -15,6 +15,7 @@ SRC			=	cris_main.c \
 				utils/double_array_utils.c \
 				utils/t_char_utils.c \
 				utils/utils1.c \
+				utils/free_structs.c \
 				parse/split_pipelines/split_pipelines.c \
 				parse/split_pipelines/list_utils.c \
 				parse/parse.c \
