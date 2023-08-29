@@ -63,7 +63,7 @@ char	*get_env(char *key, t_env_info *e)
 	while (head)
 	{
 		i = 0;
-		while (head->key[i] == key[i])
+		while (key[i] && head->key[i] == key[i])
 			i++;
 		if (!ft_isname(head->key[i]) && !ft_isname(key[i]))
 		{

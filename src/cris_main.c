@@ -30,8 +30,15 @@ void	tymon(t_ally *all, char *input)
 {
 	//pre_parse(input, all);
 	all->list = parse_input(input);
-	executor(all->list, all->env);
-	// print_whole_list(all->list);
+	//executor(all->list, all->env);
+	int i = 0;
+	//env(all->env->head);
+	//while (all->env->head)
+	//	printf("%s\n", all->env->env[i++]);
+	//char *path = get_env("PATH", all->env);
+	//printf("path: %s\n", path);
+	append_cmd_path(all, all->list->exec->cmd);
+	 print_whole_list(all->list);
 	//printf("pipeline exited with code : %d\n", all->list->exit_code);
 	//free (*input);
 	// exit(0);

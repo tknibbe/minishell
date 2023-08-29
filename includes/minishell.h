@@ -24,6 +24,7 @@
 //hey tymoo daddy 8=D
 //hey crissie deel 2 80085
 //hey tymoo bicep baby muscle mommy
+//heck yeah muscle mommy <3333
 
 typedef struct s_list	t_list;
 typedef struct s_rdr		t_rdr;

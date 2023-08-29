@@ -39,6 +39,7 @@ SRC			=	cris_main.c \
 				exit_funcs.c \
 				execution/executor.c \
 				execution/redirect.c \
+				execution/pathfinder.c \
 				#test.c \
 				# parse/tokenize/make_list.c \
 				# built_ins/cd.c \
