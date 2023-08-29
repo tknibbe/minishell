@@ -7,7 +7,6 @@ void	leaks(void)
 	system("leaks -q minishell");
 }
 
-
 t_ally	*minishell_init(char *envp[])
 {
 	t_ally	*all;
@@ -29,7 +28,6 @@ t_ally	*minishell_init(char *envp[])
 
 void	tymon(t_ally *all, char *input)
 {
-
 	//pre_parse(input, all);
 	all->list = parse_input(input);
 	executor(all->list, all->env);
@@ -40,25 +38,7 @@ void	tymon(t_ally *all, char *input)
 	//leaks();
 }
 
-void	cris(t_ally *all, char *input)
-{
-	// if (!ft_strncmp(input, "> ", 2))
-	// 	test_env_expansion_shit(all, &input[2]);
-	if (!ft_strncmp(input, "echo ", 5))
-		echo(ft_split(input, ' '));
-	if (!ft_strncmp(input, "env", 4))
-		env(all->env->head);
-	if (!ft_strncmp(input, "unset ", 6))
-		unset(all->env, ft_split(input, ' '));
-	if (!ft_strncmp(input, "export ", 6))
-		export(all->env, ft_split(input, ' '));
-	// if (!ft_strncmp(input, "pwd", 4))
-	// 	pwd();
-	// if (!ft_strncmp(input, "cd ", 3))
-	// 	cd(&input[3], all->env->head);
-}
-
-int	run_shell(t_ally *all, char *prompt)
+void	run_shell(t_ally *all, char *prompt)
 {
 	char	*string;
 
@@ -67,18 +47,14 @@ int	run_shell(t_ally *all, char *prompt)
 	set_signals_non_inter();
 	if (!string)
 		exit(0);
-	if (!strncmp(string, "", 1))
+	if (*string)
 	{
-		free(string);
-		return (1);
+		add_history(string);
+		if (ft_strncmp(string, "exit", 4) == 0)
+			exit(0);
+		tymon(all, string);
 	}
-	add_history(string);
-	if (ft_strncmp(string, "exit", 4) == 0)
-		exit(0);
-	tymon(all, string);
-	//cris(all, string);
-	return (0);
-	//exit(0);
+	free(string);
 }
 
 int	main(int argc, char *argv[], char *envp[])

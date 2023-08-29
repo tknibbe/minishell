@@ -6,7 +6,7 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/14 20:18:58 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/08/16 14:55:03 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/08/29 13:34:43 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ char	**full_expansion(t_str *c, t_env_info *e)
 	t_str	*willy;
 	int		i;
 
+	if (!c)
+		return (NULL);
 	expansion_ws(c, e);
 	expansion_wc(c);
 	result = malloc((amount(c) + 1) * sizeof(char *));

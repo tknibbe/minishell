@@ -18,16 +18,22 @@
 
 t_list	*next_pipe_line(t_list *current)
 {
-	printf("free current node");
+	t_list	*ret;
+	
 	if (!current->next)
-		return (NULL);
-	if (!((!current->exit_code && current->and_or) || (current->exit_code && !current->and_or)))
+		ret = NULL;
+	else if ((!current->exit_code && current->and_or) || (current->exit_code && !current->and_or))
 	{
-		printf(", and next node\n");
-		return (current->next->next);
+		ret = current->next;
+		current->next = NULL;
 	}
-	printf("\n");
-	return (current->next);
+	else
+	{
+		ret = current->next->next;
+		current->next->next = NULL;
+	}
+	free_list(current);
+	return (ret);
 }
 
 void	set_pipe(int *p)
@@ -69,37 +75,31 @@ void	execute_child(t_exec *exec, int *p, int fd, t_env_info *e, char **cmd)
 
 int	exec_pipe_line(t_exec *exec, t_env_info *e)
 {
-	int		p[2];
+	int		*p;
 	int		fd;
 	pid_t	pid;
 	char	**cmd;
 
 	fd = 0;
+	
+	p = malloc(2 * sizeof(int));
+	if (!p)
+		ft_minishell_error("pipe()", NULL, strerror(errno), errno);
 	while (exec)
 	{
-		cmd = NULL;
-		if (exec->cmd)
-			cmd = full_expansion(exec->cmd, e);
-		if (cmd)
-			print_double_array(cmd);
-		// if (cmd && !builtin(*cmd))
-		if (cmd)
-		{
+		cmd = full_expansion(exec->cmd, e);
+		if (exec->next)
 			set_pipe(p);
-			pid = fork();
-			if (pid < 0)
-				ft_minishell_error("fork()", strerror(errno), NULL, errno);
-			else if (!pid)
-			{
-				if (exec->next)
-					execute_child(exec, p, fd, e, cmd);
-				else
-					execute_child(exec, NULL, fd, e, cmd);
-			}
-			fd = dup(p[0]);
-			close(p[0]);
-			close(p[1]);
-		}
+		else
+			p = NULL;
+		pid = fork();
+		if (pid < 0)
+			ft_minishell_error("fork()", strerror(errno), NULL, errno);
+		else if (!pid)
+			execute_child(exec, p, fd, e, cmd);
+		fd = dup(p[0]);
+		close(p[0]);
+		close(p[1]);
 		exec = exec->next;
 	}
 	close(fd);
