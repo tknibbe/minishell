@@ -6,5 +6,5 @@
 typedef struct s_exec		t_exec;
 void	test_exec(char **env);
 void	execute_command(t_exec *t);
-
+void	append_cmd_path(t_ally *all, t_str *cmd);
 #endif
