@@ -30,7 +30,6 @@ void	tymon(t_ally *all, char *input)
 {
 	//pre_parse(input, all);
 	all->list = parse_input(input);
-	//executor(all->list, all->env);
 	int i = 0;
 	//env(all->env->head);
 	//while (all->env->head)
@@ -48,17 +47,21 @@ void	run_shell(t_ally *all, char *prompt)
 {
 	char	*string;
 
-	set_signals_inter();
+	// set_signals_inter();
 	string = readline(prompt);
-	set_signals_non_inter();
+	// set_signals_non_inter();
 	if (!string)
+	{
+		printf("LOL NOOP\n");
 		exit(0);
+	}
 	if (*string)
 	{
 		add_history(string);
 		if (ft_strncmp(string, "exit", 4) == 0)
 			exit(0);
 		tymon(all, string);
+		executor(all->list, all->env);
 	}
 	free(string);
 }

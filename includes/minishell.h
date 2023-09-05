@@ -27,7 +27,7 @@
 //heck yeah muscle mommy <3333
 
 typedef struct s_list	t_list;
-typedef struct s_rdr		t_rdr;
+typedef struct s_rdr	t_rdr;
 
 typedef struct	s_str
 {
@@ -39,7 +39,6 @@ typedef struct s_minishell
 {
 	t_env_info			*env;
 	t_list				*list;
-	int					exit_code;
 }						t_ally;
 
 void	history(const char *s);

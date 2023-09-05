@@ -2,8 +2,9 @@
 #include <minishell.h>
 
 /*will print out all keys with their value's*/
-int	env(t_env *env)
+int	env(char **cmd, t_env *env)
 {
+	
 	while (env)
 	{
 		printf("%s=%s\n", env->key, env->value);

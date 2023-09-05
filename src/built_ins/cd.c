@@ -17,8 +17,7 @@ int	cd(char **cmd, t_env_info *e)
 		return (free_dp(cmd), use_env(e, "OLDPWD"));
 	else if (chdir(cmd[1]) < 0)
 		return (free_dp(cmd), ft_minishell_error("cd", cmd[1], strerror(errno), 0));
-	free_dp(cmd);
-	return (0);
+	return (free_dp(cmd), 0);
 }
 
 void	history(const char *s)
@@ -27,10 +26,11 @@ void	history(const char *s)
 		add_history(s);
 }
 
-int	pwd(void)
+int	pwd(char **cmd)
 {
 	char	*buff;
 
+	free_dp(cmd);
 	buff = getcwd(NULL, 0);
 	if (!buff)
 		return (ft_minishell_error("getcwd()", strerror(errno), NULL, errno));

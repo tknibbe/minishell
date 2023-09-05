@@ -23,11 +23,11 @@ typedef struct s_env_info
 }					t_env_info;
 
 int					cd(char **cmd, t_env_info *e);
-void				echo(char **echo);
-int					pwd(void);
+void				echo(char **cmd);
+int					pwd(char **cmd);
 void				history(const char *s);
 
-int					env(t_env *env);
+int					env(char **cmd, t_env *env);
 int					unset(t_env_info *e, char **to_unset);
 int					export(t_env_info *e, char **to_export);
 int					valid_identifier(char *s);

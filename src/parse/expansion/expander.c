@@ -6,7 +6,7 @@
 /*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/14 20:18:58 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/08/29 13:34:43 by cvan-sch      ########   odam.nl         */
+/*   Updated: 2023/08/29 16:52:24 by cvan-sch      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,12 @@ char	**full_expansion(t_str *c, t_env_info *e)
 	while (c)
 	{
 		if (c->str)
+		{
 			result[i++] = c->str;
+			c->str = NULL;
+		}
 		willy = c;
 		c = c->next;
-		free(willy);
 	}
 	result[i] = NULL;
 	return (result);

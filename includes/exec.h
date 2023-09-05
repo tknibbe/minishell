@@ -9,8 +9,17 @@ typedef struct s_str		t_str;
 typedef struct s_minishell	t_ally;
 typedef struct s_env_info	t_env_info;
 
+typedef struct s_process
+{
+	int			fd;
+	int			*p;
+	t_env_info	*e;
+	char		**cmd;
+}				t_process;
 
-void	test_exec(char **env);
-void	execute_command(t_exec *t);
+
+// void	test_exec(char **env);
+// void	execute_command(t_exec *t);
 char	*append_cmd_path(t_env_info *env, char *cmd);
+
 #endif
