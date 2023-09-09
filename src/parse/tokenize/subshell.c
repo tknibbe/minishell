@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 14:46:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/09/09 14:05:13 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/09/09 15:29:53 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	set_subshell(t_list *list, char *input)
 		i++;
 	}
 	sub_count(' ', RESET);
-	print_tokens(list, ft_strlen(input));
 }
 
 void	add_subshell(char *input, t_list *list, t_exec *exec, int *i)

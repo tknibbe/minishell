@@ -47,9 +47,9 @@ void	run_shell(t_ally *all, char *prompt)
 {
 	char	*string;
 
-	// set_signals_inter();
+	set_signals_inter();
 	string = readline(prompt);
-	// set_signals_non_inter();
+	set_signals_non_inter();
 	if (!string)
 	{
 		printf("exit\n");

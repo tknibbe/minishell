@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:35:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/09/09 13:38:35 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/09/09 15:32:17 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	unset_echo(void)
 {
 	struct termios	term;
 
-	printf("unset echo %d\n", tcgetattr(STDIN_FILENO, &term));
 	if (tcgetattr(STDIN_FILENO, &term) != 0)
 		ft_exit("Error getting terminal attributes", errno);
 	term.c_lflag &= ~ECHOCTL;

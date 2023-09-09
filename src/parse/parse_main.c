@@ -19,7 +19,6 @@ t_list	*parse_input(char *input)
 			parse(temp->input, temp);
 			temp = temp->next;
 		}
-		print_whole_list(list);
 	}
 	else
 		parse(input, list);
