@@ -9,13 +9,13 @@ void print_whole_list(t_list *list)
 	while (temp)
 	{
 		printf("--------------------\n");
-		print_t_exec(temp, temp->input);
+		print_t_exec(temp);
 		temp = temp->next;
 	}
 }
 
 // somehow moves the pointers so if you use this expect leaks xxxx <3
- void print_t_exec(t_list *list, char *input)
+ void print_t_exec(t_list *list)
  {
     int node_amnt = 0;
     while (list->exec)
@@ -30,7 +30,7 @@ void print_whole_list(t_list *list)
 		if (exec->subshell)
 		{
 			printf("-------SUBSHELL----------- ");
-			print_t_exec(list, exec->subshell->input);
+			print_t_exec(list);
 			printf("---END SUBSHELL----------- ");
 		}
         while (cmd)

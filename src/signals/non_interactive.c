@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 13:41:26 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/17 15:31:22 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/09/09 13:38:42 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 void	non_inter_handler(int c)
 {
+	c = 0;
 	ft_putchar_fd('\n', STDIN_FILENO);
 }
 

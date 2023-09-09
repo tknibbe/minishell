@@ -32,11 +32,10 @@ static t_str	*split_var(char *var, char *sub)
 static t_str	*get_insert_lst(char *var, t_env_info *e, char *s)
 {
 	t_exp	x;
-	char	**result;
 	int		i;
 
 	i = 0;
-	initialize_xp(&x, s, e);
+	initialize_xp(&x, e);
 	if (s)
 		expand_string(s, &x);
 	if (var)

@@ -27,5 +27,5 @@ void	echo(char **cmd)
 	}
 	free(cmd);
 	if (!new_line)
-		write(1, "\n", 1);
+		write(STDERR_FILENO, "\n", 1);
 }

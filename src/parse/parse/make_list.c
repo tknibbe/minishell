@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/27 16:25:26 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/09/09 13:34:10 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	new_rdr_node(char *input, int *token, t_list *list, int *i)
 {
 	int		start;
 	int		type;
-	char	*str;
 	t_rdr	*rdr_node;
 	t_exec	*cur_node;
 

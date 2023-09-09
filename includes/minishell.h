@@ -19,6 +19,7 @@
 # include <termios.h>
 
 # define PROMPT "ez_game -> "
+//# define PROMPT ""
 
 //hey crissie baby <3
 //hey tymoo daddy 8=D
