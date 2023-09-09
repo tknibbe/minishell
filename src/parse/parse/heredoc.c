@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/09/09 13:35:11 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/09/09 13:51:53 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_struct_and_fork(t_heredoc *doc, char *input, int *i)
 	doc->delimiter = get_delimiter(input, i);
 	doc->expand = set_expand(doc->delimiter);
 	doc->status = 0;
+	doc->line = "";
 	if (doc->expand == HEREDOC_NO_EXP)
 		doc->delimiter = ft_strdel(doc->delimiter, "\"\'");
 	if (pipe(doc->pipefd) < 0)
@@ -50,7 +51,6 @@ void	add_heredoc(char *input, t_list *list, int *i)
 		return ;
 	}
 	close(doc.pipefd[1]);
-	doc.line = "";
 	while (doc.line)
 	{
 		doc.line = get_next_line(doc.pipefd[0]);

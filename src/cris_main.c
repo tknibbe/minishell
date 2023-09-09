@@ -55,7 +55,7 @@ void	run_shell(t_ally *all, char *prompt)
 		printf("exit\n");
 		exit(0);
 	}
-	if (!strncmp(string, "", 1))
+	if (strncmp(string, "", 1))
 	{
 		add_history(string);
 		if (ft_strncmp(string, "exit", 4) == 0)

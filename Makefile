@@ -24,6 +24,7 @@ SRC			=	cris_main.c \
 				parse/tokenize/subshell.c \
 				parse/syntax/syntax.c \
 				parse/syntax/syntax_utils.c \
+				parse/syntax/syntax_utils2.c \
 				parse/parse/make_list.c \
 				parse/parse/list_utils.c \
 				parse/parse/list_utils2.c \

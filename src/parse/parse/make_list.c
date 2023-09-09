@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/09/09 13:34:10 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/09/09 14:13:43 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 void	new_rdr_node(char *input, int *token, t_list *list, int *i);
 void	new_cmd_node(char *input, int *token, t_exec *exec, int *i);
 int		is_redirect(int t);
+
+int	ft_whitespace(char c)
+{
+	if (c == ' ' || c == '\t' || c == '\n'\
+		|| c == '\v' || c == '\f' || c == '\r')
+		return (1);
+	return (0);
+}
 
 void	parse(char *input, t_list *list)
 {
@@ -40,7 +48,6 @@ void	parse(char *input, t_list *list)
 		if (input[i] == '|')
 			i++;
 	}
-			//printf("EXIING PARSE\n");
 }
 
 void	new_cmd_node(char *input, int *token, t_exec *node, int *i)
@@ -57,7 +64,6 @@ void	new_cmd_node(char *input, int *token, t_exec *node, int *i)
 		str = ft_substr(input, start, *i - start);
 		if (!str)
 			ft_exit("Malloc error\n", errno);
-		//printf("stuck! token[i] = %d\n", token[*i]);
 		t_str_lstadd_back(&node->cmd, t_str_lstnew(str));
 		while (token[*i] == BLANK && input[*i])
 			*i += 1;

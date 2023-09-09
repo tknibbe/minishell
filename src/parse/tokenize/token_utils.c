@@ -6,18 +6,18 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:56:52 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/19 16:42:58 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/09/09 14:16:02 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parsing.h>
 
-int	ft_whitespace(char c)
+static void	continued(t_list *list, char *input, int *i)
 {
-	if (c == ' ' || c == '\t' || c == '\n'\
-		|| c == '\v' || c == '\f' || c == '\r')
-		return (1);
-	return (0);
+	if (input[*i] == '<')
+		left(list, input, i);
+	else if (input[*i] == '>')
+		right(list, input, i);
 }
 
 void	set_rdr_pipe_amp(t_list *list, char *input, int *i)
@@ -43,12 +43,7 @@ void	set_rdr_pipe_amp(t_list *list, char *input, int *i)
 			list->token[*i] = PIPESYMBOL;
 	}
 	else
-	{
-		if (input[*i] == '<')
-			left(list, input, i);
-		else if (input[*i] == '>')
-			right(list, input, i);
-	}
+		continued(list, input, i);
 }
 
 void	left(t_list *list, char *input, int *i)

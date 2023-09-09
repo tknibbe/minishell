@@ -70,12 +70,12 @@ t_list	*parse_input(char *input);
 //TOKEN.C
 void	tokenize(t_list *list);
 //TOKEN_UTILS.C
-int		ft_whitespace(char c);
 void	set_rdr_pipe_amp(t_list *list, char *input, int *i);
 void	left(t_list *list, char *input, int *i);
 void	right(t_list *list, char *input, int *i);
 //MAKE_LIST.c
 void	parse(char *input, t_list *list);
+int		ft_whitespace(char c);
 
 //SYNTAX.C
 //int		check_syntax(t_list *list, char **input);
@@ -114,6 +114,7 @@ int		is_control_op(int token);
 int		ft_syntax_error(char c, int token);
 int		op_amount_check(t_list *list, int i);
 int		start_check(t_list *list);
+int		brace_check(t_list *list, int *i);
 
 //TEST_FUNCTIONS.C
 void	print_class(int num);

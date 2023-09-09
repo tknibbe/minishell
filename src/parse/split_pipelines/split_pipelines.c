@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:34:27 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/27 16:21:23 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/09/09 14:25:26 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,24 @@ int	*copy_token(int *token, int start, int end)
 	return (new_token);
 }
 
-int	split_pipelines(char *input, t_list **list)
+static t_list	*make_new_node(t_list *data, char *input, int *end, int *start)
 {
 	t_list	*node;
+
+	if (!input[*end + 1])
+		*end += 1;
+	node = t_listnew();
+	node->input = ft_substr(input, *start, (*end) - (*start));
+	node->token = copy_token(data->token, *start, *end);
+	node->and_or = data->token[*end];
+	if (input[*end + 2])
+		*end += 2;
+	*start = *end;
+	return (node);
+}
+
+int	split_pipelines(char *input, t_list **list)
+{
 	t_list	*data;
 	int		start;
 	int		end;
@@ -57,19 +72,9 @@ int	split_pipelines(char *input, t_list **list)
 	*list = NULL;
 	while (input[end])
 	{
-		if (data->token[end] == AND || data->token[end] == OR || !input[end + 1])
-		{
-			if (!input[end + 1])
-				end++;
-			node = t_listnew();
-			t_listadd_back(list, node);
-			node->input = ft_substr(input, start, end - start);
-			node->token = copy_token(data->token, start, end);
-			node->and_or = data->token[end];
-			if (input[end + 2])
-				end += 2;
-			start = end;
-		}
+		if (data->token[end] == AND || data->token[end] == OR || \
+			!input[end + 1])
+			t_listadd_back(list, make_new_node(data, input, &end, &start));
 		else
 			end++;
 	}
