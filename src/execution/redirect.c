@@ -63,7 +63,6 @@ int	do_heredoc_or_so(t_rdr *r, t_env *e)
 		heredoc_expand(heredoc, e);
 	while (heredoc)
 	{
-		printf("writing [%s] to file\n", heredoc->str);
 		write(fd, heredoc->str, ft_strlen(heredoc->str));
 		heredoc = heredoc->next;
 	}
