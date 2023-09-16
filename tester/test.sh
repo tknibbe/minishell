@@ -73,54 +73,54 @@ compare_syntax () {
 	#printf "[$bash_syn]\n"
 }
 
-#printf "\n\e[32mtesting syntax errors\e[0m\n"
-#compare_syntax "hello < |"
-#compare_syntax "< >"
-#compare_syntax "<< >>"
-#compare_syntax "< |"
-#compare_syntax "> |"
-#compare_syntax ") ()"
-#compare_syntax "| |"
-#compare_syntax "(| |)"
-#compare_syntax "&&&"
-#compare_syntax "|||"
-#compare_syntax "|| |||"
-#compare_syntax ">>>"
-#compare_syntax "(())"
-#compare_syntax "(((|||)))"
+printf "\n\e[32mtesting syntax errors\e[0m\n"
+compare_syntax "hello < |"
+compare_syntax "< >"
+compare_syntax "<< >>"
+compare_syntax "< |"
+compare_syntax "> |"
+compare_syntax ") ()"
+compare_syntax "| |"
+compare_syntax "(| |)"
+compare_syntax "&&&"
+compare_syntax "|||"
+compare_syntax "|| |||"
+compare_syntax ">>>"
+compare_syntax "(())"
+compare_syntax "(((|||)))"
 
 
-#printf "\n\e[32mtesting empty input\e[0m\n"
-#sleep 1
+printf "\n\e[32mtesting empty input\e[0m\n"
+sleep 1
+compare_command ""
+
+
+printf "\n\e[32mtesting basic commands\e[0m\n"
+sleep 1
+compare_command "ls -lah"
+compare_command "cat ../Makefile"
+compare_command "cat NONEXISTINNGFILE.c"
+compare_command "echo "HEY" > cat"
+#compare_command "cd NONEXISTINGPATH" //heap_use_after_free
+compare_command "echo hey | echo hey | ls"
+
+
+printf "\n\e[32mtesting redirects\e[0m\n"
+sleep 1
+compare_command "ls > test > test1 < test2 > test 3"
+compare_command "echo >> test.sh"
+compare_command "echo >> NONEXISTINGFILE"
+compare_command "ls >> lol "
+#compare_command "echo < test.sh < test.sh < test.sh < test.sh" //segv with fsanitize on? only in tester, not normal minishell?
+#compare_command ""
 #compare_command ""
 
-
-#printf "\n\e[32mtesting basic commands\e[0m\n"
-#sleep 1
-#compare_command "ls -lah"
-#compare_command "cat ../Makefile"
-#compare_command "cat NONEXISTINNGFILE.c"
-#compare_command "echo "HEY" > cat"
-##compare_command "cd NONEXISTINGPATH" //heap_use_after_free
-#compare_command "echo hey | echo hey | ls"
-
-
-#printf "\n\e[32mtesting redirects\e[0m\n"
-#sleep 1
-#compare_command "ls > test > test1 < test2 > test 3"
-#compare_command "echo >> test.sh"
-#compare_command "echo >> NONEXISTINGFILE"
-#compare_command "ls >> lol "
-##compare_command "echo < test.sh < test.sh < test.sh < test.sh" //segv with fsanitize on? only in tester, not normal minishell?
-##compare_command ""
-##compare_command ""
-
-#printf "\n\e[32mtesting pipes\e[0m\n"
-#compare_command "ls | ls | ls | ls"
-#compare_command "echo "hey" | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat"
-#compare_command "ls | cat | cat | echo"
-#compare_command "echo "hey" | ls"
-#compare_command "echo "hey" | ls | cat | wc -l"
+printf "\n\e[32mtesting pipes\e[0m\n"
+compare_command "ls | ls | ls | ls"
+compare_command "echo "hey" | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat"
+compare_command "ls | cat | cat | echo"
+compare_command "echo "hey" | ls"
+compare_command "echo "hey" | ls | cat | wc -l"
 
 
 printf "\n\e[32mtesting BONUS\e[0m\n"
@@ -146,6 +146,9 @@ if [ "$WRONG" -eq 0 ]; then
 else
 	printf "\nTEST FAILED ON "$WRONG" MISTAKES!\n"
 fi
+
+
+
 
 
 

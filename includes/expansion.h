@@ -40,4 +40,6 @@ int		skip_quoted_state(char *s, int i, int quote);
 int		amount(t_str *s);
 void	initialize_xp(t_exp *xp, t_env_info *e);
 
+char	**lst_to_dp(t_str *c);
+
 #endif

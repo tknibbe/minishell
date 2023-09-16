@@ -86,7 +86,8 @@ void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 	}
 	else if (exec->subshell)
 	{
-		printf("subshell needs to be executed\n"); // fork and call parse_input and executor again
+		executor(exec->subshell, e);
+		// printf("subshell needs to be executed\n"); // fork and call parse_input and executor again
 		exit(0);
 	}
 	exit (0);

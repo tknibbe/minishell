@@ -67,16 +67,11 @@ void	expander(int state, t_exp *x, char *input)
 	return (expander(0, x, input));
 }
 
-char	**full_expansion(t_str *c, t_env_info *e)
+char	**lst_to_dp(t_str *c)
 {
 	char	**result;
-	t_str	*willy;
 	int		i;
 
-	if (!c)
-		return (NULL);
-	expansion_ws(c, e);
-	expansion_wc(c);
 	result = malloc((amount(c) + 1) * sizeof(char *));
 	if (!result)
 		ft_exit("Malloc error\n", errno);
@@ -88,9 +83,17 @@ char	**full_expansion(t_str *c, t_env_info *e)
 			result[i++] = c->str;
 			c->str = NULL;
 		}
-		willy = c;
 		c = c->next;
 	}
 	result[i] = NULL;
 	return (result);
+}
+
+char	**full_expansion(t_str *c, t_env_info *e)
+{
+	if (!c)
+		return (NULL);
+	expansion_ws(c, e);
+	expansion_wc(c);
+	return (lst_to_dp(c));
 }
