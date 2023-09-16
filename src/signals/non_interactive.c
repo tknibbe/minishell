@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 13:41:26 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/09/09 13:38:42 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/09/15 12:59:20 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ void	set_echo(void)
 {
 	struct termios	term;
 
+	if (!isatty(STDIN_FILENO))
+	{
+		//printf("script detected set_echo\n");
+		return ;
+	}
 	if (tcgetattr(STDIN_FILENO, &term) != 0)
 		ft_exit("Error getting terminal attributes", errno);
 	term.c_lflag |= ECHOCTL;

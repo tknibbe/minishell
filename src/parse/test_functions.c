@@ -1,5 +1,5 @@
 
-//#include <minishell.h>
+#include <minishell.h>
 
 //void print_whole_list(t_list *list)
 //{
@@ -122,14 +122,14 @@
 //	}
 //}
 
-//void	print_tokens(t_list *list, int len)
-//{
-//	int i = 0;
-//	//printf("len = %d\n", len);
-//	while (i < len)
-//	{
-//		printf("[%d]", list->token[i]);
-//		i++;
-//	}
-//	printf("\n");
-//}
+void	print_tokens(t_list *list, int len)
+{
+	int i = 0;
+	//printf("len = %d\n", len);
+	while (i < len)
+	{
+		printf("[%d]", list->token[i]);
+		i++;
+	}
+	printf("\n");
+}

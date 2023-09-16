@@ -43,16 +43,21 @@ void	tymon(t_ally *all, char *input)
 	//leaks();
 }
 
-void	run_shell(t_ally *all, char *prompt)
+void	run_shell(t_ally *all)
 {
 	char	*string;
 
 	set_signals_inter();
-	string = readline(prompt);
+	if (isatty(STDIN_FILENO))
+		string = readline(PROMPT);
+	else
+		string = get_next_line(STDIN_FILENO);
+	//write(2, PROMPT, 11);
+	//string = get_next_line(STDIN_FILENO);
 	set_signals_non_inter();
 	if (!string)
 	{
-		printf("exit\n");
+		//printf("exit\n");
 		exit(0);
 	}
 	if (strncmp(string, "", 1))
@@ -75,6 +80,6 @@ int	main(int argc, char *argv[], char *envp[])
 	argv = NULL;
 	all = minishell_init(envp);
 	while (1)
-		run_shell(all, PROMPT);
+		run_shell(all);
 	//free(prompt);
 }

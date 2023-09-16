@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/09/09 15:22:46 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/09/15 16:33:39 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ static int	control_op_check(t_list *list, int *i)
 
 static int	rdr_check(t_list *list, int *i)
 {
-	while (is_redirect(list->token[*i]) && list->input[*i])
+	int	temp;
+
+	temp = *i;
+	while (list->token[temp] == list->token[*i] && list->input[*i])
 		*i += 1;
 	while (list->token[*i] == BLANK && list->input[*i])
 		*i += 1;
