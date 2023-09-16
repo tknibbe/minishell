@@ -88,6 +88,7 @@ void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 		printf("subshell needs to be executed\n");
 		exit(0);
 	}
+	exit (0);
 }
 
 int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
@@ -147,12 +148,19 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 	return (WEXITSTATUS(status));
 }
 
+int	exec_single_cmd(t_exec *exec, t_env_info *e)
+{
+	if ()
+}
+
 void	executor(t_list *pipe_line, t_env_info *e)
 {
 	while (pipe_line)
 	{
-		pipe_line->exit_code = exec_pipe_line(pipe_line->exec, e);
-		//printf("exit code: %d\n", pipe_line->exit_code);
+		if (!pipe_line->exec->next)
+			e->last_exit_status = exec_single_cmd(pipe_line->exec, e);
+		else
+			e->last_exit_status = exec_pipe_line(pipe_line->exec, e);
 		pipe_line = next_pipe_line(pipe_line);
 	}
 }

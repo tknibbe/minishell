@@ -83,8 +83,11 @@ void	split_word(t_str *start, t_env_info *e)
 		if (s[i] == '$')
 		{
 			splitted = get_insert_lst(get_env(&s[++i], e), e, sub);
-			while (ft_isname(s[i]))
+			if (s[i] == '?')
 				i++;
+			else
+				while (ft_isname(s[i]))
+					i++;
 		}
 		else
 			splitted = get_insert_lst(NULL, e, sub);
