@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   token.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/28 12:18:15 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/08/28 17:20:09 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   token.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/09/09 14:11:37 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	tokenize(t_list *list)
 	int	len;
 
 	len = ft_strlen(list->input);
-	list->token = ft_calloc(sizeof(int), len); // beter to malloc since we have a token for BLANK
+	list->token = malloc(sizeof(int) * len);
 	if (!list->token)
 		ft_exit("Malloc error\n", errno);
 	set_token(list, list->input);
@@ -57,6 +57,27 @@ static int	is_closed_quote(char *input, int *end_quote, int i)
 	return (0);
 }
 
+static void	norm_bs(t_list *list, char *input, int *i)
+{
+	if (is_rdr_pipe_amp(input, *i))
+	{
+		set_rdr_pipe_amp(list, input, i);
+		*i += 1;
+	}
+	else if (input[*i] == '(' || input[*i] == ')')
+	{
+		sub_count(input[*i], 0);
+		*i += 1;
+	}
+	else
+	{
+		if (!ft_whitespace(input[*i]))
+			list->token[*i] = WORD;
+		else
+			list->token[*i] = BLANK;
+		*i += 1;
+	}
+}
 
 static void	set_token(t_list *list, char *input)
 {
@@ -77,21 +98,8 @@ static void	set_token(t_list *list, char *input)
 				i++;
 			}
 		}
-		else if (is_rdr_pipe_amp(input, i))
-		{
-			set_rdr_pipe_amp(list, input, &i);
-			i++;
-		}
-		else if (input[i] == '(' || input[i] == ')')
-			sub_count(input[i++], 0);
 		else
-		{
-			if (!ft_whitespace(input[i]))
-				list->token[i] = WORD;
-			else
-				list->token[i] = BLANK;
-			i++;
-		}
+			norm_bs(list, input, &i);
 	}
 	set_subshell(list, input);
 }

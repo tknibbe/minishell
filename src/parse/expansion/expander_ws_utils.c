@@ -5,11 +5,11 @@
 void	expand_string(char *s, t_exp *x)
 {
 	if (*s == '\'')
-		expander('\'', "'", x, s);
+		expander('\'', x, s);
 	else if (*s == '"')
-		expander('"', "$\"", x, s);
+		expander('"', x, s);
 	else
-		expander(0, "$\"'", x, s);
+		expander(0, x, s);
 	free(s);
 }
 

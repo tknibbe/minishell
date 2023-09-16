@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   heredoc.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/07/24 15:05:32 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/08/27 16:46:10 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/09/09 15:33:31 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 static char	*get_delimiter(char *input, int *i);
 static int	set_expand(char *delimiter);
-static void	heredoc(char *input, t_heredoc *doc);
+static void	heredoc(t_heredoc *doc);
 
 void	init_struct_and_fork(t_heredoc *doc, char *input, int *i)
 {
 	doc->delimiter = get_delimiter(input, i);
 	doc->expand = set_expand(doc->delimiter);
 	doc->status = 0;
+	doc->line = "";
 	if (doc->expand == HEREDOC_NO_EXP)
 		doc->delimiter = ft_strdel(doc->delimiter, "\"\'");
 	if (pipe(doc->pipefd) < 0)
@@ -41,7 +42,7 @@ void	add_heredoc(char *input, t_list *list, int *i)
 	rdr_node = rdr_lstnew(NULL, doc.expand, 1);
 	rdr_lstadd_back(&cur_node->rdr, rdr_node);
 	if (doc.pid == 0)
-		heredoc(input, &doc);
+		heredoc(&doc);
 	wait(&doc.status);
 	if (WIFSIGNALED(doc.status) && WEXITSTATUS(doc.status) != 0)
 	{
@@ -50,7 +51,6 @@ void	add_heredoc(char *input, t_list *list, int *i)
 		return ;
 	}
 	close(doc.pipefd[1]);
-	doc.line = "";
 	while (doc.line)
 	{
 		doc.line = get_next_line(doc.pipefd[0]);
@@ -60,9 +60,9 @@ void	add_heredoc(char *input, t_list *list, int *i)
 	free(doc.delimiter);
 }
 
-static void	heredoc(char *input, t_heredoc *doc)
+static void	heredoc(t_heredoc *doc)
 {
-	// unset_echo();
+	set_echo();
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
 	close(doc->pipefd[0]);

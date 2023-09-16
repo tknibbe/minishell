@@ -2,7 +2,7 @@
 #include <minishell.h>
 
 /*will print out all keys with their value's*/
-int	env(char **cmd, t_env *env)
+int	env(t_env *env)
 {
 	
 	while (env)
@@ -10,6 +10,7 @@ int	env(char **cmd, t_env *env)
 		printf("%s=%s\n", env->key, env->value);
 		env = env->next;
 	}
+	return (0);
 }
 
 /*will create or adjust a node for export*/

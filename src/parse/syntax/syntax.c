@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/27 15:36:42 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/09/15 16:33:39 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ static int	control_op_check(t_list *list, int *i)
 
 static int	rdr_check(t_list *list, int *i)
 {
-	while (is_redirect(list->token[*i]) && list->input[*i])
+	int	temp;
+
+	temp = *i;
+	while (list->token[temp] == list->token[*i] && list->input[*i])
 		*i += 1;
 	while (list->token[*i] == BLANK && list->input[*i])
 		*i += 1;
@@ -71,19 +74,26 @@ static int	rdr_check(t_list *list, int *i)
 	return (0);
 }
 
-int	brace_check(t_list *list, int *i)
+static int	syntax_loop(t_list *list, int *i)
 {
-	int	j;
-
-	if (*i == 0)
-		return (0);
-	j = *i - 1;
-	while (j >= 0 && list->token[j] == BLANK)
+	if (is_redirect(list->token[*i]))
 	{
-		j--;
+		if (rdr_check(list, i))
+			return (1);
 	}
-	if (is_control_op(list->token[j]) == 0)
-		return (ft_syntax_error('(', list->token[*i]));
+	else if (is_control_op(list->token[*i]))
+	{
+		if (control_op_check(list, i))
+			return (1);
+	}
+	else if (list->token[*i] == BRACE_OPEN)
+	{
+		if (brace_check(list, i))
+			return (1);
+		*i += 1;
+	}
+	else
+		*i += 1;
 	return (0);
 }
 
@@ -98,24 +108,8 @@ int	check_syntax(t_list *list)
 		return (1);
 	while (list->input[i])
 	{
-		if (is_redirect(list->token[i]))
-		{
-			if (rdr_check(list, &i))
-				return (1);
-		}
-		else if (is_control_op(list->token[i]))
-		{
-			if (control_op_check(list, &i))
-				return (1);
-		}
-		else if (list->token[i] == BRACE_OPEN)
-		{
-			if (brace_check(list, &i))
-				return (1);
-			i++;
-		}
-		else
-			i++;
+		if (syntax_loop(list, &i))
+			return (1);
 	}
 	return (0);
 }

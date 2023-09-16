@@ -30,7 +30,7 @@ void	tymon(t_ally *all, char *input)
 {
 	//pre_parse(input, all);
 	all->list = parse_input(input);
-	int i = 0;
+	//int i = 0;
 	//env(all->env->head);
 	//while (all->env->head)
 	//	printf("%s\n", all->env->env[i++]);
@@ -43,19 +43,24 @@ void	tymon(t_ally *all, char *input)
 	//leaks();
 }
 
-void	run_shell(t_ally *all, char *prompt)
+void	run_shell(t_ally *all)
 {
 	char	*string;
 
-	// set_signals_inter();
-	string = readline(prompt);
-	// set_signals_non_inter();
+	set_signals_inter();
+	if (isatty(STDIN_FILENO))
+		string = readline(PROMPT);
+	else
+		string = get_next_line(STDIN_FILENO);
+	//write(2, PROMPT, 11);
+	//string = get_next_line(STDIN_FILENO);
+	set_signals_non_inter();
 	if (!string)
 	{
-		printf("LOL NOOP\n");
+		//printf("exit\n");
 		exit(0);
 	}
-	if (*string)
+	if (strncmp(string, "", 1))
 	{
 		add_history(string);
 		if (ft_strncmp(string, "exit", 4) == 0)
@@ -72,8 +77,9 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (argc != 1)
 		ft_exit("just ./minishell is enough\n", 1);
+	argv = NULL;
 	all = minishell_init(envp);
 	while (1)
-		run_shell(all, PROMPT);
+		run_shell(all);
 	//free(prompt);
 }

@@ -1,5 +1,5 @@
 INCLUDE		=	-I includes -I lib/includes -I $(shell brew --prefix readline)/include
-CFLAGS		=	#-Wall -Werror -Wextra
+CFLAGS		=	-Wall -Werror -Wextra
 READLINE	=	-lreadline  -L $(shell brew --prefix readline)/lib
 OBJ_F		=	$(SRC:%.c=obj/%.o)
 MINISHELL	=	minishell
@@ -18,12 +18,13 @@ SRC			=	cris_main.c \
 				utils/free_structs.c \
 				parse/split_pipelines/split_pipelines.c \
 				parse/split_pipelines/list_utils.c \
-				parse/parse.c \
+				parse/parse_main.c \
 				parse/tokenize/token.c \
 				parse/tokenize/token_utils.c \
 				parse/tokenize/subshell.c \
 				parse/syntax/syntax.c \
 				parse/syntax/syntax_utils.c \
+				parse/syntax/syntax_utils2.c \
 				parse/parse/make_list.c \
 				parse/parse/list_utils.c \
 				parse/parse/list_utils2.c \
@@ -34,13 +35,13 @@ SRC			=	cris_main.c \
 				parse/expansion/expander_utils.c \
 				parse/expansion/expander_ws_utils.c \
 				parse/expansion/expander_wc_utils.c \
-				parse/test_functions.c \
 				signals/interactive.c \
 				signals/non_interactive.c \
 				exit_funcs.c \
 				execution/executor.c \
 				execution/redirect.c \
 				execution/pathfinder.c \
+				parse/test_functions.c \
 				#test.c \
 				# parse/tokenize/make_list.c \
 				# built_ins/cd.c \
@@ -49,7 +50,7 @@ all : $(MINISHELL)
 
 $(MINISHELL) : $(OBJ_F)
 	@make -C lib
-	$(CC)  $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@ -fsanitize=address
+	$(CC)  $(CFLAGS) $(LIBFT) $(READLINE) $^ -o $@ #-fsanitize=address
 
 obj/%.o : src/%.c
 	@mkdir -p obj

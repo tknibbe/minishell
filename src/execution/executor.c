@@ -17,6 +17,7 @@ t_list	*next_pipe_line(t_list *current)
 {
 	t_list	*ret;
 
+	//printf("free current node");
 	if (!current->next)
 		return (free_list(current), NULL);
 	else if ((!current->exit_code && current->and_or == AND) ||\
@@ -40,7 +41,7 @@ void	set_pipe(int *p)
 		ft_minishell_error("pipe()", strerror(errno), NULL, errno);
 }
 
-int	builtin(char **cmd, t_env_info *e, int rd, int wr)
+int	builtin(char **cmd, t_env_info *e)
 {
 	if (!ft_strncmp("echo", *cmd, 5))
 		echo(cmd);
@@ -55,7 +56,7 @@ int	builtin(char **cmd, t_env_info *e, int rd, int wr)
 	else if (!ft_strncmp("exit", *cmd, 5))
 		exit(0);
 	else if (!ft_strncmp("env", *cmd, 4))
-		env(cmd, e->head);
+		env(e->head);
 	else
 		return (0);
 	return (1);
@@ -76,7 +77,7 @@ void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 	}
 	if (exec->rdr)
 		redirect(exec->rdr, e);
-	if (proc->cmd && !builtin(proc->cmd, e, STDIN_FILENO, STDOUT_FILENO))
+	if (proc->cmd && !builtin(proc->cmd, e))
 	{
 		get_environment_for_exec(e);
 		*proc->cmd = append_cmd_path(e, *proc->cmd);
@@ -85,7 +86,7 @@ void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 	}
 	else if (exec->subshell)
 	{
-		printf("subshell needs to be executed\n");
+		printf("subshell needs to be executed\n"); // fork and call parse_input and executor again
 		exit(0);
 	}
 	exit (0);
@@ -148,19 +149,19 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 	return (WEXITSTATUS(status));
 }
 
-int	exec_single_cmd(t_exec *exec, t_env_info *e)
-{
-	if ()
-}
+// int	exec_single_cmd(t_exec *exec, t_env_info *e)
+// {
+// 	if ()
+// }
 
 void	executor(t_list *pipe_line, t_env_info *e)
 {
 	while (pipe_line)
 	{
-		if (!pipe_line->exec->next)
-			e->last_exit_status = exec_single_cmd(pipe_line->exec, e);
-		else
-			e->last_exit_status = exec_pipe_line(pipe_line->exec, e);
+		// if (!pipe_line->exec->next)
+		// 	e->last_exit_status = exec_single_cmd(pipe_line->exec, e);
+		// else
+		e->last_exit_status = exec_pipe_line(pipe_line->exec, e);
 		pipe_line = next_pipe_line(pipe_line);
 	}
 }

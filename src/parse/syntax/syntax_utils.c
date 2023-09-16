@@ -6,20 +6,51 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 13:45:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/27 13:52:42 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/09/15 16:35:39 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parsing.h>
 
-int	is_redirect(int t)
+int	brace_check(t_list *list, int *i)
 {
-	return (t == REDIRLEFT || t == REDIRRIGHT || t == HEREDOC || t == APPEND);
+	int	j;
+
+	if (*i == 0)
+		return (0);
+	j = *i - 1;
+	while (j >= 0 && list->token[j] == BLANK)
+	{
+		j--;
+	}
+	if (is_control_op(list->token[j]) == 0 && list->token[j] != BRACE_OPEN)
+	{
+		return (ft_syntax_error('(', list->token[*i]));
+	}
+	return (0);
 }
 
-int	is_control_op(int token)
+static void	print_unex_token(char c, int token)
 {
-	return (token == OR || token == AND || token == PIPESYMBOL);
+	write(2, "near unexpected token ", 22);
+	write(2, "\'", 1);
+	if (token == HEREDOC)
+		write(2, "<<", 2);
+	else if (token == APPEND)
+		write(2, ">>", 2);
+	else if (token == OR)
+		write(2, "||", 2);
+	else if (token == AND)
+		write(2, "&&", 2);
+	else if (token == PIPESYMBOL)
+		write(2, "|", 1);
+	else if (token == REDIRRIGHT)
+		write(2, ">", 1);
+	else if (token == REDIRLEFT)
+		write(2, "<", 1);
+	else
+		write(2, &c, 1);
+	write(2, "\'", 1);
 }
 
 int	ft_syntax_error(char c, int token)
@@ -30,27 +61,7 @@ int	ft_syntax_error(char c, int token)
 	else if (c == '\0')
 		write(2, "near unexpected token 'newline'", 31);
 	else
-	{
-		write(2, "near unexpected token ", 22);
-		write(2, "\'", 1);
-		if (token == HEREDOC)
-			write(2, "<<", 2);
-		else if (token == APPEND)
-			write(2, ">>", 2);
-		else if (token == OR)
-			write(2, "||", 2);
-		else if (token == AND)
-			write(2, "&&", 2);
-		else if (token == PIPESYMBOL)
-			write(2, "|", 1);
-		else if (token == REDIRRIGHT)
-			write(2, ">", 1);
-		else if (token == REDIRLEFT)
-			write(2, "<", 1);
-		else
-			write(2, &c, 1);
-		write(2, "\'", 1);
-	}
+		print_unex_token(c, token);
 	write(2, "\n", 1);
 	return (1);
 }

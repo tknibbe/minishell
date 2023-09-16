@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   expander.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/08/14 20:18:58 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/09/07 19:46:20 by cvan-sch      ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <minishell.h>
 #include <expansion.h>
 
@@ -53,7 +41,7 @@ static void	expansion_ws(t_str *start, t_env_info *e)
 	}
 }
 
-void	expander(int state, char *brake, t_exp *x, char *input)
+void	expander(int state, t_exp *x, char *input)
 {
 	int		i;
 	char	*s;
@@ -73,10 +61,10 @@ void	expander(int state, char *brake, t_exp *x, char *input)
 	input += i;
 	free(s);
 	if (*input == '\'')
-		return (expander('\'', "'", x, input));
+		return (expander('\'', x, input));
 	else if (*input == '"')
-		return (expander('"', "$\"", x, input));
-	return (expander(0, "$\"'", x, input));
+		return (expander('"', x, input));
+	return (expander(0, x, input));
 }
 
 char	**full_expansion(t_str *c, t_env_info *e)
