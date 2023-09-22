@@ -93,7 +93,7 @@ void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 		close(proc->fd);
 	}
 	if (exec->rdr)
-		redirect(exec->rdr, e);
+		redirect(exec->rdr, e, STDIN_FILENO, STDOUT_FILENO);
 	if (proc->cmd)
 	{
 		proc->builtin = builtin(*proc->cmd);
@@ -178,15 +178,18 @@ int	exec_single_cmd(t_exec *exec, t_env_info *e)
 	t_process	proc;
 
 	cmd = full_expansion(exec->cmd, e);
-	b = builtin(*cmd);
+	b = 0;
+	if (cmd)
+		b = builtin(*cmd);
 	if (b)
 	{
-		printf("execute builtin but not in a childprocess\n");
-		return (0);
+		if (exec->rdr && redirect(exec->rdr, e, -1, 3))
+			return (do_builtin(cmd, e, b, 3));
+		else
+			return (do_builtin(cmd, e, b, 1));
 	}
 	else
 	{
-		printf("gets in the else for single command");
 		init_proc(&proc, 1);
 		proc.cmd = cmd;
 		waitpid(fork_and_execute(exec, e, &proc), &e->last_exit_status, 0);

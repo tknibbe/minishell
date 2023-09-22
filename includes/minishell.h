@@ -75,7 +75,7 @@ void	set_echo(void);
 int	ft_minishell_error(char *program, char *arg, char *desc, int ex);
 
 void	executor(t_list *pipe_line, t_env_info *e);
-void	redirect(t_rdr *r, t_env_info *e);
+int		redirect(t_rdr *r, t_env_info *e, int in, int out);
 void	free_list(t_list *lst);
 
 #endif

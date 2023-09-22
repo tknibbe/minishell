@@ -56,10 +56,7 @@ void	run_shell(t_ally *all)
 	//string = get_next_line(STDIN_FILENO);
 	set_signals_non_inter();
 	if (!string)
-	{
-		//printf("exit\n");
 		exit(0);
-	}
 	if (strncmp(string, "", 1))
 	{
 		add_history(string);

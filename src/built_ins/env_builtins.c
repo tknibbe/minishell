@@ -9,6 +9,7 @@ int	env(t_env *env, int fd)
 		write(fd, env->key, ft_strlen(env->key));
 		write(fd, "=", 1);
 		write(fd, env->value, ft_strlen(env->value));
+		write(fd, "\n", 1);
 		env = env->next;
 	}
 	return (0);
