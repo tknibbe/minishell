@@ -2,12 +2,13 @@
 #include <minishell.h>
 
 /*will print out all keys with their value's*/
-int	env(t_env *env)
+int	env(t_env *env, int fd)
 {
-	
 	while (env)
 	{
-		printf("%s=%s\n", env->key, env->value);
+		write(fd, env->key, ft_strlen(env->key));
+		write(fd, "=", 1);
+		write(fd, env->value, ft_strlen(env->value));
 		env = env->next;
 	}
 	return (0);

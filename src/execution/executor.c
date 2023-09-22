@@ -41,25 +41,42 @@ void	set_pipe(int *p)
 		ft_minishell_error("pipe()", strerror(errno), NULL, errno);
 }
 
-int	builtin(char **cmd, t_env_info *e)
+int	builtin(char *cmd)
 {
-	if (!ft_strncmp("echo", *cmd, 5))
-		echo(cmd);
-	else if (!ft_strncmp("unset", *cmd, 6))
-		unset(e, cmd);
-	else if (!ft_strncmp("export", *cmd, 7))
-		export(e, cmd);
-	else if (!ft_strncmp("pwd", *cmd, 4))
-		pwd(cmd);
-	else if (!ft_strncmp("cd", *cmd, 3))
-		cd(cmd, e);
-	else if (!ft_strncmp("exit", *cmd, 5))
-		exit(0);
-	else if (!ft_strncmp("env", *cmd, 4))
-		env(e->head);
-	else
+	if (!ft_strncmp("echo", cmd, 5))
+		return (MS_ECHO);
+	else if (!ft_strncmp("unset", cmd, 6))
+		return (MS_UNSET);
+	else if (!ft_strncmp("export", cmd, 7))
+		return (MS_EXPORT);
+	else if (!ft_strncmp("pwd", cmd, 4))
+		return (MS_PWD);
+	else if (!ft_strncmp("cd", cmd, 3))
+		return (MS_CD);
+	else if (!ft_strncmp("exit", cmd, 5))
+		return (MS_EXIT);
+	else if (!ft_strncmp("env", cmd, 4))
+		return (MS_ENV);
+	return (MS_NOBUILTIN);
+}
+
+int	do_builtin(char **cmd, t_env_info *e, int builtin_no, int out)
+{
+	if (builtin_no == MS_ECHO)
+		return (echo(cmd, out));
+	else if (builtin_no == MS_ENV)
+		return (env(e->head, out));
+	else if (builtin_no == MS_EXPORT)
+		return (export(e, cmd));
+	else if (builtin_no == MS_UNSET)
+		return (unset(e, cmd));
+	else if (builtin_no == MS_EXIT)
 		return (0);
-	return (1);
+	else if (builtin_no == MS_CD)
+		return (cd(cmd, e, out));
+	else if (builtin_no == MS_PWD)
+		return (pwd(cmd, out));
+	return (-1);
 }
 
 void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
@@ -77,19 +94,18 @@ void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 	}
 	if (exec->rdr)
 		redirect(exec->rdr, e);
-	if (proc->cmd && !builtin(proc->cmd, e))
+	if (proc->cmd)
 	{
+		proc->builtin = builtin(*proc->cmd);
+		if (proc->builtin)
+			exit (do_builtin(proc->cmd, e, proc->builtin, STDOUT_FILENO));
 		get_environment_for_exec(e);
 		*proc->cmd = append_cmd_path(e, *proc->cmd);
 		if (execve(*proc->cmd, proc->cmd, e->env) == -1)
 			ft_minishell_error("execve()", *proc->cmd, strerror(errno), errno);
 	}
 	else if (exec->subshell)
-	{
 		executor(exec->subshell, e);
-		// printf("subshell needs to be executed\n"); // fork and call parse_input and executor again
-		exit(0);
-	}
 	exit (0);
 }
 
@@ -99,7 +115,7 @@ int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
 
 	pid = fork();
 	if (pid < 0)
-		ft_minishell_error("fork()", strerror(errno), NULL, errno);
+		ft_minishell_error("fork()", NULL, strerror(errno), errno);
 	else if (pid == 0)
 		execute_child(exec, e, proc);
 	if (proc->p)
@@ -113,13 +129,18 @@ int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
 	return (pid);
 }
 
-void	init_proc(t_process *proc)
+void	init_proc(t_process *proc, int peepee)
 {
 	proc->cmd = NULL;
 	proc->fd = 0;
-	proc->p = malloc(2 * sizeof(int));
-	if (!proc->p)
-		ft_minishell_error("malloc()", "allocating pipe", strerror(errno), errno);
+	if (!peepee)
+	{
+		proc->p = malloc(2 * sizeof(int));
+		if (!proc->p)
+			ft_minishell_error("malloc()", "allocating pipe", strerror(errno), errno);
+	}
+	else
+		proc->p = NULL;
 }
 
 int	exec_pipe_line(t_exec *exec, t_env_info *e)
@@ -127,7 +148,7 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 	t_process	proc;
 	pid_t		pid;
 
-	init_proc(&proc);
+	init_proc(&proc, 0);
 	while (exec)
 	{
 		proc.cmd = full_expansion(exec->cmd, e);
@@ -150,19 +171,37 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 	return (WEXITSTATUS(status));
 }
 
-// int	exec_single_cmd(t_exec *exec, t_env_info *e)
-// {
-// 	if ()
-// }
+int	exec_single_cmd(t_exec *exec, t_env_info *e)
+{
+	int			b;
+	char		**cmd;
+	t_process	proc;
+
+	cmd = full_expansion(exec->cmd, e);
+	b = builtin(*cmd);
+	if (b)
+	{
+		printf("execute builtin but not in a childprocess\n");
+		return (0);
+	}
+	else
+	{
+		printf("gets in the else for single command");
+		init_proc(&proc, 1);
+		proc.cmd = cmd;
+		waitpid(fork_and_execute(exec, e, &proc), &e->last_exit_status, 0);
+	}
+	return (e->last_exit_status);
+}
 
 void	executor(t_list *pipe_line, t_env_info *e)
 {
 	while (pipe_line)
 	{
-		// if (!pipe_line->exec->next)
-		// 	e->last_exit_status = exec_single_cmd(pipe_line->exec, e);
-		// else
-		e->last_exit_status = exec_pipe_line(pipe_line->exec, e);
+		if (!pipe_line->exec->next)
+			e->last_exit_status = exec_single_cmd(pipe_line->exec, e);
+		else
+			e->last_exit_status = exec_pipe_line(pipe_line->exec, e);
 		pipe_line = next_pipe_line(pipe_line);
 	}
 }

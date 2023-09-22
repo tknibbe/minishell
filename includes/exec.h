@@ -12,12 +12,23 @@ typedef struct s_env_info	t_env_info;
 typedef struct s_process
 {
 	int			fd;
+	int			builtin;
 	int			*p;
 	t_env_info	*e;
 	char		**cmd;
 }				t_process;
 
-
+enum	e_builtin
+{
+	MS_NOBUILTIN,
+	MS_ECHO,
+	MS_CD,
+	MS_PWD,
+	MS_UNSET,
+	MS_EXPORT,
+	MS_ENV,
+	MS_EXIT,
+};
 // void	test_exec(char **env);
 // void	execute_command(t_exec *t);
 char	*append_cmd_path(t_env_info *env, char *cmd);

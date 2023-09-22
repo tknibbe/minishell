@@ -42,7 +42,7 @@ typedef struct s_minishell
 	t_list				*list;
 }						t_ally;
 
-void	history(const char *s);
+int		history(char *s);
 //void	parse_input(char *input, t_ally *all);
 
 //EXIT_FUNCS.C
