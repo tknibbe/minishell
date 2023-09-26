@@ -24,9 +24,12 @@ int	ft_isinset(int c, char *s)
 
 int	ft_minishell_error(char *program, char *arg, char *desc, int ex)
 {
-	write(2, "minishell: ", 11);
+	write(2, "minishell", 9);
 	if (program)
+	{
+		write(2, ": ", 2);
 		write(2, program, ft_strlen(program));
+	}
 	if (arg)
 	{
 		write(2, ": ", 2);
