@@ -14,7 +14,7 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer[OPEN_MAX];
+	static char	*buffer[1024];
 	char		*return_line;
 
 	if (fd < 0 || BUFFER_SIZE < 0 || BUFFER_SIZE > 2147483646)
