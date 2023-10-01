@@ -16,11 +16,11 @@ t_ally	*minishell_init(char *envp[])
 	all = malloc(sizeof(t_ally));
 	if (!all)
 		ft_exit("Malloc error\n", errno);
-	all->list = malloc(sizeof(t_list));
-	if (!all->list)
-		ft_exit("Malloc error\n", errno);
-	all->list->next = NULL;
-	all->list->exec = NULL;
+	// all->list = malloc(sizeof(t_list));
+	// if (!all->list)
+	// 	ft_exit("Malloc error\n", errno);
+	// all->list->next = NULL;
+	// all->list->exec = NULL;
 	all->env = env_init(envp);
 	return (all);
 }

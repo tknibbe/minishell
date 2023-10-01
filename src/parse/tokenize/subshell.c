@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 14:46:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/01 14:16:15 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/01 16:19:40 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	sub_count(char c, int option)
 	{
 		amount_open = 0;
 		amount_close = 0;
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	if (amount_open < amount_close)
 		return (amount_open);
@@ -94,7 +94,7 @@ int	add_subshell(char *input, t_list *list, t_exec *exec, int *i, t_env_info *en
 	str = ft_substr(input, start, *i - start - 1);
 	temp = parse_input(str, env);
 	if (!temp)
-		return (1);
+		return (EXIT_FAILURE);
 	t_listadd_back(&exec->subshell, temp);
-	return (0);
+	return (EXIT_SUCCESS);
 }

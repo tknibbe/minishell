@@ -93,7 +93,7 @@ void	t_str_lstadd_back(t_str **lst, t_str *new);
 t_str	*t_str_lstnew(char *str);
 
 //HEREDOC.C
-void	add_heredoc(char *input, t_list *list, int *i);
+int		add_heredoc(char *input, t_list *list, int *i, t_env_info *env);
 
 //SPLIT_PIPELINES.C
 int		split_pipelines(char *input, t_list **list);

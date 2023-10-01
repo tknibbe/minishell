@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/01 13:58:17 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/01 16:19:59 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_struct_and_fork(t_heredoc *doc, char *input, int *i)
 		ft_exit("Error creating child process", errno);
 }
 
-void	add_heredoc(char *input, t_list *list, int *i)
+int	add_heredoc(char *input, t_list *list, int *i, t_env_info *env)
 {
 	t_heredoc	doc;
 	t_rdr		*rdr_node;
@@ -44,11 +44,11 @@ void	add_heredoc(char *input, t_list *list, int *i)
 	if (doc.pid == 0)
 		heredoc(&doc);
 	wait(&doc.status);
-	if (WIFSIGNALED(doc.status) && WEXITSTATUS(doc.status) != 0) // TODO :add exit code in here if heredoc is terminated with CTRL+C
+	if (WIFSIGNALED(doc.status))	// && WEXITSTATUS(doc.status) != 0) // TODO :add exit code in here if heredoc is terminated with CTRL+C
 	{
 		free(doc.delimiter);
-		// list->exit_code = 1; // make env exit code 130 here
-		return ;
+		env->last_exit_status = 130;
+		return (EXIT_FAILURE);
 	}
 	close(doc.pipefd[1]);
 	while (doc.line)
@@ -58,6 +58,7 @@ void	add_heredoc(char *input, t_list *list, int *i)
 			t_str_lstadd_back(&rdr_node->file, t_str_lstnew(doc.line));
 	}
 	free(doc.delimiter);
+	return (EXIT_SUCCESS);
 }
 
 static void	heredoc(t_heredoc *doc)

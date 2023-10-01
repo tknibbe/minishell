@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:56:52 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/09/09 14:16:02 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/01 16:19:40 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ void	right(t_list *list, char *input, int *i)
 int	is_alphanumeric(char c)
 {
 	if (c >= '0' && c <= '9')
-		return (1);
+		return (EXIT_FAILURE);
 	if (c >= 'a' && c <= 'z')
-		return (1);
+		return (EXIT_FAILURE);
 	if (c >= 'A' && c <= 'Z')
-		return (1);
+		return (EXIT_FAILURE);
 	if (c == '_')
-		return (1);
-	return (0);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

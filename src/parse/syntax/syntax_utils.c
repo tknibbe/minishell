@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 13:45:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/09/15 16:35:39 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/01 16:19:40 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	brace_check(t_list *list, int *i)
 	int	j;
 
 	if (*i == 0)
-		return (0);
+		return (EXIT_SUCCESS);
 	j = *i - 1;
 	while (j >= 0 && list->token[j] == BLANK)
 	{
@@ -27,7 +27,7 @@ int	brace_check(t_list *list, int *i)
 	{
 		return (ft_syntax_error('(', list->token[*i]));
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static void	print_unex_token(char c, int token)
@@ -63,7 +63,7 @@ int	ft_syntax_error(char c, int token)
 	else
 		print_unex_token(c, token);
 	write(2, "\n", 1);
-	return (1);
+	return (EXIT_FAILURE);
 }
 
 int	op_amount_check(t_list *list, int i)
@@ -74,8 +74,8 @@ int	op_amount_check(t_list *list, int i)
 	while (list->input[i + j] == list->input[i + j - 1])
 		j++;
 	if (j > 2)
-		return (1);
-	return (0);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int	start_check(t_list *list)
@@ -88,5 +88,5 @@ int	start_check(t_list *list)
 	if (list->token[i] != WORD && !is_redirect(list->token[i]) \
 		&& !is_subshell(list->token[i]))
 		return (ft_syntax_error(' ', list->token[i]));
-	return (0);
+	return (EXIT_SUCCESS);
 }

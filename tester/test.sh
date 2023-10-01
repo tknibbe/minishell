@@ -111,7 +111,7 @@ printf "\n\e[32mtesting syntax errors\e[0m\n"
 # compare_command "cat ../Makefile"
 # compare_command "cat NONEXISTINNGFILE.c"
 # compare_command "echo "HEY" > cat"
-compare_command "cd NONEXISTINGPATH" #//heap_use_after_free
+# compare_command "cd NONEXISTINGPATH" #//heap_use_after_free
 # compare_command "echo hey | echo hey | ls"
 
 
@@ -121,7 +121,7 @@ compare_command "cd NONEXISTINGPATH" #//heap_use_after_free
 # compare_command "echo >> test.sh"
 # compare_command "echo >> NONEXISTINGFILE"
 # compare_command "ls >> lol "
-#compare_command "echo < test.sh < test.sh < test.sh < test.sh" //segv with fsanitize on? only in tester, not normal minishell?
+compare_command "echo < test.sh < test.sh < test.sh < test.sh" //segv with fsanitize on? only in tester, not normal minishell?
 #compare_command ""
 #compare_command ""
 

@@ -6,13 +6,13 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/01 14:22:43 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/01 16:19:40 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	new_rdr_node(char *input, int *token, t_list *list, int *i);
+int	new_rdr_node(char *input, int *token, t_list *list, int *i, t_env_info *env);
 void	new_cmd_node(char *input, int *token, t_exec *exec, int *i);
 int		is_redirect(int t);
 
@@ -20,8 +20,8 @@ int	ft_whitespace(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n'\
 		|| c == '\v' || c == '\f' || c == '\r')
-		return (1);
-	return (0);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 int	parse(char *input, t_list *list, t_env_info *env)
@@ -37,13 +37,16 @@ int	parse(char *input, t_list *list, t_env_info *env)
 		while (list->token[i] != PIPESYMBOL && input[i])
 		{
 			if (is_redirect(list->token[i]))
-				new_rdr_node(input, list->token, list, &i);
+			{
+				if (new_rdr_node(input, list->token, list, &i, env))
+					return (EXIT_FAILURE);
+			}		
 			else if (list->token[i] == WORD)
 				new_cmd_node(input, list->token, node, &i);
 			else if (list->token[i] == BRACE_OPEN)
 			{
 				if (add_subshell(input, list, node, &i, env))
-					return (1);
+					return (EXIT_FAILURE);
 			}
 			else
 				i++;
@@ -51,7 +54,7 @@ int	parse(char *input, t_list *list, t_env_info *env)
 		if (input[i] == '|')
 			i++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 void	new_cmd_node(char *input, int *token, t_exec *node, int *i)
@@ -74,7 +77,7 @@ void	new_cmd_node(char *input, int *token, t_exec *node, int *i)
 	}
 }
 
-void	new_rdr_node(char *input, int *token, t_list *list, int *i)
+int	new_rdr_node(char *input, int *token, t_list *list, int *i, t_env_info *env)
 {
 	int		start;
 	int		type;
@@ -85,8 +88,8 @@ void	new_rdr_node(char *input, int *token, t_list *list, int *i)
 	type = token[*i];
 	if (type == HEREDOC)
 	{
-		add_heredoc(input, list, i);
-		return ;
+		add_heredoc(input, list, i, env);
+		return (EXIT_FAILURE);
 	}
 	rdr_node = rdr_lstnew(NULL, type, 0);
 	while ((token[*i] == BLANK || is_redirect(token[*i])) && input[*i])
@@ -98,4 +101,5 @@ void	new_rdr_node(char *input, int *token, t_list *list, int *i)
 	if (!rdr_node->file->str)
 		ft_exit("Malloc error\n", errno);
 	rdr_lstadd_back(&cur_node->rdr, rdr_node);
+	return (EXIT_SUCCESS);
 }

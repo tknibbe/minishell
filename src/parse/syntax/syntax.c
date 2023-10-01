@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/01 13:50:40 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/01 16:19:40 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	add_new_input(t_list *list, t_env_info *env)
 	list->input = new_str;
 	tokenize(list);
 	check_syntax(list, env);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static int	control_op_check(t_list *list, int *i, t_env_info *env)
@@ -49,7 +49,7 @@ static int	control_op_check(t_list *list, int *i, t_env_info *env)
 	if (list->token[*i] == WORD || is_redirect(list->token[*i]) \
 		|| list->token[*i] == BRACE_OPEN)
 	{
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	return (ft_syntax_error(' ', list->token[*i]));
 }
@@ -71,7 +71,7 @@ static int	rdr_check(t_list *list, int *i)
 	{
 		return (ft_syntax_error(' ', list->token[*i]));
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static int	syntax_loop(t_list *list, int *i, t_env_info *env)
@@ -79,22 +79,22 @@ static int	syntax_loop(t_list *list, int *i, t_env_info *env)
 	if (is_redirect(list->token[*i]))
 	{
 		if (rdr_check(list, i))
-			return (1);
+			return (EXIT_FAILURE);
 	}
 	else if (is_control_op(list->token[*i]))
 	{
 		if (control_op_check(list, i, env))
-			return (1);
+			return (EXIT_FAILURE);
 	}
 	else if (list->token[*i] == BRACE_OPEN)
 	{
 		if (brace_check(list, i))
-			return (1);
+			return (EXIT_FAILURE);
 		*i += 1;
 	} 
 	else
 		*i += 1;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	check_syntax(t_list *list, t_env_info *env)
@@ -107,15 +107,15 @@ int	check_syntax(t_list *list, t_env_info *env)
 	if (start_check(list))
 	{
 		env->last_exit_status = 2;
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	while (list->input[i])
 	{
 		if (syntax_loop(list, &i, env))
 		{
 			env->last_exit_status = 2;
-			return (1);
+			return (EXIT_FAILURE);
 		}
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
