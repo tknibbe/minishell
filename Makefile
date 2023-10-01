@@ -1,6 +1,6 @@
-INCLUDE		=	-I includes -I lib/includes -I $(shell brew --prefix readline)/include
+INCLUDE		=	-I includes -I lib/includes
 #CFLAGS		=	-Wall -Werror -Wextra
-READLINE	=	-lreadline  -L $(shell brew --prefix readline)/lib
+READLINE	=	-L/usr/include -lreadline $(pkg-config --cflags --libs readline) -lhistory
 OBJ_F		=	$(SRC:%.c=obj/%.o)
 MINISHELL	=	minishell
 LIBFT		=	lib/libft.a
@@ -50,7 +50,7 @@ all : $(MINISHELL)
 
 $(MINISHELL) : $(OBJ_F)
 	@make -C lib
-	$(CC)  $(CFLAGS) $(READLINE) $^ -o $@ $(LIBFT) #-fsanitize=address
+	$(CC) $^ -o $@ $(LIBFT) #-fsanitize=address
 
 obj/%.o : src/%.c
 	@mkdir -p obj
@@ -63,7 +63,7 @@ obj/%.o : src/%.c
 	@mkdir -p obj/parse/syntax
 	@mkdir -p obj/execution
 	@mkdir -p obj/signals
-	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
+	$(CC) $(CFLAGS) $(READLINE) $(INCLUDE) -c $^ -o $@
 
 clean :
 	make -C lib clean
@@ -74,8 +74,3 @@ fclean : clean
 	rm -f $(MINISHELL)
 
 re: fclean all
-
-git :
-	git add .
-	git commit -m "automatic push"
-	git push
