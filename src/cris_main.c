@@ -60,8 +60,8 @@ void	run_shell(t_ally *all)
 	if (strncmp(string, "", 1))
 	{
 		add_history(string);
-		if (ft_strncmp(string, "exit", 4) == 0)
-			exit(0);
+		// if (ft_strncmp(string, "exit", 4) == 0)
+		// 	exit(0);
 		tymon(all, string);
 		executor(all->list, all->env);
 	}
