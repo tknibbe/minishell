@@ -10,7 +10,8 @@ int ms_exit(char **cmd)
 	int	i;
 	int	check;
 
-	write(2, "exit\n", 5);
+	if (isatty(STDIN_FILENO))
+		write(1, "exit\n", 5);
 	if (!cmd[1])
 		exit(0);
 	check = 0;

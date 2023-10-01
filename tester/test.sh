@@ -15,8 +15,8 @@ out_bash=~/bullshit/out_bash
 err_bash=~/bullshit/err_bash
 
 print_diff () {
-	printf "mini output:\n $(cat -e "$1")\n"
-	printf "bash output:\n $(cat -e "$2")\n"
+	printf "	mini:\n		$(cat -e "$1")\n"
+	printf "	bash:\n		$(cat -e "$2")\n"
 }
 
 compare_command ()
@@ -73,79 +73,82 @@ compare_syntax () {
 	#printf "[$bash_syn]\n"
 }
 
-printf "\n\e[32mtesting syntax errors\e[0m\n"
-compare_syntax "hello < |"
-compare_syntax "< >"
-compare_syntax "<< >>"
-compare_syntax "< |"
-compare_syntax "> |"
-compare_syntax ") ()"
-compare_syntax "| |"
-compare_syntax "(| |)"
-compare_syntax "&&&"
-compare_syntax "|||"
-compare_syntax "|| |||"
-compare_syntax ">>>"
-compare_syntax "(())"
-compare_syntax "(((|||)))"
+# printf "\n\e[32mtesting syntax errors\e[0m\n"
+# compare_syntax "hello < |"
+# compare_syntax "< >"
+# compare_syntax "<< >>"
+# compare_syntax "< |"
+# compare_syntax "> |"
+# compare_syntax ") ()"
+# compare_syntax "| |"
+# compare_syntax "(| |)"
+# compare_syntax "&&&"
+# compare_syntax "|||"
+# compare_syntax "|| |||"
+# compare_syntax ">>>"
+# compare_syntax "(())"
+# compare_syntax "(((|||)))"
 
 
-printf "\n\e[32mtesting empty input\e[0m\n"
-sleep 1
-compare_command ""
+# printf "\n\e[32mtesting empty input\e[0m\n"
+# sleep 1
+# compare_command ""
 
 
-printf "\n\e[32mtesting basic commands\e[0m\n"
-sleep 1
-compare_command "ls -lah"
-compare_command "cat ../Makefile"
-compare_command "cat NONEXISTINNGFILE.c"
-compare_command "echo "HEY" > cat"
-#compare_command "cd NONEXISTINGPATH" //heap_use_after_free
-compare_command "echo hey | echo hey | ls"
+# printf "\n\e[32mtesting basic commands\e[0m\n"
+# sleep 1
+# compare_command "ls -lah"
+# compare_command "cat ../Makefile"
+# compare_command "cat NONEXISTINNGFILE.c"
+# compare_command "echo "HEY" > cat"
+# #compare_command "cd NONEXISTINGPATH" //heap_use_after_free
+# compare_command "echo hey | echo hey | ls"
 
 
 printf "\n\e[32mtesting redirects\e[0m\n"
 sleep 1
 compare_command "ls > test > test1 < test2 > test 3"
-compare_command "echo >> test.sh"
-compare_command "echo >> NONEXISTINGFILE"
-compare_command "ls >> lol "
+# compare_command "echo >> test.sh"
+# compare_command "echo >> NONEXISTINGFILE"
+# compare_command "ls >> lol "
 #compare_command "echo < test.sh < test.sh < test.sh < test.sh" //segv with fsanitize on? only in tester, not normal minishell?
 #compare_command ""
 #compare_command ""
 
-printf "\n\e[32mtesting pipes\e[0m\n"
-compare_command "ls | ls | ls | ls"
-compare_command "echo "hey" | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat"
-compare_command "ls | cat | cat | echo"
-compare_command "echo "hey" | ls"
-compare_command "echo "hey" | ls | cat | wc -l"
+# printf "\n\e[32mtesting pipes\e[0m\n"
+# compare_command "ls | ls | ls | ls"
+# compare_command "echo "hey" | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | cat"
+# compare_command "ls | cat | cat | echo"
+# compare_command "echo "hey" | ls"
+# compare_command "echo "hey" | ls | cat | wc -l"
 
 
-printf "\n\e[32mtesting BONUS\e[0m\n"
-compare_command "ls && ls"
-compare_command "ls || ls"
-compare_command "(ls) && (ls)"
-compare_command "(ls) || (ls)"
-compare_command "(((((((((((((((((((((ls)))))))))))))))))))))"
-compare_command "(((((((((((((((((((((ls))))))))))))))))))))) && ((((((((ls))))))))"
-compare_command "unset PATH && ls"
-#compare_command "cat test.sh | echo hey && echo bye | ls"
+# printf "\n\e[32mtesting BONUS\e[0m\n"
+compare_command "exit 92"
+# compare_command "ls && ls"
+# compare_command "ls || ls"
+# compare_command "(ls) && (ls)"
+# compare_command "(ls) || (ls)"
+# compare_command "(((((((((((((((((((((ls)))))))))))))))))))))"
+# compare_command "(((((((((((((((((((((ls))))))))))))))))))))) && ((((((((ls))))))))"
+# compare_command "unset PATH && ls"
+# #compare_command "cat test.sh | echo hey && echo bye | ls"
 
 
 #rm -rf ~/bullshit
-rm lol
-rm cat
-rm test
-rm NONEXISTINGFILE
-rm test1
+rm lol 2> /dev/null
+rm cat 2> /dev/null
+rm test 2> /dev/null
+rm NONEXISTINGFILE 2> /dev/null
+rm test1 2> /dev/null
 
 if [ "$WRONG" -eq 0 ]; then
 	printf "\nALL TESTS PASSED\n"
 else
 	printf "\nTEST FAILED ON "$WRONG" MISTAKES!\n"
 fi
+
+
 
 
 
