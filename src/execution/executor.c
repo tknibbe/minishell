@@ -9,8 +9,9 @@ t_list	*next_pipe_line(t_list *current)
 
 	if (!current->next)
 		return (free_list(current), NULL);
-	else if ((!current->exit_code && current->and_or == AND) ||\
-			 (current->exit_code && current->and_or == OR))
+	// else if ((!current->exit_code && current->and_or == AND) ||\		!dit was de else if, exit code is verwijderd uit t_list dus jij (cris) moet even kijken of dit zo nog klopt <3
+	// 		 (current->exit_code && current->and_or == OR))
+	else if (current->and_or == AND || current->and_or == OR)
 	{
 		ret = current->next;
 		current->next = NULL;

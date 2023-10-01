@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/09/09 14:13:43 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/01 14:22:43 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_whitespace(char c)
 	return (0);
 }
 
-void	parse(char *input, t_list *list)
+int	parse(char *input, t_list *list, t_env_info *env)
 {
 	int		i;
 	t_exec	*node;
@@ -41,13 +41,17 @@ void	parse(char *input, t_list *list)
 			else if (list->token[i] == WORD)
 				new_cmd_node(input, list->token, node, &i);
 			else if (list->token[i] == BRACE_OPEN)
-				add_subshell(input, list, node, &i);
+			{
+				if (add_subshell(input, list, node, &i, env))
+					return (1);
+			}
 			else
 				i++;
 		}
 		if (input[i] == '|')
 			i++;
 	}
+	return (0);
 }
 
 void	new_cmd_node(char *input, int *token, t_exec *node, int *i)

@@ -75,7 +75,7 @@ void	open_file_and_dup(char *file, int flag, int to_dup, int permission)
 
 	fd = open(file, flag, permission);
 	if (fd < 0)
-		ft_minishell_error(NULL, file, strerror(errno), errno);
+		ft_minishell_error(NULL, file, strerror(errno), 1);
 	if (dup2(fd, to_dup) < 0)
 		ft_minishell_error("dup2()", NULL, strerror(errno), errno);
 }

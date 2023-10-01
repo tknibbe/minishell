@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   syntax.c                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: tknibbe <tknibbe@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/07/08 13:46:32 by tknibbe       #+#    #+#                 */
-/*   Updated: 2023/09/16 13:28:03 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   syntax.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/10/01 13:50:40 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	add_new_input(t_list *list)
+int	add_new_input(t_list *list, t_env_info *env)
 {
 	char	*new_str;
 	char	*str;
@@ -27,11 +27,11 @@ int	add_new_input(t_list *list)
 	free(list->exec);
 	list->input = new_str;
 	tokenize(list);
-	check_syntax(list);
+	check_syntax(list, env);
 	return (0);
 }
 
-static int	control_op_check(t_list *list, int *i)
+static int	control_op_check(t_list *list, int *i, t_env_info *env)
 {
 	int	j;
 	int	token;
@@ -39,7 +39,7 @@ static int	control_op_check(t_list *list, int *i)
 	j = *i;
 	token = list->token[*i];
 	if (!list->input[*i + 1])
-		return (add_new_input(list));
+		return (add_new_input(list, env));
 	if (op_amount_check(list, *i))
 		return (ft_syntax_error(' ', list->token[*i]));
 	while (list->token[*i] == token && list->input[*i + 1])
@@ -74,7 +74,7 @@ static int	rdr_check(t_list *list, int *i)
 	return (0);
 }
 
-static int	syntax_loop(t_list *list, int *i)
+static int	syntax_loop(t_list *list, int *i, t_env_info *env)
 {
 	if (is_redirect(list->token[*i]))
 	{
@@ -83,7 +83,7 @@ static int	syntax_loop(t_list *list, int *i)
 	}
 	else if (is_control_op(list->token[*i]))
 	{
-		if (control_op_check(list, i))
+		if (control_op_check(list, i, env))
 			return (1);
 	}
 	else if (list->token[*i] == BRACE_OPEN)
@@ -97,7 +97,7 @@ static int	syntax_loop(t_list *list, int *i)
 	return (0);
 }
 
-int	check_syntax(t_list *list)
+int	check_syntax(t_list *list, t_env_info *env)
 {
 	int	i;
 	int	prev_token;
@@ -105,11 +105,17 @@ int	check_syntax(t_list *list)
 	i = 0;
 	prev_token = 0;
 	if (start_check(list))
+	{
+		env->last_exit_status = 2;
 		return (1);
+	}
 	while (list->input[i])
 	{
-		if (syntax_loop(list, &i))
+		if (syntax_loop(list, &i, env))
+		{
+			env->last_exit_status = 2;
 			return (1);
+		}
 	}
 	return (0);
 }

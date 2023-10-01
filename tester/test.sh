@@ -65,15 +65,25 @@ compare_command ()
 
 compare_syntax () {
 	echo -n "$1" | .././minishell 2>$err_mini
+	mini_exit="$?"
 	echo -n "$1" | bash 2>$err_bash
+	bash_exit="$?"
 	mini_syn=$(head -n 1 $err_mini)
 	bash_syn=$(head -n 1 $err_bash)
 	printf "\n[$1];\n$mini_syn\n$bash_syn\n"
+	if [ "$mini_exit" -eq "$bash_exit" ]; then
+		printf "Exit:   \e[32m✔\e[0m\n"
+	else
+	{
+		printf "Exit:   \e[31m✘\e[0m\n"
+		printf "mini_output: $mini_exit\nbash_output: $bash_exit\n"
+	}
+	fi
 	sleep 0.2
 	#printf "[$bash_syn]\n"
 }
 
-# printf "\n\e[32mtesting syntax errors\e[0m\n"
+printf "\n\e[32mtesting syntax errors\e[0m\n"
 # compare_syntax "hello < |"
 # compare_syntax "< >"
 # compare_syntax "<< >>"
@@ -81,13 +91,13 @@ compare_syntax () {
 # compare_syntax "> |"
 # compare_syntax ") ()"
 # compare_syntax "| |"
-# compare_syntax "(| |)"
 # compare_syntax "&&&"
 # compare_syntax "|||"
 # compare_syntax "|| |||"
 # compare_syntax ">>>"
+# compare_syntax "(| |)"
 # compare_syntax "(())"
-# compare_syntax "(((|||)))"
+### compare_syntax "((( || )))" #deze gewoon niet aanzetten joh, bash doet hier gewoon kut
 
 
 # printf "\n\e[32mtesting empty input\e[0m\n"
@@ -101,13 +111,13 @@ compare_syntax () {
 # compare_command "cat ../Makefile"
 # compare_command "cat NONEXISTINNGFILE.c"
 # compare_command "echo "HEY" > cat"
-# #compare_command "cd NONEXISTINGPATH" //heap_use_after_free
+compare_command "cd NONEXISTINGPATH" #//heap_use_after_free
 # compare_command "echo hey | echo hey | ls"
 
 
-printf "\n\e[32mtesting redirects\e[0m\n"
-sleep 1
-compare_command "ls > test > test1 < test2 > test 3"
+# printf "\n\e[32mtesting redirects\e[0m\n"
+# sleep 1
+# compare_command "ls > test > test1 < test2 > test 3"
 # compare_command "echo >> test.sh"
 # compare_command "echo >> NONEXISTINGFILE"
 # compare_command "ls >> lol "
@@ -124,7 +134,7 @@ compare_command "ls > test > test1 < test2 > test 3"
 
 
 # printf "\n\e[32mtesting BONUS\e[0m\n"
-compare_command "exit 92"
+# compare_command "exit 92"
 # compare_command "ls && ls"
 # compare_command "ls || ls"
 # compare_command "(ls) && (ls)"
