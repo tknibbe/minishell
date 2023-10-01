@@ -60,7 +60,7 @@ int	do_builtin(char **cmd, t_env_info *e, int builtin_no, int out)
 	else if (builtin_no == MS_UNSET)
 		return (unset(e, cmd));
 	else if (builtin_no == MS_EXIT)
-		return (0);
+		return (ms_exit(cmd));
 	else if (builtin_no == MS_CD)
 		return (cd(cmd, e, out));
 	else if (builtin_no == MS_PWD)
