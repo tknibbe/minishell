@@ -3,21 +3,10 @@
 #include <built_ins.h>
 #include <parsing.h>
 
-	// big loop that loops through all conditionals
-		// we can ignore token and input so best to free and set to null as soon as possible
-		// after execution depending of the and_or variable continue or not
-		// we store latest exit number ^
-		// t_list = next
-	// for every big loop we need a pipeline executor
-		// set up pipes redirects
-		// then check for subshell and cmd
-	// the expanding happens always in the childprocess
-
 t_list	*next_pipe_line(t_list *current)
 {
 	t_list	*ret;
 
-	//printf("free current node");
 	if (!current->next)
 		return (free_list(current), NULL);
 	else if ((!current->exit_code && current->and_or == AND) ||\
@@ -168,7 +157,11 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 	waitpid(pid, &status, 0);
 	while (wait(NULL) != -1)
 		;
-	return (WEXITSTATUS(status));
+	if (WIFEXITED(e->last_exit_status))
+		return (WEXITSTATUS(e->last_exit_status));
+	else if (WIFSIGNALED(e->last_exit_status))
+		return (128 + WTERMSIG(e->last_exit_status));
+	return (EXIT_FAILURE);;
 }
 
 int	exec_single_cmd(t_exec *exec, t_env_info *e)
@@ -185,16 +178,16 @@ int	exec_single_cmd(t_exec *exec, t_env_info *e)
 	{
 		if (exec->rdr && redirect(exec->rdr, e, -1, 3))
 			return (do_builtin(cmd, e, b, 3));
-		else
-			return (do_builtin(cmd, e, b, 1));
+		return (do_builtin(cmd, e, b, 1));
 	}
-	else
-	{
-		init_proc(&proc, 1);
-		proc.cmd = cmd;
-		waitpid(fork_and_execute(exec, e, &proc), &e->last_exit_status, 0);
-	}
-	return (e->last_exit_status);
+	init_proc(&proc, 1);
+	proc.cmd = cmd;
+	waitpid(fork_and_execute(exec, e, &proc), &e->last_exit_status, 0);
+	if (WIFEXITED(e->last_exit_status))
+		return (WEXITSTATUS(e->last_exit_status));
+	else if (WIFSIGNALED(e->last_exit_status))
+		return (128 + WTERMSIG(e->last_exit_status));
+	return (EXIT_FAILURE);
 }
 
 void	executor(t_list *pipe_line, t_env_info *e)
