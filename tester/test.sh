@@ -2,7 +2,7 @@
 
 FOLDER=~/bullshit
 if test -e "$FOLDER"; then
-	echo "$FOLDER exists! yes baby"
+	# echo "$FOLDER exists! yes baby"
 else
 	mkdir ~/bullshit
 fi
@@ -83,7 +83,7 @@ compare_syntax () {
 	#printf "[$bash_syn]\n"
 }
 
-printf "\n\e[32mtesting syntax errors\e[0m\n"
+# printf "\n\e[32mtesting syntax errors\e[0m\n"
 # compare_syntax "hello < |"
 # compare_syntax "< >"
 # compare_syntax "<< >>"
@@ -121,9 +121,9 @@ printf "\n\e[32mtesting syntax errors\e[0m\n"
 # compare_command "echo >> test.sh"
 # compare_command "echo >> NONEXISTINGFILE"
 # compare_command "ls >> lol "
-compare_command "echo < test.sh < test.sh < test.sh < test.sh" //segv with fsanitize on? only in tester, not normal minishell?
-#compare_command ""
-#compare_command ""
+# compare_command "echo < test.sh < test.sh < test.sh < test.sh" //segv with fsanitize on? only in tester, not normal minishell?
+# compare_command ""
+# compare_command ""
 
 # printf "\n\e[32mtesting pipes\e[0m\n"
 # compare_command "ls | ls | ls | ls"
@@ -136,13 +136,14 @@ compare_command "echo < test.sh < test.sh < test.sh < test.sh" //segv with fsani
 # printf "\n\e[32mtesting BONUS\e[0m\n"
 # compare_command "exit 92"
 # compare_command "ls && ls"
+compare_command "(ls)"
 # compare_command "ls || ls"
 # compare_command "(ls) && (ls)"
 # compare_command "(ls) || (ls)"
 # compare_command "(((((((((((((((((((((ls)))))))))))))))))))))"
 # compare_command "(((((((((((((((((((((ls))))))))))))))))))))) && ((((((((ls))))))))"
 # compare_command "unset PATH && ls"
-# #compare_command "cat test.sh | echo hey && echo bye | ls"
+#compare_command "cat test.sh | echo hey && echo bye | ls"
 
 
 #rm -rf ~/bullshit
@@ -157,6 +158,10 @@ if [ "$WRONG" -eq 0 ]; then
 else
 	printf "\nTEST FAILED ON "$WRONG" MISTAKES!\n"
 fi
+
+
+
+
 
 
 

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/01 16:19:40 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/05 13:55:17 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static int	syntax_loop(t_list *list, int *i, t_env_info *env)
 		if (brace_check(list, i))
 			return (EXIT_FAILURE);
 		*i += 1;
-	} 
+	}
 	else
 		*i += 1;
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/01 16:19:59 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/05 14:20:26 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,10 @@ int	add_heredoc(char *input, t_list *list, int *i, t_env_info *env)
 	if (doc.pid == 0)
 		heredoc(&doc);
 	wait(&doc.status);
-	if (WIFSIGNALED(doc.status))	// && WEXITSTATUS(doc.status) != 0) // TODO :add exit code in here if heredoc is terminated with CTRL+C
+	if (WIFSIGNALED(doc.status))
 	{
-		free(doc.delimiter);
 		env->last_exit_status = 130;
-		return (EXIT_FAILURE);
+		return (free(doc.delimiter), EXIT_FAILURE);
 	}
 	close(doc.pipefd[1]);
 	while (doc.line)

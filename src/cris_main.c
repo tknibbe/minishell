@@ -69,6 +69,7 @@ void	run_single_command(t_ally *all)
 	// 	printf("exit code = %d\n", all->list->exit_code);
 	// 	all->list = all->list->next;
 	// }
+	// system("leaks -q minishell");
 	exit (all->env->last_exit_status);
 }
 
