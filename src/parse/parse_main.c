@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:21:38 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/05 14:25:23 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/05 14:27:05 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	split_pipe_and_parse(t_list *list, t_env_info *env)
 			if (parse(temp->input, temp, env))
 			{
 				free_list(list);
-				return (NULL);
+				return (EXIT_FAILURE);
 			}
 			temp = temp->next;
 		}
@@ -34,9 +34,10 @@ static int	split_pipe_and_parse(t_list *list, t_env_info *env)
 		if (parse(list->input, list, env))
 		{
 			free_list(list);
-			return (NULL);
+			return (EXIT_FAILURE);
 		}
 	}
+	return (EXIT_SUCCESS);
 }
 
 t_list	*parse_input(char *input, t_env_info *env)
