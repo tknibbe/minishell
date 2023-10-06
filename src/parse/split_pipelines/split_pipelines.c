@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:34:27 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/01 16:19:40 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/05 16:51:07 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	*copy_token(int *token, int start, int end)
 
 	new_token = malloc(sizeof(int) * end - start);
 	if (!new_token)
-		ft_exit("Malloc error", errno);
+		ft_minishell_error("malloc()", "failed", strerror(errno), errno);
 	i = 0;
 	while (start + i < end)
 	{
@@ -50,6 +50,8 @@ static t_list	*make_new_node(t_list *data, char *input, int *end, int *start)
 		*end += 1;
 	node = t_listnew();
 	node->input = ft_substr(input, *start, (*end) - (*start));
+	if (!node->input)
+		ft_minishell_error("malloc()", "failed", strerror(errno), errno);
 	node->token = copy_token(data->token, *start, *end);
 	node->and_or = data->token[*end];
 	if (input[*end + 2])

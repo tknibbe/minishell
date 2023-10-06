@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/05 14:18:50 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/06 14:08:53 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ static int	select_struct(t_list *list, char *input, int *i, t_env_info *env)
 				return (EXIT_FAILURE);
 		}
 		else if (list->token[*i] == WORD)
+		{
 			new_cmd_node(input, list->token, node, i);
+		}
 		else if (list->token[*i] == BRACE_OPEN)
 		{
 			t_listadd_back(&node->subshell, add_subshell(input, list, i, env));
@@ -46,7 +48,7 @@ static int	select_struct(t_list *list, char *input, int *i, t_env_info *env)
 				return (EXIT_FAILURE);
 		}
 		else
-			i++;
+			*i += 1;
 	}
 	return (EXIT_SUCCESS);
 }
@@ -90,9 +92,9 @@ int	new_rdr_node(char *input, t_list *list, int *i, t_env_info *env)
 {
 	int		start;
 	int		type;
+	int		*token;
 	t_rdr	*rdr_node;
 	t_exec	*cur_node;
-	int		*token;
 
 	token = list->token;
 	cur_node = exec_lstlast(list->exec);
@@ -100,7 +102,7 @@ int	new_rdr_node(char *input, t_list *list, int *i, t_env_info *env)
 	if (type == HEREDOC)
 	{
 		add_heredoc(input, list, i, env);
-		return (EXIT_FAILURE);
+		return (EXIT_SUCCESS);
 	}
 	rdr_node = rdr_lstnew(NULL, type, 0);
 	while ((token[*i] == BLANK || is_redirect(token[*i])) && input[*i])

@@ -195,6 +195,7 @@ void	executor(t_list *pipe_line, t_env_info *e)
 {
 	while (pipe_line)
 	{
+		// printf("executor %p\n", pipe_line->exec);
 		if (!pipe_line->exec->next)
 			e->last_exit_status = exec_single_cmd(pipe_line->exec, e);
 		else

@@ -25,23 +25,6 @@ t_ally	*minishell_init(char *envp[])
 	return (all);
 }
 
-void	tymon(t_ally *all, char *input)
-{
-	//pre_parse(input, all);
-	all->list = parse_input(input, all->env);
-	//int i = 0;
-	//env(all->env->head);
-	//while (all->env->head)
-	//	printf("%s\n", all->env->env[i++]);
-	//char *path = get_env("PATH", all->env);
-	//printf("path: %s\n", path);
-	// print_whole_list(all->list);
-	//printf("pipeline exited with code : %d\n", all->list->exit_code);
-	//free (*input);
-	// exit(0);
-	//leaks();
-}
-
 void	run_single_command(t_ally *all)
 {
 	char *string;
@@ -58,8 +41,10 @@ void	run_single_command(t_ally *all)
 		add_history(string);
 		// if (ft_strncmp(string, "exit", 4) == 0)
 		// 	exit(0);
-		tymon(all, string);
-		executor(all->list, all->env);
+		all->list = parse_input(string, all->env);
+		// print_whole_list(all->list);
+		if (all->list)
+			executor(all->list, all->env);
 	}
 	free(string);
 	// while (all->list)
@@ -87,8 +72,10 @@ void	run_shell(t_ally *all)
 		add_history(string);
 		// if (ft_strncmp(string, "exit", 4) == 0)
 		// 	exit(0);
-		tymon(all, string);
-		executor(all->list, all->env);
+		// tymon(all, string);
+		all->list = parse_input(string, all->env);
+		if (all->list)
+			executor(all->list, all->env);
 	}
 	free(string);
 }

@@ -6,24 +6,24 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:21:38 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/05 14:27:05 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/06 14:11:54 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int	split_pipe_and_parse(t_list *list, t_env_info *env)
+static int	split_pipe_and_parse(t_list **list, t_env_info *env)
 {
 	t_list	*temp;
 
-	if (split_pipelines(list->input, &list))
+	if (split_pipelines((*list)->input, list))
 	{
-		temp = list;
+		temp = *list;
 		while (temp)
 		{
 			if (parse(temp->input, temp, env))
 			{
-				free_list(list);
+				free_list((*list));
 				return (EXIT_FAILURE);
 			}
 			temp = temp->next;
@@ -31,9 +31,9 @@ static int	split_pipe_and_parse(t_list *list, t_env_info *env)
 	}
 	else
 	{
-		if (parse(list->input, list, env))
+		if (parse((*list)->input, (*list), env))
 		{
-			free_list(list);
+			free_list((*list));
 			return (EXIT_FAILURE);
 		}
 	}
@@ -53,8 +53,13 @@ t_list	*parse_input(char *input, t_env_info *env)
 	list->input = ft_strtrim(input, " ");
 	tokenize(list);
 	if (check_syntax(list, env))
+	{
+		// printf("returning NULL\n");
 		return (NULL);
-	if (split_pipe_and_parse(list, env))
+	}
+	if (split_pipe_and_parse(&list, env))
 		return (NULL);
+	// printf("parser 2 %p\n", list->exec);
+	// print_whole_list(list);
 	return (list);
 }
