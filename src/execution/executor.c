@@ -9,7 +9,7 @@ t_list	*next_pipe_line(t_list *current)
 
 	if (!current->next)
 		return (free_list(current), NULL);
-	// else if ((!current->exit_code && current->and_or == AND) ||\		!dit was de else if, exit code is verwijderd uit t_list dus jij (cris) moet even kijken of dit zo nog klopt <3
+	// else if ((!current->exit_code && current->and_or == AND) ||\		TODO: !dit was de else if, exit code is verwijderd uit t_list dus jij (cris) moet even kijken of dit zo nog klopt <3
 	// 		 (current->exit_code && current->and_or == OR))
 	else if (current->and_or == AND || current->and_or == OR)
 	{
@@ -171,7 +171,7 @@ int	exec_single_cmd(t_exec *exec, t_env_info *e)
 	char		**cmd;
 	t_process	proc;
 
-	cmd = full_expansion(exec->cmd, e);
+	cmd = full_expansion(exec->cmd, e); //TODO: cmd is leaking here. needs to be fixed pls
 	b = 0;
 	if (cmd)
 		b = builtin(*cmd);

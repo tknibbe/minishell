@@ -6,6 +6,16 @@ if test -e "$FOLDER"; then
 else
 	mkdir ~/bullshit
 fi
+
+rm lol 2> /dev/null
+rm cat 2> /dev/null
+rm test 2> /dev/null
+rm NONEXISTINGFILE 2> /dev/null
+rm test1 2> /dev/null
+
+make -C .. > /dev/null
+
+
 printf "\e[32mWELCOME TO THE TESTER BABY\e[0m\n\n"
 printf "\e[32moutput and exit codes are expected to match.\nerror messages may differ so dont take those too serious\e[0m\n\n"
 declare -i WRONG=0
@@ -27,7 +37,7 @@ compare_command ()
 	echo -n "$TEST" | bash 2>$err_bash >$out_bash
 	bash_exit="$?"
 
-	printf "\n[$TEST];\n"
+	printf "\n\e[36m[$TEST];\e[0m\n"
 
 	if (diff $out_mini $out_bash > /dev/null); then
 		printf "Output: \e[32m✔\e[0m\n"
@@ -70,7 +80,7 @@ compare_syntax () {
 	bash_exit="$?"
 	mini_syn=$(head -n 1 $err_mini)
 	bash_syn=$(head -n 1 $err_bash)
-	printf "\n[$1];\n$mini_syn\n$bash_syn\n"
+	printf "\n\e[36m[$1];\e[0m\n$mini_syn\n$bash_syn\n"
 	if [ "$mini_exit" -eq "$bash_exit" ]; then
 		printf "Exit:   \e[32m✔\e[0m\n"
 	else
@@ -158,6 +168,22 @@ if [ "$WRONG" -eq 0 ]; then
 else
 	printf "\nTEST FAILED ON "$WRONG" MISTAKES!\n"
 fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

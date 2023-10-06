@@ -34,17 +34,14 @@ int	expand_dollo(t_exp *x, char *input, char **s, int i)
 {
 	char	*value;
 
-	printf("nononon\n");
 	value = get_env(&input[i], x->e);
 	if (value)
 	{
 		*s = ft_join(*s, value);
 		free(value);
 	}
-	printf("[%c]\n", input[i]);
 	if (input[i] == '?')
 	{
-		printf("does it even get here?\n");
 		return (i++);
 	}
 	while (ft_isname(input[i]))

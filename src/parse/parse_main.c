@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:21:38 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/06 14:11:54 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/06 14:48:42 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static int	split_pipe_and_parse(t_list **list, t_env_info *env)
 	}
 	return (EXIT_SUCCESS);
 }
+//TODO: fix only a quote as input
 
 t_list	*parse_input(char *input, t_env_info *env)
 {
@@ -50,7 +51,7 @@ t_list	*parse_input(char *input, t_env_info *env)
 		return (NULL);
 	}
 	list = t_listnew();
-	list->input = ft_strtrim(input, " ");
+	list->input = ft_strtrim(input, " "); // TODO: leaks if &&/|| in cmd
 	tokenize(list);
 	if (check_syntax(list, env))
 	{
