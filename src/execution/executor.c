@@ -3,21 +3,10 @@
 #include <built_ins.h>
 #include <parsing.h>
 
-	// big loop that loops through all conditionals
-		// we can ignore token and input so best to free and set to null as soon as possible
-		// after execution depending of the and_or variable continue or not
-		// we store latest exit number ^
-		// t_list = next
-	// for every big loop we need a pipeline executor
-		// set up pipes redirects
-		// then check for subshell and cmd
-	// the expanding happens always in the childprocess
-
 t_list	*next_pipe_line(t_list *current)
 {
 	t_list	*ret;
 
-	//printf("free current node");
 	if (!current->next)
 		return (free_list(current), NULL);
 	else if ((!current->exit_code && current->and_or == AND) ||\
