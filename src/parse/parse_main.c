@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:21:38 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/11 14:58:17 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/11 15:10:56 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,8 @@ t_list	*parse_input(char *input, t_env_info *env)
 	list->input = ft_strtrim(input, " "); // TODO: leaks if &&/|| in cmd
 	tokenize(list);
 	if (check_syntax(list, env))
-	{
-		// printf("returning NULL\n");
 		return (NULL);
-	}
 	if (split_pipe_and_parse(&list, env))
 		return (NULL);
-	// printf("parser 2 %p\n", list->exec);
-	// print_whole_list(list);
 	return (list);
 }

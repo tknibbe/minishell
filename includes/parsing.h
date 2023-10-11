@@ -108,9 +108,10 @@ int		sub_count(char c, int want);
 int		is_subshell(int token);
 t_list	*add_subshell(char *input, t_list *list, int *i, t_env_info *env);
 
-//SYNTAX.C
+//SYNTAX
 int		is_redirect(int c);
 int		is_control_op(int token);
+int		no_valid_token(t_list *list);
 int		ft_syntax_error(char c, int token);
 int		op_amount_check(t_list *list, int i);
 int		start_check(t_list *list);

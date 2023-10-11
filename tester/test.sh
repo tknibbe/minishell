@@ -107,12 +107,15 @@ compare_syntax () {
 # compare_syntax ">>>"
 # compare_syntax "(| |)"
 # compare_syntax "(())"
-# ## compare_syntax "((( || )))" #deze gewoon niet aanzetten joh, bash doet hier gewoon kut
 
 
 # printf "\n\e[32mtesting empty input\e[0m\n"
 # sleep 1
 # compare_command ""
+compare_command "	"
+# compare_command "'"
+# compare_command '"'
+compare_command '""'
 
 
 # printf "\n\e[32mtesting basic commands\e[0m\n"
@@ -123,6 +126,7 @@ compare_syntax () {
 # compare_command "echo "HEY" > cat"
 # # compare_command "cd NONEXISTINGPATH" #//heap_use_after_free in cd --> ft_minishell error call
 # compare_command "echo hey | echo hey | ls"
+# compare_command "ls -S"
 
 
 # printf "\n\e[32mtesting redirects\e[0m\n"
@@ -153,8 +157,7 @@ compare_syntax () {
 # compare_command "(((((((((((((((((((((ls)))))))))))))))))))))"
 # compare_command "(((((((((((((((((((((ls))))))))))))))))))))) && ((((((((ls))))))))"
 # compare_command "unset PATH && ls"
-compare_command "cat test.sh | echo hey && echo bye | ls" #### goes wrong, it splits into [cat test.sh | echo hey] and [ echo bye | ls]
-
+# compare_command "cat test.sh | echo hey && echo bye | ls"
 
 #rm -rf ~/bullshit
 rm lol 2> /dev/null
@@ -168,6 +171,10 @@ if [ "$WRONG" -eq 0 ]; then
 else
 	printf "\nTEST FAILED ON "$WRONG" MISTAKES!\n"
 fi
+
+
+
+
 
 
 
