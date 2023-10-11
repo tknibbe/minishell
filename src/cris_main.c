@@ -74,6 +74,7 @@ void	run_shell(t_ally *all)
 		// 	exit(0);
 		// tymon(all, string);
 		all->list = parse_input(string, all->env);
+		// print_whole_list(all->list);
 		if (all->list)
 			executor(all->list, all->env);
 	}
