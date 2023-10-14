@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/01 16:19:40 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/11 15:20:34 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	tokenize(t_list *list)
 	if (!list->token)
 		ft_exit("Malloc error\n", errno);
 	set_token(list, list->input);
+	
 }
 
 int	is_rdr_pipe_amp(char *c, int i)
@@ -71,7 +72,7 @@ static void	norm_bs(t_list *list, char *input, int *i)
 	}
 	else
 	{
-		if (!ft_whitespace(input[*i]))
+		if (!ft_whitespace(input[*i]) && input[*i] != '\'' && input[*i] != '"')
 			list->token[*i] = WORD;
 		else
 			list->token[*i] = BLANK;

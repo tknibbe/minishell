@@ -66,6 +66,8 @@ void	run_shell(t_ally *all)
 		// 	exit(0);
 		// tymon(all, string);
 		all->list = parse_input(string, all->env);
+		// print_whole_list(all->list);
+		// printf("all->list = %p\n", all->list);
 		if (all->list)
 			executor(all->list, all->env);
 	}
@@ -84,5 +86,4 @@ int	main(int argc, char *argv[], char *envp[])
 		run_single_command(all);
 	while (1)
 		run_shell(all);
-	//free(prompt);
 }

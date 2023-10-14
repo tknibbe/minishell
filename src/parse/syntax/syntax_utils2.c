@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 15:14:24 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/09/09 15:14:54 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/11 15:21:14 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,18 @@ int	is_redirect(int t)
 int	is_control_op(int token)
 {
 	return (token == OR || token == AND || token == PIPESYMBOL);
+}
+
+int	no_valid_token(t_list *list)
+{
+	int	i;
+
+	i = 0;
+	while (list->input[i])
+	{
+		if (list->token[i] != BLANK)
+			return (EXIT_SUCCESS);
+		i++;
+	}
+	return (EXIT_FAILURE);
 }
