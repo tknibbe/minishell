@@ -53,5 +53,6 @@ void	free_list(t_list *lst)
 		free(to_free->input);
 		free(to_free->token);
 		free_exec(to_free->exec);
+		free(to_free);
 	}
 }

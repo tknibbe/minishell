@@ -9,8 +9,9 @@ t_list	*next_pipe_line(t_list *current)
 
 	if (!current->next)
 		return (free_list(current), NULL);
-	else if ((!current->exit_code && current->and_or == AND) ||\
-			 (current->exit_code && current->and_or == OR))
+	// else if ((!current->exit_code && current->and_or == AND) ||\		TODO: !dit was de else if, exit code is verwijderd uit t_list dus jij (cris) moet even kijken of dit zo nog klopt <3
+	// 		 (current->exit_code && current->and_or == OR))
+	else if (current->and_or == AND || current->and_or == OR)
 	{
 		ret = current->next;
 		current->next = NULL;
@@ -60,7 +61,7 @@ int	do_builtin(char **cmd, t_env_info *e, int builtin_no, int out)
 	else if (builtin_no == MS_UNSET)
 		return (unset(e, cmd));
 	else if (builtin_no == MS_EXIT)
-		return (0);
+		return (ms_exit(cmd));
 	else if (builtin_no == MS_CD)
 		return (cd(cmd, e, out));
 	else if (builtin_no == MS_PWD)
@@ -157,7 +158,11 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 	waitpid(pid, &status, 0);
 	while (wait(NULL) != -1)
 		;
-	return (WEXITSTATUS(status));
+	if (WIFEXITED(e->last_exit_status))
+		return (WEXITSTATUS(e->last_exit_status));
+	else if (WIFSIGNALED(e->last_exit_status))
+		return (128 + WTERMSIG(e->last_exit_status));
+	return (EXIT_FAILURE);;
 }
 
 int	exec_single_cmd(t_exec *exec, t_env_info *e)
@@ -166,7 +171,7 @@ int	exec_single_cmd(t_exec *exec, t_env_info *e)
 	char		**cmd;
 	t_process	proc;
 
-	cmd = full_expansion(exec->cmd, e);
+	cmd = full_expansion(exec->cmd, e); //TODO: cmd is leaking here. needs to be fixed pls
 	b = 0;
 	if (cmd)
 		b = builtin(*cmd);
@@ -174,22 +179,23 @@ int	exec_single_cmd(t_exec *exec, t_env_info *e)
 	{
 		if (exec->rdr && redirect(exec->rdr, e, -1, 3))
 			return (do_builtin(cmd, e, b, 3));
-		else
-			return (do_builtin(cmd, e, b, 1));
+		return (do_builtin(cmd, e, b, 1));
 	}
-	else
-	{
-		init_proc(&proc, 1);
-		proc.cmd = cmd;
-		waitpid(fork_and_execute(exec, e, &proc), &e->last_exit_status, 0);
-	}
-	return (e->last_exit_status);
+	init_proc(&proc, 1);
+	proc.cmd = cmd;
+	waitpid(fork_and_execute(exec, e, &proc), &e->last_exit_status, 0);
+	if (WIFEXITED(e->last_exit_status))
+		return (WEXITSTATUS(e->last_exit_status));
+	else if (WIFSIGNALED(e->last_exit_status))
+		return (128 + WTERMSIG(e->last_exit_status));
+	return (EXIT_FAILURE);
 }
 
 void	executor(t_list *pipe_line, t_env_info *e)
 {
 	while (pipe_line)
 	{
+		// printf("executor %p\n", pipe_line->exec);
 		if (!pipe_line->exec->next)
 			e->last_exit_status = exec_single_cmd(pipe_line->exec, e);
 		else
