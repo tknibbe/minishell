@@ -30,11 +30,11 @@ void	update_var(t_env_info *e, char *new)
 		oldpwd->value = pwd->value;
 		pwd->value = new;
 	}
-	else
-	{
-		if (!oldpwd)
-			env_addback(e->head, env_new())
-	}
+	// else
+	// {
+	// 	if (!oldpwd)
+	// 		// env_addback(e->head, env_new());
+	// }
 }
 // void	update_var(t_env_info *e, char *pwd)
 // {
