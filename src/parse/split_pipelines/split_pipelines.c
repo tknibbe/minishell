@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:34:27 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/11 14:56:26 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/15 13:36:27 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	split_pipelines(char *input, t_list **list)
 		else
 			end++;
 	}
+	free(data->input);
 	free(data->token);
 	free(data);
 	return (EXIT_FAILURE);
