@@ -161,7 +161,7 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 		return (WEXITSTATUS(e->last_exit_status));
 	else if (WIFSIGNALED(e->last_exit_status))
 		return (128 + WTERMSIG(e->last_exit_status));
-	return (EXIT_FAILURE);;
+	return (EXIT_FAILURE);
 }
 
 int	exec_single_cmd(t_exec *exec, t_env_info *e)
