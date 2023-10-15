@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/09/09 14:11:37 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/11 15:20:34 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,16 @@ void	tokenize(t_list *list)
 	if (!list->token)
 		ft_exit("Malloc error\n", errno);
 	set_token(list, list->input);
+	
 }
 
 int	is_rdr_pipe_amp(char *c, int i)
 {
 	if (c[i] == '|' || c[i] == '<' || c[i] == '>')
-		return (1);
+		return (EXIT_FAILURE);
 	if (c[i] == '&' && c[i + 1] == '&')
-		return (1);
-	return (0);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 static int	is_closed_quote(char *input, int *end_quote, int i)
@@ -42,7 +43,7 @@ static int	is_closed_quote(char *input, int *end_quote, int i)
 	char	quote;
 
 	if (input[i] != '"' && input[i] != '\'')
-		return (0);
+		return (EXIT_SUCCESS);
 	*end_quote = i + 1;
 	quote = input[i];
 	i++;
@@ -50,11 +51,11 @@ static int	is_closed_quote(char *input, int *end_quote, int i)
 	{
 		*end_quote += 1;
 		if (input[i] == quote)
-			return (1);
+			return (EXIT_FAILURE);
 		i++;
 	}
 	*end_quote = 0;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static void	norm_bs(t_list *list, char *input, int *i)
@@ -71,7 +72,7 @@ static void	norm_bs(t_list *list, char *input, int *i)
 	}
 	else
 	{
-		if (!ft_whitespace(input[*i]))
+		if (!ft_whitespace(input[*i]) && input[*i] != '\'' && input[*i] != '"')
 			list->token[*i] = WORD;
 		else
 			list->token[*i] = BLANK;

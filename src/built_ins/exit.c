@@ -10,7 +10,8 @@ int ms_exit(char **cmd)
 	int	i;
 	int	check;
 
-	write(2, "exit\n", 5);
+	if (isatty(STDIN_FILENO))
+		write(1, "exit\n", 5);
 	if (!cmd[1])
 		exit(0);
 	check = 0;
@@ -26,6 +27,9 @@ int ms_exit(char **cmd)
 		}
 		i++;
 	}
+	//  we can bypass check variable and just break when ms_isnum returns false;
+	//	then instead of if (check), we can use if (cmd[1][i]);
+	//	also the rest of the builtins will free_dp(cmd);
 	if (check)
 		ft_minishell_error("exit()", cmd[1], "numeric argument required", 2);
 	exit(ft_atoi(cmd[1]));

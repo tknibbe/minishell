@@ -67,7 +67,7 @@ char	*get_env(char *key, t_env_info *e)
 			i++;
 		if (!ft_isname(head->key[i]) && !ft_isname(key[i]))
 		{
-			value = ft_strdup(head->value);
+			value = ft_strdup(head->value);	//TODO: leaks on input: [echo $USER && exit]
 			if (!value)
 				ft_exit("Malloc error\n", errno);
 			return (value);

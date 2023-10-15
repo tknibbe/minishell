@@ -1,30 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_main.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/05 14:21:38 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/10/15 13:29:55 by tknibbe          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <minishell.h>
 
-t_list	*parse_input(char *input)
+static int	split_pipe_and_parse(t_list **list, t_env_info *env)
 {
-	t_list	*list;
 	t_list	*temp;
 
-	if (!input[0]) //if we go into a subshell and theres nothing in it
-		return (NULL);
-	list = t_listnew();
-	list->input = ft_strtrim(input, " ");
-	tokenize(list);
-	//printf("input is : [%s]\n", input);
-	//print_tokens(list, ft_strlen(input));
-	if (check_syntax(list))
-		return (NULL);
-	if (split_pipelines(input, &list))
+	if (split_pipelines((*list)->input, list))
 	{
-		temp = list;
+		temp = *list;
 		while (temp)
 		{
-			parse(temp->input, temp);
+			if (parse(temp->input, temp, env))
+			{
+				free_list((*list));
+				return (EXIT_FAILURE);
+			}
 			temp = temp->next;
 		}
 	}
 	else
-		parse(input, list);
+	{
+		if (parse((*list)->input, (*list), env))
+		{
+			free_list((*list));
+			return (EXIT_FAILURE);
+		}
+	}
+	return (EXIT_SUCCESS);
+}
+//TODO: fix only a quote as input
+
+t_list	*parse_input(char *input, t_env_info *env)
+{
+	t_list	*list;
+
+	if (!input[0])
+	{
+		env->last_exit_status = 1;
+		return (NULL);
+	}
+	list = t_listnew();
+	list->input = ft_strtrim(input, " "); // TODO: leaks if &&/|| in cmd
+	if (!list->input)
+		ft_minishell_error("ft_strtrim()", "failed", strerror(errno), errno);
+	tokenize(list);
+	if (check_syntax(list, env))
+		return (NULL);
+	if (split_pipe_and_parse(&list, env))
+		return (NULL);
 	return (list);
 }

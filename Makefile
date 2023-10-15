@@ -19,17 +19,17 @@ SRC			=	cris_main.c \
 				utils/free_structs.c \
 				parse/split_pipelines/split_pipelines.c \
 				parse/split_pipelines/list_utils.c \
-				parse/parse_main.c \
 				parse/tokenize/token.c \
 				parse/tokenize/token_utils.c \
 				parse/tokenize/subshell.c \
 				parse/syntax/syntax.c \
 				parse/syntax/syntax_utils.c \
 				parse/syntax/syntax_utils2.c \
-				parse/parse/make_list.c \
-				parse/parse/list_utils.c \
-				parse/parse/list_utils2.c \
-				parse/parse/heredoc.c \
+				parse/parse_main.c \
+				parse/make_structs/make_list.c \
+				parse/make_structs/list_utils.c \
+				parse/make_structs/list_utils2.c \
+				parse/make_structs/heredoc.c \
 				parse/expansion/expander_wildcard.c \
 				parse/expansion/expander.c \
 				parse/expansion/expander_wordsplit.c \
@@ -51,7 +51,7 @@ all : $(MINISHELL)
 
 $(MINISHELL) : $(OBJ_F)
 	@make -C lib
-	$(CC)  $(CFLAGS) $(READLINE) $^ -o $@ $(LIBFT) #-fsanitize=address
+	$(CC)  $(CFLAGS) $(READLINE) $^ -o $@ $(LIBFT) -fsanitize=address
 
 obj/%.o : src/%.c
 	@mkdir -p obj
@@ -59,7 +59,7 @@ obj/%.o : src/%.c
 	@mkdir -p obj/built_ins
 	@mkdir -p obj/parse/split_pipelines
 	@mkdir -p obj/parse/tokenize
-	@mkdir -p obj/parse/parse
+	@mkdir -p obj/parse/make_structs
 	@mkdir -p obj/parse/expansion
 	@mkdir -p obj/parse/syntax
 	@mkdir -p obj/execution

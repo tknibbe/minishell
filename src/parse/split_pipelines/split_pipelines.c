@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:34:27 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/09/09 14:25:26 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/15 13:36:27 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	and_or_instr(char *input, int *token, int i)
 		i++;
 	}
 	if (!input[i])
-		return (0);
+		return (EXIT_SUCCESS);
 	return (ft_strlen(input) - 1);
 }
 
@@ -32,7 +32,7 @@ int	*copy_token(int *token, int start, int end)
 
 	new_token = malloc(sizeof(int) * end - start);
 	if (!new_token)
-		ft_exit("Malloc error", errno);
+		ft_minishell_error("malloc()", "failed", strerror(errno), errno);
 	i = 0;
 	while (start + i < end)
 	{
@@ -50,6 +50,8 @@ static t_list	*make_new_node(t_list *data, char *input, int *end, int *start)
 		*end += 1;
 	node = t_listnew();
 	node->input = ft_substr(input, *start, (*end) - (*start));
+	if (!node->input)
+		ft_minishell_error("malloc()", "failed", strerror(errno), errno);
 	node->token = copy_token(data->token, *start, *end);
 	node->and_or = data->token[*end];
 	if (input[*end + 2])
@@ -68,7 +70,7 @@ int	split_pipelines(char *input, t_list **list)
 	data = *list;
 	end = and_or_instr(input, data->token, 0);
 	if (end == 0)
-		return (0);
+		return (EXIT_SUCCESS);
 	*list = NULL;
 	while (input[end])
 	{
@@ -78,7 +80,8 @@ int	split_pipelines(char *input, t_list **list)
 		else
 			end++;
 	}
+	free(data->input);
 	free(data->token);
 	free(data);
-	return (1);
+	return (EXIT_FAILURE);
 }

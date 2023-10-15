@@ -9,6 +9,7 @@ typedef struct s_rdr		t_rdr;
 typedef struct s_minishell	t_ally;
 typedef struct s_str		t_str;
 typedef struct s_list		t_list;
+typedef struct s_env_info	t_env_info;
 
 typedef struct s_rdr
 {
@@ -30,7 +31,6 @@ typedef struct s_list
 	int				*token;
 	char			*input;
 	int				and_or;
-	int				exit_code;
 	t_exec			*exec;
 	struct s_list	*next;
 }					t_list;
@@ -65,7 +65,7 @@ enum	e_token
 };
 
 //PARSE.C
-t_list	*parse_input(char *input);
+t_list	*parse_input(char *input, t_env_info *env);
 
 //TOKEN.C
 void	tokenize(t_list *list);
@@ -74,12 +74,12 @@ void	set_rdr_pipe_amp(t_list *list, char *input, int *i);
 void	left(t_list *list, char *input, int *i);
 void	right(t_list *list, char *input, int *i);
 //MAKE_LIST.c
-void	parse(char *input, t_list *list);
+int		parse(char *input, t_list *list, t_env_info *env);
 int		ft_whitespace(char c);
 
 //SYNTAX.C
 //int		check_syntax(t_list *list, char **input);
-int		check_syntax(t_list *list);
+int		check_syntax(t_list *list, t_env_info *env);
 
 //LIST_utils.C
 void	exec_lstadd_back(t_exec **lst, t_exec *new);
@@ -93,7 +93,7 @@ void	t_str_lstadd_back(t_str **lst, t_str *new);
 t_str	*t_str_lstnew(char *str);
 
 //HEREDOC.C
-void	add_heredoc(char *input, t_list *list, int *i);
+int		add_heredoc(char *input, t_list *list, int *i, t_env_info *env);
 
 //SPLIT_PIPELINES.C
 int		split_pipelines(char *input, t_list **list);
@@ -106,11 +106,12 @@ t_list	*t_listnew(void);
 void	set_subshell(t_list *list, char *input);
 int		sub_count(char c, int want);
 int		is_subshell(int token);
-void	add_subshell(char *input, t_list *list, t_exec *exec, int *i);
+t_list	*add_subshell(char *input, t_list *list, int *i, t_env_info *env);
 
-//SYNTAX.C
+//SYNTAX
 int		is_redirect(int c);
 int		is_control_op(int token);
+int		no_valid_token(t_list *list);
 int		ft_syntax_error(char c, int token);
 int		op_amount_check(t_list *list, int i);
 int		start_check(t_list *list);

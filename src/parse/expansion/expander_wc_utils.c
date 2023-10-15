@@ -9,10 +9,10 @@ int	check_for_wildcard(char *s)
 	while (s[i])
 	{
 		if (s[i] == -1)
-			return (1);
+			return (EXIT_FAILURE);
 		i++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	unclosed_quote(int state)
@@ -20,7 +20,7 @@ int	unclosed_quote(int state)
 	write(2, "Warning: unclosed quote ( ", 26);
 	write(2, &state, 1);
 	write(2, " ) was ignored\n", 16);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	skip_quoted_state(char *s, int i, int quote)
@@ -28,7 +28,7 @@ int	skip_quoted_state(char *s, int i, int quote)
 	while (s[i] && s[i] != quote)
 		i++;
 	if (!s[i])
-		return (1);
+		return (EXIT_FAILURE);
 	return (i + 1);
 }
 

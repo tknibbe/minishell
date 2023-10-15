@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 14:46:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/09/16 13:41:34 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/05 16:45:04 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	sub_count(char c, int option)
 	{
 		amount_open = 0;
 		amount_close = 0;
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	if (amount_open < amount_close)
 		return (amount_open);
@@ -73,11 +73,12 @@ void	set_subshell(t_list *list, char *input)
 	sub_count(' ', RESET);
 }
 
-void	add_subshell(char *input, t_list *list, t_exec *exec, int *i)
+t_list	*add_subshell(char *input, t_list *list, int *i, t_env_info *env)
 {
 	int		start;
 	char	*str;
 	int		shdepth;
+	t_list	*temp;
 
 	start = *i + 1;
 	shdepth = 1;
@@ -91,5 +92,11 @@ void	add_subshell(char *input, t_list *list, t_exec *exec, int *i)
 		*i += 1;
 	}
 	str = ft_substr(input, start, *i - start - 1);
-	t_listadd_back(&exec->subshell, parse_input(str));
+	if (!str)
+		ft_minishell_error("malloc()", "failed", strerror(errno), errno);
+	temp = parse_input(str, env);
+	free (str);
+	if (!temp)
+		return (NULL);
+	return (temp);
 }
