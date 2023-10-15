@@ -39,15 +39,6 @@ void	run_single_command(t_ally *all)
 			executor(all->list, all->env);
 	}
 	free(string);
-	// while (all->list)
-	// {
-	// 	if (all->list->exit_code != 0)
-	// 		exit(all->list->exit_code);
-	// 	printf("exit code = %d\n", all->list->exit_code);
-	// 	all->list = all->list->next;
-	// }
-	// system("leaks -q minishell");
-	exit (all->env->last_exit_status);
 }
 
 void	run_shell(t_ally *all)
@@ -62,12 +53,7 @@ void	run_shell(t_ally *all)
 	if (strncmp(string, "", 1))
 	{
 		add_history(string);
-		// if (ft_strncmp(string, "exit", 4) == 0)
-		// 	exit(0);
-		// tymon(all, string);
 		all->list = parse_input(string, all->env);
-		// print_whole_list(all->list);
-		// printf("all->list = %p\n", all->list);
 		if (all->list)
 			executor(all->list, all->env);
 	}
@@ -83,7 +69,12 @@ int	main(int argc, char *argv[], char *envp[])
 	argv = NULL;
 	all = minishell_init(envp);
 	if (!isatty(STDIN_FILENO))
+	{
 		run_single_command(all);
+		free_list(all->list);
+		//free_environment(); // TODO:
+		return (all->env->last_exit_status);
+	}
 	while (1)
 		run_shell(all);
 }

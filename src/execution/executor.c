@@ -171,7 +171,7 @@ int	exec_single_cmd(t_exec *exec, t_env_info *e)
 	char		**cmd;
 	t_process	proc;
 
-	cmd = full_expansion(exec->cmd, e); //TODO: cmd is leaking here. needs to be fixed pls/ fixed on line 187. check if correct pls @crisss
+	cmd = full_expansion(exec->cmd, e); //TODO: cmd is leaking here. needs to be fixed pls/ //fixed on line 187. check if correct pls @crisss
 	b = 0;
 	if (cmd)
 		b = builtin(*cmd);
@@ -184,8 +184,8 @@ int	exec_single_cmd(t_exec *exec, t_env_info *e)
 	init_proc(&proc, 1);
 	proc.cmd = cmd;
 	waitpid(fork_and_execute(exec, e, &proc), &e->last_exit_status, 0);
-	if (cmd)
-		free_dp(cmd); //see above comment pls @criss
+	// if (proc.cmd)
+	// 	free_dp(proc.cmd); //see above comment pls @criss
 	if (WIFEXITED(e->last_exit_status))
 		return (WEXITSTATUS(e->last_exit_status));
 	else if (WIFSIGNALED(e->last_exit_status))
