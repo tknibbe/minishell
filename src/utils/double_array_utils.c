@@ -28,6 +28,8 @@ void	free_dp(char **dp)
 	int	i;
 
 	i = 0;
+	if (!dp)
+		return ;
 	while (dp[i])
 	{
 		free(dp[i]);

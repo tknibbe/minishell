@@ -1,18 +1,6 @@
 #include <built_ins.h>
 #include <minishell.h>
 
-void	free_env(char **env)
-{
-	int	i;
-
-	i = 0;
-	if (!env)
-		return ;
-	while (env[i])
-		free(env[i++]);
-	free(env);
-}
-
 char	*ft_envjoin(char *s1, char *s2)
 {
 	char	*result;
@@ -86,15 +74,19 @@ void	get_environment_for_exec(t_env_info *e)
 	if (!(e->has_changed))
 		return ;
 	e->has_changed = 0;
-	i = 0;
-	free_env(e->env);
 	tmp = e->head;
 	new_env = malloc((e->count + 1) * sizeof(char *));
 	if (!new_env)
 		ft_exit("Malloc error\n", errno);
+	i = 0;
 	while (tmp)
 	{
 		new_env[i] = ft_envjoin(tmp->key, tmp->value);
 		tmp = tmp->next;
+		i++;
 	}
+	if (e->env)
+		free_dp(e->env);
+	e->env = new_env;
+	// system("leaks ./minishell");
 }

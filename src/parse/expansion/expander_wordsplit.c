@@ -33,16 +33,19 @@ static t_str	*get_insert_lst(char *var, t_env_info *e, char *s)
 {
 	t_exp	x;
 	int		i;
+	t_str	*ret;
 
 	i = 0;
+	ret = NULL;
 	initialize_xp(&x, e);
 	if (s)
 		expand_string(s, &x);
 	if (var)
-		return (split_var(var, x.result));
+		ret = split_var(var, x.result);
 	else if (x.result)
-		return (tstr_new(x.result));
-	return (NULL);
+		ret = tstr_new(x.result);
+	free(var);
+	return (ret);
 }
 
 void	insert_list(t_str **start, t_str *list)

@@ -103,6 +103,7 @@ int	redirect(t_rdr *r, t_env_info *e, int in, int out)
 				open_file_and_dup(*file, O_WRONLY | O_CREAT | O_TRUNC, STDOUT_FILENO, 420);
 			else if (r->type == APPEND)
 				open_file_and_dup(*file,O_WRONLY | O_CREAT | O_APPEND, STDOUT_FILENO, 420);
+			free_dp(file);
 		}
 		r = r->next;
 	}

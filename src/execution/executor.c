@@ -3,15 +3,13 @@
 #include <built_ins.h>
 #include <parsing.h>
 
-t_list	*next_pipe_line(t_list *current)
+t_list	*next_pipe_line(t_list *current, int ex)
 {
 	t_list	*ret;
 
 	if (!current->next)
 		return (free_list(current), NULL);
-	// else if ((!current->exit_code && current->and_or == AND) ||\		TODO: !dit was de else if, exit code is verwijderd uit t_list dus jij (cris) moet even kijken of dit zo nog klopt <3
-	// 		 (current->exit_code && current->and_or == OR))
-	else if (current->and_or == AND || current->and_or == OR)
+	else if ((current->and_or == AND && !ex) || (current->and_or == OR && ex))
 	{
 		ret = current->next;
 		current->next = NULL;
@@ -184,8 +182,8 @@ int	exec_single_cmd(t_exec *exec, t_env_info *e)
 	init_proc(&proc, 1);
 	proc.cmd = cmd;
 	waitpid(fork_and_execute(exec, e, &proc), &e->last_exit_status, 0);
-	// if (proc.cmd)
-	// 	free_dp(proc.cmd); //see above comment pls @criss
+	free_dp(cmd);
+	free(proc.p);
 	if (WIFEXITED(e->last_exit_status))
 		return (WEXITSTATUS(e->last_exit_status));
 	else if (WIFSIGNALED(e->last_exit_status))
@@ -197,11 +195,10 @@ void	executor(t_list *pipe_line, t_env_info *e)
 {
 	while (pipe_line)
 	{
-		// printf("executor %p\n", pipe_line->exec);
 		if (!pipe_line->exec->next)
 			e->last_exit_status = exec_single_cmd(pipe_line->exec, e);
 		else
 			e->last_exit_status = exec_pipe_line(pipe_line->exec, e);
-		pipe_line = next_pipe_line(pipe_line);
+		pipe_line = next_pipe_line(pipe_line, e->last_exit_status);
 	}
 }

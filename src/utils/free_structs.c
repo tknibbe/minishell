@@ -9,7 +9,8 @@ void	free_str(t_str *str)
 	{
 		to_free = str;
 		str = str->next;
-		free(to_free->str);
+		if (to_free->str)
+			free(to_free->str);
 		free(to_free);
 	}
 }

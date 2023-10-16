@@ -41,8 +41,9 @@ char	*append_cmd_path(t_env_info *env, char *cmd)
 			free(cmd);
 			free_dp(path);
 			free(cmd_path);
-			return full_path;
+			return (full_path);
 		}
+		free(full_path);
 		i++;
 	}
 	ft_minishell_error(cmd, NULL, "command not found", 127);
