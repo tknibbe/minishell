@@ -54,12 +54,12 @@ void	expander(int state, t_exp *x, char *input)
 	i = identify_substr(x, state, input, &s);
 	if ((state && state == input[i]) || !state)
 		x->result = ft_join(x->result, s); //TODO: leaks! with input: echo "echo HEY > cat" | ./minishell
+	free(s);
 	if (state && state == input[i])
 		i++;
 	else if (state && !input[i])
 		i = unclosed_quote(state);
 	input += i;
-	free(s);
 	if (*input == '\'')
 		return (expander('\'', x, input));
 	else if (*input == '"')

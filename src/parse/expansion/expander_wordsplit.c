@@ -76,6 +76,8 @@ void	split_word(t_str *start, t_env_info *e)
 	char	*sub;
 	t_str	*splitted;
 
+	if (!*s)
+		return ;
 	s = start->str;
 	start->str = NULL;
 	i = 0;

@@ -16,7 +16,7 @@ char	*ft_join(char *s1, char *s2)
 		len2 = ft_strlen(s2);
 	s = malloc(len1 + len2 + 1);
 	if (!s)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, "malloc failed", errno);
 	i = 0;
 	while (s1 && s1[i])
 	{
