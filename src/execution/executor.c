@@ -148,6 +148,7 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 			proc.p = NULL;
 		}
 		pid = fork_and_execute(exec, e, &proc);
+		free_dp(proc.cmd);
 		exec = exec->next;
 	}
 	if (proc.fd)

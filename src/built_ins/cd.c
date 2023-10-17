@@ -5,7 +5,7 @@
 // old pwd becomes pwd else
 // owd becomes pwd
 
-void	update_var(t_env_info *e, char *new)
+int	update_var(t_env_info *e, char *new)
 {
 	t_env	*curr;
 	t_env	*pwd;
@@ -24,12 +24,23 @@ void	update_var(t_env_info *e, char *new)
 			break ;
 		curr = curr->next;
 	}
-	if (oldpwd && pwd)
+	if (oldpwd)
 	{
 		free(oldpwd->value);
-		oldpwd->value = pwd->value;
+		if (pwd)
+			oldpwd->value = pwd->value;
+		else
+			oldpwd->value = NULL; //  maybe no null pointers as key 
+	}
+	if (pwd)
+	{
+		if (!oldpwd)
+			free(pwd->value);
 		pwd->value = new;
 	}
+	else
+		return (1);
+	return (0);
 }
 
 static int	use_env(t_env_info *e, char *var, int fd)
@@ -39,8 +50,12 @@ static int	use_env(t_env_info *e, char *var, int fd)
 	val = get_env(var, e);
 	if (chdir(val) < 0)
 		return (ft_minishell_error("cd", var, "not set", 0));
-	update_var(e, var);
-	if (!ft_strncmp("OLDPWD", var, 7))
+	if (update_var(e, var))
+	{
+		free(var);
+		var = NULL;
+	}
+	if (var && !ft_strncmp("OLDPWD", var, 7))
 		return (pwd(NULL, fd));
 	return (0);
 }
