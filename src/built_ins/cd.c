@@ -30,42 +30,7 @@ void	update_var(t_env_info *e, char *new)
 		oldpwd->value = pwd->value;
 		pwd->value = new;
 	}
-	// else
-	// {
-	// 	if (!oldpwd)
-	// 		// env_addback(e->head, env_new());
-	// }
 }
-// void	update_var(t_env_info *e, char *pwd)
-// {
-// 	t_env	*env;
-// 	char	*old;
-// 	t_env	*oldpwd;
-
-// 	env = e->head;
-// 	old = NULL;
-// 	oldpwd = NULL;
-// 	while (env)
-// 	{
-// 		if (!ft_strncmp("PWD", env->key, 4))
-// 		{
-// 			old = env->value;
-// 			env->value = getcwd(NULL, 0);
-// 			if (!env->value)
-// 				ft_minishell_error("getcwd()", strerror(errno), NULL, errno);
-// 		}
-// 		else if (!ft_strncmp("OLDPWD", env->key, 7))
-// 			oldpwd = env;
-// 		if (old && oldpwd)
-// 			break ;
-// 		env = env->next;
-// 	}
-// 	if (oldpwd)
-// 	{
-// 		free(oldpwd->value);
-// 		oldpwd->value = old;
-// 	}
-// }
 
 static int	use_env(t_env_info *e, char *var, int fd)
 {

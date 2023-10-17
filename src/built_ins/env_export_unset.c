@@ -23,9 +23,8 @@ int	legit_export_item(char *to_export)
 		i++;
 	if (!to_export[i])
 		return (1);
-	else if (to_export[i] == '=')
-		return (0);
-	else if (to_export[i] == '+' && to_export[i + 1] == '=')
+	else if (to_export[i] == '=' ||\
+			 to_export[i] == '+' && to_export[i + 1] == '=')
 		return (0);
 	return (2);
 }
@@ -49,6 +48,7 @@ int	find_and_unset(t_env **env, char *unset)
 				*env = curr->next;
 			free(curr->key);
 			free(curr->value);
+			free(curr->joined_value);
 			free(curr);
 			return (1);
 		}
@@ -71,6 +71,7 @@ int	find_and_export(t_env *head, char *to_export)
 		{
 			free(head->value);
 			head->value = ft_strdup(&to_export[i + 1]);
+			head->joined_value = ft_envjoin(head->key, head->value);
 			return (1);
 		}
 		else if (!head->key[i] && to_export[i] == '+')

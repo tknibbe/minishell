@@ -67,7 +67,6 @@ char	*get_env(char *key, t_env_info *e)
 
 void	get_environment_for_exec(t_env_info *e)
 {
-	char	**new_env;
 	t_env	*tmp;
 	int		i;
 
@@ -75,18 +74,17 @@ void	get_environment_for_exec(t_env_info *e)
 		return ;
 	e->has_changed = 0;
 	tmp = e->head;
-	new_env = malloc((e->count + 1) * sizeof(char *));
-	if (!new_env)
+	if (e->env)
+		free(e->env);
+	e->env = malloc((e->count + 1) * sizeof(char *));
+	if (!e->env)
 		ft_exit("Malloc error\n", errno);
 	i = 0;
 	while (tmp)
 	{
-		new_env[i] = ft_envjoin(tmp->key, tmp->value);
+		e->env[i] = tmp->joined_value;
 		tmp = tmp->next;
 		i++;
 	}
-	if (e->env)
-		free_dp(e->env);
-	e->env = new_env;
-	// system("leaks ./minishell");
+	e->env[i] = NULL;
 }

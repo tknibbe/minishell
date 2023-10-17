@@ -4,6 +4,7 @@
 t_env_info	*env_init(char **env)
 {
 	t_env		*head;
+	t_env		*tmp;
 	t_env_info	*info;
 	int			i;
 
@@ -38,6 +39,9 @@ t_env	*env_new(char *s)
 		ft_exit("Error: malloc failure\n", errno);
 	new->value = ft_strdup(s + i + 1);
 	if (!new->value)
+		ft_exit("Error: malloc failure\n", errno);
+	new->joined_value = ft_strdup(s);
+	if (!new->joined_value)
 		ft_exit("Error: malloc failure\n", errno);
 	new->next = NULL;
 	return (new);

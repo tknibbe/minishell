@@ -89,7 +89,7 @@ void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 			exit (do_builtin(proc->cmd, e, proc->builtin, STDOUT_FILENO));
 		get_environment_for_exec(e);
 		*proc->cmd = append_cmd_path(e, *proc->cmd);
-		if (execve(*proc->cmd, proc->cmd, e->env) == -1)
+		if (execve(*(proc->cmd), proc->cmd, e->env) == -1)
 			ft_minishell_error("execve()", *proc->cmd, strerror(errno), errno);
 	}
 	else if (exec->subshell)
