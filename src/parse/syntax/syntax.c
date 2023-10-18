@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/18 12:24:24 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/18 15:45:21 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,17 @@ static int	syntax_loop(t_list *list, int *i, t_env_info *env)
 	return (EXIT_SUCCESS);
 }
 
+/*This function checks the syntax of a given shell command. It updates the exit status in the environment based on whether the syntax is valid or not.
+
+Parameters:
+
+    t_list *list: List of tokens representing a shell command.
+    t_env_info *env: Shell environment information.
+
+Return Value:
+
+    EXIT_SUCCESS (0) for valid syntax.
+    EXIT_FAILURE (1) for syntax errors with an updated exit status.*/
 int	check_syntax(t_list *list, t_env_info *env)
 {
 	int	i;

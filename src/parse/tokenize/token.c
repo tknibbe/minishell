@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/11 15:20:34 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/18 16:02:28 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 
 static void	set_token(t_list *list, char *input);
 
-/*sets tokens according to the ENUMs defined in the header. 
-returns 0 on succes.*/
+/*Description:
+tokenize is a function used to analyze and tokenize an input string, populating a t_list structure with tokens that represent different parts of the input. It also handles the detection of subshells and their tokens within the input.
+
+Parameters:
+
+    list (t_list*): A pointer to a t_list structure that stores the input and its tokens.*/
 void	tokenize(t_list *list)
 {
 	int	len;
@@ -26,7 +30,6 @@ void	tokenize(t_list *list)
 	if (!list->token)
 		ft_exit("Malloc error\n", errno);
 	set_token(list, list->input);
-	
 }
 
 int	is_rdr_pipe_amp(char *c, int i)
