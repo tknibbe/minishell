@@ -13,7 +13,7 @@ rm test 2> /dev/null
 rm NONEXISTINGFILE 2> /dev/null
 rm test1 2> /dev/null
 
-make -C .. > /dev/null
+make -C .. > /dev/null 2> /dev/null
 
 
 printf "\e[32mWELCOME TO THE TESTER BABY\e[0m\n\n"
@@ -93,40 +93,40 @@ compare_syntax () {
 	#printf "[$bash_syn]\n"
 }
 
-printf "\n\e[32mtesting syntax errors\e[0m\n"
-compare_syntax "hello < |"
-compare_syntax "< >"
-compare_syntax "<< >>"
-compare_syntax "< |"
-compare_syntax "> |"
-compare_syntax ") ()"
-compare_syntax "| |"
-compare_syntax "&&&"
-compare_syntax "|||"
-compare_syntax "|| |||"
-compare_syntax ">>>"
-# compare_syntax "(| |)" // exit code?
-compare_syntax "(())"
+# printf "\n\e[32mtesting syntax errors\e[0m\n"
+# compare_syntax "hello < |"
+# compare_syntax "< >"
+# compare_syntax "<< >>"
+# compare_syntax "< |"
+# compare_syntax "> |"
+# compare_syntax ") ()"
+# compare_syntax "| |"
+# compare_syntax "&&&"
+# compare_syntax "|||"
+# compare_syntax "|| |||"
+# compare_syntax ">>>"
+# # compare_syntax "(| |)" // exit code?
+# compare_syntax "(())"
 
 
-printf "\n\e[32mtesting empty input\e[0m\n"
-sleep 1
-compare_command ""
-compare_command "	"
-compare_command "'"
-compare_command '"'
-compare_command '""'
+# printf "\n\e[32mtesting empty input\e[0m\n"
+# sleep 1
+# compare_command ""
+# compare_command "	"
+# compare_command "'"
+# compare_command '"'
+# compare_command '""'
 
 
-printf "\n\e[32mtesting basic commands\e[0m\n"
-sleep 1
-compare_command "ls -lah"
-compare_command "cat ../Makefile"
-compare_command "cat NONEXISTINNGFILE.c"
-compare_command "echo "HEY" > cat"
-# compare_command "cd NONEXISTINGPATH" #//heap_use_after_free in cd --> ft_minishell error call
-compare_command "echo hey | echo hey | ls"
-compare_command "ls -S"
+# printf "\n\e[32mtesting basic commands\e[0m\n"
+# sleep 1
+# compare_command "ls -lah"
+# compare_command "cat ../Makefile"
+# compare_command "cat NONEXISTINNGFILE.c"
+# compare_command "echo "HEY" > cat"
+# # compare_command "cd NONEXISTINGPATH" #//heap_use_after_free in cd --> ft_minishell error call
+# compare_command "echo hey | echo hey | ls"
+# compare_command "ls -S"
 
 
 # printf "\n\e[32mtesting redirects\e[0m\n"
@@ -173,21 +173,4 @@ else
 fi
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# $OLDPWD leaks

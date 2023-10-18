@@ -23,18 +23,13 @@ void	run_single_command(t_ally *all)
 {
 	char *string;
 
-	// set_signals_inter();
-	// printf("running single command\n");
 	string = get_next_line(STDIN_FILENO);
-	// set_signals_non_inter();
-	// printf("str = %s\n", string);
 	if (!string)
 		exit(0);
 	if (strncmp(string, "", 1))
 	{
 		add_history(string);
 		all->list = parse_input(string, all->env);
-		// print_whole_list(all->list);
 		if (all->list)
 			executor(all->list, all->env);
 	}
@@ -71,8 +66,9 @@ int	main(int argc, char *argv[], char *envp[])
 	if (!isatty(STDIN_FILENO))
 	{
 		run_single_command(all);
-		free_list(all->list);
+		// free_list(all->list);
 		//free_environment(); // TODO:
+		exit(all->env->last_exit_status);
 		return (all->env->last_exit_status);
 	}
 	while (1)

@@ -140,6 +140,7 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 	while (exec)
 	{
 		proc.cmd = full_expansion(exec->cmd, e);
+		// if geen command return 
 		if (exec->next)
 			set_pipe(proc.p);
 		else

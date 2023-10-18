@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/11 15:16:02 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/18 12:24:24 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,12 @@ int	check_syntax(t_list *list, t_env_info *env)
 
 	i = 0;
 	prev_token = 0;
-	if (no_valid_token(list) || start_check(list))
+	if (no_valid_token(list))
+	{
+		env->last_exit_status = 0;
+		return (EXIT_FAILURE);
+	}
+	if (start_check(list))
 	{
 		env->last_exit_status = 2;
 		return (EXIT_FAILURE);
