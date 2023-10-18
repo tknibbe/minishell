@@ -109,13 +109,13 @@ compare_syntax () {
 # compare_syntax "(())"
 
 
-# printf "\n\e[32mtesting empty input\e[0m\n"
-# sleep 1
-# compare_command ""
-# compare_command "	"
-# compare_command "'"
-# compare_command '"'
-# compare_command '""'
+printf "\n\e[32mtesting empty input\e[0m\n"
+sleep 1
+compare_command ""
+compare_command "	"
+compare_command "'"
+compare_command '"'
+compare_command '""'
 
 
 # printf "\n\e[32mtesting basic commands\e[0m\n"

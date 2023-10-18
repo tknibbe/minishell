@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/05 14:20:26 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/18 12:32:47 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ static void	heredoc(t_heredoc *doc)
 		if (!ft_strncmp(doc->delimiter, doc->line, ft_strlen(doc->delimiter)))
 			break ;
 		write(doc->pipefd[1], doc->line, ft_strlen(doc->line));
+		free(doc->line);
 	}
 	close(doc->pipefd[1]);
-	free(doc->line);
 	exit(0);
 }
 
