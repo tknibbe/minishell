@@ -117,7 +117,7 @@ int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
 	return (pid);
 }
 
-void	init_proc(t_process *proc, int peepee)
+void	init_proc(t_process *proc, int peepee) //lol
 {
 	proc->cmd = NULL;
 	proc->fd = 0;
