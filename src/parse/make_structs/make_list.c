@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/11 14:49:31 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/18 12:38:41 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,7 @@ int	new_rdr_node(char *input, t_list *list, int *i, t_env_info *env)
 	cur_node = exec_lstlast(list->exec);
 	type = token[*i];
 	if (type == HEREDOC)
-	{
-		add_heredoc(input, list, i, env);
-		return (EXIT_SUCCESS);
-	}
+		return (add_heredoc(input, list, i, env));
 	rdr_node = rdr_lstnew(NULL, type, 0);
 	while ((token[*i] == BLANK || is_redirect(token[*i])) && input[*i])
 		*i += 1;
