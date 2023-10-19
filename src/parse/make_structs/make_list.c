@@ -92,7 +92,7 @@ void	new_cmd_node(char *input, int *token, t_exec *node, int *i)
 			*i += 1;
 		str = ft_substr(input, start, *i - start);
 		if (!str)
-			ft_exit("Malloc error\n", errno);
+			ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 		t_str_lstadd_back(&node->cmd, t_str_lstnew(str));
 		while (token[*i] == BLANK && input[*i])
 			*i += 1;

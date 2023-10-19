@@ -2,10 +2,10 @@
 #include <minishell.h>
 #include <readline/history.h>
 
-int	update_env(t_env_info *e, t_env *edit, char *s)
-{
+// int	update_env(t_env_info *e, t_env *edit, char *s)
+// {
 	
-}
+// }
 
 void	update_var(t_env_info *e)
 {
