@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/19 14:53:02 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/19 15:16:02 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ static void	norm_bs(t_list *list, char *input, int *i)
 			&& input[*i] != '(' && input[*i] != ')')
 			list->token[*i] = WORD;
 		else
+		{
 			list->token[*i] = BLANK;
+		}
 		*i += 1;
 	}
 }
