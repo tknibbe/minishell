@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/18 12:38:41 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/18 15:58:01 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,17 @@ static int	select_struct(t_list *list, char *input, int *i, t_env_info *env)
 	return (EXIT_SUCCESS);
 }
 
+/***Description:**
+`parse` is a function responsible for parsing an input string into a series of command structures. It considers redirection, subshells, and individual commands separated by pipe symbols.
+
+**Parameters:**
+- `input` (char*): The input string to be parsed.
+- `list` (t_list*): A data structure to hold the parsed command structures.
+- `env` (t_env_info*): Environment information.
+
+**Return Value:**
+- `EXIT_SUCCESS` on successful parsing.
+- `EXIT_FAILURE` if an error occurs during parsing.*/
 int	parse(char *input, t_list *list, t_env_info *env)
 {
 	int		i;

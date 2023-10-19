@@ -64,10 +64,12 @@ enum	e_token
 	OR,
 };
 
-//PARSE.C
+//PARSE_MAIN.C
+
 t_list	*parse_input(char *input, t_env_info *env);
 
 //TOKEN.C
+
 void	tokenize(t_list *list);
 //TOKEN_UTILS.C
 void	set_rdr_pipe_amp(t_list *list, char *input, int *i);
@@ -78,7 +80,7 @@ int		parse(char *input, t_list *list, t_env_info *env);
 int		ft_whitespace(char c);
 
 //SYNTAX.C
-//int		check_syntax(t_list *list, char **input);
+
 int		check_syntax(t_list *list, t_env_info *env);
 
 //LIST_utils.C
@@ -96,6 +98,7 @@ t_str	*t_str_lstnew(char *str);
 int		add_heredoc(char *input, t_list *list, int *i, t_env_info *env);
 
 //SPLIT_PIPELINES.C
+
 int		split_pipelines(char *input, t_list **list);
 
 //SPLIT_UTILS

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:34:27 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/15 13:36:27 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/18 16:03:10 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,19 @@ static t_list	*make_new_node(t_list *data, char *input, int *end, int *start)
 	return (node);
 }
 
+/*Description:
+split_pipelines is a function responsible for segmenting an input string into separate pipelines and constructing a linked list to represent these pipeline segments.
+It facilitates the execution of multiple commands separated by the AND and OR operators within a custom shell environment.
+
+Parameters:
+
+    input (char*): The input string to be segmented into pipelines.
+    list (t_list**): A pointer to a pointer to a t_list structure, which will hold the segmented pipeline data.
+
+Return Value:
+
+    EXIT_SUCCESS if the input contains no pipelines.
+    EXIT_FAILURE if any errors occur during the segmentation process.*/
 int	split_pipelines(char *input, t_list **list)
 {
 	t_list	*data;
