@@ -2,8 +2,10 @@
 #include <minishell.h>
 #include <readline/history.h>
 
-// old pwd becomes pwd else
-// owd becomes pwd
+int	update_env(t_env_info *e, t_env *edit, char *s)
+{
+	
+}
 
 void	update_var(t_env_info *e)
 {
@@ -49,36 +51,21 @@ void	update_var(t_env_info *e)
 		free(pwd);
 }
 
-// int	cd(char **cmd, t_env_info *e, int fd)
-// {
-// 	if (!cmd[1])
-// 		return (free_dp(cmd), use_env(e, "HOME", fd));
-// 	else if (!ft_strncmp(cmd[1], "-", 2))
-// 		return (free_dp(cmd), use_env(e, "OLDPWD", fd));
-// 	else if (chdir(cmd[1]) < 0)
-// 	{
-// 		ft_minishell_error("cd", cmd[1], strerror(errno), 0);
-// 		return (free_dp(cmd), 1);
-// 	}
-// 	update_var(e);
-// 	return (free_dp(cmd), 0);
-// }
-
 int	cd(char **cmd, t_env_info *e, int fd)
 {
 	int		ret;
 	char	*nav;
 
-	if (!cmd[1])
+	ret = 0;
+	if (!cmd[1] || !ft_strncmp("-", cmd[1], 2))
 	{
-		nav = get_env("HOME", e);
-		if (!nav)
+		if (!cmd[1])
+			nav = get_env("HOME", e);
+		else
+			nav = get_env("OLDPWD", e);
+		if (!nav && !cmd[1])
 			return (free_dp(cmd), ft_minishell_error("cd", "HOME", "not set", 0));
-	}
-	else if (!ft_strncmp("-", cmd[1], 2))
-	{
-		nav = get_env("OLDPWD", e);
-		if (!nav)
+		else if (!nav)
 			return (free_dp(cmd), ft_minishell_error("cd", "OLDPWD", "not set", 0));
 	}
 	else
@@ -89,11 +76,9 @@ int	cd(char **cmd, t_env_info *e, int fd)
 	}
 	if (chdir(nav) < 0)
 		ret = ft_minishell_error("cd", nav, strerror(errno), 0);
-	free(nav);
 	update_var(e);
-	return (free_dp(cmd), 0);
+	return (free_dp(cmd), free(nav), ret);
 }
-
 
 int		history(char *s)
 {

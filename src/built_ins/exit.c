@@ -1,14 +1,14 @@
 #include <minishell.h>
 
-int	ms_isnum(char c)
+int ms_isnum(char c)
 {
-	return(c >= '0' && c <= '9');
+	return (c >= '0' && c <= '9');
 }
 
 int ms_exit(char **cmd)
 {
-	int	i;
-	int	check;
+	int i;
+	int check;
 
 	if (isatty(STDIN_FILENO))
 		write(1, "exit\n", 5);
@@ -23,7 +23,7 @@ int ms_exit(char **cmd)
 		if (!ms_isnum(cmd[1][i]))
 		{
 			check = 1;
-			break ;
+			break;
 		}
 		i++;
 	}
