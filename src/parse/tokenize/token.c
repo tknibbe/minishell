@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/18 16:02:28 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/19 14:53:02 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	tokenize(t_list *list)
 	int	len;
 
 	len = ft_strlen(list->input);
-	list->token = malloc(sizeof(int) * len);
+	list->token = ft_calloc(sizeof(int), len);
 	if (!list->token)
 		ft_exit("Malloc error\n", errno);
 	set_token(list, list->input);
@@ -75,7 +75,8 @@ static void	norm_bs(t_list *list, char *input, int *i)
 	}
 	else
 	{
-		if (!ft_whitespace(input[*i]) && input[*i] != '\'' && input[*i] != '"')
+		if (!ft_whitespace(input[*i]) && input[*i] != '\'' && input[*i] != '"'
+			&& input[*i] != '(' && input[*i] != ')')
 			list->token[*i] = WORD;
 		else
 			list->token[*i] = BLANK;
