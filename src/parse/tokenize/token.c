@@ -26,7 +26,7 @@ void	tokenize(t_list *list)
 	int	len;
 
 	len = ft_strlen(list->input);
-	list->token = ft_calloc(sizeof(int), len);
+	list->token = ft_calloc(sizeof(int), len + 1);
 	if (!list->token)
 		ft_exit("Malloc error\n", errno);
 	set_token(list, list->input);
