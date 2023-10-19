@@ -66,11 +66,9 @@ int	main(int argc, char *argv[], char *envp[])
 	if (!isatty(STDIN_FILENO))
 	{
 		run_single_command(all);
-		// free_list(all->list);
-		//free_environment(); // TODO:
 		exit(all->env->last_exit_status);
-		return (all->env->last_exit_status);
 	}
 	while (1)
 		run_shell(all);
+	return (EXIT_FAILURE);
 }
