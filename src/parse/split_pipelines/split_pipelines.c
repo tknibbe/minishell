@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:34:27 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/18 16:03:10 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/21 15:28:42 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ static t_list	*make_new_node(t_list *data, char *input, int *end, int *start)
 		ft_minishell_error("malloc()", "failed", strerror(errno), errno);
 	node->token = copy_token(data->token, *start, *end);
 	node->and_or = data->token[*end];
-	if (input[*end + 2])
-		*end += 2;
+	*end += 2;
 	*start = *end;
 	return (node);
 }
@@ -78,6 +77,7 @@ int	split_pipelines(char *input, t_list **list)
 	t_list	*data;
 	int		start;
 	int		end;
+	int		len;
 
 	start = 0;
 	data = *list;
@@ -85,7 +85,8 @@ int	split_pipelines(char *input, t_list **list)
 	if (end == 0)
 		return (EXIT_SUCCESS);
 	*list = NULL;
-	while (input[end])
+	len = ft_strlen(input);
+	while (end < len)
 	{
 		if (data->token[end] == AND || data->token[end] == OR || \
 			!input[end + 1])

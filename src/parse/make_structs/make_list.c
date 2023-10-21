@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/18 15:58:01 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/21 15:28:29 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ int	ft_whitespace(char c)
 static int	select_struct(t_list *list, char *input, int *i, t_env_info *env)
 {
 	t_exec	*node;
+	int		len;
 
 	node = exec_lstnew();
 	exec_lstadd_back(&list->exec, node);
-	while (list->token[*i] != PIPESYMBOL && input[*i])
+	len = ft_strlen(input);
+	while (*i < len && list->token[*i] != PIPESYMBOL)
 	{
 		if (is_redirect(list->token[*i]))
 		{
@@ -84,8 +86,8 @@ void	new_cmd_node(char *input, int *token, t_exec *node, int *i)
 	int		start;
 	char	*str;
 
-	while (is_redirect(token[*i]) == 0 && token[*i] != PIPESYMBOL \
-			&& input[*i] && token[*i] != BRACE_OPEN)
+	while (input[*i] && !is_redirect(token[*i]) && token[*i] != PIPESYMBOL \
+			&& token[*i] != BRACE_OPEN)
 	{
 		start = *i;
 		while (token[*i] == WORD && input[*i])
@@ -94,7 +96,7 @@ void	new_cmd_node(char *input, int *token, t_exec *node, int *i)
 		if (!str)
 			ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 		t_str_lstadd_back(&node->cmd, t_str_lstnew(str));
-		while (token[*i] == BLANK && input[*i])
+		while (input[*i] && token[*i] == BLANK)
 			*i += 1;
 	}
 }
