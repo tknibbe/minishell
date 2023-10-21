@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/21 15:28:29 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/21 15:37:01 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ static int	select_struct(t_list *list, char *input, int *i, t_env_info *env)
 				return (EXIT_FAILURE);
 		}
 		else if (list->token[*i] == WORD)
-		{
 			new_cmd_node(input, list->token, node, i);
-		}
 		else if (list->token[*i] == BRACE_OPEN)
 		{
 			t_listadd_back(&node->subshell, add_subshell(input, list, i, env));
@@ -56,7 +54,9 @@ static int	select_struct(t_list *list, char *input, int *i, t_env_info *env)
 }
 
 /***Description:**
-`parse` is a function responsible for parsing an input string into a series of command structures. It considers redirection, subshells, and individual commands separated by pipe symbols.
+`parse` is a function responsible for parsing an input string into a series
+of command structures. It considers redirection, subshells, and individual
+commands separated by pipe symbols.
 
 **Parameters:**
 - `input` (char*): The input string to be parsed.

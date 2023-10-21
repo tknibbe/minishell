@@ -21,7 +21,7 @@ t_ally	*minishell_init(char *envp[])
 
 void	run_single_command(t_ally *all)
 {
-	char *string;
+	char	*string;
 
 	string = get_next_line(STDIN_FILENO);
 	if (!string)

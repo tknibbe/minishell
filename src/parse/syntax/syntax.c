@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/18 15:45:21 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/21 15:34:49 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,9 @@ static int	syntax_loop(t_list *list, int *i, t_env_info *env)
 	return (EXIT_SUCCESS);
 }
 
-/*This function checks the syntax of a given shell command. It updates the exit status in the environment based on whether the syntax is valid or not.
+/*This function checks the syntax of a given shell command. 
+It updates the exit status in the environment based on whether the syntax is
+valid or not.
 
 Parameters:
 

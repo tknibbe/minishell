@@ -23,7 +23,7 @@ int ms_exit(char **cmd)
 		if (!ms_isnum(cmd[1][i]))
 		{
 			check = 1;
-			break;
+			break ;
 		}
 		i++;
 	}
