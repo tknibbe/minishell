@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:34:27 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/18 16:03:10 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/21 15:35:22 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,23 @@ static t_list	*make_new_node(t_list *data, char *input, int *end, int *start)
 		ft_minishell_error("malloc()", "failed", strerror(errno), errno);
 	node->token = copy_token(data->token, *start, *end);
 	node->and_or = data->token[*end];
-	if (input[*end + 2])
-		*end += 2;
+	*end += 2;
 	*start = *end;
 	return (node);
 }
 
 /*Description:
-split_pipelines is a function responsible for segmenting an input string into separate pipelines and constructing a linked list to represent these pipeline segments.
-It facilitates the execution of multiple commands separated by the AND and OR operators within a custom shell environment.
+split_pipelines is a function responsible for segmenting an input string into
+separate pipelines and constructing a linked list to represent these pipeline
+segments.
+It facilitates the execution of multiple commands separated by the AND and OR
+operators within a custom shell environment.
 
 Parameters:
 
     input (char*): The input string to be segmented into pipelines.
-    list (t_list**): A pointer to a pointer to a t_list structure, which will hold the segmented pipeline data.
+    list (t_list**): A pointer to a pointer to a t_list structure, which will
+	hold the segmented pipeline data.
 
 Return Value:
 
@@ -78,6 +81,7 @@ int	split_pipelines(char *input, t_list **list)
 	t_list	*data;
 	int		start;
 	int		end;
+	int		len;
 
 	start = 0;
 	data = *list;
@@ -85,7 +89,8 @@ int	split_pipelines(char *input, t_list **list)
 	if (end == 0)
 		return (EXIT_SUCCESS);
 	*list = NULL;
-	while (input[end])
+	len = ft_strlen(input);
+	while (end < len)
 	{
 		if (data->token[end] == AND || data->token[end] == OR || \
 			!input[end + 1])

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 13:41:26 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/18 15:54:18 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/21 15:46:47 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,13 @@ void	non_inter_handler(int c)
 	ft_putchar_fd('\n', STDIN_FILENO);
 }
 
-/*The set_echo function is used to modify the terminal settings to include the ECHOCTL flag. This flag, when enabled, causes the terminal to echo control characters as-is. It first retrieves the current terminal attributes using tcgetattr, enables ECHOCTL in the c_lflag field, and then sets the modified attributes using tcsetattr.
-If any error occurs during these operations, the function exits with an error message and the associated error code.*/
+/*The set_echo function is used to modify the terminal settings to include the
+ECHOCTL flag. This flag, when enabled, causes the terminal to echo control
+characters as-is. It first retrieves the current terminal attributes using
+tcgetattr, enables ECHOCTL in the c_lflag field, and then sets the modified
+attributes using tcsetattr.
+If any error occurs during these operations, the function exits with an error
+message and the associated error code.*/
 void	set_echo(void)
 {
 	struct termios	term;

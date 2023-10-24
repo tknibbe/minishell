@@ -44,11 +44,15 @@ void	free_exec(t_exec *exec)
 }
 
 /*Description:
-This function frees memory associated with a linked list of tokens and their related data structures. It iterates through the list and releases memory for each element, including the input string, token array, and the exec structure. The function does not return any value.
+This function frees memory associated with a linked list of tokens and
+their related data structures. It iterates through the list and releases
+memory for each element, including the input string, token array, and the
+exec structure. The function does not return any value.
 
 Parameters:
 
-    t_list *lst: A pointer to the head of a linked list containing tokens and related data structures to be freed.*/
+    t_list *lst: A pointer to the head of a linked list containing tokens
+	and related data structures to be freed.*/
 void	free_list(t_list *lst)
 {
 	t_list	*to_free;

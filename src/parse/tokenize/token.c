@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/19 15:16:02 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/21 15:33:41 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@
 static void	set_token(t_list *list, char *input);
 
 /*Description:
-tokenize is a function used to analyze and tokenize an input string, populating a t_list structure with tokens that represent different parts of the input. It also handles the detection of subshells and their tokens within the input.
+tokenize is a function used to analyze and tokenize an input string, populating
+a t_list structure with tokens that represent different parts of the input. 
+It also handles the detection of subshells and their tokens within the input.
 
 Parameters:
 
-    list (t_list*): A pointer to a t_list structure that stores the input and its tokens.*/
+list (t_list*): A pointer to a t_list structure that stores the input and its
+tokens.*/
 void	tokenize(t_list *list)
 {
 	int	len;

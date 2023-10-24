@@ -1,14 +1,15 @@
 #include <minishell.h>
 #include <stdlib.h>
 
-int	ft_iswhitespace(int	c)
+int	ft_iswhitespace(int c)
 {
 	return (c == 32 || (c >= 9 && c <= 13));
 }
 
 int	ft_isname(int c)
 {
-	return ((c >= '0' && c <='9') || (c >= 'a' && c <='z') || (c >= 'A' && c <='Z') || c == '_');
+	return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') \
+			|| (c >= 'A' && c <= 'Z') || c == '_');
 }
 
 int	ft_isinset(int c, char *s)
@@ -23,7 +24,10 @@ int	ft_isinset(int c, char *s)
 }
 
 /*Description:
-This function is used to report errors. It prints an error message to the standard error stream (file descriptor 2) with optional information such as the program name, argument, and a description. The function can also exit the program with a specified exit code if required.
+This function is used to report errors. It prints an error message to the
+standard error stream (file descriptor 2) with optional information such as
+the program name, argument, and a description. The function can also exit the
+program with a specified exit code if required.
 
 Parameters:
 
@@ -34,7 +38,8 @@ Parameters:
 
 Return Value:
 
-    1 is returned after printing the error message. If the ex parameter is nonzero, the function may also exit the program.*/
+    1 is returned after printing the error message. If the ex parameter is
+	nonzero, the function may also exit the program.*/
 int	ft_minishell_error(char *program, char *arg, char *desc, int ex)
 {
 	write(2, "minishell", 9);

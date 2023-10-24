@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 16:15:10 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/07/25 11:46:49 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/21 15:47:14 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	in_del(char c, char *del)
 	}
 	return (0);
 }
+
 /*will delete any occurance of any char in "del" out of the input string "str"
 the result is malloced and "str" if freed before returning*/
 char	*ft_strdel(char *str, char *del)
