@@ -27,7 +27,7 @@ int					cd(char **cmd, t_env_info *e, int fd);
 int					echo(char **cmd, int fd);
 int					pwd(char **cmd, int fd);
 int					history(char *s);
-int					ms_exit(char **cmd);
+void				ms_exit(char **cmd);
 
 int					env(t_env *env, int fd);
 int					unset(t_env_info *e, char **to_unset);

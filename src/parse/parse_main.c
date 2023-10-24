@@ -79,7 +79,7 @@ t_list	*parse_input(char *input, t_env_info *env)
 	if (!list->input)
 		ft_minishell_error("ft_strtrim()", "failed", strerror(errno), errno);
 	tokenize(list);
-	print_tokens(list, ft_strlen(list->input));
+	// print_tokens(list, ft_strlen(list->input));
 	if (check_syntax(list, env))
 		return (free_list(list), NULL);
 	if (split_pipe_and_parse(&list, env))

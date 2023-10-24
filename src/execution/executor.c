@@ -59,7 +59,7 @@ int	do_builtin(char **cmd, t_env_info *e, int builtin_no, int out)
 	else if (builtin_no == MS_UNSET)
 		return (unset(e, cmd));
 	else if (builtin_no == MS_EXIT)
-		return (ms_exit(cmd));
+		ms_exit(cmd);
 	else if (builtin_no == MS_CD)
 		return (cd(cmd, e, out));
 	else if (builtin_no == MS_PWD)
@@ -170,7 +170,7 @@ int	exec_single_cmd(t_exec *exec, t_env_info *e)
 	char		**cmd;
 	t_process	proc;
 
-	cmd = full_expansion(exec->cmd, e); //TODO: cmd is leaking here. needs to be fixed pls/ //fixed on line 187. check if correct pls @crisss
+	cmd = full_expansion(exec->cmd, e);
 	b = 0;
 	if (cmd)
 		b = builtin(*cmd);

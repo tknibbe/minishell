@@ -93,7 +93,6 @@ int	identify_substr(t_exp *x, int state, char *input, char **s)
 			i = expand_dollo(x, input, s, (i + 1));
 		else if (ft_isinset(input[i], brake))
 			break ;
-		//printf("string: %s, input[i]: %c\n", *s, input[i]);
 	}
 	return (i);
 }
