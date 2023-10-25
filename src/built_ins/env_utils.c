@@ -9,7 +9,7 @@ char	*ft_envjoin(char *s1, char *s2)
 	i = 0;
 	result = malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
 	if (!result)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	while (*s1)
 	{
 		result[i++] = *s1;
@@ -57,7 +57,7 @@ char	*get_env(char *key, t_env_info *e)
 		{
 			if (!value)
 				return (NULL);
-			value = ft_strdup(head->value);	//TODO: leaks on input: [echo $USER && exit]
+			value = ft_strdup(head->value);
 			if (!value)
 				ft_exit("Malloc error\n", errno);
 			return (value);
@@ -65,6 +65,34 @@ char	*get_env(char *key, t_env_info *e)
 		head = head->next;
 	}
 	return (NULL);
+}
+
+void	update_var(t_env_info *e)
+{
+	char	*pwd;
+	t_env	*curr;
+	t_env	*oldpwd;
+
+	curr = e->head;
+	pwd = NULL;
+	oldpwd = NULL;
+	while (curr)
+	{
+		if (!ft_strncmp("PWD", curr->key, 4))
+		{
+			pwd = curr->value;
+			curr->value = getcwd(NULL, 0);
+			if (!curr->value)
+				ft_minishell_error("getcwd()", NULL, strerror(errno), errno);
+			update_env(curr, e);
+		}
+		else if (!ft_strncmp("OLDPWD", curr->key, 7))
+			oldpwd = curr;
+		if (pwd && oldpwd)
+			break ;
+		curr = curr->next;
+	}
+	swap (pwd, oldpwd, e);
 }
 
 void	get_environment_for_exec(t_env_info *e)

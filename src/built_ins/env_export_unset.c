@@ -71,6 +71,10 @@ int	find_and_export(t_env *head, char *to_export)
 		{
 			free(head->value);
 			head->value = ft_strdup(&to_export[i + 1]);
+			if (head->value == NULL)
+				ft_minishell_error("malloc()", NULL, strerror(errno), errno);
+			if (head->joined_value)
+				free(head->joined_value);
 			head->joined_value = ft_envjoin(head->key, head->value);
 			return (1);
 		}

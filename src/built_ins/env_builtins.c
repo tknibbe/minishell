@@ -13,7 +13,7 @@ int	env(t_env *env, int fd)
 	return (0);
 }
 
-/*will create or adjust a node for export*/
+/*will create or adjust an environment variable for export*/
 int	export(t_env_info *e, char **to_export)
 {
 	int		i;
@@ -22,7 +22,6 @@ int	export(t_env_info *e, char **to_export)
 
 	i = 1;
 	ret = 0;
-	free(to_export[0]);
 	while (to_export[i])
 	{
 		mode = legit_export_item(to_export[i]);
@@ -37,20 +36,18 @@ int	export(t_env_info *e, char **to_export)
 		}
 		else if (mode > 1)
 			ret = ft_minishell_error("export", to_export[i], "not a valid identifier", 0);
-		free(to_export[i++]);
+		i++;
 	}
-	free(to_export);
 	return (ret);
 }
 
-/*will unset a variable given the key*/
+/*will unset/remove a variable from environment given the key*/
 int	unset(t_env_info *e, char **unset)
 {
 	int	i;
 	int	ret;
 
 	i = 1;
-	free(unset[0]);
 	ret = 0;
 	while (unset[i])
 	{
@@ -64,9 +61,7 @@ int	unset(t_env_info *e, char **unset)
 		}
 		else
 			ret = ft_minishell_error("export", unset[i], "not a valid identifier", 0);
-		free(unset[i]);
 		i++;
 	}
-	free(unset);
 	return (ret);
 }

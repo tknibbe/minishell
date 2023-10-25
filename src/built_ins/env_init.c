@@ -61,3 +61,27 @@ void	env_addback(t_env **head, t_env *new)
 		tmp->next = new;
 	}
 }
+
+void	swap(char *pwd, t_env *oldpwd, t_env_info *e)
+{
+	if (oldpwd)
+	{
+		free(oldpwd->value);
+		if (pwd)
+			oldpwd->value = pwd;
+		else
+			oldpwd->value = ft_strdup("");
+		if (!oldpwd->value)
+			ft_minishell_error("malloc()", NULL, strerror(errno), errno);	
+		update_env(oldpwd, e);
+	}
+	else
+		free(pwd);
+}
+
+void	update_env(t_env *to_update, t_env_info *e)
+{
+	free(to_update->joined_value);
+	to_update->joined_value = ft_envjoin(to_update->key, to_update->value);
+	e->has_changed = 1;
+}

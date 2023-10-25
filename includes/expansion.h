@@ -1,8 +1,6 @@
 #ifndef EXPANSION_H
 # define EXPANSION_H
 
-# include <built_ins.h>
-# include <dirent.h>
 # include <minishell.h>
 
 typedef struct s_exp
@@ -10,7 +8,7 @@ typedef struct s_exp
 	char		*result;
 	int			star;
 	t_env_info	*e;
-}			t_exp;
+}				t_exp;
 
 typedef struct	s_str	t_str;
 

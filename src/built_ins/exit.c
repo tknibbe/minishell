@@ -1,10 +1,5 @@
 #include <minishell.h>
 
-int ms_isnum(char c)
-{
-	return (c >= '0' && c <= '9');
-}
-
 void	ms_exit(char **cmd)
 {
 	int i;

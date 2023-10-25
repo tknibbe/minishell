@@ -2,53 +2,44 @@
 #include <minishell.h>
 #include <readline/history.h>
 
-// int	update_env(t_env_info *e, t_env *edit, char *s)
-// {
-	
-// }
-
-void	update_var(t_env_info *e)
+char	*oldpwd(t_env_info *e, int fd)
 {
+	char	*nav;
 	char	*pwd;
-	t_env	*curr;
-	t_env	*oldpwd;
 
-	curr = e->head;
-	pwd = NULL;
-	oldpwd = NULL;
-	while (curr)
+	nav = get_env("OLDPWD", e);
+	if (!nav)
 	{
-		if (!ft_strncmp("PWD", curr->key, 4))
-		{
-			pwd = curr->value;
-			curr->value = getcwd(NULL, 0);
-			if (!curr->value)
-				ft_minishell_error("getcwd()", NULL, strerror(errno), errno);
-			free(curr->joined_value);
-			curr->joined_value = ft_envjoin(curr->key, curr->value);
-			e->has_changed = 1;
-		}
-		else if (!ft_strncmp("OLDPWD", curr->key, 7))
-			oldpwd = curr;
-		if (pwd && oldpwd)
-			break ;
-		curr = curr->next;
+		ft_minishell_error("cd", "OLDPWD", "not set", 0);
+		return (NULL);
 	}
-	if (oldpwd)
+	pwd = getcwd(NULL, 0);
+	if (pwd == NULL)
+		ft_minishell_error("getcwd()", NULL, strerror(errno), errno);
+	write(fd, pwd, ft_strlen(pwd));
+	free(pwd);
+	return (nav);
+}
+
+char	*get_nav(char *input, t_env_info *e, int fd)
+{
+	char	*nav;
+
+	if (!input)
 	{
-		free(oldpwd->value);
-		if (pwd)
-			oldpwd->value = pwd;
-		else
-			oldpwd->value = ft_strdup("");
-		if (!oldpwd->value)
-			ft_minishell_error("malloc()", NULL, strerror(errno), errno);	
-		free(oldpwd->joined_value);
-		oldpwd->joined_value = ft_envjoin(oldpwd->key, oldpwd->value);
-		e->has_changed = 1;
+		nav = get_env("HOME", e);
+		if (!nav)
+			ft_minishell_error("cd", "HOME", "not set", 0);
 	}
+	else if (!ft_strncmp("-", input, 2))
+		nav = oldpwd(e, fd);
 	else
-		free(pwd);
+	{
+		nav = ft_strdup(input);
+		if (!nav)
+			ft_minishell_error("malloc()", NULL, strerror(errno), errno);
+	}
+	return (nav);
 }
 
 int	cd(char **cmd, t_env_info *e, int fd)
@@ -57,29 +48,23 @@ int	cd(char **cmd, t_env_info *e, int fd)
 	char	*nav;
 
 	ret = 0;
-	if (!cmd[1] || !ft_strncmp("-", cmd[1], 2))
+	nav = get_nav(cmd[1], e, fd);
+	if (!nav)
 	{
-		if (!cmd[1])
-			nav = get_env("HOME", e);
-		else
-			nav = get_env("OLDPWD", e);
-		if (!nav && !cmd[1])
-			return (free_dp(cmd), ft_minishell_error("cd", "HOME", "not set", 0));
-		else if (!nav)
-			return (free_dp(cmd), ft_minishell_error("cd", "OLDPWD", "not set", 0));
-	}
-	else
-	{
-		nav = ft_strdup(cmd[1]);
-		if (!nav)
-			return (ft_minishell_error("malloc()", NULL, strerror(errno), errno));
+		if (fd != 1)
+			close((fd));
+		return (1);
 	}
 	if (chdir(nav) < 0)
 		ret = ft_minishell_error("cd", nav, strerror(errno), 0);
-	update_var(e);
-	return (free_dp(cmd), free(nav), ret);
+	else
+		update_var(e);
+	if (fd != 1)
+		close((fd));
+	return (free(nav), ret);
 }
 
+/* will add the input to the readline history */
 int		history(char *s)
 {
 	if (s && *s)
@@ -87,17 +72,18 @@ int		history(char *s)
 	return (0);
 }
 
+/* will print the current working directory */
 int	pwd(char **cmd, int fd)
 {
 	char	*buff;
-	
-	if (cmd)
-		free_dp(cmd);
+
 	buff = getcwd(NULL, 0);
 	if (!buff)
 		return (ft_minishell_error("getcwd()", strerror(errno), NULL, errno));
 	write(fd, buff, ft_strlen(buff));
 	write(fd, "\n", 1);
 	free(buff);
+	if (fd != 1)
+		close(fd);
 	return (0);
 }

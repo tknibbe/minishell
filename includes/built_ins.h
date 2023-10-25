@@ -44,6 +44,9 @@ void				env_addback(t_env **head, t_env *new);
 char				*ft_envjoin(char *s1, char *s2);
 void				get_environment_for_exec(t_env_info *e);
 char				*get_env(char *key, t_env_info *e);
-void				free_env(char **env);
+// void				free_env(char **env);
+void				update_var(t_env_info *e);
+void				update_env(t_env *to_update, t_env_info *e);
+void				swap(char *pwd, t_env *oldpwd, t_env_info *e);
 
 #endif

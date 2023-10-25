@@ -43,6 +43,7 @@ SRC			=	cris_main.c \
 				execution/executor.c \
 				execution/redirect.c \
 				execution/pathfinder.c \
+				execution/executor_utils.c \
 				parse/test_functions.c \
 				#test.c \
 				# parse/tokenize/make_list.c \

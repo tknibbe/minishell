@@ -2,6 +2,7 @@
 # define MINISHELL_H
 
 # include <stdio.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <readline/history.h>
@@ -10,13 +11,16 @@
 # include <sys/errno.h>
 # include <fcntl.h>
 # include <string.h>
+# include <signal.h>
+# include <sys/ioctl.h>
+# include <termios.h>
+# include <dirent.h>
+
 # include "../lib/includes/libft.h"
 # include <parsing.h>
 # include <exec.h>
 # include <built_ins.h>
-# include <signal.h>
-# include <sys/ioctl.h>
-# include <termios.h>
+# include <expansion.h>
 
 # define PROMPT "ez_game -> "
 //# define PROMPT ""
