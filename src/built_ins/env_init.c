@@ -72,7 +72,7 @@ void	swap(char *pwd, t_env *oldpwd, t_env_info *e)
 		else
 			oldpwd->value = ft_strdup("");
 		if (!oldpwd->value)
-			ft_minishell_error("malloc()", NULL, strerror(errno), errno);	
+			ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 		update_env(oldpwd, e);
 	}
 	else

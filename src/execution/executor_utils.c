@@ -35,6 +35,7 @@ int	do_builtin(char **cmd, t_env_info *e, int builtin_no, int out)
 	else if (builtin_no == MS_PWD)
 		return (pwd(cmd, out));
 	ms_exit(cmd);
+	return (1);
 }
 
 int	prep_process(t_process *proc, t_exec *exec, t_env_info *e)

@@ -23,8 +23,8 @@ int	legit_export_item(char *to_export)
 		i++;
 	if (!to_export[i])
 		return (1);
-	else if (to_export[i] == '=' ||\
-			 to_export[i] == '+' && to_export[i + 1] == '=')
+	else if (to_export[i] == '=' || \
+			to_export[i] == '+' && to_export[i + 1] == '=')
 		return (0);
 	return (2);
 }
@@ -58,6 +58,18 @@ int	find_and_unset(t_env **env, char *unset)
 	return (0);
 }
 
+int	replace_value(t_env *node, char *new_value)
+{
+	free(node->value);
+	node->value = ft_strdup(new_value);
+	if (node->value == NULL)
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
+	if (node->joined_value)
+		free(node->joined_value);
+	node->joined_value = ft_envjoin(node->key, node->value);
+	return (1);
+}
+
 int	find_and_export(t_env *head, char *to_export)
 {
 	int	i;
@@ -68,16 +80,7 @@ int	find_and_export(t_env *head, char *to_export)
 		while (head->key[i] == to_export[i])
 			i++;
 		if (!head->key[i] && to_export[i] == '=')
-		{
-			free(head->value);
-			head->value = ft_strdup(&to_export[i + 1]);
-			if (head->value == NULL)
-				ft_minishell_error("malloc()", NULL, strerror(errno), errno);
-			if (head->joined_value)
-				free(head->joined_value);
-			head->joined_value = ft_envjoin(head->key, head->value);
-			return (1);
-		}
+			return (replace_value(head, &to_export[i + 1]));
 		else if (!head->key[i] && to_export[i] == '+')
 		{
 			head->value = ft_join(head->value, &to_export[i + 2]);

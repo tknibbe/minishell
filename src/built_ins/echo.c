@@ -1,9 +1,13 @@
-
 #include <minishell.h>
 #include <built_ins.h>
 
-/*echo function with -n option, if -n option is used new line character at the end will not be printed
-it will write all it's arguments seperated by a space*/
+/*
+	echo function will write it's arguments to the standard output
+	seperated by a space.
+	if -n option is supplied at the start of it's argument, newline will be skipped
+	otherwise it will end sentence with a newline
+*/
+
 int	echo(char **cmd, int fd)
 {
 	int		i;

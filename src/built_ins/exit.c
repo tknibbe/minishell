@@ -2,7 +2,7 @@
 
 void	ms_exit(char **cmd)
 {
-	int i;
+	int	i;
 
 	if (isatty(STDIN_FILENO))
 		write(STDERR_FILENO, "exit\n", 5);

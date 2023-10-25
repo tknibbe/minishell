@@ -42,6 +42,7 @@ char	*get_nav(char *input, t_env_info *e, int fd)
 	return (nav);
 }
 
+/*will change its current working directory*/
 int	cd(char **cmd, t_env_info *e, int fd)
 {
 	int		ret;
@@ -65,7 +66,7 @@ int	cd(char **cmd, t_env_info *e, int fd)
 }
 
 /* will add the input to the readline history */
-int		history(char *s)
+int	history(char *s)
 {
 	if (s && *s)
 		add_history(s);

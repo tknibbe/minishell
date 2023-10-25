@@ -38,7 +38,10 @@ static char	*no_env(int c, int status)
 	return (value);
 }
 
-/*finds value corrosponding with key in the environment and returns an allocated string that must be FREED properly*/
+/*
+	finds value corrosponding with key in the environment
+	and returns an allocated string
+*/
 char	*get_env(char *key, t_env_info *e)
 {
 	int		i;
