@@ -16,7 +16,10 @@ int	echo(char **cmd, int fd)
 	i = 1;
 	new_line = 1;
 	while (!ft_strncmp(cmd[i], "-n", 3))
+	{
+		i++;
 		new_line = 0;
+	}
 	while (cmd[i])
 	{
 		write(fd, cmd[i], ft_strlen(cmd[i]));

@@ -42,7 +42,12 @@ char	*get_nav(char *input, t_env_info *e, int fd)
 	return (nav);
 }
 
-/*will change its current working directory*/
+/*
+	will try and change its current working directory
+	to the first argument given
+	if no argument is given it will navigate to the HOME directory
+	specified in the environment
+*/
 int	cd(char **cmd, t_env_info *e, int fd)
 {
 	int		ret;
@@ -65,7 +70,10 @@ int	cd(char **cmd, t_env_info *e, int fd)
 	return (free(nav), ret);
 }
 
-/* will add the input to the readline history */
+/*
+	will add the input to the readline history
+	if no input is given it will skip this step
+*/
 int	history(char *s)
 {
 	if (s && *s)
@@ -73,7 +81,10 @@ int	history(char *s)
 	return (0);
 }
 
-/* will print the current working directory */
+/*
+	will print the current working directory
+	followed by a new line
+*/
 int	pwd(char **cmd, int fd)
 {
 	char	*buff;

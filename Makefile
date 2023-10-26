@@ -77,8 +77,3 @@ fclean : clean
 	rm -f $(MINISHELL)
 
 re: fclean all
-
-git :
-	git add .
-	git commit -m "automatic push"
-	git push

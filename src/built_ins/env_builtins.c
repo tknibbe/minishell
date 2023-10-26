@@ -1,7 +1,9 @@
 #include <built_ins.h>
 #include <minishell.h>
 
-/*will print out all keys with their value's*/
+/*
+	will print out all keys with their value's
+*/
 int	env(t_env *env, int fd)
 {
 	while (env)
