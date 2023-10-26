@@ -3,7 +3,7 @@
 #include <built_ins.h>
 #include <expansion.h>
 
-static char	*expand(char *str, t_env *e)
+static char	*expand(char *str, t_env *e) //wtf fix dit G
 {
 	int	start;
 	int	end;
@@ -17,10 +17,7 @@ static char	*expand(char *str, t_env *e)
 	while (e)
 	{
 		if (!strncmp(&str[start], e->key, end - start))
-		{
-			free(str);
-			return (ft_strjoin(e->value, "\n"));
-		}
+			return (free(str), ft_strjoin(e->value, "\n"));
 		e = e->next;
 	}
 	free(str);
@@ -45,18 +42,17 @@ void	heredoc_expand(t_str *heredoc, t_env *e)
 	}
 }
 
-int	do_heredoc_or_so(t_rdr *r, t_env *e)
+int	do_heredoc_or_so(t_rdr *r, t_env *e, int hierdok_num)
+//needs to be executed
 {
 	int		fd;
-	int		error;
 	t_str	*heredoc;
-
+	// append hdnum to unieke naam
 	fd = open("/tmp/unieke_naam2", O_CREAT | O_RDWR | O_EXCL, 0644);
 	if (fd < 0)
 		ft_minishell_error("open()", "\"/tmp/unieke_naam2\"", \
 			strerror(errno), errno);
-	error = unlink("/tmp/unieke_naam2");
-	if (error < 0)
+	if (unlink("/tmp/unieke_naam2"))
 		ft_minishell_error("unlink()", NULL, strerror(errno), errno);
 	heredoc = r->file;
 	if (r->type == HEREDOC)
@@ -80,7 +76,7 @@ void	open_file_and_dup(char *file, int flag, int to_dup, int permission)
 		ft_minishell_error("dup2()", NULL, strerror(errno), errno);
 }
 
-int	redirect(t_rdr *r, t_env_info *e, int in, int out)
+int	redirect(t_rdr *r, t_env_info *e, int in, int out, int hierdok_num)
 {
 	char	**file;
 	int		ret;
@@ -91,8 +87,8 @@ int	redirect(t_rdr *r, t_env_info *e, int in, int out)
 		if (r->type == REDIRRIGHT || r->type == APPEND)
 			ret = 1;
 		if ((r->type == HEREDOC || r->type == HEREDOC_NO_EXP) && in != -1)
-			do_heredoc_or_so(r, e->head);
-		else
+			in = do_heredoc_or_so(r, e->head, hierdok_num);
+		else // fix for heredoccie
 		{
 			file = full_expansion(r->file, e);
 			if (!(*file) || (*file && *(file + 1)))

@@ -15,7 +15,7 @@ void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 		close(proc->fd);
 	}
 	if (exec->rdr)
-		redirect(exec->rdr, e, STDIN_FILENO, STDOUT_FILENO);
+		redirect(exec->rdr, e, STDIN_FILENO, STDOUT_FILENO, proc->here_doc_nbr);
 	if (proc->cmd)
 	{
 		if (proc->builtin)
@@ -41,6 +41,7 @@ int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
 		execute_child(exec, e, proc);
 	if (proc->p)
 	{
+		proc->here_doc_nbr++;
 		proc->fd = dup(proc->p[0]);
 		if (proc->fd == -1)
 			ft_minishell_error("dup()", "duplicating read end of pipe for next command", strerror(errno), errno);
@@ -50,20 +51,16 @@ int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
 	return (pid);
 }
 
-void	init_proc(t_process *proc, int peepee)
+void	init_proc(t_process *proc)
 {
 	proc->cmd = NULL;
 	proc->fd = 0;
 	proc->builtin = 0;
 	proc->is_first = 1;
-	if (!peepee)
-	{
-		proc->p = malloc(2 * sizeof(int));
-		if (!proc->p)
-			ft_minishell_error("malloc()", "allocating pipe", strerror(errno), errno);
-	}
-	else
-		proc->p = NULL;
+	proc->here_doc_nbr = 1;
+	proc->p = malloc(2 * sizeof(int));
+	if (!proc->p)
+		ft_minishell_error("malloc()", "allocating pipe", strerror(errno), errno);
 }
 
 int	exec_pipe_line(t_exec *exec, t_env_info *e)
@@ -72,7 +69,7 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 	pid_t		pid;
 	int			status;
 
-	init_proc(&proc, 0);
+	init_proc(&proc);
 	while (exec)
 	{
 		if (prep_process(&proc, exec, e))
@@ -86,10 +83,10 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 	waitpid(pid, &status, 0);
 	while (wait(NULL) != -1)
 		;
-	if (WIFEXITED(e->last_exit_status))
-		return (WEXITSTATUS(e->last_exit_status));
-	else if (WIFSIGNALED(e->last_exit_status))
-		return (128 + WTERMSIG(e->last_exit_status));
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		return (128 + WTERMSIG(status));
 	return (EXIT_FAILURE);
 }
 
