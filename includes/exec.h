@@ -11,6 +11,7 @@ typedef struct s_process
 	int			fd;
 	int			builtin;
 	bool		is_first;
+	int			here_doc_nbr;
 	int			*p;
 	t_env_info	*e;
 	char		**cmd;

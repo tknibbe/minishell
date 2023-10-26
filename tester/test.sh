@@ -107,7 +107,7 @@ compare_syntax "&&&"
 compare_syntax "|||"
 compare_syntax "|| |||"
 compare_syntax ">>>"
-# compare_syntax "(| |)" // exit code?
+compare_syntax "(| |)"
 compare_syntax "(())"
 
 
@@ -126,7 +126,7 @@ compare_command "ls -lah"
 compare_command "cat ../Makefile"
 compare_command "cat NONEXISTINNGFILE.c"
 compare_command "echo "HEY" > cat"
-# compare_command "cd NONEXISTINGPATH" #//heap_use_after_free in cd --> ft_minis...hell error call
+compare_command "cd NONEXISTINGPATH"
 compare_command "echo hey | echo hey | ls"
 compare_command "ls -S"
 compare_command "exit 92"
@@ -149,6 +149,11 @@ compare_command "ls | cat | cat | echo"
 compare_command "echo "hey" | ls"
 compare_command "echo "hey" | ls | cat | wc -l"
 
+
+printf "\n\e[32mtesting expansiones\e[0m\n"
+sleep 1
+compare "echo $HOME"
+
 printf "\n\e[32mtesting BONUS\e[0m\n"
 
 compare_command "ls && ls"
@@ -160,6 +165,7 @@ compare_command "(ls) || (ls)"
 # compare_command "(((((((((((((((((((((ls))))))))))))))))))))) && ((((((((ls))))))))"
 # compare_command "unset PATH && ls"
 compare_command "cat test.sh | echo hey && echo bye | ls"
+compare_command "(sleep 3 && echo 'deze is voor de fatoe') | cat"
 
 #rm -rf ~/bullshit
 rm lol 2> /dev/null
@@ -176,6 +182,12 @@ fi
 
 
 # $OLDPWD leaks
+
+
+
+
+
+
 
 
 

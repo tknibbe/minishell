@@ -47,9 +47,9 @@ int	prep_process(t_process *proc, t_exec *exec, t_env_info *e)
 	{
 		free(proc->p);
 		proc->p = NULL;
-		if (proc->builtin && proc->is_first)
+		if (proc->builtin && proc->is_first) // vraagtekens if else
 		{
-			if (exec->rdr && redirect(exec->rdr, e, -1, 3))
+			if (exec->rdr && redirect(exec->rdr, e, -1, 3, proc->here_doc_nbr))
 				e->last_exit_status =  do_builtin(proc->cmd, e, proc->builtin, 3);
 			else
 				e->last_exit_status =  do_builtin(proc->cmd, e, proc->builtin, 1);
