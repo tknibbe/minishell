@@ -6,7 +6,7 @@
 /*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/27 17:35:41 by tymonknibbe      ###   ########.fr       */
+/*   Updated: 2023/10/27 17:56:18 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_struct_and_fork(t_heredoc *doc, t_list *list, int *i)
 		ft_exit("Error creating child process", errno);
 }
 
-int	add_heredoc(char *input, t_list *list, int *i, t_env_info *env)
+int	add_heredoc(t_list *list, int *i, t_env_info *env)
 {
 	t_heredoc	doc;
 	t_rdr		*rdr_node;
