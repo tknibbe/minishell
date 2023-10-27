@@ -6,7 +6,7 @@
 /*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/27 14:47:12 by tymonknibbe      ###   ########.fr       */
+/*   Updated: 2023/10/27 17:35:41 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static int	set_expand(char *d)
 		j = 0;
 		i++;
 	}
-	return (HEREDOC);
+	return (HEREDOC_EXP);
 }
 
 static char	*get_delimiter(t_list *list, int *i)
@@ -117,7 +117,8 @@ static char	*get_delimiter(t_list *list, int *i)
 	while (ft_whitespace(list->input[*i]) || list->input[*i] == '<')
 		*i += 1;
 	start = *i;
-	while (list->token[*i] == WORD && list->input[*i])
+	while ((list->token[*i] == WORD || list->input[*i] == '\'' || list->input[*i] == '"') \
+			&& list->input[*i])
 		*i += 1;
 	temp = ft_substr(list->input, start, *i - start);
 	if (temp == NULL)

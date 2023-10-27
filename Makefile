@@ -44,6 +44,7 @@ SRC			=	cris_main.c \
 				execution/redirect.c \
 				execution/pathfinder.c \
 				execution/executor_utils.c \
+				execution/heredoc_expansion.c \
 				parse/test_functions.c \
 				#test.c \
 				# parse/tokenize/make_list.c \

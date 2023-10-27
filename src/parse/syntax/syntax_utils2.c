@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 15:14:24 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/18 15:41:49 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/27 16:31:06 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_redirect(int t)
 {
-	return (t == REDIRLEFT || t == REDIRRIGHT || t == HEREDOC || t == APPEND);
+	return (t == REDIRLEFT || t == REDIRRIGHT || t == HEREDOC_EXP || t == APPEND);
 }
 
 int	is_control_op(int token)

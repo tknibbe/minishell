@@ -55,7 +55,7 @@ enum	e_token
 	REDIRLEFT,
 	REDIRRIGHT,
 	APPEND,
-	HEREDOC,
+	HEREDOC_EXP,
 	HEREDOC_NO_EXP,
 	PIPESYMBOL,
 	BRACE_OPEN,
@@ -94,7 +94,7 @@ t_rdr	*rdr_lstnew(char *str, int type, int heredoc);
 void	t_str_lstadd_back(t_str **lst, t_str *new);
 t_str	*t_str_lstnew(char *str);
 
-//HEREDOC.C
+//HEREDOC_EXP.C
 int		add_heredoc(char *input, t_list *list, int *i, t_env_info *env);
 
 //SPLIT_PIPELINES.C

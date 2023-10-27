@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 14:56:52 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/01 16:19:40 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/27 16:31:06 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	left(t_list *list, char *input, int *i)
 {
 	if (input[*i + 1] == '<')
 	{
-		list->token[*i] = HEREDOC;
-		list->token[*i + 1] = HEREDOC;
+		list->token[*i] = HEREDOC_EXP;
+		list->token[*i + 1] = HEREDOC_EXP;
 		*i += 1;
 	}
 	else

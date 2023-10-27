@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 13:45:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/01 16:19:40 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/27 16:31:06 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	print_unex_token(char c, int token)
 {
 	write(2, "near unexpected token ", 22);
 	write(2, "\'", 1);
-	if (token == HEREDOC)
+	if (token == HEREDOC_EXP)
 		write(2, "<<", 2);
 	else if (token == APPEND)
 		write(2, ">>", 2);

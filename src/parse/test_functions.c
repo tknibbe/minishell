@@ -6,7 +6,7 @@
 /*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:52:44 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/27 14:42:12 by tymonknibbe      ###   ########.fr       */
+/*   Updated: 2023/10/27 16:31:06 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ void print_t_exec(t_list *list)
       printf("RDR: ");
       while (rdr)
       {
-          if (rdr->type == HEREDOC || rdr->type == HEREDOC_NO_EXP)
+          if (rdr->type == HEREDOC_EXP || rdr->type == HEREDOC_NO_EXP)
           {
               if (hd)
                   printf("\n(WARNING! 2 heredocs found but the print function will only display the last ones contents)\n");
-              if (rdr->type == HEREDOC)
-                  printf("{HEREDOC} [%d], ", rdr->type);
+              if (rdr->type == HEREDOC_EXP)
+                  printf("{HEREDOC_EXP} [%d], ", rdr->type);
               else
                   printf("{HEREDOC_NO_EXP} [%d], ", rdr->type);
               hd = rdr->file;
@@ -105,7 +105,7 @@ void	print_class(int	num)
 		printf("redir left  : ");
 	else if (num == REDIRRIGHT)
 		printf("redirright  : ");
-	else if (num == HEREDOC)
+	else if (num == HEREDOC_EXP)
 		printf("append left : ");
 	else if (num == APPEND)
 		printf("append right: ");
