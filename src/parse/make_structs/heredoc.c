@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/18 12:39:21 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/27 14:47:12 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <parsing.h>
 
-static char	*get_delimiter(char *input, int *i);
+static char	*get_delimiter(t_list *list, int *i);
 static int	set_expand(char *delimiter);
 static void	heredoc(t_heredoc *doc);
 
-void	init_struct_and_fork(t_heredoc *doc, char *input, int *i)
+void	init_struct_and_fork(t_heredoc *doc, t_list *list, int *i)
 {
-	doc->delimiter = get_delimiter(input, i);
+	doc->delimiter = get_delimiter(list, i);
 	doc->expand = set_expand(doc->delimiter);
 	doc->status = 0;
 	doc->line = "";
@@ -37,7 +37,7 @@ int	add_heredoc(char *input, t_list *list, int *i, t_env_info *env)
 	t_rdr		*rdr_node;
 	t_exec		*cur_node;
 
-	init_struct_and_fork(&doc, input, i);
+	init_struct_and_fork(&doc, list, i);
 	cur_node = exec_lstlast(list->exec);
 	rdr_node = rdr_lstnew(NULL, doc.expand, 1);
 	rdr_lstadd_back(&cur_node->rdr, rdr_node);
@@ -108,18 +108,18 @@ static int	set_expand(char *d)
 	return (HEREDOC);
 }
 
-static char	*get_delimiter(char *input, int *i)
+static char	*get_delimiter(t_list *list, int *i)
 {
 	int		start;
 	char	*temp;
 	char	*str;
 
-	while (ft_whitespace(input[*i]) || input[*i] == '<')
+	while (ft_whitespace(list->input[*i]) || list->input[*i] == '<')
 		*i += 1;
 	start = *i;
-	while (!ft_whitespace(input[*i]) && input[*i])
+	while (list->token[*i] == WORD && list->input[*i])
 		*i += 1;
-	temp = ft_substr(input, start, *i - start);
+	temp = ft_substr(list->input, start, *i - start);
 	if (temp == NULL)
 		ft_exit("Malloc fail\n", errno);
 	str = ft_strjoin(temp, "\n");
