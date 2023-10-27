@@ -9,7 +9,7 @@ static t_str	*split_var(char *var, char *sub)
 
 	splitted_var = ft_split(var, ' ');
 	if (!splitted_var)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	transform_wildcards(splitted_var);
 	head = NULL;
 	if (var[0] == ' ' && sub)
@@ -32,10 +32,8 @@ static t_str	*split_var(char *var, char *sub)
 static t_str	*get_insert_lst(char *var, t_env_info *e, char *s)
 {
 	t_exp	x;
-	int		i;
 	t_str	*ret;
 
-	i = 0;
 	ret = NULL;
 	initialize_xp(&x, e);
 	if (s)

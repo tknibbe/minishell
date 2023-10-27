@@ -31,7 +31,7 @@ void	tokenize(t_list *list)
 	len = ft_strlen(list->input);
 	list->token = ft_calloc(sizeof(int), len + 1);
 	if (!list->token)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	set_token(list, list->input);
 }
 
@@ -93,10 +93,8 @@ static void	set_token(t_list *list, char *input)
 {
 	int	i;
 	int	end_quote;
-	int	subshell;
 
 	i = 0;
-	subshell = 0;
 	end_quote = 0;
 	while (input[i])
 	{

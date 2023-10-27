@@ -54,7 +54,7 @@ char	*create_sub(char *s, int *i, int j)
 		return (NULL);
 	sub = ft_substr(s, *i, j);
 	if (!sub)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	*i += j;
 	return (sub);
 }

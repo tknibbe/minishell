@@ -25,7 +25,7 @@ typedef struct s_env_info
 
 int					cd(char **cmd, t_env_info *e, int fd);
 int					echo(char **cmd, int fd);
-int					pwd(char **cmd, int fd);
+int					pwd(int fd);
 int					history(char *s);
 void				ms_exit(char **cmd);
 
@@ -47,6 +47,6 @@ char				*get_env(char *key, t_env_info *e);
 // void				free_env(char **env);
 void				update_var(t_env_info *e);
 void				update_env(t_env *to_update, t_env_info *e);
-void				swap(char *pwd, t_env *oldpwd, t_env_info *e);
+void				swap(t_env *pwd, t_env *oldpwd, t_env_info *e);
 
 #endif

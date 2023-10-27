@@ -5,19 +5,15 @@
 char	*oldpwd(t_env_info *e, int fd)
 {
 	char	*nav;
-	char	*pwd;
 
 	nav = get_env("OLDPWD", e);
-	if (!nav)
+	if (!nav || !*nav)
 	{
 		ft_minishell_error("cd", "OLDPWD", "not set", 0);
 		return (NULL);
 	}
-	pwd = getcwd(NULL, 0);
-	if (pwd == NULL)
-		ft_minishell_error("getcwd()", NULL, strerror(errno), errno);
-	write(fd, pwd, ft_strlen(pwd));
-	free(pwd);
+	write(fd, nav, ft_strlen(nav));
+	write(fd, "\n", 1);
 	return (nav);
 }
 
@@ -85,7 +81,7 @@ int	history(char *s)
 	will print the current working directory
 	followed by a new line
 */
-int	pwd(char **cmd, int fd)
+int	pwd(int fd)
 {
 	char	*buff;
 

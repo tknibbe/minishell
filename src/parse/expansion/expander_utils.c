@@ -55,7 +55,7 @@ void	append_sub(char **s, char *input, int len)
 
 	str = ft_substr(input, 0, len);
 	if (!str)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	*s = ft_join(*s, str);
 	free(str);
 }

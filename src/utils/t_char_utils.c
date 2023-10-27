@@ -6,7 +6,7 @@ t_str	*tstr_new(char *content)
 
 	new = malloc(sizeof(t_str));
 	if (!new)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	new->next = NULL;
 	new->str = content;
 	return (new);

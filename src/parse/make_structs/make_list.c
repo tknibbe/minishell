@@ -122,7 +122,7 @@ int	new_rdr_node(char *input, t_list *list, int *i, t_env_info *env)
 		*i += 1;
 	rdr_node->file->str = ft_substr(input, start, *i - start);
 	if (!rdr_node->file->str)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	rdr_lstadd_back(&cur_node->rdr, rdr_node);
 	return (EXIT_SUCCESS);
 }

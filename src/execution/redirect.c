@@ -12,7 +12,7 @@ static char	*expand(char *str, t_env *e) //wtf fix dit G
 	while (str[start] && str[start - 1] != '$')
 		start++;
 	end = start;
-	while (!ft_iswhitespace(str[end]) && str[end])
+	while (ft_isname(str[end]) && str[end])
 		end++;
 	while (e)
 	{
@@ -64,7 +64,6 @@ void	do_heredoc_or_so(t_rdr *r, t_env *e, int hierdok_num, int in)
 	char	*filename;
 
 	filename = getfilename(hierdok_num);
-	printf("filename: %s\n", filename);
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		ft_minishell_error("open()", filename, strerror(errno), errno);

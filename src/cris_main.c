@@ -13,7 +13,7 @@ t_ally	*minishell_init(char *envp[])
 
 	all = malloc(sizeof(t_ally));
 	if (!all)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	all->list = NULL;
 	all->env = env_init(envp);
 	return (all);
@@ -61,7 +61,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (argc != 1)
 		ft_exit("just ./minishell is enough\n", 1);
-	argv = NULL;
+	(void)argv;
 	all = minishell_init(envp);
 	if (!isatty(STDIN_FILENO))
 	{

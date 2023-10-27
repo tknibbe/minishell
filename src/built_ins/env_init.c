@@ -4,13 +4,12 @@
 t_env_info	*env_init(char **env)
 {
 	t_env		*head;
-	t_env		*tmp;
 	t_env_info	*info;
 	int			i;
 
 	info = malloc(sizeof(t_env_info));
 	if (!info)
-		ft_exit("Error: malloc failure\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	i = 0;
 	head = NULL;
 	while (env[i])
@@ -31,18 +30,18 @@ t_env	*env_new(char *s)
 	i = 0;
 	new = malloc(sizeof(t_env));
 	if (!new)
-		ft_exit("Error: malloc failure\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	while (s[i] && s[i] != '=')
 		i++;
 	new->key = ft_substr(s, 0, i);
 	if (!new->key)
-		ft_exit("Error: malloc failure\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	new->value = ft_strdup(s + i + 1);
 	if (!new->value)
-		ft_exit("Error: malloc failure\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	new->joined_value = ft_strdup(s);
 	if (!new->joined_value)
-		ft_exit("Error: malloc failure\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	new->next = NULL;
 	return (new);
 }
@@ -62,21 +61,27 @@ void	env_addback(t_env **head, t_env *new)
 	}
 }
 
-void	swap(char *pwd, t_env *oldpwd, t_env_info *e)
+void	swap(t_env *pwd, t_env *oldpwd, t_env_info *e)
 {
-	if (oldpwd)
+	if (!pwd)
 	{
-		free(oldpwd->value);
-		if (pwd)
-			oldpwd->value = pwd;
-		else
-			oldpwd->value = ft_strdup("");
-		if (!oldpwd->value)
-			ft_minishell_error("malloc()", NULL, strerror(errno), errno);
-		update_env(oldpwd, e);
+		pwd = env_new("PWD=");
+		env_addback(&e->head, pwd);
+		e->count++;
 	}
-	else
-		free(pwd);
+	if (!oldpwd)
+	{
+		oldpwd = env_new("OLDPWD=");
+		env_addback(&e->head, oldpwd);
+		e->count++;
+	}
+	free(oldpwd->value);
+	oldpwd->value = pwd->value;
+	pwd->value = getcwd(NULL, 0);
+	if (!pwd->value)
+		ft_minishell_error("getcwd()", NULL, strerror(errno), errno);
+	update_env(pwd, e);
+	update_env(oldpwd, e);
 }
 
 void	update_env(t_env *to_update, t_env_info *e)

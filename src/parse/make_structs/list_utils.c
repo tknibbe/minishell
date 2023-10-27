@@ -36,7 +36,7 @@ t_exec	*exec_lstnew(void)
 
 	n1 = malloc(sizeof(t_exec));
 	if (n1 == NULL)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	n1->cmd = NULL;
 	n1->subshell = NULL;
 	n1->rdr = NULL;

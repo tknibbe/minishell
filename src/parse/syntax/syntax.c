@@ -33,10 +33,8 @@ int	add_new_input(t_list *list, t_env_info *env)
 
 static int	control_op_check(t_list *list, int *i, t_env_info *env)
 {
-	int	j;
 	int	token;
 
-	j = *i;
 	token = list->token[*i];
 	if (!list->input[*i + 1])
 		return (add_new_input(list, env));
@@ -113,10 +111,8 @@ Return Value:
 int	check_syntax(t_list *list, t_env_info *env)
 {
 	int	i;
-	int	prev_token;
 
 	i = 0;
-	prev_token = 0;
 	if (no_valid_token(list))
 	{
 		env->last_exit_status = 0;

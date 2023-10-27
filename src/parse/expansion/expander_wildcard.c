@@ -59,7 +59,7 @@ static void	attempt_to_match(t_str **head, struct dirent *entry, char *s)
 		return ;
 	tmp = ft_strdup(entry->d_name);
 	if (!tmp)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	if (m == DIRECTORY && entry->d_type == DT_DIR)
 		tmp = ft_join(tmp, "/");
 	tstr_addback(head, tstr_new(tmp));
@@ -73,8 +73,8 @@ t_str	*expand_wildcard(char *s)
 
 	matched = NULL;
 	dir_p = opendir(".");
-	if (dir_p < 0)
-		ft_exit("opendir()\n", errno);
+	if (!dir_p)
+		ft_minishell_error("opendir()", NULL, strerror(errno), errno);
 	while (1)
 	{
 		entry = readdir(dir_p);

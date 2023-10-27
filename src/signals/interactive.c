@@ -14,7 +14,7 @@
 
 static void	interactive_handler(int c)
 {
-	c = 0;
+	(void)c;
 	ft_putchar_fd('\n', STDIN_FILENO);
 	rl_replace_line("", 0);
 	rl_on_new_line();

@@ -74,7 +74,7 @@ char	**lst_to_dp(t_str *c)
 
 	result = malloc((amount(c) + 1) * sizeof(char *));
 	if (!result)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	i = 0;
 	while (c)
 	{

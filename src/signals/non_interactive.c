@@ -25,7 +25,7 @@
 
 void	non_inter_handler(int c)
 {
-	c = 0;
+	(void)c;
 	ft_putchar_fd('\n', STDIN_FILENO);
 }
 

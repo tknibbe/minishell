@@ -18,7 +18,7 @@ t_rdr	*rdr_lstnew(char *str, int type, int heredoc)
 
 	n1 = malloc(sizeof(t_rdr));
 	if (n1 == NULL)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	if (!heredoc)
 	{
 		n1->file = t_str_lstnew(NULL);
@@ -59,7 +59,7 @@ t_str	*t_str_lstnew(char *str)
 
 	n1 = malloc(sizeof(t_str));
 	if (n1 == NULL)
-		ft_exit("Malloc error\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	n1->str = str;
 	n1->next = NULL;
 	return (n1);
