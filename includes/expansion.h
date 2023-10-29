@@ -2,7 +2,6 @@
 # define EXPANSION_H
 
 # include "structs.h"
-# include "minishell.h"
 
 /*		expander.c*/
 void	expander(int state, t_exp *x, char *input);

@@ -15,8 +15,22 @@ int	env(t_env *env, int fd)
 	return (0);
 }
 
+static void	only_export(char *arg, t_env *head, int fd)
+{
+	if (arg)
+		return ;
+	while (head)
+	{
+		write(fd, head->key, ft_strlen(head->key));
+		write(fd, "=\"", 2);
+		write(fd, head->value, ft_strlen(head->value));
+		write(fd, "\"\n", 2);
+		head = head->next;
+	}
+}
+
 /*will create or adjust an environment variable for export*/
-int	export(t_env_info *e, char **to_export)
+int	export(t_env_info *e, char **to_export, int fd)
 {
 	int		i;
 	int		mode;
@@ -24,6 +38,7 @@ int	export(t_env_info *e, char **to_export)
 
 	i = 1;
 	ret = 0;
+	only_export(to_export[1], e->head, fd);
 	while (to_export[i])
 	{
 		mode = legit_export_item(to_export[i]);

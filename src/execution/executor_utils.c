@@ -27,7 +27,7 @@ int	do_builtin(char **cmd, t_env_info *e, int builtin_no, int out)
 	else if (builtin_no == MS_ENV)
 		return (env(e->head, out));
 	else if (builtin_no == MS_EXPORT)
-		return (export(e, cmd));
+		return (export(e, cmd, out));
 	else if (builtin_no == MS_UNSET)
 		return (unset(e, cmd));
 	else if (builtin_no == MS_CD)

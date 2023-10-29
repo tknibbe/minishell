@@ -93,7 +93,7 @@ t_list	*add_subshell(char *input, t_list *list, int *i, t_env_info *env)
 	}
 	str = ft_substr(input, start, *i - start - 1);
 	if (!str)
-		ft_minishell_error("malloc()", "failed", strerror(errno), errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	temp = parse_input(str, env);
 	free (str);
 	if (!temp)

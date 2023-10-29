@@ -1,5 +1,5 @@
 
-#include "built_ins.h"
+#include "minishell.h"
 
 /*
 	echo function will write it's arguments to the standard output

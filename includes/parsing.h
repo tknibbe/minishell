@@ -3,7 +3,6 @@
 # define PARSING_H
 
 # include "structs.h"
-# include <minishell.h>
 
 enum	e_token
 {

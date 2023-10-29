@@ -28,7 +28,7 @@ void	tokenize(t_list *list)
 	int	len;
 
 	len = ft_strlen(list->input);
-	list->token = ft_calloc(sizeof(int), len + 1);
+	list->token = ft_calloc(sizeof(int), len + 1); // just a slight optimizations since we fill it with blankspace token or something else no need to calloc, use malloc instead
 	if (!list->token)
 		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	set_token(list, list->input);
@@ -36,9 +36,8 @@ void	tokenize(t_list *list)
 
 int	is_rdr_pipe_amp(char *c, int i)
 {
-	if (c[i] == '|' || c[i] == '<' || c[i] == '>')
-		return (EXIT_FAILURE);
-	if (c[i] == '&' && c[i + 1] == '&')
+	if ((c[i] == '|' || c[i] == '<' || c[i] == '>') || \
+		(c[i] == '&' && c[i + 1] == '&'))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

@@ -2,7 +2,6 @@
 # define UTILS_H
 
 # include "structs.h"
-# include "minishell.h"
 
 /*		t_str utils*/
 t_str	*tstr_new(char *content);

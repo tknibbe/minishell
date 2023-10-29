@@ -2,7 +2,6 @@
 # define BUILT_INS_H
 
 # include "structs.h"
-# include "minishell.h"
 
 /*				echo_pwd_exit.c*/
 int				echo(char **cmd, int fd);
@@ -10,7 +9,7 @@ void			ms_exit(char **cmd);
 int				pwd(int fd);
 
 /*				env_builtins.c*/
-int				export(t_env_info *e, char **to_export);
+int				export(t_env_info *e, char **to_export, int fd);
 int				unset(t_env_info *e, char **to_unset);
 int				env(t_env *env, int fd);
 

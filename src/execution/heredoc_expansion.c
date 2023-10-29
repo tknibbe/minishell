@@ -72,6 +72,8 @@ void	do_heredoc_or_so(t_rdr *r, t_env_info *e, int hierdok_num, int in)
 	int		fd;
 	char	*filename;
 
+	if (in == -1)
+		return ;
 	filename = getfilename(hierdok_num);
 	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)

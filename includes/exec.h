@@ -2,7 +2,6 @@
 # define EXEC_H
 
 # include "structs.h"
-# include "minishell.h"
 
 enum	e_builtin
 {
