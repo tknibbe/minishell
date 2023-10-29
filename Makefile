@@ -1,49 +1,34 @@
-INCLUDE		=	-I includes -I lib/includes -I $(shell brew --prefix readline)/include
-CFLAGS		=	-Wall -Werror -Wextra
-CFLAGS		+=	-g -fsanitize=address
-READLINE	=	-lreadline  -L $(shell brew --prefix readline)/lib
-OBJ_F		=	$(SRC:%.c=obj/%.o)
-MINISHELL	=	minishell
-LIBFT		=	lib/libft.a
 
-SRC			=	super_duper_awesome_tymon_and_cris_main.c \
-				built_ins/env_builtins.c \
-				built_ins/env_export_unset.c \
-				built_ins/env_init.c \
-				built_ins/env_utils.c \
-				built_ins/cd.c \
-				built_ins/echo_pwd_exit.c \
-				utils/double_array_utils.c \
-				utils/t_char_utils.c \
-				utils/utils1.c \
-				utils/free_structs.c \
-				parse/split_pipelines/split_pipelines.c \
-				parse/split_pipelines/list_utils.c \
-				parse/tokenize/token.c \
-				parse/tokenize/token_utils.c \
-				parse/tokenize/subshell.c \
-				parse/syntax/syntax.c \
-				parse/syntax/syntax_utils.c \
-				parse/syntax/syntax_utils2.c \
-				parse/parse_main.c \
-				parse/make_structs/make_list.c \
-				parse/make_structs/list_utils.c \
-				parse/make_structs/list_utils2.c \
-				parse/make_structs/heredoc.c \
-				parse/expansion/expander_wildcard.c \
-				parse/expansion/expander.c \
-				parse/expansion/expander_wordsplit.c \
-				parse/expansion/expander_utils.c \
-				parse/expansion/expander_ws_utils.c \
-				parse/expansion/expander_wc_utils.c \
-				signals/interactive.c \
-				signals/non_interactive.c \
-				execution/executor.c \
-				execution/redirect.c \
-				execution/pathfinder.c \
-				execution/executor_utils.c \
-				execution/heredoc_expansion.c \
-				parse/test_functions.c
+INCLUDE			=	-I includes -I lib/includes -I $(shell brew --prefix readline)/include
+CFLAGS			=	-Wall -Werror -Wextra
+CFLAGS			+=	-g -fsanitize=address
+READLINE		=	-lreadline -L $(shell brew --prefix readline)/lib
+MINISHELL		=	minishell
+LIBFT			=	lib/libft.a
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+#	SOURCE FILES AND OBJECT DIRECTORIES
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
+
+OBJ_DIR			=	obj obj/utils obj/built_ins obj/execution obj/signals \
+					obj/parse obj/parse/expansion obj/parse/make_structs obj/parse/split_pipelines \
+					obj/parse/syntax obj/parse/tokenize
+BUILTINS		=	cd.c echo_pwd_exit.c env_builtins.c env_export_unset.c env_init.c env_utils.c
+EXECUTION		=	executor_utils.c executor.c heredoc_expansion.c pathfinder.c redirect.c
+SIGNALS			=	interactive.c non_interactive.c
+UTILS			=	double_array_utils.c free_structs.c t_char_utils.c utils1.c
+EXPANSION		=	expander_utils.c expander_wc_utils.c expander_wildcard.c expander_wordsplit.c expander_ws_utils.c expander.c
+MAKE_STRUCTS	=	heredoc.c list_utils.c list_utils2.c make_list.c
+SPLIT_PIPELINES	=	list_utils.c split_pipelines.c
+SYNTAX			=	syntax_utils.c syntax_utils2.c syntax.c
+TOKENIZE		=	subshell.c token_utils.c token.c
+PARSE			=	parse_main.c test_functions.c $(addprefix tokenize/, $(TOKENIZE)) $(addprefix syntax/, $(SYNTAX)) $(addprefix make_structs/, $(MAKE_STRUCTS)) \
+					$(addprefix split_pipelines/, $(SPLIT_PIPELINES)) $(addprefix expansion/, $(EXPANSION))
+SRC				=	super_duper_awesome_tymon_and_cris_main.c $(addprefix parse/, $(PARSE)) $(addprefix utils/, $(UTILS)) \
+					$(addprefix signals/, $(SIGNALS)) $(addprefix execution/, $(EXECUTION)) $(addprefix built_ins/, $(BUILTINS))
+OBJ_F			=	$(SRC:%.c=obj/%.o)
+
+#----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 all : $(MINISHELL)
 
@@ -52,16 +37,7 @@ $(MINISHELL) : $(OBJ_F)
 	$(CC)  $(CFLAGS) $(READLINE) $^ -o $@ $(LIBFT)
 
 obj/%.o : src/%.c
-	@mkdir -p obj
-	@mkdir -p obj/utils
-	@mkdir -p obj/built_ins
-	@mkdir -p obj/parse/split_pipelines
-	@mkdir -p obj/parse/tokenize
-	@mkdir -p obj/parse/make_structs
-	@mkdir -p obj/parse/expansion
-	@mkdir -p obj/parse/syntax
-	@mkdir -p obj/execution
-	@mkdir -p obj/signals
+	mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
 
 clean :
