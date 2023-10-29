@@ -41,10 +41,10 @@ void	set_echo(void)
 	struct termios	term;
 
 	if (tcgetattr(STDIN_FILENO, &term) != 0)
-		ft_exit("Error getting terminal attributes", errno);
+		ft_minishell_error("tcgetattr()", NULL, strerror(errno), errno);
 	term.c_lflag |= ECHOCTL;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) != 0)
-		ft_exit("Error setting terminal attributes", errno);
+		ft_minishell_error("tcgetattr()", NULL, strerror(errno), errno);
 }
 
 void	set_signals_non_inter(void)

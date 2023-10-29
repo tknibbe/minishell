@@ -1,43 +1,44 @@
 #ifndef EXPANSION_H
 # define EXPANSION_H
 
-# include <minishell.h>
+# include "structs.h"
+# include "libft.h"
+# include "utils.h"
 
-typedef struct s_exp
-{
-	char		*result;
-	int			star;
-	t_env_info	*e;
-}				t_exp;
+# include <sys/types.h>
+# include <string.h>
+# include <dirent.h>
+# include <stdlib.h>
+# include <errno.h>
 
-typedef struct	s_str	t_str;
-
-/*full expansion*/
-char	**full_expansion(t_str *c, t_env_info *e);
+/*		expander.c*/
 void	expander(int state, t_exp *x, char *input);
+char	**full_expansion(t_str *c, t_env_info *e);
 
-/*wordsplitter functions*/
+/*		expander_wc_utils.c*/
+int		skip_quoted_state(char *s, int i, int quote);
+void	initialize_xp(t_exp *xp, t_env_info *e);
+int		check_for_wildcard(char *s);
+int		unclosed_quote(int state);
+int		amount(t_str *s);
+
+/*		expander_wildcard.c*/
+t_str	*expand_wildcard(char *s);
+
+/*		expander_ws_utils.c*/
+char	*create_sub(char *s, int *i, int j);
+void	expand_string(char *s, t_exp *x);
+void	transform_wildcards(char **s);
+
+//		expander_wordsplit.c
 void	split_word(t_str *start, t_env_info *e);
 void	insert_list(t_str **start, t_str *list);
 
-/*wildcard expander*/
-t_str	*expand_wildcard(char *s);
-
-/*utils*/
-char	*ft_join(char *s1, char *s2);
+//		expander_utils.c
 int		expand_dollo(t_exp *x, char *input, char **s, int i);
 void	append_sub(char **s, char *input, int len);
-char	*get_brake(int state);
-int		identify_substr(t_exp *x, int state, char *input, char **s);
-char	*create_sub(char *s, int *i, int j);
-void	transform_wildcards(char **s);
-void	expand_string(char *s, t_exp *x);
-int		check_for_wildcard(char *s);
-int		unclosed_quote(int state);
-int		skip_quoted_state(char *s, int i, int quote);
-int		amount(t_str *s);
-void	initialize_xp(t_exp *xp, t_env_info *e);
-
+char	*ft_join(char *s1, char *s2);
 char	**lst_to_dp(t_str *c);
+char	*get_brake(int state);
 
 #endif

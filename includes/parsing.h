@@ -2,51 +2,8 @@
 #ifndef PARSING_H 
 # define PARSING_H
 
+# include "structs.h"
 # include <minishell.h>
-
-typedef struct s_exec		t_exec;
-typedef struct s_rdr		t_rdr;
-typedef struct s_minishell	t_ally;
-typedef struct s_str		t_str;
-typedef struct s_list		t_list;
-typedef struct s_env_info	t_env_info;
-
-typedef struct s_rdr
-{
-	t_str			*file;
-	int				type;
-	t_rdr			*next;
-}					t_rdr;
-
-typedef struct s_exec
-{
-	t_list			*subshell;
-	t_str			*cmd;
-	t_rdr			*rdr;
-	t_exec			*next;
-}					t_exec;
-
-typedef struct s_list
-{
-	int				*token;
-	char			*input;
-	int				and_or;
-	t_exec			*exec;
-	struct s_list	*next;
-}					t_list;
-
-typedef struct s_heredoc
-{
-	int		pid;
-	int		expand;
-	int		status;
-	int		pipefd[2];
-	char	*line;
-	char	*delimiter;
-}				t_heredoc;
-
-//# define TAB '	'
-# define SPACE ' '
 
 enum	e_token
 {
@@ -65,7 +22,6 @@ enum	e_token
 };
 
 //PARSE_MAIN.C
-
 t_list	*parse_input(char *input, t_env_info *env);
 
 //TOKEN.C

@@ -1,8 +1,52 @@
-#include <built_ins.h>
-#include <minishell.h>
-#include <readline/history.h>
 
-char	*oldpwd(t_env_info *e, int fd)
+#include "built_ins.h"
+
+static void	swap(t_env *pwd, t_env *oldpwd, t_env_info *e)
+{
+	if (!pwd)
+	{
+		pwd = env_new("PWD=");
+		env_addback(&e->head, pwd);
+		e->count++;
+	}
+	if (!oldpwd)
+	{
+		oldpwd = env_new("OLDPWD=");
+		env_addback(&e->head, oldpwd);
+		e->count++;
+	}
+	free(oldpwd->value);
+	oldpwd->value = pwd->value;
+	pwd->value = getcwd(NULL, 0);
+	if (!pwd->value)
+		ft_minishell_error("getcwd()", NULL, strerror(errno), errno);
+	update_env(pwd, e);
+	update_env(oldpwd, e);
+}
+
+static void	update_var(t_env_info *e)
+{
+	t_env	*curr;
+	t_env	*pwd;
+	t_env	*oldpwd;
+
+	curr = e->head;
+	pwd = NULL;
+	oldpwd = NULL;
+	while (curr)
+	{
+		if (!ft_strncmp("PWD", curr->key, 4))
+			pwd = curr;
+		else if (!ft_strncmp("OLDPWD", curr->key, 7))
+			oldpwd = curr;
+		if (pwd && oldpwd)
+			break ;
+		curr = curr->next;
+	}
+	swap(pwd, oldpwd, e);
+}
+
+static char	*oldpwd(t_env_info *e, int fd)
 {
 	char	*nav;
 
@@ -17,7 +61,7 @@ char	*oldpwd(t_env_info *e, int fd)
 	return (nav);
 }
 
-char	*get_nav(char *input, t_env_info *e, int fd)
+static char	*get_nav(char *input, t_env_info *e, int fd)
 {
 	char	*nav;
 
@@ -64,34 +108,4 @@ int	cd(char **cmd, t_env_info *e, int fd)
 	if (fd != 1)
 		close((fd));
 	return (free(nav), ret);
-}
-
-/*
-	will add the input to the readline history
-	if no input is given it will skip this step
-*/
-int	history(char *s)
-{
-	if (s && *s)
-		add_history(s);
-	return (0);
-}
-
-/*
-	will print the current working directory
-	followed by a new line
-*/
-int	pwd(int fd)
-{
-	char	*buff;
-
-	buff = getcwd(NULL, 0);
-	if (!buff)
-		return (ft_minishell_error("getcwd()", strerror(errno), NULL, errno));
-	write(fd, buff, ft_strlen(buff));
-	write(fd, "\n", 1);
-	free(buff);
-	if (fd != 1)
-		close(fd);
-	return (0);
 }

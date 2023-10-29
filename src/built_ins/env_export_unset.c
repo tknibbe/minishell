@@ -1,6 +1,6 @@
-#include <built_ins.h>
-#include <minishell.h>
-#include <expansion.h>
+
+#include "built_ins.h"
+#include "expansion.h"
 
 int	valid_identifier(char *s)
 {
@@ -58,19 +58,17 @@ int	find_and_unset(t_env **env, char *unset)
 	return (0);
 }
 
-int	replace_value(t_env *node, char *new_value)
+static int	replace_value(t_env_info *e, t_env *node, char *new_value)
 {
 	free(node->value);
 	node->value = ft_strdup(new_value);
 	if (node->value == NULL)
 		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
-	if (node->joined_value)
-		free(node->joined_value);
-	node->joined_value = ft_envjoin(node->key, node->value);
+	update_env(node, e);
 	return (1);
 }
 
-int	find_and_export(t_env *head, char *to_export)
+int	find_and_export(t_env_info *e, t_env *head, char *to_export)
 {
 	int	i;
 
@@ -80,10 +78,11 @@ int	find_and_export(t_env *head, char *to_export)
 		while (head->key[i] == to_export[i])
 			i++;
 		if (!head->key[i] && to_export[i] == '=')
-			return (replace_value(head, &to_export[i + 1]));
+			return (replace_value(e, head, &to_export[i + 1]));
 		else if (!head->key[i] && to_export[i] == '+')
 		{
 			head->value = ft_join(head->value, &to_export[i + 2]);
+			update_env(head, e);
 			return (1);
 		}
 		head = head->next;

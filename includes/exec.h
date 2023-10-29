@@ -1,24 +1,8 @@
 #ifndef EXEC_H
 # define EXEC_H
 
-#include <stdbool.h>
-
-typedef struct s_exec		t_exec;
-typedef struct s_str		t_str;
-typedef struct s_minishell	t_ally;
-typedef struct s_env_info	t_env_info;
-typedef struct s_env		t_env;
-
-typedef struct s_process
-{
-	int			fd;
-	int			builtin;
-	bool		is_first;
-	int			here_doc_nbr;
-	int			*p;
-	t_env_info	*e;
-	char		**cmd;
-}				t_process;
+# include <stdbool.h>
+# include "minishell.h"
 
 enum	e_builtin
 {
@@ -32,11 +16,17 @@ enum	e_builtin
 	MS_EXIT,
 };
 
-char	*append_cmd_path(t_env_info *env, char *cmd);
+/*		executor.c*/
+void	executor(t_list *pipe_line, t_env_info *e);
+
+/*		executor_utils.c*/
 int		do_builtin(char **cmd, t_env_info *e, int builtin_no, int out);
-int		builtin(char *cmd);
 int		prep_process(t_process *proc, t_exec *exec, t_env_info *e);
-void	execute_child(t_exec *exec, t_env_info *e, t_process *proc);
-void	heredoc_write(t_str *str, t_env_info *e, int fd, int type);
+int		builtin(char *cmd);
+
+/*		heredoc_expansion*/
+void	do_heredoc_or_so(t_rdr *r, t_env_info *e, int hierdok_num, int in);
+
+char	*append_cmd_path(t_env_info *env, char *cmd);
 
 #endif

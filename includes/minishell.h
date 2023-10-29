@@ -16,11 +16,12 @@
 # include <termios.h>
 # include <dirent.h>
 
-# include "../lib/includes/libft.h"
-# include <parsing.h>
-# include <exec.h>
-# include <built_ins.h>
-# include <expansion.h>
+# include "libft.h"
+# include "parsing.h"
+# include "exec.h"
+# include "built_ins.h"
+# include "expansion.h"
+# include "structs.h"
 
 # define PROMPT "ez_game -> "
 //# define PROMPT ""
@@ -31,31 +32,22 @@
 //hey tymoo bicep baby muscle mommy
 //heck yeah muscle mommy <3333
 
-typedef struct s_list	t_list;
-typedef struct s_rdr	t_rdr;
+// typedef struct s_list	t_list;
+// typedef struct s_rdr	t_rdr;
 
-typedef struct	s_str
-{
-	char			*str;
-	struct s_str	*next;
-}					t_str;
-
-typedef struct s_minishell
-{
-	t_env_info			*env;
-	t_list				*list;
-}						t_ally;
+// typedef struct	s_str
+// {
+// 	char			*str;
+// 	struct s_str	*next;
+// }					t_str;
 
 int		history(char *s);
 //void	parse_input(char *input, t_ally *all);
 
-//EXIT_FUNCS.C
-void	ft_exit(char *string, int errnum);
-
 //utils
 void	print_double_array(char **x);
 void	free_dp(char **dp);
-int		count(char **c);
+int		count_dp(char **c);
 
 int		ft_iswhitespace(int	c);
 int		ft_isname(int c);
@@ -76,7 +68,7 @@ void	unset_echo(void);
 void	set_signals_non_inter(void);
 void	set_echo(void);
 
-int	ft_minishell_error(char *program, char *arg, char *desc, int ex);
+int		ft_minishell_error(char *program, char *arg, char *desc, int ex);
 
 void	executor(t_list *pipe_line, t_env_info *e);
 int		redirect(t_rdr *r, t_env_info *e, int in, int out, int hierdok_num);

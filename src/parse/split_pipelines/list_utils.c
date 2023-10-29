@@ -18,7 +18,7 @@ t_list	*t_listnew(void)
 
 	node = malloc(sizeof(t_list));
 	if (!node)
-		ft_exit("Malloc error", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	node->token = NULL;
 	node->input = NULL;
 	node->and_or = 0;

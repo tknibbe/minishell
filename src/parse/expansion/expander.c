@@ -41,6 +41,34 @@ static void	expansion_ws(t_str *start, t_env_info *e)
 	}
 }
 
+static int	identify_substr(t_exp *x, int state, char *input, char **s)
+{
+	char	*brake;
+	int		i;
+	int		j;
+
+	i = 0;
+	brake = get_brake(state);
+	while (input[i] && input[i] != state)
+	{
+		j = 0;
+		while (input[i + j] && !ft_isinset(input[i + j], brake))
+		{
+			if (!state && input[i + j] == '*')
+				input[i + j] = -1;
+			j++;
+		}
+		if (j)
+			append_sub(s, &input[i], j);
+		i += j;
+		if (input[i] == '$')
+			i = expand_dollo(x, input, s, (i + 1));
+		else if (ft_isinset(input[i], brake))
+			break ;
+	}
+	return (i);
+}
+
 void	expander(int state, t_exp *x, char *input)
 {
 	int		i;
@@ -53,7 +81,7 @@ void	expander(int state, t_exp *x, char *input)
 		input++;
 	i = identify_substr(x, state, input, &s);
 	if ((state && state == input[i]) || !state)
-		x->result = ft_join(x->result, s); //TODO: leaks! with input: echo "echo HEY > cat" | ./minishell
+		x->result = ft_join(x->result, s);
 	free(s);
 	if (state && state == input[i])
 		i++;
@@ -65,28 +93,6 @@ void	expander(int state, t_exp *x, char *input)
 	else if (*input == '"')
 		return (expander('"', x, input));
 	return (expander(0, x, input));
-}
-
-char	**lst_to_dp(t_str *c)
-{
-	char	**result;
-	int		i;
-
-	result = malloc((amount(c) + 1) * sizeof(char *));
-	if (!result)
-		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
-	i = 0;
-	while (c)
-	{
-		if (c->str)
-		{
-			result[i++] = c->str;
-			c->str = NULL;
-		}
-		c = c->next;
-	}
-	result[i] = NULL;
-	return (result);
 }
 
 char	**full_expansion(t_str *c, t_env_info *e)

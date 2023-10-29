@@ -48,7 +48,6 @@ int	amount(t_str *s)
 
 void	initialize_xp(t_exp *xp, t_env_info *e)
 {
-	xp->star = 0;
 	xp->e = e;
 	xp->result = NULL;
 }

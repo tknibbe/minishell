@@ -1,5 +1,4 @@
-#include <built_ins.h>
-#include <minishell.h>
+#include "built_ins.h"
 
 /*
 	will print out all keys with their value's
@@ -29,7 +28,7 @@ int	export(t_env_info *e, char **to_export)
 		mode = legit_export_item(to_export[i]);
 		if (mode < 1)
 		{
-			if (!find_and_export(e->head, to_export[i]))
+			if (!find_and_export(e, e->head, to_export[i]))
 			{
 				env_addback(&e->head, env_new(to_export[i]));
 				e->count++;

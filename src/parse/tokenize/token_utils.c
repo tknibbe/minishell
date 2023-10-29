@@ -69,16 +69,3 @@ void	right(t_list *list, char *input, int *i)
 	else
 		list->token[*i] = REDIRRIGHT;
 }
-
-int	is_alphanumeric(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (EXIT_FAILURE);
-	if (c >= 'a' && c <= 'z')
-		return (EXIT_FAILURE);
-	if (c >= 'A' && c <= 'Z')
-		return (EXIT_FAILURE);
-	if (c == '_')
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}

@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int	count(char **c)
+int	count_dp(char **c)
 {
 	int	i;
 

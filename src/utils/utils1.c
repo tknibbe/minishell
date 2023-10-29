@@ -42,24 +42,24 @@ Return Value:
 	nonzero, the function may also exit the program.*/
 int	ft_minishell_error(char *program, char *arg, char *desc, int ex)
 {
-	write(2, "minishell", 9);
+	write(STDERR_FILENO, "minishell", 9);
 	if (program)
 	{
-		write(2, ": ", 2);
-		write(2, program, ft_strlen(program));
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, program, ft_strlen(program));
 	}
 	if (arg)
 	{
-		write(2, ": ", 2);
-		write(2, arg, ft_strlen(arg));
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, arg, ft_strlen(arg));
 	}
 	if (desc)
 	{
-		write(2, ": ", 2);
-		write(2, desc, ft_strlen(desc));
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, desc, ft_strlen(desc));
 	}
-	write(2, "\n", 1);
-	if (ex)
+	write(STDERR_FILENO, "\n", 1);
+	if (ex != 0)
 		exit(ex);
 	return (1);
 }

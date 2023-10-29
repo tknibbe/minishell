@@ -1,5 +1,5 @@
-#include <minishell.h>
-#include <expansion.h>
+
+#include "expansion.h"
 
 char	*ft_join(char *s1, char *s2)
 {
@@ -69,30 +69,24 @@ char	*get_brake(int state)
 	return ("$\"'");
 }
 
-int	identify_substr(t_exp *x, int state, char *input, char **s)
+char	**lst_to_dp(t_str *c)
 {
-	char	*brake;
+	char	**result;
 	int		i;
-	int		j;
 
+	result = malloc((amount(c) + 1) * sizeof(char *));
+	if (!result)
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	i = 0;
-	brake = get_brake(state);
-	while (input[i] && input[i] != state) //  change statement so it also includes lowest elseif
+	while (c)
 	{
-		j = 0;
-		while (input[i + j] && !ft_isinset(input[i + j], brake))
+		if (c->str)
 		{
-			if (!state && input[i + j] == '*')
-				input[i + j] = -1;
-			j++;
+			result[i++] = c->str;
+			c->str = NULL;
 		}
-		if (j)
-			append_sub(s, &input[i], j);
-		i += j;
-		if (input[i] == '$')
-			i = expand_dollo(x, input, s, (i + 1));
-		else if (ft_isinset(input[i], brake))
-			break ;
+		c = c->next;
 	}
-	return (i);
+	result[i] = NULL;
+	return (result);
 }

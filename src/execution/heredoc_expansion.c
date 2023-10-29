@@ -10,39 +10,52 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <exec.h>
 #include <minishell.h>
-#include <built_ins.h>
+
+static char	*getfilename(int num)
+{
+	char	*nbr;
+	char	*filename;
+
+	nbr = ft_itoa(num);
+	if (!nbr)
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
+	filename = ft_strjoin("/tmp/unieke_naam", nbr);
+	if (!filename)
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
+	free(nbr);
+	return (filename);
+}
 
 static void	write_expand(char *str, t_env_info *e, int fd)
 {
 	int		i;
 	int		start;
-	char	*temp;
+	char	*var;
 
 	i = 0;
-	start = 0;
 	while (str[i])
 	{
+		start = i;
+		while (str[i] && str[i] != '$')
+			i++;
+		write(fd, str + start, i - start);
 		if (str[i] == '$')
 		{
-			write(fd, &str[start], i++ - start);
-			temp = get_env(&str[i], e);
-			while (ft_isname(str[i]))
+			var = get_env(&str[++i], e);
+			if (str[i] == '?')
 				i++;
-			// printf("temp = [%s] i = %d\n", temp, i);
-			start = i;
-			if (temp)
-				write(fd, temp, ft_strlen(temp));
-			free(temp);
+			else
+				while (ft_isname(str[i]))
+					i++;
+			if (var)
+				write(fd, var, ft_strlen(var));
+			free(var);
 		}
-		i++;
 	}
-	// printf("start = %d\n", start);
-	write(fd, &str[start], i - start);
 }
 
-void	heredoc_write(t_str *str, t_env_info *e, int fd, int type)
+static void	heredoc_write(t_str *str, t_env_info *e, int fd, int type)
 {
 	while (str)
 	{
@@ -52,4 +65,26 @@ void	heredoc_write(t_str *str, t_env_info *e, int fd, int type)
 			write_expand(str->str, e, fd);
 		str = str->next;
 	}
+}
+
+void	do_heredoc_or_so(t_rdr *r, t_env_info *e, int hierdok_num, int in)
+{
+	int		fd;
+	char	*filename;
+
+	filename = getfilename(hierdok_num);
+	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+		ft_minishell_error("open()", filename, strerror(errno), errno);
+	heredoc_write(r->file, e, fd, r->type);
+	close(fd);
+	fd = open(filename, O_RDONLY);
+	if (fd < 0)
+		ft_minishell_error("open()", filename, strerror(errno), errno);
+	if (dup2(fd, in) < 0)
+		ft_minishell_error("dup2()", "duplicating heredoc", strerror(errno), errno);
+	close(fd);
+	if (unlink(filename))
+		ft_minishell_error("unlink()", NULL, strerror(errno), errno);
+	free(filename);
 }

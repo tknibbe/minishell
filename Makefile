@@ -1,19 +1,18 @@
 INCLUDE		=	-I includes -I lib/includes -I $(shell brew --prefix readline)/include
-CFLAGS		=	-Wall -Werror -Wextra 
-CFLAGS		+=	-g -fsanitize=address 
+CFLAGS		=	-Wall -Werror -Wextra
+CFLAGS		+=	-g -fsanitize=address
 READLINE	=	-lreadline  -L $(shell brew --prefix readline)/lib
 OBJ_F		=	$(SRC:%.c=obj/%.o)
 MINISHELL	=	minishell
 LIBFT		=	lib/libft.a
-SRC			=	cris_main.c \
-				exit_funcs.c \
+
+SRC			=	super_duper_awesome_tymon_and_cris_main.c \
 				built_ins/env_builtins.c \
 				built_ins/env_export_unset.c \
 				built_ins/env_init.c \
 				built_ins/env_utils.c \
 				built_ins/cd.c \
-				built_ins/exit.c \
-				built_ins/echo.c \
+				built_ins/echo_pwd_exit.c \
 				utils/double_array_utils.c \
 				utils/t_char_utils.c \
 				utils/utils1.c \
@@ -39,7 +38,6 @@ SRC			=	cris_main.c \
 				parse/expansion/expander_wc_utils.c \
 				signals/interactive.c \
 				signals/non_interactive.c \
-				exit_funcs.c \
 				execution/executor.c \
 				execution/redirect.c \
 				execution/pathfinder.c \

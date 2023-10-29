@@ -1,7 +1,7 @@
 #include <minishell.h>
 #include <exec.h>
 
-void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
+static void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 {
 	if (proc->p)
 	{
@@ -9,10 +9,10 @@ void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 		dup2(proc->p[1], STDOUT_FILENO);
 		close(proc->p[1]);
 	}
-	if (proc->fd)
+	if (proc->fd_to_read_from)
 	{
-		dup2(proc->fd, STDIN_FILENO);
-		close(proc->fd);
+		dup2(proc->fd_to_read_from, STDIN_FILENO);
+		close(proc->fd_to_read_from);
 	}
 	if (exec->rdr)
 		redirect(exec->rdr, e, STDIN_FILENO, STDOUT_FILENO, proc->here_doc_nbr);
@@ -30,7 +30,7 @@ void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 	exit (0);
 }
 
-int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
+static int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
 {
 	pid_t	pid;
 
@@ -42,8 +42,8 @@ int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
 	if (proc->p)
 	{
 		proc->here_doc_nbr++;
-		proc->fd = dup(proc->p[0]);
-		if (proc->fd == -1)
+		proc->fd_to_read_from = dup(proc->p[0]);
+		if (proc->fd_to_read_from == -1)
 			ft_minishell_error("dup()", "duplicating read end of pipe for next command", strerror(errno), errno);
 		if (close(proc->p[0]) == -1 || close(proc->p[1]) == -1)
 			ft_minishell_error("close()", "closing pipe in main process", strerror(errno), errno);
@@ -51,25 +51,33 @@ int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
 	return (pid);
 }
 
-void	init_proc(t_process *proc)
+static void	init_proc(t_process *proc, t_exec *next)
 {
 	proc->cmd = NULL;
-	proc->fd = 0;
+	proc->fd_to_read_from = 0;
 	proc->builtin = 0;
-	proc->is_first = 1;
+	if (!next)
+	{
+		proc->is_single_command = 1;
+		proc->p = NULL;
+	}
+	else
+	{
+		proc->is_single_command = 0;
+		proc->p = malloc(2 * sizeof(int));
+		if (!proc->p)
+			ft_minishell_error("malloc()", "allocating pipe", strerror(errno), errno);
+	}
 	proc->here_doc_nbr = 1;
-	proc->p = malloc(2 * sizeof(int));
-	if (!proc->p)
-		ft_minishell_error("malloc()", "allocating pipe", strerror(errno), errno);
 }
 
-int	exec_pipe_line(t_exec *exec, t_env_info *e)
+static int	exec_pipe_line(t_exec *exec, t_env_info *e)
 {
 	t_process	proc;
 	pid_t		pid;
 	int			status;
 
-	init_proc(&proc);
+	init_proc(&proc, exec->next);
 	while (exec)
 	{
 		if (prep_process(&proc, exec, e))
@@ -78,8 +86,8 @@ int	exec_pipe_line(t_exec *exec, t_env_info *e)
 		free_dp(proc.cmd);
 		exec = exec->next;
 	}
-	if (proc.fd)
-		close(proc.fd);
+	if (proc.fd_to_read_from)
+		close(proc.fd_to_read_from);
 	waitpid(pid, &status, 0);
 	while (wait(NULL) != -1)
 		;

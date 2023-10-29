@@ -45,7 +45,7 @@ char	*append_cmd_path(t_env_info *env, char *cmd)
 		return (cmd);
 	temp = get_env("PATH", env);
 	if (!temp)
-		ft_minishell_error(cmd, NULL, "command not found", 127);
+		ft_minishell_error(cmd, NULL, "no such file or directory", 127);
 	path = ft_split(temp, ':');
 	if (!path)
 		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
@@ -59,3 +59,4 @@ char	*append_cmd_path(t_env_info *env, char *cmd)
 	ft_minishell_error(cmd, NULL, "command not found", 127);
 	return (NULL);
 }
+				    	 	 	 		

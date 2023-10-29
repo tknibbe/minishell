@@ -1,6 +1,7 @@
 #include <parsing.h>
 #include <minishell.h>
-#include <expansion.h>
+#include "expansion.h"
+#include "structs.h"
 
 void	expand_string(char *s, t_exp *x)
 {

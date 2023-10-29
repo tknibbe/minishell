@@ -20,15 +20,14 @@ void	init_struct_and_fork(t_heredoc *doc, t_list *list, int *i)
 {
 	doc->delimiter = get_delimiter(list, i);
 	doc->expand = set_expand(doc->delimiter);
-	doc->status = 0;
 	doc->line = "";
 	if (doc->expand == HEREDOC_NO_EXP)
 		doc->delimiter = ft_strdel(doc->delimiter, "\"\'");
 	if (pipe(doc->pipefd) < 0)
-		ft_exit("Error creating pipe", errno);
+		ft_minishell_error("pipe()", "creating the pipe for heredoc", strerror(errno), errno);
 	doc->pid = fork();
 	if (doc->pid < 0)
-		ft_exit("Error creating child process", errno);
+		ft_minishell_error("fork()", "forking for heredoc", strerror(errno), errno);
 }
 
 int	add_heredoc(t_list *list, int *i, t_env_info *env)
@@ -85,25 +84,21 @@ static void	heredoc(t_heredoc *doc)
 static int	set_expand(char *d)
 {
 	int		i;
-	int		j;
-	char	quote;
+	int		quote;
 
 	i = 0;
-	j = 0;
 	while (d[i])
 	{
-		if (d[i] == '"' || d[i] == '\'')
-		{
-			quote = d[i];
-			while (d[i + j])
-			{
-				j++;
-				if (d[i + j] == quote)
-					return (HEREDOC_NO_EXP);
-			}
-		}
-		j = 0;
-		i++;
+		while (d[i] && d[i] != '\'' && d[i] != '"')
+			i++;
+		if (!d[i])
+			break ;
+		quote = i++;
+		while (d[i] && d[i] != d[quote])
+			i++;
+		if (d[i] == d[quote])
+			return (HEREDOC_NO_EXP);
+		i = quote + 1;
 	}
 	return (HEREDOC_EXP);
 }
@@ -122,8 +117,10 @@ static char	*get_delimiter(t_list *list, int *i)
 		*i += 1;
 	temp = ft_substr(list->input, start, *i - start);
 	if (temp == NULL)
-		ft_exit("Malloc fail\n", errno);
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	str = ft_strjoin(temp, "\n");
+	if (str == NULL)
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	free (temp);
 	return (str);
 }

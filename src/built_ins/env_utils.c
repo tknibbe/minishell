@@ -68,26 +68,11 @@ char	*get_env(char *key, t_env_info *e)
 	return (NULL);
 }
 
-void	update_var(t_env_info *e)
+void	update_env(t_env *to_update, t_env_info *e)
 {
-	t_env	*curr;
-	t_env	*pwd;
-	t_env	*oldpwd;
-
-	curr = e->head;
-	pwd = NULL;
-	oldpwd = NULL;
-	while (curr)
-	{
-		if (!ft_strncmp("PWD", curr->key, 4))
-			pwd = curr;
-		else if (!ft_strncmp("OLDPWD", curr->key, 7))
-			oldpwd = curr;
-		if (pwd && oldpwd)
-			break ;
-		curr = curr->next;
-	}
-	swap(pwd, oldpwd, e);
+	free(to_update->joined_value);
+	to_update->joined_value = ft_envjoin(to_update->key, to_update->value);
+	e->has_changed = 1;
 }
 
 void	get_environment_for_exec(t_env_info *e)
