@@ -16,7 +16,7 @@ static void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 	}
 	if (exec->rdr)
 		redirect(exec->rdr, e, STDIN_FILENO, STDOUT_FILENO, proc->here_doc_nbr);
-	if (proc->cmd)
+	if (proc->cmd && *proc->cmd)
 	{
 		if (proc->builtin)
 			exit (do_builtin(proc->cmd, e, proc->builtin, STDOUT_FILENO));
