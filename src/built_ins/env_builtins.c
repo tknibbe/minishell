@@ -1,4 +1,5 @@
-#include "built_ins.h"
+
+# include "minishell.h"
 
 /*
 	will print out all keys with their value's

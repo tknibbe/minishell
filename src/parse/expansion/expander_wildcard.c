@@ -1,9 +1,9 @@
 
-#include "expansion.h"
+#include "minishell.h"
 
 #define NO_MATCH 0
 #define MATCHED 1
-#define DIRECTORY 47
+#define DIRECTORY '/'
 
 static int	check_for_first_matching_string(char **file, char **input, int w_card)
 {

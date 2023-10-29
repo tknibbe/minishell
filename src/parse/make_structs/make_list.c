@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+# include "minishell.h"
 
 int		new_rdr_node(char *input, t_list *list, int *i, t_env_info *env);
 void	new_cmd_node(char *input, int *token, t_exec *exec, int *i);

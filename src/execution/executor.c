@@ -1,5 +1,5 @@
-#include <minishell.h>
-#include <exec.h>
+
+# include "minishell.h"
 
 static void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 {

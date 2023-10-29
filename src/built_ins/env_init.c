@@ -1,5 +1,5 @@
-#include <built_ins.h>
-#include <minishell.h>
+
+# include "minishell.h"
 
 t_env_info	*env_init(char **env)
 {

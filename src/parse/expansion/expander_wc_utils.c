@@ -1,5 +1,5 @@
-#include <expansion.h>
-#include <parsing.h>
+
+#include "minishell.h"
 
 int	check_for_wildcard(char *s)
 {

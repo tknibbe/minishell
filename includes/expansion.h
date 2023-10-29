@@ -2,14 +2,7 @@
 # define EXPANSION_H
 
 # include "structs.h"
-# include "libft.h"
-# include "utils.h"
-
-# include <sys/types.h>
-# include <string.h>
-# include <dirent.h>
-# include <stdlib.h>
-# include <errno.h>
+# include "minishell.h"
 
 /*		expander.c*/
 void	expander(int state, t_exp *x, char *input);

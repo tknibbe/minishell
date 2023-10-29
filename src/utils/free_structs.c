@@ -1,5 +1,5 @@
-#include <minishell.h>
-#include <parsing.h>
+
+# include "minishell.h"
 
 void	free_str(t_str *str)
 {

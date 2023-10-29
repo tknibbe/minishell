@@ -12,21 +12,21 @@
 
 #include <minishell.h>
 
-/*Description:
-split_pipe_and_parse is a function responsible for splitting input into separate
-pipelines, each of which is then parsed into individual commands.
-It facilitates the execution of multiple commands separated by pipe symbols.
+/*
+	Description:
+		split_pipe_and_parse is a function responsible for splitting input into separate
+		pipelines, each of which is then parsed into individual commands.
+		It facilitates the execution of multiple commands separated by pipe symbols.
 
-Parameters:
+	Parameters:
+		list (t_list**): A pointer to a pointer to a t_list structure representing
+		the input and parsed data.
+		env (t_env_info*): Environment information.
 
-    list (t_list**): A pointer to a pointer to a t_list structure representing
-	the input and parsed data.
-    env (t_env_info*): Environment information.
-
-Return Value:
-
-    EXIT_SUCCESS on successful splitting and parsing.
-    EXIT_FAILURE if any errors occur during this process.*/
+	Return Value:
+		EXIT_SUCCESS on successful splitting and parsing.
+		EXIT_FAILURE if any errors occur during this process.
+*/
 static int	split_pipe_and_parse(t_list **list, t_env_info *env)
 {
 	t_list	*temp;
@@ -55,21 +55,21 @@ static int	split_pipe_and_parse(t_list **list, t_env_info *env)
 	return (EXIT_SUCCESS);
 }
 
-/* Description:
-parse_input is a function designed to parse user input and generate a
-structured t_list representing the parsed input.
-It handles input validation, memory management, tokenization, syntax checking 
-and parsing of command segments separated by pipes.
+/* 
+	Description:
+		parse_input is a function designed to parse user input and generate a
+		structured t_list representing the parsed input.
+		It handles input validation, memory management, tokenization, syntax checking 
+		and parsing of command segments separated by pipes.
 
-Parameters:
+	Parameters:
+		input (char*): The user's input string to be parsed.
+		env (t_env_info*): Environment information.
 
-    input (char*): The user's input string to be parsed.
-    env (t_env_info*): Environment information.
-
-Return Value:
-
-A pointer to a t_list structure containing the parsed input or NULL
-in case of errors.*/
+	Return Value:
+		A pointer to a t_list structure containing the parsed input or NULL
+		in case of errors.
+*/
 t_list	*parse_input(char *input, t_env_info *env)
 {
 	t_list	*list;

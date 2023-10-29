@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
-#include <parsing.h>
+# include "minishell.h"
 
 static void	set_token(t_list *list, char *input);
 

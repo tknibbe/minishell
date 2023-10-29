@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+# include "minishell.h"
 
 t_exec	*exec_lstlast(t_exec *lst)
 {

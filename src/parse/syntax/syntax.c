@@ -95,19 +95,20 @@ static int	syntax_loop(t_list *list, int *i, t_env_info *env)
 	return (EXIT_SUCCESS);
 }
 
-/*This function checks the syntax of a given shell command. 
-It updates the exit status in the environment based on whether the syntax is
-valid or not.
+/*
+	Description:
+		This function checks the syntax of a given shell command. 
+		It updates the exit status in the environment based on whether the syntax is
+		valid or not.
 
-Parameters:
+	Parameters:
+		t_list *list: List of tokens representing a shell command.
+		t_env_info *env: Shell environment information.
 
-    t_list *list: List of tokens representing a shell command.
-    t_env_info *env: Shell environment information.
-
-Return Value:
-
-    EXIT_SUCCESS (0) for valid syntax.
-    EXIT_FAILURE (1) for syntax errors with an updated exit status.*/
+	Return Value:
+		EXIT_SUCCESS (0) for valid syntax.
+		EXIT_FAILURE (1) for syntax errors with an updated exit status.
+*/
 int	check_syntax(t_list *list, t_env_info *env)
 {
 	int	i;

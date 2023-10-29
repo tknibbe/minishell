@@ -1,5 +1,5 @@
-#include <minishell.h>
-#include <exec.h>
+
+# include "minishell.h"
 
 int	builtin(char *cmd)
 {

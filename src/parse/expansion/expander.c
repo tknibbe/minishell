@@ -1,5 +1,5 @@
-#include <minishell.h>
-#include <expansion.h>
+
+# include "minishell.h"
 
 static void	expansion_wc(t_str *s)
 {

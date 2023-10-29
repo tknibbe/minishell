@@ -1,6 +1,5 @@
 
-#include "built_ins.h"
-#include "expansion.h"
+# include "minishell.h"
 
 int	valid_identifier(char *s)
 {

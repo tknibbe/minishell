@@ -2,15 +2,7 @@
 # define BUILT_INS_H
 
 # include "structs.h"
-# include "libft.h"
-# include "utils.h"
-
-# include <errno.h>
-# include <unistd.h>
-# include <string.h>
-# include <stdlib.h>
-
-# include <stdio.h>
+# include "minishell.h"
 
 /*				echo_pwd_exit.c*/
 int				echo(char **cmd, int fd);

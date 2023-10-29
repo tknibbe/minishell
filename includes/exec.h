@@ -1,7 +1,7 @@
 #ifndef EXEC_H
 # define EXEC_H
 
-# include <stdbool.h>
+# include "structs.h"
 # include "minishell.h"
 
 enum	e_builtin
@@ -27,6 +27,8 @@ int		builtin(char *cmd);
 /*		heredoc_expansion*/
 void	do_heredoc_or_so(t_rdr *r, t_env_info *e, int hierdok_num, int in);
 
+/*		redirect.c*/
+int		redirect(t_rdr *r, t_env_info *e, int in, int out, int hierdok_num);
 char	*append_cmd_path(t_env_info *env, char *cmd);
 
 #endif

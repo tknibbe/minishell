@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parsing.h>
+# include "minishell.h"
 
 static char	*get_delimiter(t_list *list, int *i);
 static int	set_expand(char *delimiter);

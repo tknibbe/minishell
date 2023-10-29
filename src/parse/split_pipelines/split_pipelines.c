@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+# include "minishell.h"
 
 int	and_or_instr(char *input, int *token, int i)
 {

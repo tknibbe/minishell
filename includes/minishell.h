@@ -1,77 +1,36 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <stdbool.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <readline/history.h>
 # include <readline/readline.h>
-# include <sys/wait.h>
+# include <readline/history.h>
 # include <sys/errno.h>
-# include <fcntl.h>
+# include <sys/ioctl.h>
+# include <sys/wait.h>
+# include <termios.h>
 # include <string.h>
 # include <signal.h>
-# include <sys/ioctl.h>
-# include <termios.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <stdio.h>
 # include <dirent.h>
 
 # include "libft.h"
+# include "structs.h"
+# include "expansion.h"
+# include "built_ins.h"
 # include "parsing.h"
 # include "exec.h"
-# include "built_ins.h"
-# include "expansion.h"
-# include "structs.h"
+# include "utils.h"
 
 # define PROMPT "ez_game -> "
-//# define PROMPT ""
 
-//hey crissie baby <3
-//hey tymoo daddy 8=D
-//hey crissie deel 2 80085
-//hey tymoo bicep baby muscle mommy
-//heck yeah muscle mommy <3333
-
-// typedef struct s_list	t_list;
-// typedef struct s_rdr	t_rdr;
-
-// typedef struct	s_str
-// {
-// 	char			*str;
-// 	struct s_str	*next;
-// }					t_str;
-
-int		history(char *s);
-//void	parse_input(char *input, t_ally *all);
-
-//utils
-void	print_double_array(char **x);
-void	free_dp(char **dp);
-int		count_dp(char **c);
-
-int		ft_iswhitespace(int	c);
-int		ft_isname(int c);
-int		ft_isinset(int c, char *s);
-
-t_str	*tstr_new(char *content);
-void	tstr_addback(t_str **head, t_str *new);
-void	tstr_addnext(t_str *current, t_str *new);
-
-t_env_info	*env_init(char **env);
-
-//expansion
-char	**full_expansion(t_str *c, t_env_info *e);
-
-//SIGNALS
-void	set_signals_inter(void);
-void	unset_echo(void);
-void	set_signals_non_inter(void);
-void	set_echo(void);
-
-int		ft_minishell_error(char *program, char *arg, char *desc, int ex);
-
-void	executor(t_list *pipe_line, t_env_info *e);
-int		redirect(t_rdr *r, t_env_info *e, int in, int out, int hierdok_num);
-void	free_list(t_list *lst);
+/*
+	hey crissie baby <3
+	hey tymoo daddy 8=D
+	hey crissie deel 2 80085
+	hey tymoo bicep baby muscle mommy
+	heck yeah muscle mommy <3333
+*/
 
 #endif

@@ -1,6 +1,5 @@
-#include <minishell.h>
-#include <built_ins.h>
-#include <exec.h>
+
+# include "minishell.h"
 
 int	run_single_command(t_list *list, t_env_info *e)
 {

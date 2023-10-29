@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parsing.h>
+# include "minishell.h"
 
 t_rdr	*rdr_lstnew(char *str, int type, int heredoc)
 {

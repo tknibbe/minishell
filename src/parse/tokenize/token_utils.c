@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <parsing.h>
+# include "minishell.h"
 
 static void	continued(t_list *list, char *input, int *i)
 {
