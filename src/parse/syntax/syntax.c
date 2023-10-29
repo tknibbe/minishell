@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/21 15:34:49 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/29 22:07:32 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int	syntax_loop(t_list *list, int *i, t_env_info *env)
 		if (control_op_check(list, i, env))
 			return (EXIT_FAILURE);
 	}
-	else if (list->token[*i] == BRACE_OPEN)
+	else if (list->token[*i] == BRACE_OPEN || list->token[*i] == BRACE_CLOSE)
 	{
 		if (brace_check(list, i))
 			return (EXIT_FAILURE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 14:46:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/05 16:45:04 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/29 21:54:40 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	sub_count(char c, int option)
 
 	if (c == '(')
 		amount_open++;
-	else if (c == ')')
+	else if (c == ')' && amount_open > amount_close)
 		amount_close++;
 	if (option == RESET)
 	{

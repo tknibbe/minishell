@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactive.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:35:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/21 15:46:26 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/10/29 21:42:22 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	interactive_handler(int c)
 {
 	(void)c;
 	ft_putchar_fd('\n', STDIN_FILENO);
-	rl_replace_line("", 0);
+	// rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 }

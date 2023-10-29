@@ -6,7 +6,7 @@
 /*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 13:45:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/27 16:31:06 by tymonknibbe      ###   ########.fr       */
+/*   Updated: 2023/10/29 22:15:45 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,23 @@ int	brace_check(t_list *list, int *i)
 {
 	int	j;
 
-	if (*i == 0)
-		return (EXIT_SUCCESS);
-	j = *i - 1;
-	while (j >= 0 && list->token[j] == BLANK)
+	if (list->token[*i] == BRACE_OPEN)
 	{
-		j--;
+		if (*i == 0)
+			return (EXIT_SUCCESS);
+		j = *i - 1;
+		while (j >= 0 && list->token[j] == BLANK)
+			j--;
+		if (is_control_op(list->token[j]) == 0 && list->token[j] != BRACE_OPEN)
+			return (ft_syntax_error('(', list->token[*i]));
 	}
-	if (is_control_op(list->token[j]) == 0 && list->token[j] != BRACE_OPEN)
+	else
 	{
-		return (ft_syntax_error('(', list->token[*i]));
+		j = *i + 1;
+		while (list->input[j] && list->token[j] == BLANK)
+			j++;
+		if (!is_control_op(list->token[j]) && list->input[j])
+			return (ft_syntax_error(list->input[j], list->token[j]));
 	}
 	return (EXIT_SUCCESS);
 }
