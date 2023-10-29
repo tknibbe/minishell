@@ -6,7 +6,7 @@
 /*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/27 17:56:18 by tymonknibbe      ###   ########.fr       */
+/*   Updated: 2023/10/29 22:33:18 by tymonknibbe      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	init_struct_and_fork(t_heredoc *doc, t_list *list, int *i)
 	doc->delimiter = get_delimiter(list, i);
 	doc->expand = set_expand(doc->delimiter);
 	doc->line = "";
-	if (doc->expand == HEREDOC_NO_EXP)
-		doc->delimiter = ft_strdel(doc->delimiter, "\"\'");
 	if (pipe(doc->pipefd) < 0)
 		ft_minishell_error("pipe()", "creating the pipe for heredoc", strerror(errno), errno);
 	doc->pid = fork();
@@ -112,15 +110,17 @@ static char	*get_delimiter(t_list *list, int *i)
 	while (ft_whitespace(list->input[*i]) || list->input[*i] == '<')
 		*i += 1;
 	start = *i;
-	while ((list->token[*i] == WORD || list->input[*i] == '\'' || list->input[*i] == '"') \
-			&& list->input[*i])
+	while ((list->token[*i] == WORD || list->input[*i] == '\'' \
+	|| list->input[*i] == '"') && list->input[*i])
 		*i += 1;
 	temp = ft_substr(list->input, start, *i - start);
 	if (temp == NULL)
 		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
-	str = ft_strjoin(temp, "\n");
-	if (str == NULL)
-		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
+	str = ft_strtrim(temp, "\'\"");
 	free (temp);
-	return (str);
+	temp = ft_strjoin(str, "\n");
+	if (temp == NULL)
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
+	free(str);
+	return (temp);
 }
