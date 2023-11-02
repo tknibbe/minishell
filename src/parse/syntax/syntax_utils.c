@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/27 13:45:40 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/02 16:13:11 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/02 16:33:29 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	brace_check(t_list *list, int *i)
 		j = *i - 1;
 		while (j > 0 && list->token[j] == BLANK)
 			j--;
-		if (is_control_op(list->token[j]) == 0 && list->token[j] != BRACE_OPEN)
+		if (is_control_op(list->token[j]) == 0 && list->token[j] != BRACE_OPEN
+			&& j)
 			return (ft_syntax_error('(', list->token[*i]));
 	}
 	else
