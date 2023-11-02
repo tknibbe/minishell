@@ -62,9 +62,7 @@ static int	identify_substr(t_exp *x, int state, char *input, char **s)
 			append_sub(s, &input[i], j);
 		i += j;
 		if (input[i] == '$')
-			i = expand_dollo(x, input, s, (i + 1));
-		else if (ft_isinset(input[i], brake))
-			break ;
+			i = expand_dollo(x, input, s, i + 1);
 	}
 	return (i);
 }
@@ -85,8 +83,6 @@ void	expander(int state, t_exp *x, char *input)
 	free(s);
 	if (state && state == input[i])
 		i++;
-	else if (state && !input[i])
-		i = unclosed_warning(state);
 	input += i;
 	if (*input == '\'')
 		return (expander('\'', x, input));

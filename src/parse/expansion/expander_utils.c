@@ -41,11 +41,12 @@ int	expand_dollo(t_exp *x, char *input, char **s, int i)
 		free(value);
 	}
 	if (input[i] == '?')
-	{
-		return (i++);
-	}
-	while (ft_isname(input[i]))
 		i++;
+	else
+	{
+		while (ft_isname(input[i]))
+			i++;
+	}
 	return (i);
 }
 

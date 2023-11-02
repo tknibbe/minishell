@@ -38,7 +38,7 @@ int	no_valid_token(t_list *list)
 
 void	unclosed_warning(char c)
 {
-	write(STDERR_FILENO, "Warning: unclosed '", 20);
+	write(STDERR_FILENO, "Warning: unclosed `", 20);
 	write(STDERR_FILENO, &c, 1);
-	write(STDERR_FILENO, "' was ignored\n", 15);
+	write(STDERR_FILENO, "` was ignored\n", 15);
 }
