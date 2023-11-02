@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:21:38 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/27 14:42:43 by tymonknibbe      ###   ########.fr       */
+/*   Updated: 2023/11/02 12:02:29 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ t_list	*parse_input(char *input, t_env_info *env)
 	if (!list->input)
 		ft_minishell_error("ft_strtrim()", "failed", strerror(errno), errno);
 	tokenize(list);
+	print_tokens(list, ft_strlen(list->input));
 	if (check_syntax(list, env))
 		return (free_list(list), NULL);
 	if (split_pipe_and_parse(&list, env))
