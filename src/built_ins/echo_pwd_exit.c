@@ -23,7 +23,7 @@ int	echo(char **cmd, int fd)
 	{
 		write(fd, cmd[i], ft_strlen(cmd[i]));
 		if (cmd[++i])
-			write(1, " ", 1);
+			write(fd, " ", 1);
 	}
 	if (new_line)
 		write(fd, "\n", 1);
