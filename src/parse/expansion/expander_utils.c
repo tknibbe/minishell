@@ -61,12 +61,13 @@ void	append_sub(char **s, char *input, int len)
 	free(str);
 }
 
-char	*get_brake(int state)
+char	*get_brake(int *state)
 {
-	if (state == '\'')
+	if (*state == '\'')
 		return ("'");
-	else if (state == '"')
+	else if (*state == '"')
 		return ("$\"");
+	*state = 0;
 	return ("$\"'");
 }
 

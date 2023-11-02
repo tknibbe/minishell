@@ -30,6 +30,6 @@ int		expand_dollo(t_exp *x, char *input, char **s, int i);
 void	append_sub(char **s, char *input, int len);
 char	*ft_join(char *s1, char *s2);
 char	**lst_to_dp(t_str *c);
-char	*get_brake(int state);
+char	*get_brake(int *state);
 
 #endif

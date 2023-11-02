@@ -48,7 +48,7 @@ static int	identify_substr(t_exp *x, int state, char *input, char **s)
 	int		j;
 
 	i = 0;
-	brake = get_brake(state);
+	brake = get_brake(&state);
 	while (input[i] && input[i] != state)
 	{
 		j = 0;
@@ -63,6 +63,8 @@ static int	identify_substr(t_exp *x, int state, char *input, char **s)
 		i += j;
 		if (input[i] == '$')
 			i = expand_dollo(x, input, s, i + 1);
+		if (ft_isinset(input[i], brake))
+			break ;
 	}
 	return (i);
 }
