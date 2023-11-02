@@ -5,7 +5,7 @@
 
 /*				echo_pwd_exit.c*/
 int				echo(char **cmd, int fd);
-void			ms_exit(char **cmd);
+int				ms_exit(char **cmd);
 int				pwd(int fd);
 
 /*				env_builtins.c*/
