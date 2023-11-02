@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 14:46:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/02 14:07:06 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/02 16:07:51 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	set_subshell(t_list *list, char *input)
 	{
 		if (input[i] == '(' && open)
 			set_brace(&list->token[i], BRACE_OPEN, &active, &open);
-		else if (input[i] == ')' && close)
+		else if (input[i] == ')' && close && open < close)
 			set_brace(&list->token[i], BRACE_CLOSE, &active, &close);
 		if (active && input[i + 1])
 			list->token[i + 1] = BLANK;
