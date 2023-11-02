@@ -105,7 +105,10 @@ int	cd(char **cmd, t_env_info *e, int fd)
 	if (chdir(nav) < 0)
 		ret = ft_minishell_error("cd", nav, strerror(errno), 0);
 	else
+	{
+		ret = 0;
 		update_var(e);
+	}
 	if (fd != 1)
 		close((fd));
 	return (free(nav), ret);
