@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 15:14:24 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/27 16:31:06 by tymonknibbe      ###   ########.fr       */
+/*   Updated: 2023/11/02 14:03:03 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,11 @@ int	no_valid_token(t_list *list)
 		i++;
 	}
 	return (EXIT_FAILURE);
+}
+
+void	unclosed_warning(char c)
+{
+	write(STDERR_FILENO, "Warning: unclosed '", 20);
+	write(STDERR_FILENO, &c, 1);
+	write(STDERR_FILENO, "' was ignored\n", 15);
 }

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:21:38 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/02 12:27:10 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/02 14:05:09 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_list	*parse_input(char *input, t_env_info *env)
 		return (NULL);
 	}
 	list = t_listnew();
-	list->input = ft_strtrim(input, " "); // maybe trim all whitespaces \t\n and stuff
+	list->input = ft_strtrim(input, " \t\n");
 	if (!list->input)
 		ft_minishell_error("ft_strtrim()", "failed", strerror(errno), errno);
 	tokenize(list);
