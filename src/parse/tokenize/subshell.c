@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   subshell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 14:46:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/29 21:54:40 by tymonknibbe      ###   ########.fr       */
+/*   Updated: 2023/11/02 14:07:06 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 #define RESET -1
+#define ADD 1
+#define RETRIEVE 0
 
 int	is_subshell(int token)
 {
@@ -24,18 +26,27 @@ int	sub_count(char c, int option)
 	static int	amount_open;
 	static int	amount_close;
 
-	if (c == '(')
-		amount_open++;
-	else if (c == ')' && amount_open > amount_close)
-		amount_close++;
-	if (option == RESET)
+	if (option == ADD)
+	{
+		if (c == '(')
+			amount_open++;
+		else if (c == ')')
+		{
+			if (amount_open > amount_close)
+				amount_close++;
+			else
+				unclosed_warning(')');
+		}
+		return (EXIT_SUCCESS);
+	}
+	else if (option == RESET)
 	{
 		amount_open = 0;
 		amount_close = 0;
 		return (EXIT_SUCCESS);
 	}
-	if (amount_open < amount_close)
-		return (amount_open);
+	while (amount_open-- > amount_close)
+		unclosed_warning('(');
 	return (amount_close);
 }
 
@@ -56,8 +67,8 @@ void	set_subshell(t_list *list, char *input)
 	int	i;
 	int	active;
 
-	open = sub_count(' ', 0);
-	close = sub_count(' ', 0);
+	open = sub_count(' ', RETRIEVE);
+	close = open;
 	i = 0;
 	active = 0;
 	while ((open || close) && input[i])

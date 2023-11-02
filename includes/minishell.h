@@ -4,7 +4,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/errno.h>
-# include <sys/ioctl.h>
+// # include <sys/ioctl.h>
 # include <sys/wait.h>
 # include <termios.h>
 # include <string.h>

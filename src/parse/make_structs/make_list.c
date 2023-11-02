@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/27 17:57:34 by tymonknibbe      ###   ########.fr       */
+/*   Updated: 2023/11/02 12:12:01 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	new_cmd_node(char *input, int *token, t_exec *node, int *i)
 			&& token[*i] != BRACE_OPEN)
 	{
 		start = *i;
-		while (token[*i] == WORD && input[*i])
+		while (input[*i] && token[*i] == WORD)
 			*i += 1;
 		str = ft_substr(input, start, *i - start);
 		if (!str)

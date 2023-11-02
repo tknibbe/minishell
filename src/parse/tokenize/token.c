@@ -6,12 +6,12 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/21 15:33:41 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/02 14:01:10 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
-
+# define ADD 1
 static void	set_token(t_list *list, char *input);
 
 /*Description:
@@ -58,6 +58,7 @@ static int	is_closed_quote(char *input, int *end_quote, int i)
 			return (EXIT_FAILURE);
 		i++;
 	}
+	unclosed_warning(quote);
 	*end_quote = 0;
 	return (EXIT_SUCCESS);
 }
@@ -71,7 +72,7 @@ static void	norm_bs(t_list *list, char *input, int *i)
 	}
 	else if (input[*i] == '(' || input[*i] == ')')
 	{
-		sub_count(input[*i], 0);
+		sub_count(input[*i], ADD);
 		*i += 1;
 	}
 	else

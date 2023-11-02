@@ -74,6 +74,7 @@ int		ft_syntax_error(char c, int token);
 int		op_amount_check(t_list *list, int i);
 int		start_check(t_list *list);
 int		brace_check(t_list *list, int *i);
+void	unclosed_warning(char c);
 
 //TEST_FUNCTIONS.C
 void	print_class(int num);
