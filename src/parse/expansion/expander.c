@@ -86,7 +86,7 @@ void	expander(int state, t_exp *x, char *input)
 	if (state && state == input[i])
 		i++;
 	else if (state && !input[i])
-		i = unclosed_quote(state);
+		i = unclosed_warning(state);
 	input += i;
 	if (*input == '\'')
 		return (expander('\'', x, input));

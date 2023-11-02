@@ -81,4 +81,5 @@ void	print_test(t_list *list, char *input);
 void	print_tokens(t_list *list, int len);
 void	print_t_exec(t_list *list);
 void 	print_whole_list(t_list *list);
+
 #endif

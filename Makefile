@@ -1,10 +1,3 @@
-INCLUDE		=	-I includes -I lib/includes #-I $(shell brew --prefix readline)/include
-CFLAGS		=	-Wall -Werror -Wextra
-CFLAGS		+=	-g -fsanitize=address
-READLINE	=	-lreadline  -L $(shell brew --prefix readline)/lib
-OBJ_F		=	$(SRC:%.c=obj/%.o)
-MINISHELL	=	minishell
-LIBFT		=	lib/libft.a
 
 INCLUDE			=	-I includes -I lib/includes -I $(shell brew --prefix readline)/include
 CFLAGS			=	-Wall -Werror -Wextra
@@ -14,7 +7,7 @@ MINISHELL		=	minishell
 LIBFT			=	lib/libft.a
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
-#	SOURCE FILES AND OBJECT DIRECTORIES
+#	SOURCE/OBJECT FILES AND DIRECTORIES
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 OBJ_DIR			=	obj obj/utils obj/built_ins obj/execution obj/signals \
@@ -29,17 +22,17 @@ MAKE_STRUCTS	=	heredoc.c list_utils.c list_utils2.c make_list.c
 SPLIT_PIPELINES	=	list_utils.c split_pipelines.c
 SYNTAX			=	syntax_utils.c syntax_utils2.c syntax.c
 TOKENIZE		=	subshell.c token_utils.c token.c
-PARSE			=	parse_main.c test_functions.c $(addprefix tokenize/, $(TOKENIZE)) $(addprefix syntax/, $(SYNTAX)) $(addprefix make_structs/, $(MAKE_STRUCTS)) \
-					$(addprefix split_pipelines/, $(SPLIT_PIPELINES)) $(addprefix expansion/, $(EXPANSION))
+PARSE			=	parse_main.c test_functions.c $(addprefix tokenize/, $(TOKENIZE)) $(addprefix syntax/, $(SYNTAX)) \
+					$(addprefix make_structs/, $(MAKE_STRUCTS)) $(addprefix split_pipelines/, $(SPLIT_PIPELINES)) $(addprefix expansion/, $(EXPANSION))
 SRC				=	super_duper_awesome_tymon_and_cris_main.c $(addprefix parse/, $(PARSE)) $(addprefix utils/, $(UTILS)) \
 					$(addprefix signals/, $(SIGNALS)) $(addprefix execution/, $(EXECUTION)) $(addprefix built_ins/, $(BUILTINS))
-OBJ_F			=	$(SRC:%.c=obj/%.o)
+OBJ				=	$(SRC:%.c=obj/%.o)
 
 #----------------------------------------------------------------------------------------------------------------------------------------------------------------------#
 
 all : $(MINISHELL)
 
-$(MINISHELL) : $(OBJ_F)
+$(MINISHELL) : $(OBJ)
 	@make -C lib
 	$(CC)  $(CFLAGS) $(READLINE) $^ -o $@ $(LIBFT)
 

@@ -11,7 +11,7 @@ char	**full_expansion(t_str *c, t_env_info *e);
 int		skip_quoted_state(char *s, int i, int quote);
 void	initialize_xp(t_exp *xp, t_env_info *e);
 int		check_for_wildcard(char *s);
-int		unclosed_quote(int state);
+int		unclosed_warning(int ignored);
 int		amount(t_str *s);
 
 /*		expander_wildcard.c*/

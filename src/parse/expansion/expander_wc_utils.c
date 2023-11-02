@@ -15,11 +15,11 @@ int	check_for_wildcard(char *s)
 	return (EXIT_SUCCESS);
 }
 
-int	unclosed_quote(int state)
+int	unclosed_warning(int ignored)
 {
-	write(2, "Warning: unclosed quote ( ", 26);
-	write(2, &state, 1);
-	write(2, " ) was ignored\n", 16);
+	write(2, "Warning: unclosed ` ", 20);
+	write(2, &ignored, 1);
+	write(2, " ` was ignored\n", 15);
 	return (EXIT_SUCCESS);
 }
 
