@@ -59,7 +59,7 @@ int	ft_minishell_error(char *program, char *arg, char *desc, int ex)
 		write(STDERR_FILENO, desc, ft_strlen(desc));
 	}
 	write(STDERR_FILENO, "\n", 1);
-	if (ex != 0)
+	if (ex)
 		exit(ex);
 	return (1);
 }

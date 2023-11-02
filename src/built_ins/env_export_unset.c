@@ -22,8 +22,8 @@ int	legit_export_item(char *to_export)
 		i++;
 	if (!to_export[i])
 		return (1);
-	else if (to_export[i] == '=' || \
-			(to_export[i] == '+' && to_export[i + 1] == '='))
+	else if (i && (to_export[i] == '=' || \
+			(to_export[i] == '+' && to_export[i + 1] == '=')))
 		return (0);
 	return (2);
 }

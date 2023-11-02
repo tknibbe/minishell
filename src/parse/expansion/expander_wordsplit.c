@@ -43,13 +43,6 @@ static t_str	*get_insert_lst(char *var, t_env_info *e, char *s)
 		ret = split_var(var, x.result);
 	else if (x.result)
 		ret = tstr_new(x.result);
-	else
-	{
-		x.result = ft_strdup("");
-		if (!x.result)
-			ft_minishell_error("malloc()", NULL, strerror(errno), errno);
-		ret = tstr_new(x.result);
-	}
 	free(var);
 	return (ret);
 }

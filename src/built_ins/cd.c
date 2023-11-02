@@ -93,7 +93,8 @@ int	cd(char **cmd, t_env_info *e, int fd)
 	int		ret;
 	char	*nav;
 
-	ret = 0;
+	if (cmd[1] && cmd[2])
+		return (ft_minishell_error("cd", NULL, "too many arguments", 0));
 	nav = get_nav(cmd[1], e, fd);
 	if (!nav)
 	{
