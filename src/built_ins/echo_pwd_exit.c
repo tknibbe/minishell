@@ -32,12 +32,17 @@ int	echo(char **cmd, int fd)
 	return (0);
 }
 
-void	ms_exit(char **cmd)
+int	ms_exit(char **cmd)
 {
 	int	i;
 
+	i = 0;
 	if (isatty(STDIN_FILENO))
 		write(STDERR_FILENO, "exit\n", 5);
+	while (cmd[i])
+		i++;
+	if (i > 2)
+		return (ft_minishell_error("Minishell", "exit()", "Too many arguments", 0));
 	if (!cmd[1])
 		exit(0);
 	i = 0;
@@ -48,6 +53,7 @@ void	ms_exit(char **cmd)
 	if (cmd[1][i])
 		ft_minishell_error("exit()", cmd[1], "numeric argument required", 2);
 	exit(ft_atoi(cmd[1]));
+	return (EXIT_SUCCESS);
 }
 
 /*
