@@ -38,14 +38,14 @@ int	do_builtin(char **cmd, t_env_info *e, int builtin_no, int out)
 	return (1);
 }
 
-int	prep_process(t_process *proc, t_exec *exec, t_env_info *e) // jfhkajsdhf
+int	prep_process(t_process *proc, t_exec *exec, t_env_info *e)
 {
 	proc->cmd = full_expansion(exec->cmd, e);
 	if (proc->cmd && *proc->cmd)
 		proc->builtin = builtin(*proc->cmd);
 	if (proc->is_single_command && proc->builtin)
 	{
-		if (exec->rdr && redirect(exec->rdr, e, -1, 3, proc->here_doc_nbr))
+		if (exec->rdr && redirect(exec->rdr, e, 4, 3, proc->here_doc_nbr))
 			e->last_exit_status =  do_builtin(proc->cmd, e, proc->builtin, 3);
 		else
 			e->last_exit_status =  do_builtin(proc->cmd, e, proc->builtin, 1);

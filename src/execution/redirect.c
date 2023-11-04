@@ -12,15 +12,18 @@
 
 # include "minishell.h"
 
-static void	open_file_and_dup(char *file, int flag, int to_dup, int permission)
+int	open_file_and_dup(char *file, int flag, int to_dup, int permission)
 {
 	int	fd;
 
 	fd = open(file, flag, permission);
-	if (fd < 0)
-		ft_minishell_error(NULL, file, strerror(errno), 1);
-	if (dup2(fd, to_dup) < 0)
-		ft_minishell_error("dup2()", NULL, strerror(errno), errno);
+	if (to_dup != 4 && fd < 0)
+		return (ft_minishell_error(NULL, file, strerror(errno), 1));
+	else if (fd < 0)
+		return (ft_minishell_error(NULL, file, strerror(errno), 0));
+	if (to_dup != 4 && dup2(fd, to_dup) < 0)
+		return (ft_minishell_error("dup2()", NULL, strerror(errno), errno));
+	return (0);
 }
 
 int	redirect(t_rdr *r, t_env_info *e, int in, int out, int hierdok_num)
@@ -42,7 +45,7 @@ int	redirect(t_rdr *r, t_env_info *e, int in, int out, int hierdok_num)
 		file = full_expansion(r->file, e);
 		if (!(*file) || (*file && *(file + 1)))
 			ft_minishell_error("ambiguous redirect", "expansion results in multiple or no arguments", NULL, 1);
-		if (r->type == REDIRLEFT && in != -1)
+		if (r->type == REDIRLEFT)
 			open_file_and_dup(*file, O_RDONLY, in, 0);
 		else if (r->type == REDIRRIGHT)
 			open_file_and_dup(*file, O_WRONLY | O_CREAT | O_TRUNC, out, 420);
