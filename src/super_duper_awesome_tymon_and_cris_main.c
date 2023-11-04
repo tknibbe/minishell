@@ -47,7 +47,7 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc != 1)
 		ft_minishell_error(argv[1], "...", "too many arguments", 1);
 	e = env_init(envp);
-	// if (!isatty(STDIN_FILENO))
-	// 	exit(run_single_command(NULL, e));
+	if (!isatty(STDIN_FILENO))
+		exit(run_single_command(NULL, e));
 	return (run_shell(NULL, e));
 }
