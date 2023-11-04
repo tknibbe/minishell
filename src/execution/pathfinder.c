@@ -6,11 +6,22 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 12:43:08 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/21 15:43:11 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/04 16:55:41 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/stat.h>
+
+char *check_validity(char *cmd)
+{
+	struct stat path;
+
+	if (!stat(cmd, &path))
+		if (access(cmd, X_OK | R_OK) != 0)
+			ft_minishell_error(cmd, "Permission denied", NULL, 126);
+	return (cmd);
+}
 
 static char	*test_for_valid_path(char **path, char *cmd_path, char *cmd)
 {
@@ -21,17 +32,33 @@ static char	*test_for_valid_path(char **path, char *cmd_path, char *cmd)
 	while (path[i])
 	{
 		full_path = ft_strjoin(path[i], cmd_path);
-		if (access(full_path, X_OK) == 0)
+		if (!access(full_path, F_OK))
 		{
 			free(cmd);
 			free_dp(path);
 			free(cmd_path);
-			return (full_path);
+			return (check_validity(full_path));
 		}
 		free(full_path);
 		i++;
 	}
 	return (NULL);
+}
+
+static char *check_local(char *cmd)
+{
+	struct stat path;
+	
+	if (EXIT_SUCCESS == stat(cmd, &path))
+	{
+		if (S_ISDIR(path.st_mode))
+			ft_minishell_error(cmd, "Is a directory", NULL, 126);
+		if (access(cmd, X_OK | R_OK | W_OK))
+			ft_minishell_error(cmd, "Permission denied", NULL, 126);
+	}
+	else
+		ft_minishell_error(cmd, "No such file or directory", NULL, 127);
+	return (cmd);
 }
 
 char	*append_cmd_path(t_env_info *env, char *cmd)
@@ -41,8 +68,8 @@ char	*append_cmd_path(t_env_info *env, char *cmd)
 	char	*full_path;
 	char	*temp;
 
-	if (access(cmd, X_OK) == 0)
-		return (cmd);
+	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
+		return (check_local(cmd));
 	temp = get_env("PATH", env);
 	if (!temp)
 		ft_minishell_error(cmd, NULL, "no such file or directory", 127);
@@ -59,4 +86,3 @@ char	*append_cmd_path(t_env_info *env, char *cmd)
 	ft_minishell_error(cmd, NULL, "command not found", 127);
 	return (NULL);
 }
-				    	 	 	 		
