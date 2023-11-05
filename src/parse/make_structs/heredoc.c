@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/29 22:33:18 by tymonknibbe      ###   ########.fr       */
+/*   Updated: 2023/11/05 19:26:41 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	heredoc(t_heredoc *doc);
 void	init_struct_and_fork(t_heredoc *doc, t_list *list, int *i)
 {
 	doc->delimiter = get_delimiter(list, i);
+	printf("delimiter = [%s]\n", doc->delimiter);
 	doc->expand = set_expand(doc->delimiter);
 	doc->line = "";
 	if (pipe(doc->pipefd) < 0)
@@ -107,16 +108,17 @@ static char	*get_delimiter(t_list *list, int *i)
 	char	*temp;
 	char	*str;
 
-	while (ft_whitespace(list->input[*i]) || list->input[*i] == '<')
+	while (list->token[*i] == BLANK || list->input[*i] == '<')
 		*i += 1;
 	start = *i;
 	while ((list->token[*i] == WORD || list->input[*i] == '\'' \
-	|| list->input[*i] == '"') && list->input[*i])
+	|| list->input[*i] == '"' || list->input[*i] == '(' || list->input[*i] == ')') \
+	&& list->input[*i])
 		*i += 1;
 	temp = ft_substr(list->input, start, *i - start);
 	if (temp == NULL)
 		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
-	str = ft_strtrim(temp, "\'\"");
+	str = ft_strdel(temp, "\'\"()");
 	free (temp);
 	temp = ft_strjoin(str, "\n");
 	if (temp == NULL)
