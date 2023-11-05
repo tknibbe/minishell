@@ -18,6 +18,8 @@ int	legit_export_item(char *to_export)
 	int		i;
 
 	i = 0;
+	if (*to_export >= '0' && *to_export <= '9')
+		return (2);
 	while (ft_isname(to_export[i]))
 		i++;
 	if (!to_export[i])
