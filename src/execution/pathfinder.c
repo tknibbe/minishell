@@ -68,6 +68,8 @@ char	*append_cmd_path(t_env_info *env, char *cmd)
 	char	*full_path;
 	char	*temp;
 
+	if (!*cmd)
+		ft_minishell_error("''", NULL, "command not found", 127);
 	if (ft_strnstr(cmd, "/", ft_strlen(cmd)))
 		return (check_local(cmd));
 	temp = get_env("PATH", env);

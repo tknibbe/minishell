@@ -15,7 +15,7 @@ static void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 		close(proc->fd_to_read_from);
 	}
 	if (exec->rdr)
-		redirect(exec->rdr, e, STDIN_FILENO, STDOUT_FILENO, proc->here_doc_nbr);
+		redirect(exec->rdr, e, proc->here_doc_nbr, 0);
 	if (proc->cmd && *proc->cmd)
 	{
 		if (proc->builtin)
@@ -27,7 +27,7 @@ static void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 	}
 	else if (exec->subshell)
 		executor(exec->subshell, e);
-	exit (0);
+	exit (e->last_exit_status);
 }
 
 static int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
