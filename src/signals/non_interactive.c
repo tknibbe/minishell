@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 13:41:26 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/09 15:10:53 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/09 15:21:30 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,14 @@ static void	set_echo(void)
 {
 	struct termios	term;
 
-	if (tcgetattr(STDIN_FILENO, &term) != 0)
-		ft_minishell_error("tcgetattr()", NULL, strerror(errno), errno);
-	term.c_lflag |= ECHOCTL;
-	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) != 0)
-		ft_minishell_error("tcgetattr()", NULL, strerror(errno), errno);
+	if (isatty(STDIN_FILENO))
+	{
+		if (tcgetattr(STDIN_FILENO, &term) != 0)
+			ft_minishell_error("tcgetattr()", NULL, strerror(errno), errno);
+		term.c_lflag |= ECHOCTL;
+		if (tcsetattr(STDIN_FILENO, TCSANOW, &term) != 0)
+			ft_minishell_error("tcgetattr()", NULL, strerror(errno), errno);
+	}
 }
 
 void	set_signals_non_inter(void)
