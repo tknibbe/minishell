@@ -56,19 +56,17 @@ static void	init_proc(t_process *proc, t_exec *next)
 	proc->cmd = NULL;
 	proc->fd_to_read_from = 0;
 	proc->builtin = 0;
+	proc->here_doc_nbr = 1;
 	if (!next)
 	{
 		proc->is_single_command = 1;
 		proc->p = NULL;
+		return ;
 	}
-	else
-	{
-		proc->is_single_command = 0;
-		proc->p = malloc(2 * sizeof(int));
-		if (!proc->p)
-			ft_minishell_error("malloc()", "allocating pipe", strerror(errno), errno);
-	}
-	proc->here_doc_nbr = 1;
+	proc->is_single_command = 0;
+	proc->p = malloc(2 * sizeof(int));
+	if (!proc->p)
+		ft_minishell_error("malloc()", "allocating pipe", strerror(errno), errno);
 }
 
 static int	exec_pipe_line(t_exec *exec, t_env_info *e)

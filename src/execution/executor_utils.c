@@ -53,21 +53,18 @@ int	prep_process(t_process *proc, t_exec *exec, t_env_info *e)
 	if (proc->is_single_command && proc->builtin)
 	{
 		fd = redirect(exec->rdr, e, 1, 1);
-		if (!fd)
-			e->last_exit_status =  do_builtin(proc->cmd, e, proc->builtin, 1);
-		else if (fd == 3)
-		{
+		if (fd > 0)
 			e->last_exit_status =  do_builtin(proc->cmd, e, proc->builtin, fd);
+		if (fd == 3)
 			close(fd);
-		}
 		return (1);
 	}
-	else if (!exec->next && !proc->is_single_command)
+	else if (!proc->is_single_command && !exec->next)
 	{
 		free(proc->p);
 		proc->p = NULL;
 	}
-	else if (!proc->is_single_command && pipe(proc->p) < 0)
+	else if (exec->next && pipe(proc->p) < 0)
 		ft_minishell_error("pipe()", strerror(errno), NULL, errno);
 	return (0);
 }
