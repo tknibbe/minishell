@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 15:12:03 by tymonknibbe       #+#    #+#             */
-/*   Updated: 2023/10/27 17:48:26 by tymonknibbe      ###   ########.fr       */
+/*   Updated: 2023/11/09 13:53:18 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	open_file_and_dup(char *file, int flag, int to_dup, int permission)
 	if (to_dup >= 0 && to_dup <= 1 && fd < 0)
 		ft_minishell_error(NULL, file, strerror(errno), 1);
 	else if (fd < 0)
-		return (ft_minishell_error(NULL, file, strerror(errno), 0));
+		return (ft_minishell_error(NULL, file, strerror(errno), 1));
 	if ((to_dup == STDOUT_FILENO || to_dup == STDIN_FILENO) && dup2(fd, to_dup) < 0)
 		ft_minishell_error("dup2()", NULL, strerror(errno), errno);
 	else if (to_dup < 3)
