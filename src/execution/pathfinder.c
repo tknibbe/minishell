@@ -6,16 +6,16 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 12:43:08 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/04 16:55:41 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/09 15:15:48 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <sys/stat.h>
 
-char *check_validity(char *cmd)
+char	*check_validity(char *cmd)
 {
-	struct stat path;
+	struct stat	path;
 
 	if (!stat(cmd, &path))
 		if (access(cmd, X_OK | R_OK) != 0)
@@ -45,10 +45,10 @@ static char	*test_for_valid_path(char **path, char *cmd_path, char *cmd)
 	return (NULL);
 }
 
-static char *check_local(char *cmd)
+static char	*check_local(char *cmd)
 {
-	struct stat path;
-	
+	struct stat	path;
+
 	if (EXIT_SUCCESS == stat(cmd, &path))
 	{
 		if (S_ISDIR(path.st_mode))

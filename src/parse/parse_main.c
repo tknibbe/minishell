@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:21:38 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/02 14:05:09 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/09 14:56:41 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 /*
 	Description:
-		split_pipe_and_parse is a function responsible for splitting input into separate
-		pipelines, each of which is then parsed into individual commands.
+		split_pipe_and_parse is a function responsible for splitting input into
+		separate pipelines, each of which is then parsed into individual commands.
 		It facilitates the execution of multiple commands separated by pipe symbols.
 
 	Parameters:
@@ -84,7 +84,6 @@ t_list	*parse_input(char *input, t_env_info *env)
 	if (!list->input)
 		ft_minishell_error("ft_strtrim()", "failed", strerror(errno), errno);
 	tokenize(list);
-	// print_tokens(list, ft_strlen(list->input));
 	if (check_syntax(list, env))
 		return (free_list(list), NULL);
 	if (split_pipe_and_parse(&list, env))

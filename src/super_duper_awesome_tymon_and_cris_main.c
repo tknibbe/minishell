@@ -1,5 +1,4 @@
-
-# include "minishell.h"
+#include "minishell.h"
 
 int	run_single_command(t_list *list, t_env_info *e)
 {
@@ -9,7 +8,7 @@ int	run_single_command(t_list *list, t_env_info *e)
 	if (string && *string)
 	{
 		add_history(string);
-		list = parse_input(string, e);  // when does it return NULL? maybe make it so it never returns NULL but just exits
+		list = parse_input(string, e);
 		if (list)
 			executor(list, e);
 		free(string);
@@ -31,7 +30,7 @@ int	run_shell(t_list *list, t_env_info *e)
 		if (*string)
 		{
 			add_history(string);
-			list = parse_input(string, e); 
+			list = parse_input(string, e);
 			if (list)
 				executor(list, e);
 		}

@@ -1,11 +1,10 @@
-
 #include "minishell.h"
 
 #define NO_MATCH 0
 #define MATCHED 1
 #define DIRECTORY '/'
 
-static int	check_for_first_matching_string(char **file, char **input, int w_card)
+static int	check_first_matching_string(char **file, char **input, int w_card)
 {
 	int	i;
 
@@ -41,7 +40,7 @@ static int	pattern_match(char *f, char *input)
 			wildcard = *(input++);
 		else
 			wildcard = 0;
-		if (!check_for_first_matching_string(&f, &input, wildcard))
+		if (!check_first_matching_string(&f, &input, wildcard))
 			return (NO_MATCH);
 		else if (*input == DIRECTORY)
 			return (DIRECTORY);

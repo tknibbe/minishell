@@ -22,7 +22,7 @@ MAKE_STRUCTS	=	heredoc.c list_utils.c list_utils2.c make_list.c
 SPLIT_PIPELINES	=	list_utils.c split_pipelines.c
 SYNTAX			=	syntax_utils.c syntax_utils2.c syntax.c
 TOKENIZE		=	subshell.c token_utils.c token.c
-PARSE			=	parse_main.c test_functions.c $(addprefix tokenize/, $(TOKENIZE)) $(addprefix syntax/, $(SYNTAX)) \
+PARSE			=	parse_main.c $(addprefix tokenize/, $(TOKENIZE)) $(addprefix syntax/, $(SYNTAX)) \
 					$(addprefix make_structs/, $(MAKE_STRUCTS)) $(addprefix split_pipelines/, $(SPLIT_PIPELINES)) $(addprefix expansion/, $(EXPANSION))
 SRC				=	super_duper_awesome_tymon_and_cris_main.c $(addprefix parse/, $(PARSE)) $(addprefix utils/, $(UTILS)) \
 					$(addprefix signals/, $(SIGNALS)) $(addprefix execution/, $(EXECUTION)) $(addprefix built_ins/, $(BUILTINS))

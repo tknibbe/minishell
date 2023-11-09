@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 int	check_for_wildcard(char *s)

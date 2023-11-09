@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 static void	swap(t_env *pwd, t_env *oldpwd, t_env_info *e)

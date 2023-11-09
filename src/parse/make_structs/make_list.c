@@ -6,11 +6,11 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 11:26:11 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/02 12:12:01 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/09 14:58:33 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int		new_rdr_node(char *input, t_list *list, int *i, t_env_info *env);
 void	new_cmd_node(char *input, int *token, t_exec *exec, int *i);

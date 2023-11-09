@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   double_array_utils.c                               :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2023/06/29 15:58:29 by cvan-sch      #+#    #+#                 */
-/*   Updated: 2023/08/16 12:49:06 by cvan-sch      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   double_array_utils.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/29 15:58:29 by cvan-sch          #+#    #+#             */
+/*   Updated: 2023/11/09 15:11:22 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int	count_dp(char **c)
 {

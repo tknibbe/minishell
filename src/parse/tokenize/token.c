@@ -6,12 +6,13 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 12:18:15 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/02 14:01:10 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/09 15:03:37 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
-# define ADD 1
+#include "minishell.h"
+#define ADD 1
+
 static void	set_token(t_list *list, char *input);
 
 /*Description:
@@ -28,7 +29,7 @@ void	tokenize(t_list *list)
 	int	len;
 
 	len = ft_strlen(list->input);
-	list->token = ft_calloc(sizeof(int), len + 1); // just a slight optimizations since we fill it with blankspace token or something else no need to calloc, use malloc instead
+	list->token = malloc(sizeof(int) * (len + 1));
 	if (!list->token)
 		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	set_token(list, list->input);

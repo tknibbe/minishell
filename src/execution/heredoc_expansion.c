@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expansion.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tymonknibbe <tymonknibbe@student.42.fr>    +#+  +:+       +#+        */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:13:53 by tymonknibbe       #+#    #+#             */
-/*   Updated: 2023/10/27 17:16:39 by tymonknibbe      ###   ########.fr       */
+/*   Updated: 2023/11/09 15:14:57 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 static char	*getfilename(int num)
 {
@@ -84,7 +84,8 @@ void	do_heredoc_or_so(t_rdr *r, t_env_info *e, int hierdok_num, int in)
 	if (fd < 0)
 		ft_minishell_error("open()", filename, strerror(errno), errno);
 	if (dup2(fd, in) < 0)
-		ft_minishell_error("dup2()", "duplicating heredoc", strerror(errno), errno);
+		ft_minishell_error("dup2()", "duplicating heredoc", \
+			strerror(errno), errno);
 	close(fd);
 	if (unlink(filename))
 		ft_minishell_error("unlink()", NULL, strerror(errno), errno);

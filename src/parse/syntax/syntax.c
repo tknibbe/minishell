@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/02 12:27:08 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/09 15:00:04 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	rdr_check(t_list *list, int *i)
 	while (list->token[temp] == list->token[*i] && list->input[*i])
 		*i += 1;
 	if ((*i - temp) > 2)
-		return (ft_syntax_error(' ', list->token[*i-1]));
+		return (ft_syntax_error(' ', list->token[*i - 1]));
 	while (list->token[*i] == BLANK && list->input[*i])
 		*i += 1;
 	if (!list->input[*i])

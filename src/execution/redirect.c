@@ -6,11 +6,11 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 15:12:03 by tymonknibbe       #+#    #+#             */
-/*   Updated: 2023/11/09 13:53:18 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/09 15:18:11 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int	open_file_and_dup(char *file, int flag, int to_dup, int permission)
 {
@@ -21,7 +21,8 @@ int	open_file_and_dup(char *file, int flag, int to_dup, int permission)
 		ft_minishell_error(NULL, file, strerror(errno), 1);
 	else if (fd < 0)
 		return (ft_minishell_error(NULL, file, strerror(errno), 1));
-	if ((to_dup == STDOUT_FILENO || to_dup == STDIN_FILENO) && dup2(fd, to_dup) < 0)
+	if ((to_dup == STDOUT_FILENO || to_dup == STDIN_FILENO) \
+		&& dup2(fd, to_dup) < 0)
 		ft_minishell_error("dup2()", NULL, strerror(errno), errno);
 	else if (to_dup < 3)
 		close (fd);
@@ -51,18 +52,20 @@ int	do_redirect(int type, char **file, int builtin)
 	if (builtin)
 	{
 		if (!(*file) || *(file + 1))
-			return (ft_minishell_error("ambiguous redirect", "expansion results in multiple or no arguments", NULL, 0));
+			return (ft_minishell_error("ambiguous redirect", "expansion results in \
+				multiple or no arguments", NULL, 0));
 		in = 4;
 		out = 3;
 	}
 	else if (!(*file) || *(file + 1))
-		ft_minishell_error("ambiguous redirect", "expansion results in multiple or no arguments", NULL, 1);
+		ft_minishell_error("ambiguous redirect", "expansion results in \
+			multiple or no arguments", NULL, 1);
 	if (type == REDIRLEFT)
 		ret = open_file_and_dup(*file, O_RDONLY, in, 0);
 	else if (type == REDIRRIGHT)
 		ret = open_file_and_dup(*file, O_WRONLY | O_CREAT | O_TRUNC, out, 420);
 	else if (type == APPEND)
-		ret = open_file_and_dup(*file,O_WRONLY | O_CREAT | O_APPEND, out, 420);
+		ret = open_file_and_dup(*file, O_WRONLY | O_CREAT | O_APPEND, out, 420);
 	if (builtin && !ret && (type == REDIRRIGHT || type == APPEND))
 		return (3);
 	return (ret);

@@ -1,5 +1,4 @@
-
-# include "minishell.h"
+#include "minishell.h"
 
 t_env_info	*env_init(char **env)
 {
@@ -9,7 +8,8 @@ t_env_info	*env_init(char **env)
 	i = 0;
 	info = malloc(sizeof(t_env_info));
 	if (!info)
-		ft_minishell_error("malloc()", "allocating t_env_info", strerror(errno), errno);
+		ft_minishell_error("malloc()", "allocating t_env_info", \
+			strerror(errno), errno);
 	info->head = NULL;
 	while (env[i])
 		env_addback(&info->head, env_new(env[i++]));

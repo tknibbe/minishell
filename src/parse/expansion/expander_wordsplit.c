@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 static t_str	*split_var(char *var, char *sub)

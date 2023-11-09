@@ -6,15 +6,16 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 15:14:24 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/02 14:03:03 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/09 14:59:35 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int	is_redirect(int t)
 {
-	return (t == REDIRLEFT || t == REDIRRIGHT || t == HEREDOC_EXP || t == APPEND);
+	return (t == REDIRLEFT || t == REDIRRIGHT || \
+		t == HEREDOC_EXP || t == APPEND);
 }
 
 int	is_control_op(int token)

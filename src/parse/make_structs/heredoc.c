@@ -6,11 +6,11 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/05 19:26:41 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/09 14:58:19 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 static char	*get_delimiter(t_list *list, int *i);
 static int	set_expand(char *delimiter);
@@ -23,10 +23,12 @@ void	init_struct_and_fork(t_heredoc *doc, t_list *list, int *i)
 	doc->expand = set_expand(doc->delimiter);
 	doc->line = "";
 	if (pipe(doc->pipefd) < 0)
-		ft_minishell_error("pipe()", "creating the pipe for heredoc", strerror(errno), errno);
+		ft_minishell_error("pipe()", "creating the pipe for heredoc", \
+			strerror(errno), errno);
 	doc->pid = fork();
 	if (doc->pid < 0)
-		ft_minishell_error("fork()", "forking for heredoc", strerror(errno), errno);
+		ft_minishell_error("fork()", "forking for heredoc", \
+			strerror(errno), errno);
 }
 
 int	add_heredoc(t_list *list, int *i, t_env_info *env)
@@ -112,8 +114,8 @@ static char	*get_delimiter(t_list *list, int *i)
 		*i += 1;
 	start = *i;
 	while ((list->token[*i] == WORD || list->input[*i] == '\'' \
-	|| list->input[*i] == '"' || list->input[*i] == '(' || list->input[*i] == ')') \
-	&& list->input[*i])
+	|| list->input[*i] == '"' || list->input[*i] == '(' || \
+	list->input[*i] == ')') && list->input[*i])
 		*i += 1;
 	temp = ft_substr(list->input, start, *i - start);
 	if (temp == NULL)

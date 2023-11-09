@@ -6,11 +6,11 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 12:12:28 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/08/27 16:20:42 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/09 14:58:31 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 t_rdr	*rdr_lstnew(char *str, int type, int heredoc)
 {

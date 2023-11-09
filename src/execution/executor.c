@@ -1,5 +1,4 @@
-
-# include "minishell.h"
+#include "minishell.h"
 
 static void	execute_child(t_exec *exec, t_env_info *e, t_process *proc)
 {
@@ -44,9 +43,11 @@ static int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
 		proc->here_doc_nbr++;
 		proc->fd_to_read_from = dup(proc->p[0]);
 		if (proc->fd_to_read_from == -1)
-			ft_minishell_error("dup()", "duplicating read end of pipe for next command", strerror(errno), errno);
+			ft_minishell_error("dup()", "duplicating read end of \
+				pipe for next command", strerror(errno), errno);
 		if (close(proc->p[0]) == -1 || close(proc->p[1]) == -1)
-			ft_minishell_error("close()", "closing pipe in main process", strerror(errno), errno);
+			ft_minishell_error("close()", "closing pipe in main process", \
+				strerror(errno), errno);
 	}
 	return (pid);
 }
@@ -66,7 +67,8 @@ static void	init_proc(t_process *proc, t_exec *next)
 	proc->is_single_command = 0;
 	proc->p = malloc(2 * sizeof(int));
 	if (!proc->p)
-		ft_minishell_error("malloc()", "allocating pipe", strerror(errno), errno);
+		ft_minishell_error("malloc()", "allocating pipe", \
+			strerror(errno), errno);
 }
 
 static int	exec_pipe_line(t_exec *exec, t_env_info *e)

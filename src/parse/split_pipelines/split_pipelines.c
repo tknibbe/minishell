@@ -6,11 +6,11 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 14:34:27 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/10/21 15:35:22 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/09 14:58:49 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int	and_or_instr(char *input, int *token, int i)
 {

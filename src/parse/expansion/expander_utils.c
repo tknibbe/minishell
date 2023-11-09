@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 char	*ft_join(char *s1, char *s2)

@@ -1,5 +1,4 @@
-
-# include "minishell.h"
+#include "minishell.h"
 
 int	builtin(char *cmd)
 {
@@ -24,6 +23,7 @@ int	do_builtin(char **cmd, t_env_info *e, int builtin_no, int out)
 {
 	int	ret;
 
+	ret = 0;
 	if (builtin_no == MS_ECHO)
 		ret = echo(cmd, out);
 	else if (builtin_no == MS_ENV)
@@ -54,7 +54,7 @@ int	prep_process(t_process *proc, t_exec *exec, t_env_info *e)
 	{
 		fd = redirect(exec->rdr, e, 1, 1);
 		if (fd > 0)
-			e->last_exit_status =  do_builtin(proc->cmd, e, proc->builtin, fd);
+			e->last_exit_status = do_builtin(proc->cmd, e, proc->builtin, fd);
 		if (fd == 3)
 			close(fd);
 		return (1);
@@ -68,4 +68,3 @@ int	prep_process(t_process *proc, t_exec *exec, t_env_info *e)
 		ft_minishell_error("pipe()", strerror(errno), NULL, errno);
 	return (0);
 }
-

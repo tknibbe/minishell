@@ -1,5 +1,4 @@
-
-# include "minishell.h"
+#include "minishell.h"
 
 void	free_str(t_str *str)
 {

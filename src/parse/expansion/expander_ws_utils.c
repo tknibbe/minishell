@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 void	expand_string(char *s, t_exp *x)
@@ -46,7 +45,8 @@ char	*create_sub(char *s, int *i, int j)
 			if (!s[*i + j])
 				j = quote - *i + 1;
 		}
-		else if (s[*i + j] == '$' && !ft_isname(s[*i + j + 1]) && !ft_isinset(s[*i + j + 1], "?$"))
+		else if (s[*i + j] == '$' && !ft_isname(s[*i + j + 1]) && \
+			!ft_isinset(s[*i + j + 1], "?$"))
 			j++;
 	}
 	if (!j)

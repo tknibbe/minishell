@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 /*
@@ -42,7 +41,8 @@ int	ms_exit(char **cmd)
 	while (cmd[i])
 		i++;
 	if (i > 2)
-		return (ft_minishell_error("Minishell", "exit()", "too many arguments", 1));
+		return (ft_minishell_error("Minishell", "exit()", \
+			"too many arguments", 1));
 	if (!cmd[1])
 		exit(0);
 	i = 0;
