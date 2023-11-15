@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/15 13:02:49 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/15 13:31:39 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_struct_and_fork(t_heredoc *doc, t_list *list, int *i)
 	doc->delimiter = get_delimiter(list, i);
 	doc->expand = set_expand(doc->delimiter);
 	swapstring = ft_strdel(doc->delimiter, "\'\"()");
-	if(!swapstring)
+	if (!swapstring)
 		ft_minishell_error("Malloc()", NULL, strerror(errno), errno);
 	free (doc->delimiter);
 	doc->delimiter = ft_strjoin(swapstring, "\n");
@@ -117,6 +117,7 @@ static char	*get_delimiter(t_list *list, int *i)
 {
 	int		start;
 	char	*temp;
+
 	while (list->token[*i] == BLANK || list->input[*i] == '<')
 		*i += 1;
 	start = *i;
@@ -129,4 +130,3 @@ static char	*get_delimiter(t_list *list, int *i)
 		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
 	return (temp);
 }
-

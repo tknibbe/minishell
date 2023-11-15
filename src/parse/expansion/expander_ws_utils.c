@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:33:55 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/15 12:33:56 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/15 13:41:14 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,22 @@ void	transform_wildcards(char **s)
 	}
 }
 
-char	*create_sub(char *s, int *i, int j)
+static char	*create_sub2(char *s, int *i, int j)
 {
 	char	*sub;
-	int		quote;
+
+	if (!j)
+		return (NULL);
+	sub = ft_substr(s, *i, j);
+	if (!sub)
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
+	*i += j;
+	return (sub);
+}
+
+char	*create_sub(char *s, int *i, int j)
+{
+	int	quote;
 
 	while (s[*i + j] && s[*i + j] != '$')
 	{
@@ -61,11 +73,5 @@ char	*create_sub(char *s, int *i, int j)
 			!ft_isinset(s[*i + j + 1], "?$"))
 			j++;
 	}
-	if (!j)
-		return (NULL);
-	sub = ft_substr(s, *i, j);
-	if (!sub)
-		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
-	*i += j;
-	return (sub);
+	return (create_sub2(s, i, j));
 }

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/15 13:48:47 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/11/15 13:50:13 by tknibbe          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef PARSING_H 
 # define PARSING_H
@@ -81,6 +92,6 @@ void	print_class(int num);
 void	print_test(t_list *list, char *input);
 void	print_tokens(t_list *list, int len);
 void	print_t_exec(t_list *list);
-void 	print_whole_list(t_list *list);
+void	print_whole_list(t_list *list);
 
 #endif

@@ -1,20 +1,32 @@
-#ifndef STRUCT_H
-# define STRUCT_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/15 13:48:49 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/11/15 13:49:36 by tknibbe          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include <stdbool.h>
+#ifndef STRUCTS_H
+# define STRUCTS_H
+
+# include <stdbool.h>
 
 typedef struct s_env_info	t_env_info;
 typedef struct s_process	t_process;
 typedef struct s_heredoc	t_heredoc;
 typedef struct s_list		t_list;
 typedef struct s_exec		t_exec;
-typedef struct	s_str		t_str;
+typedef struct s_str		t_str;
 typedef struct s_env		t_env;
 typedef struct s_exp		t_exp;
 typedef struct s_rdr		t_rdr;
 
 /*linked list of strings*/
-typedef struct	s_str
+typedef struct s_str
 {
 	char			*str;
 	struct s_str	*next;
@@ -50,7 +62,6 @@ typedef struct s_process
 	int				fd_to_read_from;
 	bool			is_single_command;
 }					t_process;
-
 
 /*a structure holding the result of expansion and the var*/
 typedef struct s_exp

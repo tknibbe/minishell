@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/15 13:48:52 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/11/15 13:49:54 by tknibbe          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef UTILS_H
 # define UTILS_H
 
@@ -9,7 +21,7 @@ void	tstr_addback(t_str **head, t_str *new);
 void	tstr_addnext(t_str *current, t_str *new);
 
 /*		is something utils*/
-int		ft_iswhitespace(int	c);
+int		ft_iswhitespace(int c);
 int		ft_isname(int c);
 int		ft_isinset(int c, char *s);
 

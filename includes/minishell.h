@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/15 13:48:45 by tknibbe           #+#    #+#             */
+/*   Updated: 2023/11/15 13:48:46 by tknibbe          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/errno.h>
-// # include <sys/ioctl.h>
+# include <sys/ioctl.h>
 # include <sys/wait.h>
 # include <termios.h>
 # include <string.h>

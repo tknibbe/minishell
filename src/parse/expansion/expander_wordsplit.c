@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:33:52 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/15 12:33:53 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/15 13:48:05 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,11 @@ void	insert_list(t_str **start, t_str *list)
 	(*start)->next = tmp;
 }
 
-void	split_word(t_str *start, t_env_info *e)
+static void	split_word2(t_str *start, t_env_info *e, char *s, t_str *splitted)
 {
 	int		i;
-	char	*s;
 	char	*sub;
-	t_str	*splitted;
 
-	s = start->str;
-	if (!*s)
-		return ;
-	start->str = NULL;
 	i = 0;
 	while (s[i])
 	{
@@ -107,5 +101,18 @@ void	split_word(t_str *start, t_env_info *e)
 			splitted = get_insert_lst(NULL, e, sub);
 		insert_list(&start, splitted);
 	}
+}
+
+void	split_word(t_str *start, t_env_info *e)
+{
+	char	*s;
+	t_str	*splitted;
+
+	s = start->str;
+	if (!*s)
+		return ;
+	start->str = NULL;
+	splitted = NULL;
+	split_word2(start, e, s, splitted);
 	free(s);
 }
