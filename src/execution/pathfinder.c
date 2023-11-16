@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 12:43:08 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/09 15:15:48 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/16 18:28:05 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*check_local(char *cmd)
 	{
 		if (S_ISDIR(path.st_mode))
 			ft_minishell_error(cmd, "Is a directory", NULL, 126);
-		if (access(cmd, X_OK | R_OK | W_OK))
+		if (access(cmd, X_OK) == -1)
 			ft_minishell_error(cmd, "Permission denied", NULL, 126);
 	}
 	else
