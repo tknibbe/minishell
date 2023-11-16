@@ -34,7 +34,12 @@ int	legit_export_item(char *to_export)
 	while (ft_isname(to_export[i]))
 		i++;
 	if (!to_export[i])
+	{
+		write(2, "WARNING: undeclared variable \"", 30);
+		write(2, to_export, ft_strlen(to_export));
+		write(2, "\" was ignored\n", 14);
 		return (1);
+	}
 	else if (i && (to_export[i] == '=' || \
 			(to_export[i] == '+' && to_export[i + 1] == '=')))
 		return (0);
