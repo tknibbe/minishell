@@ -50,14 +50,11 @@ static int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
 		ft_minishell_error("fork()", NULL, strerror(errno), errno);
 	else if (pid == 0)
 		execute_child(exec, e, proc);
+	if (proc->fd_to_read_from)
+		close(proc->fd_to_read_from);
 	if (proc->p)
 	{
 		proc->here_doc_nbr++;
-		if (proc->fd_to_read_from)
-		{
-			close(proc->fd_to_read_from);
-			proc->fd_to_read_from = 0;
-		}
 		proc->fd_to_read_from = dup(proc->p[0]);
 		if (proc->fd_to_read_from == -1)
 			ft_minishell_error("dup()", "duplicating read end of \
@@ -106,15 +103,8 @@ static int	exec_pipe_line(t_exec *exec, t_env_info *e)
 	if (proc.fd_to_read_from)
 		close(proc.fd_to_read_from);
 	waitpid(pid, &status, 0);
-	printf("waited for: %d\n", pid);
-
-	int	somid;
-	somid = wait(NULL);
-	while (somid != -1)
-	{
-		somid = wait(NULL);
-		printf("waited for: %d\n", somid);
-	}
+	while (wait(NULL) != -1)
+		;
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
