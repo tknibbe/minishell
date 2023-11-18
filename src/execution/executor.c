@@ -101,8 +101,15 @@ static int	exec_pipe_line(t_exec *exec, t_env_info *e)
 	if (proc.fd_to_read_from)
 		close(proc.fd_to_read_from);
 	waitpid(pid, &status, 0);
-	while (wait(NULL) != -1)
-		;
+	printf("waited for: %d\n", pid);
+
+	int	somid;
+	somid = wait(NULL);
+	while (somid != -1)
+	{
+		somid = wait(NULL);
+		printf("waited for: %d\n", somid);
+	}
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
