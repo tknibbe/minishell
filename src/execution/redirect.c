@@ -20,12 +20,17 @@ int	open_file_and_dup(char *file, int flag, int to_dup, int permission)
 	if (to_dup >= 0 && to_dup <= 1 && fd < 0)
 		ft_minishell_error(NULL, file, strerror(errno), 1);
 	else if (fd < 0)
-		return (ft_minishell_error(NULL, file, strerror(errno), 1));
+		return (ft_minishell_error(NULL, file, strerror(errno), 0));
+	if (to_dup == -1)
+		close(fd);
 	if ((to_dup == STDOUT_FILENO || to_dup == STDIN_FILENO) \
 		&& dup2(fd, to_dup) < 0)
 		ft_minishell_error("dup2()", NULL, strerror(errno), errno);
-	else if (to_dup < 3)
-		close (fd);
+	else if (to_dup == 4)
+	{
+		dup2(fd, 4);
+		close(fd);
+	}
 	return (0);
 }
 
@@ -54,8 +59,8 @@ int	do_redirect(int type, char **file, int builtin)
 		if (!(*file) || *(file + 1))
 			return (ft_minishell_error("ambiguous redirect", "expansion results in \
 				multiple or no arguments", NULL, 0));
-		in = 4;
-		out = 3;
+		in = -1;
+		out = 4;
 	}
 	else if (!(*file) || *(file + 1))
 		ft_minishell_error("ambiguous redirect", "expansion results in \
@@ -67,7 +72,7 @@ int	do_redirect(int type, char **file, int builtin)
 	else if (type == APPEND)
 		ret = open_file_and_dup(*file, O_WRONLY | O_CREAT | O_APPEND, out, 420);
 	if (builtin && !ret && (type == REDIRRIGHT || type == APPEND))
-		return (3);
+		return (4);
 	return (ret);
 }
 
@@ -86,8 +91,8 @@ int	redirect(t_rdr *r, t_env_info *e, int hierdok_num, int builtin)
 		rdr = do_redirect(r->type, file, builtin);
 		if (rdr == 1)
 			return (free_dp(file), -1);
-		else if (builtin && rdr == 3)
-			ret = 3;
+		else if (builtin && rdr == 4)
+			ret = 4;
 		free_dp(file);
 		r = r->next;
 	}
