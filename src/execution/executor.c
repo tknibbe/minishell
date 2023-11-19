@@ -81,7 +81,7 @@ static void	init_proc(t_process *proc, t_exec *next)
 		proc->p = NULL;
 		return ;
 	}
-	proc->is_single_command = 0; <missing <"
+	proc->is_single_command = 0;
 	proc->p = malloc(2 * sizeof(int));
 	if (!proc->p)
 		ft_minishell_error("malloc()", "allocating pipe", \

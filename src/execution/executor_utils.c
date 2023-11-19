@@ -67,6 +67,8 @@ int	prep_process(t_process *proc, t_exec *exec, t_env_info *e)
 		fd = redirect(exec->rdr, e, 1, 1);
 		if (fd > 0)
 			e->last_exit_status = do_builtin(proc->cmd, e, proc->builtin, fd);
+		else if (fd < 0)
+			e->last_exit_status = 1;
 		if (fd == 3)
 			close(fd);
 		return (1);
