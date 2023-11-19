@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:34:10 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/18 15:02:23 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/19 14:09:25 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ static int	fork_and_execute(t_exec *exec, t_env_info *e, t_process *proc)
 	if (pid < 0)
 		ft_minishell_error("fork()", NULL, strerror(errno), errno);
 	else if (pid == 0)
+	{
+		signal(SIGQUIT, SIG_DFL);
 		execute_child(exec, e, proc);
+	}
 	if (proc->fd_to_read_from)
 		close(proc->fd_to_read_from);
 	if (proc->p)
@@ -78,7 +81,7 @@ static void	init_proc(t_process *proc, t_exec *next)
 		proc->p = NULL;
 		return ;
 	}
-	proc->is_single_command = 0;
+	proc->is_single_command = 0; <missing <"
 	proc->p = malloc(2 * sizeof(int));
 	if (!proc->p)
 		ft_minishell_error("malloc()", "allocating pipe", \
