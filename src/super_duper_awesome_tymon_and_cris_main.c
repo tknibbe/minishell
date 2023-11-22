@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:32:28 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/22 14:32:43 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/22 15:54:00 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,10 @@ int	run_shell(t_list *list, t_env_info *e)
 		string = readline(PROMPT);
 		set_signals_non_inter();
 		if (!string)
-			exit(0);
+			exit(e->last_exit_status);
 		if (*string)
 		{
 			list = parse_input(string, e);
-			// add_history(list->input);
 			if (list)
 				executor(list, e);
 		}
