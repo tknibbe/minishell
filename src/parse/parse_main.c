@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:21:38 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/22 14:32:35 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/22 16:12:04 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_list	*parse_input(char *input, t_env_info *env)
 		add_history(list->input);
 		return (free_list(list), NULL);
 	}
-	add_history(list->input);
+	add_history(list->input); //this fucks up the history with subshells. maybe input = list->input and then post it in the main?
 	if (split_pipe_and_parse(&list, env))
 		return (NULL);
 	return (list);
