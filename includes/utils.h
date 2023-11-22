@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:48:52 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/15 13:49:54 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/22 16:03:40 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ int		ft_minishell_error(char *program, char *arg, char *desc, int ex);
 void	unset_echo(void);
 void	set_signals_inter(void);
 void	set_signals_non_inter(void);
+int		pretty_much_a_global(int mode, int value);
 
 #endif
