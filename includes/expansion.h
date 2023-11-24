@@ -15,18 +15,22 @@
 
 # include "structs.h"
 
+# define NO_MATCH 0
+# define MATCH 1
+# define MATCH_DIR 2
+
 /*		expander.c*/
 void	expander(int state, t_exp *x, char *input);
 char	**full_expansion(t_str *c, t_env_info *e);
 
 /*		expander_wc_utils.c*/
 int		skip_quoted_state(char *s, int i, int quote);
-void	initialize_xp(t_exp *xp, t_env_info *e);
 int		check_for_wildcard(char *s);
 int		amount(t_str *s);
+bool	check_for_more(char *s, char *file, t_str **matched, char *dir);
 
 /*		expander_wildcard.c*/
-t_str	*expand_wildcard(char *s);
+void	expand_wildcard(char *s, t_str **matched, char *directory);
 
 /*		expander_ws_utils.c*/
 char	*create_sub(char *s, int *i, int j);

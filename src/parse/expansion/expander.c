@@ -19,11 +19,12 @@ static void	expansion_wc(t_str *s)
 
 	while (s)
 	{
+		matched = NULL;
 		if (!s->str)
 			return ;
 		if (check_for_wildcard(s->str))
 		{
-			matched = expand_wildcard(s->str);
+			expand_wildcard(s->str, &matched, NULL);
 			if (matched)
 			{
 				free(s->str);

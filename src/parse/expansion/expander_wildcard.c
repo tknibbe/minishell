@@ -12,89 +12,110 @@
 
 #include "minishell.h"
 
-#define NO_MATCH 0
-#define MATCHED 1
-#define DIRECTORY '/'
-
-static int	check_first_matching_string(char **file, char **input, int w_card)
+static char	*getstr(char *dir, char *d_name, int match)
 {
-	int	i;
+	char	*new;
 
-	while (*(*file))
+	if (!dir)
+		new = ft_strdup(d_name);
+	else
+		new = ft_strjoin(dir, d_name);
+	if (!new)
+		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
+	if (match == MATCH_DIR)
+		new = ft_join(new, "/");
+	return (new);
+}
+
+static int	pre_pm(char **file, char **input)
+{ 
+	if (*(*input) != '.' && *(*file) == '.')
+		return (1);
+	while (*(*input) && *(*input) == *(*file))
+	{
+		(*file)++;
+		(*input)++;
+	}
+	if (*(*input) == -1)
+	{
+		while (*(*input) == -1)
+			(*input)++;
+		return (0);
+	}
+	return (1);
+}
+
+static int	match_condition(int i, int type, char **input, char **file)
+{
+	if (!(*input)[i] && !(*file)[i])
+		return (MATCH);
+	else if (!(*file)[i] && (*input)[i] == '/' && type == DT_DIR)
+		return (MATCH_DIR);
+	else if ((*input)[i] == '/' && !(*file)[i])
+		return (NO_MATCH);
+	else if ((*input)[i] == -1)
+	{
+		(*input) += i;
+		(*file) += i;
+		while (*(*input) == -1)
+			(*input)++;
+	}
+	else if (*(*file))
+		(*file)++;
+	return (-1);
+}
+
+static int	pattern_match(char *file, char *input, const int type)
+{
+	int		i;
+	int		condition;
+
+	if (pre_pm(&file, &input))
+		return (NO_MATCH);
+	while (*file)
 	{
 		i = 0;
-		if (w_card)
-			while (*(*file) && *(*file) != *(*input))
-				(*file)++;
-		while ((*file)[i] && (*file)[i] == (*input)[i])
+		while (*file && *file != *input)
+			file++;
+		while (file[i] && file[i] == input[i])
 			i++;
-		if ((*input)[i] == -1 || (!(*file)[i] && !(*input)[i]) \
-			|| (!(*file)[i] && (*input)[i] == '/'))
-		{
-			*input += i;
-			*file += i;
-			return (MATCHED);
-		}
-		if (!((*file)[i]) || !w_card)
-			break ;
-		*file += i;
+		condition = match_condition(i, type, &input, &file);
+		if (condition == -1)
+			continue ;
+		return (condition);
 	}
+
+	if (*input == *file)
+		return (MATCH);
+	else if (*input == '/' && type == DT_DIR)
+		return (MATCH_DIR);
 	return (NO_MATCH);
 }
 
-static int	pattern_match(char *f, char *input)
+
+void	expand_wildcard(char *s, t_str **matched, char *directory)
 {
-	int	wildcard;
-
-	while (*f)
-	{
-		if (*input == -1)
-			wildcard = *(input++);
-		else
-			wildcard = 0;
-		if (!check_first_matching_string(&f, &input, wildcard))
-			return (NO_MATCH);
-		else if (*input == DIRECTORY)
-			return (DIRECTORY);
-	}
-	return (MATCHED);
-}
-
-static void	attempt_to_match(t_str **head, struct dirent *entry, char *s)
-{
-	int		m;
-	char	*tmp;
-
-	m = pattern_match(entry->d_name, s);
-	if (!m || (m == DIRECTORY && entry->d_type != DT_DIR))
-		return ;
-	tmp = ft_strdup(entry->d_name);
-	if (!tmp)
-		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
-	if (m == DIRECTORY && entry->d_type == DT_DIR)
-		tmp = ft_join(tmp, "/");
-	tstr_addback(head, tstr_new(tmp));
-}
-
-t_str	*expand_wildcard(char *s)
-{
-	DIR				*dir_p;
 	struct dirent	*entry;
-	t_str			*matched;
+	DIR				*instance;
+	int				match;
 
-	matched = NULL;
-	dir_p = opendir(".");
-	if (!dir_p)
-		ft_minishell_error("opendir()", NULL, strerror(errno), errno);
-	while (1)
+	if (!directory)
+		instance = opendir(".");
+	else
+		instance = opendir(directory);
+	if (!instance)
+		ft_minishell_error("opendir()", directory, strerror(errno), errno); // maybe not exit but just return and catch that somewhere els
+	while (true)
 	{
-		entry = readdir(dir_p);
+		entry = readdir(instance);
 		if (!entry)
 			break ;
-		if (*entry->d_name == '.' && *s != '.')
+		match = pattern_match(entry->d_name, s, entry->d_type);
+		if (match == MATCH_DIR && check_for_more(s, entry->d_name, matched, directory))
 			continue ;
-		attempt_to_match(&matched, entry, s);
+		if (match)
+			tstr_addback(matched, tstr_new(getstr(directory, entry->d_name, match)));
 	}
-	closedir(dir_p);
-	return (matched);
+	closedir(instance);
+	free(directory);
 }

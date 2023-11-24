@@ -47,7 +47,8 @@ static t_str	*get_insert_lst(char *var, t_env_info *e, char *s)
 	t_str	*ret;
 
 	ret = NULL;
-	initialize_xp(&x, e);
+	x.e = e;
+	x.result = NULL;
 	if (s)
 		expand_string(s, &x);
 	if (var)

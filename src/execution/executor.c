@@ -118,23 +118,25 @@ static int	exec_pipe_line(t_exec *exec, t_env_info *e)
 void	executor(t_list *pipe_line, t_env_info *e)
 {
 	t_list	*to_free;
+	t_list	*temp;
 
 	while (pipe_line)
 	{
 		e->last_exit_status = exec_pipe_line(pipe_line->exec, e);
-		to_free = pipe_line;
 		if (!pipe_line->next)
 			return (free_list(pipe_line));
-		else if ((pipe_line->and_or == AND && !e->last_exit_status) || \
-				(pipe_line->and_or == OR && e->last_exit_status))
+		to_free = pipe_line;
+		while (pipe_line)
 		{
+			if ((e->last_exit_status && pipe_line->and_or == OR) || \
+				(!e->last_exit_status && pipe_line->and_or == AND))
+			{
+				temp = pipe_line;
+				pipe_line = pipe_line->next;
+				temp->next = NULL;
+				break ;
+			}
 			pipe_line = pipe_line->next;
-			to_free->next = NULL;
-		}
-		else
-		{
-			pipe_line = pipe_line->next->next;
-			to_free->next->next = NULL;
 		}
 		free_list(to_free);
 	}

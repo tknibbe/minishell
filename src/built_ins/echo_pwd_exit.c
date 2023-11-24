@@ -12,6 +12,25 @@
 
 #include "minishell.h"
 
+static int	check_flag(char *flag, int *new_line)
+{
+	int	i;
+
+	if (!ft_strncmp(flag, "-n", 2))
+	{
+		i = 2;
+		while (flag[i] && flag[i] == 'n')
+			i++;
+		if (!flag[i])
+		{
+			*new_line = 0;
+			return (2);
+		}
+	}
+	*new_line = 1;
+	return (1);
+}
+
 /*
 	echo function will write it's arguments to the standard output
 	seperated by a space.
@@ -23,13 +42,7 @@ int	echo(char **cmd, int fd)
 	int		i;
 	int		new_line;
 
-	i = 1;
-	new_line = 1;
-	while (!ft_strncmp(cmd[i], "-n", 3))
-	{
-		i++;
-		new_line = 0;
-	}
+	i = check_flag(cmd[1], &new_line);
 	while (cmd[i])
 	{
 		write(fd, cmd[i], ft_strlen(cmd[i]));
@@ -78,7 +91,7 @@ int	pwd(int fd)
 
 	buff = getcwd(NULL, 0);
 	if (!buff)
-		return (ft_minishell_error("getcwd()", strerror(errno), NULL, errno));
+		return (ft_minishell_error("getcwd()", strerror(errno), NULL, 0));
 	write(fd, buff, ft_strlen(buff));
 	write(fd, "\n", 1);
 	free(buff);

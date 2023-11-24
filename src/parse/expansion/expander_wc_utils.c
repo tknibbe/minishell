@@ -49,8 +49,15 @@ int	amount(t_str *s)
 	return (count);
 }
 
-void	initialize_xp(t_exp *xp, t_env_info *e)
+bool	check_for_more(char *s, char *file, t_str **matched, char *dir)
 {
-	xp->e = e;
-	xp->result = NULL;
+	int	i;
+
+	i = 0;
+	while (s[i] != '/')
+		i++;
+	if (!s[i + 1])
+		return (0);
+	expand_wildcard(s + i + 1, matched, getstr(dir, file, MATCH_DIR));
+	return (1);
 }

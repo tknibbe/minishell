@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	swap(t_env *pwd, t_env *oldpwd, t_env_info *e)
+static int	swap(t_env *pwd, t_env *oldpwd, t_env_info *e)
 {
 	if (!pwd)
 	{
@@ -30,12 +30,13 @@ static void	swap(t_env *pwd, t_env *oldpwd, t_env_info *e)
 	oldpwd->value = pwd->value;
 	pwd->value = getcwd(NULL, 0);
 	if (!pwd->value)
-		ft_minishell_error("getcwd()", NULL, strerror(errno), errno);
+		return (ft_minishell_error("getcwd()", NULL, strerror(errno), 0));
 	update_env(pwd, e);
 	update_env(oldpwd, e);
+	return (0);
 }
 
-static void	update_var(t_env_info *e)
+static int	update_var(t_env_info *e)
 {
 	t_env	*curr;
 	t_env	*pwd;
@@ -54,7 +55,7 @@ static void	update_var(t_env_info *e)
 			break ;
 		curr = curr->next;
 	}
-	swap(pwd, oldpwd, e);
+	return (swap(pwd, oldpwd, e));
 }
 
 static char	*oldpwd(t_env_info *e, int fd)
@@ -116,10 +117,7 @@ int	cd(char **cmd, t_env_info *e, int fd)
 	if (chdir(nav) < 0)
 		ret = ft_minishell_error("cd", nav, strerror(errno), 0);
 	else
-	{
-		ret = 0;
-		update_var(e);
-	}
+		ret = update_var(e);
 	if (fd != 1)
 		close((fd));
 	return (free(nav), ret);
