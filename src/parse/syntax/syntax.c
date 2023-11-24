@@ -6,28 +6,32 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/09 15:00:04 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/22 14:26:03 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	add_new_input(t_list *list, t_env_info *env)
+int	add_new_input(t_list **list, t_env_info *env)
 {
 	char	*new_str;
 	char	*str;
 
-	str = readline("> ");
-	if (!str)
-		return (ft_syntax_error(' ', -1));
-	new_str = ft_strjoin(list->input, str);
-	free(list->input);
+	str = "";
+	while (!str[0])
+	{
+		str = readline("> ");
+		(void)	env;
+		if (!str)
+			return (ft_syntax_error(' ', -1));
+	}
+	new_str = ft_strjoin((*list)->input, str);
+	free((*list)->input);
 	free(str);
-	free(list->token);
-	free(list->exec);
-	list->input = new_str;
-	tokenize(list);
-	check_syntax(list, env);
+	free((*list)->token);
+	free((*list)->exec);
+	(*list)->input = new_str;
+	tokenize((*list));
 	return (EXIT_SUCCESS);
 }
 
@@ -36,8 +40,10 @@ static int	control_op_check(t_list *list, int *i, t_env_info *env)
 	int	token;
 
 	token = list->token[*i];
-	if (!list->input[*i + 1])
-		return (add_new_input(list, env));
+	if (!list->input[*i + 1] || \
+		((list->token[*i] == OR || list->token[*i] == AND) && !list->input[*i + 2]))
+		if (add_new_input(&list, env))
+			return (EXIT_FAILURE);
 	if (op_amount_check(list, *i))
 		return (ft_syntax_error(' ', list->token[*i]));
 	while (list->token[*i] == token && list->input[*i + 1])
@@ -46,9 +52,7 @@ static int	control_op_check(t_list *list, int *i, t_env_info *env)
 		*i += 1;
 	if (list->token[*i] == WORD || is_redirect(list->token[*i]) \
 		|| list->token[*i] == BRACE_OPEN)
-	{
 		return (EXIT_SUCCESS);
-	}
 	return (ft_syntax_error(' ', list->token[*i]));
 }
 

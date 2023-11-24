@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/15 13:31:39 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/22 16:17:41 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	add_heredoc(t_list *list, int *i, t_env_info *env)
 			t_str_lstadd_back(&rdr_node->file, t_str_lstnew(doc.line));
 	}
 	free(doc.delimiter);
+	close(doc.pipefd[0]);
 	return (EXIT_SUCCESS);
 }
 

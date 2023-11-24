@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:48:45 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/15 13:48:46 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/22 15:57:40 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@
 # include "parsing.h"
 # include "exec.h"
 # include "utils.h"
+
+# define SET 0
+# define GET 1
 
 # define PROMPT "ez_game -> "
 

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:48:38 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/15 13:48:39 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/22 15:53:07 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 /*				echo_pwd_exit.c*/
 int				echo(char **cmd, int fd);
-int				ms_exit(char **cmd);
+int				ms_exit(char **cmd, t_env_info *e);
 int				pwd(int fd);
 
 /*				env_builtins.c*/

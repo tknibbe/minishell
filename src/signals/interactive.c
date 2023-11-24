@@ -6,11 +6,29 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:35:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/09 15:21:03 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/22 16:04:53 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+/*returns a value based on if there has been a signal interruption
+0 on no interruption
+the exit code if there has been an interruption*/
+int	pretty_much_a_global(int mode, int value)
+{
+	static int	not_a_global;
+
+	if (mode == SET)
+	{
+		not_a_global = value;
+		return (EXIT_SUCCESS);
+	}
+	value = not_a_global;
+	not_a_global = 0;
+	return (value);
+	
+}
 
 static void	interactive_handler(int c)
 {
@@ -19,6 +37,7 @@ static void	interactive_handler(int c)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	pretty_much_a_global(SET, 130);
 }
 
 /*The unset_echo function is used to modify the terminal settings to disable the

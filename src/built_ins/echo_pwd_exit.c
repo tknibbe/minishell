@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:33:05 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/15 12:33:06 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/22 15:51:50 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	echo(char **cmd, int fd)
 	return (0);
 }
 
-int	ms_exit(char **cmd)
+int	ms_exit(char **cmd, t_env_info *e)
 {
 	int	i;
 
@@ -69,7 +69,7 @@ int	ms_exit(char **cmd)
 		return (ft_minishell_error("Minishell", "exit()", \
 			"too many arguments", 1));
 	if (!cmd[1])
-		exit(0);
+		exit(e->last_exit_status);
 	i = 0;
 	if (cmd[1][i] == '-' || cmd[1][i] == '+')
 		i++;

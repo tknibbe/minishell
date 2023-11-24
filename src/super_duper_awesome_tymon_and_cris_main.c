@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:32:28 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/15 13:48:12 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/22 16:04:57 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	run_shell(t_list *list, t_env_info *e)
 		set_signals_inter();
 		string = readline(PROMPT);
 		set_signals_non_inter();
+		e->last_exit_status = pretty_much_a_global(GET, 0);
 		if (!string)
-			exit(0);
+			exit(e->last_exit_status);
 		if (*string)
 		{
-			add_history(string);
 			list = parse_input(string, e);
 			if (list)
 				executor(list, e);
@@ -58,7 +58,7 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc != 1)
 		ft_minishell_error(argv[1], "...", "too many arguments", 1);
 	e = env_init(envp);
-	if (!isatty(STDIN_FILENO))
-		exit(run_single_command(NULL, e));
+	// if (!isatty(STDIN_FILENO))
+	// 	exit(run_single_command(NULL, e));
 	return (run_shell(NULL, e));
 }

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:34:14 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/15 12:34:15 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/22 15:52:40 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	do_builtin(char **cmd, t_env_info *e, int builtin_no, int out)
 	else if (builtin_no == MS_PWD)
 		ret = pwd(out);
 	else
-		ms_exit(cmd);
+		ms_exit(cmd, e);
 	if (out == 3)
 		close(out);
 	return (ret);
