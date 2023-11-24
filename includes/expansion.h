@@ -31,6 +31,7 @@ bool	check_for_more(char *s, char *file, t_str **matched, char *dir);
 
 /*		expander_wildcard.c*/
 void	expand_wildcard(char *s, t_str **matched, char *directory);
+char	*getstr(char *dir, char *d_name, int match);
 
 /*		expander_ws_utils.c*/
 char	*create_sub(char *s, int *i, int j);

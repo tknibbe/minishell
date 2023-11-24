@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static char	*getstr(char *dir, char *d_name, int match)
+char	*getstr(char *dir, char *d_name, int match)
 {
 	char	*new;
 
