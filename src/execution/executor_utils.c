@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	builtin(char *cmd)
+int	builtin(char *cmd, int x)
 {
 	if (!ft_strncmp("echo", cmd, 5))
 		return (MS_ECHO);
@@ -25,7 +25,11 @@ int	builtin(char *cmd)
 	else if (!ft_strncmp("cd", cmd, 3))
 		return (MS_CD);
 	else if (!ft_strncmp("exit", cmd, 5))
+	{
+		if (x && isatty(STDIN_FILENO))
+			write(STDERR_FILENO, "exit\n", 5);
 		return (MS_EXIT);
+	}
 	else if (!ft_strncmp("env", cmd, 4))
 		return (MS_ENV);
 	return (MS_NOBUILTIN);
@@ -61,7 +65,7 @@ int	prep_process(t_process *proc, t_exec *exec, t_env_info *e)
 
 	proc->cmd = full_expansion(exec->cmd, e);
 	if (proc->cmd && *proc->cmd)
-		proc->builtin = builtin(*proc->cmd);
+		proc->builtin = builtin(*proc->cmd, proc->is_single_command);
 	if (proc->is_single_command && proc->builtin)
 	{
 		fd = redirect(exec->rdr, e, 1, 1);

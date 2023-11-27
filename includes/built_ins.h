@@ -17,7 +17,7 @@
 
 /*				echo_pwd_exit.c*/
 int				echo(char **cmd, int fd);
-int				ms_exit(char **cmd, t_env_info *e);
+void			ms_exit(char **cmd, t_env_info *e);
 int				pwd(int fd);
 
 /*				env_builtins.c*/

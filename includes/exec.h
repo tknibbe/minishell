@@ -33,7 +33,7 @@ void	executor(t_list *pipe_line, t_env_info *e);
 /*		executor_utils.c*/
 int		do_builtin(char **cmd, t_env_info *e, int builtin_no, int out);
 int		prep_process(t_process *proc, t_exec *exec, t_env_info *e);
-int		builtin(char *cmd);
+int		builtin(char *cmd, int x);
 
 /*		heredoc_expansion*/
 void	do_heredoc_or_so(t_rdr *r, t_env_info *e, int hierdok_num, int in);

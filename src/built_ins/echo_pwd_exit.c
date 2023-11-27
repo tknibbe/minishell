@@ -56,18 +56,13 @@ int	echo(char **cmd, int fd)
 	return (0);
 }
 
-int	ms_exit(char **cmd, t_env_info *e)
+void	ms_exit(char **cmd, t_env_info *e)
 {
 	int	i;
 
-	i = 0;
-	if (isatty(STDIN_FILENO))
-		write(STDERR_FILENO, "exit\n", 5);
-	while (cmd[i])
-		i++;
-	if (i > 2)
-		return (ft_minishell_error("Minishell", "exit()", \
-			"too many arguments", 1));
+	if (*(cmd + 1) && *(cmd + 2))
+		ft_minishell_error("exit", NULL, \
+			"too many arguments", 1);
 	if (!cmd[1])
 		exit(e->last_exit_status);
 	i = 0;
@@ -78,7 +73,6 @@ int	ms_exit(char **cmd, t_env_info *e)
 	if (cmd[1][i])
 		ft_minishell_error("exit()", cmd[1], "numeric argument required", 2);
 	exit(ft_atoi(cmd[1]));
-	return (EXIT_SUCCESS);
 }
 
 /*
