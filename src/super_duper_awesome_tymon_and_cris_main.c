@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:32:28 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/22 16:04:57 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/28 16:46:28 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	run_shell(t_list *list, t_env_info *e)
 		set_signals_inter();
 		string = readline(PROMPT);
 		set_signals_non_inter();
-		e->last_exit_status = pretty_much_a_global(GET, 0);
+		if (pretty_much_a_global(CHECK, 0))
+			e->last_exit_status = pretty_much_a_global(GET, 0);
 		if (!string)
 			exit(e->last_exit_status);
 		if (*string)
