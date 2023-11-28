@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:35:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/22 16:04:53 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/28 16:28:38 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,13 @@ int	pretty_much_a_global(int mode, int value)
 		not_a_global = value;
 		return (EXIT_SUCCESS);
 	}
-	value = not_a_global;
-	not_a_global = 0;
+	if (mode == GET)
+	{
+		value = not_a_global;
+		not_a_global = 0;
+	}
+	if (mode == CHECK)
+		value = not_a_global;
 	return (value);
 	
 }
