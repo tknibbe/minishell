@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 15:05:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/22 16:17:41 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/28 17:46:45 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,10 @@ int	add_heredoc(t_list *list, int *i, t_env_info *env)
 {
 	t_heredoc	doc;
 	t_rdr		*rdr_node;
-	t_exec		*cur_node;
 
 	init_struct_and_fork(&doc, list, i);
-	cur_node = exec_lstlast(list->exec);
 	rdr_node = rdr_lstnew(NULL, doc.expand, 1);
-	rdr_lstadd_back(&cur_node->rdr, rdr_node);
+	rdr_lstadd_back(&exec_lstlast(list->exec)->rdr, rdr_node);
 	if (doc.pid == 0)
 		heredoc(&doc);
 	wait(&doc.status);
@@ -73,8 +71,8 @@ int	add_heredoc(t_list *list, int *i, t_env_info *env)
 static void	heredoc(t_heredoc *doc)
 {
 	unset_echo();
-	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_DFL);
 	close(doc->pipefd[0]);
 	doc->line = NULL;
 	while (1)

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 12:32:28 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/28 17:36:08 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/28 17:40:50 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int argc, char *argv[], char *envp[])
 	if (argc != 1)
 		ft_minishell_error(argv[1], "...", "too many arguments", 1);
 	e = env_init(envp);
-	// if (!isatty(STDIN_FILENO))
-	// 	exit(run_single_command(NULL, e));
+	if (!isatty(STDIN_FILENO))
+		exit(run_single_command(NULL, e));
 	return (run_shell(NULL, e));
 }

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 15:35:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/28 16:28:38 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/28 17:49:49 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	pretty_much_a_global(int mode, int value)
 	if (mode == CHECK)
 		value = not_a_global;
 	return (value);
-	
 }
 
 static void	interactive_handler(int c)

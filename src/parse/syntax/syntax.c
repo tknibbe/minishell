@@ -6,13 +6,13 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/28 16:48:12 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/28 17:49:08 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	add_new_input(t_list **list, t_env_info *env)
+int	add_new_input(t_list **list)
 {
 	char	*new_str;
 	char	*str;
@@ -21,7 +21,6 @@ int	add_new_input(t_list **list, t_env_info *env)
 	while (!str[0])
 	{
 		str = readline("> ");
-		(void)	env;
 		if (!str)
 			return (ft_syntax_error(' ', -1));
 		if ((*list)->input[ft_strlen((*list)->input) - 1] == str[0])
@@ -39,14 +38,15 @@ int	add_new_input(t_list **list, t_env_info *env)
 	return (EXIT_SUCCESS);
 }
 
-static int	control_op_check(t_list *list, int *i, t_env_info *env)
+static int	control_op_check(t_list *list, int *i)
 {
 	int	token;
 
 	token = list->token[*i];
 	if (!list->input[*i + 1] || \
-		((list->token[*i] == OR || list->token[*i] == AND) && !list->input[*i + 2]))
-		if (add_new_input(&list, env))
+		((list->token[*i] == OR || list->token[*i] == AND) \
+			&& !list->input[*i + 2]))
+		if (add_new_input(&list))
 			return (EXIT_FAILURE);
 	if (op_amount_check(list, *i))
 		return (ft_syntax_error(' ', list->token[*i]));
@@ -82,7 +82,7 @@ static int	rdr_check(t_list *list, int *i)
 	return (EXIT_SUCCESS);
 }
 
-static int	syntax_loop(t_list *list, int *i, t_env_info *env)
+static int	syntax_loop(t_list *list, int *i)
 {
 	if (is_redirect(list->token[*i]))
 	{
@@ -91,7 +91,7 @@ static int	syntax_loop(t_list *list, int *i, t_env_info *env)
 	}
 	else if (is_control_op(list->token[*i]))
 	{
-		if (control_op_check(list, i, env))
+		if (control_op_check(list, i))
 			return (EXIT_FAILURE);
 	}
 	else if (list->token[*i] == BRACE_OPEN || list->token[*i] == BRACE_CLOSE)
@@ -136,7 +136,7 @@ int	check_syntax(t_list *list, t_env_info *env)
 	}
 	while (list->input[i])
 	{
-		if (syntax_loop(list, &i, env))
+		if (syntax_loop(list, &i))
 		{
 			env->last_exit_status = 2;
 			return (EXIT_FAILURE);
