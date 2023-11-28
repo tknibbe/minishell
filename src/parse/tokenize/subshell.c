@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 14:46:50 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/02 16:07:51 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/28 17:34:09 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ t_list	*add_subshell(char *input, t_list *list, int *i, t_env_info *env)
 	str = ft_substr(input, start, *i - start - 1);
 	if (!str)
 		ft_minishell_error("malloc()", NULL, strerror(errno), errno);
-	temp = parse_input(str, env);
+	temp = parse_input(&str, env);
 	free (str);
 	if (!temp)
 		return (NULL);

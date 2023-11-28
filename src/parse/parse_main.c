@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:21:38 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/22 16:12:04 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/28 17:31:40 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,14 @@ static int	split_pipe_and_parse(t_list **list, t_env_info *env)
 	return (EXIT_SUCCESS);
 }
 
+void	replace_input(char **input, char *new)
+{
+	free (*input);
+	*input = ft_strdup(new);
+	if (!input)
+		ft_minishell_error("ft_strdup()", NULL, strerror(errno), errno);
+}
+
 /* 
 	Description:
 		parse_input is a function designed to parse user input and generate a
@@ -70,26 +78,26 @@ static int	split_pipe_and_parse(t_list **list, t_env_info *env)
 		A pointer to a t_list structure containing the parsed input or NULL
 		in case of errors.
 */
-t_list	*parse_input(char *input, t_env_info *env)
+t_list	*parse_input(char **input, t_env_info *env)
 {
 	t_list	*list;
 
-	if (!input[0])
+	if (!(*input)[0])
 	{
 		env->last_exit_status = 1;
 		return (NULL);
 	}
 	list = t_listnew();
-	list->input = ft_strtrim(input, " \t\n");
+	list->input = ft_strtrim(*input, " \t\n");
 	if (!list->input)
 		ft_minishell_error("ft_strtrim()", "failed", strerror(errno), errno);
 	tokenize(list);
 	if (check_syntax(list, env))
 	{
-		add_history(list->input);
+		replace_input(input, list->input);
 		return (free_list(list), NULL);
 	}
-	add_history(list->input); //this fucks up the history with subshells. maybe input = list->input and then post it in the main?
+	replace_input(input, list->input);
 	if (split_pipe_and_parse(&list, env))
 		return (NULL);
 	return (list);

@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:48:47 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/15 13:50:13 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/28 17:06:11 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ enum	e_token
 };
 
 //PARSE_MAIN.C
-t_list	*parse_input(char *input, t_env_info *env);
+t_list	*parse_input(char **input, t_env_info *env);
 
 //TOKEN.C
 
