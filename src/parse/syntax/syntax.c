@@ -6,7 +6,7 @@
 /*   By: tknibbe <tknibbe@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 13:46:32 by tknibbe           #+#    #+#             */
-/*   Updated: 2023/11/22 14:26:03 by tknibbe          ###   ########.fr       */
+/*   Updated: 2023/11/28 16:23:47 by tknibbe          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,12 @@ int	add_new_input(t_list **list, t_env_info *env)
 		(void)	env;
 		if (!str)
 			return (ft_syntax_error(' ', -1));
+		if ((*list)->input[ft_strlen((*list)->input) - 1] == str[0])
+			return (ft_syntax_error('|', 0));
 	}
 	new_str = ft_strjoin((*list)->input, str);
+	if (!new_str)
+		ft_minishell_error("ft_strjoin()", NULL, strerror(errno), errno);
 	free((*list)->input);
 	free(str);
 	free((*list)->token);
@@ -42,8 +46,7 @@ static int	control_op_check(t_list *list, int *i, t_env_info *env)
 	token = list->token[*i];
 	if (!list->input[*i + 1] || \
 		((list->token[*i] == OR || list->token[*i] == AND) && !list->input[*i + 2]))
-		if (add_new_input(&list, env))
-			return (EXIT_FAILURE);
+		add_new_input(&list, env);
 	if (op_amount_check(list, *i))
 		return (ft_syntax_error(' ', list->token[*i]));
 	while (list->token[*i] == token && list->input[*i + 1])
